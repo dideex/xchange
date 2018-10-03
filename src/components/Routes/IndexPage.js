@@ -1,9 +1,14 @@
 import React, {Component, Fragment} from 'react'
+import Index from '../Index'
 
 // IndexPage component;
 export class IndexPage extends Component {
   render() {
-    return <Fragment>index</Fragment>
+    return (
+      <Fragment>
+        <Index />
+      </Fragment>
+    )
   }
 }
 
