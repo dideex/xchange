@@ -1,12 +1,12 @@
 import React, {Component, Fragment} from 'react'
-import Index from '../Index'
+import Converter from '../Converter'
 
 // IndexPage component;
 export class IndexPage extends Component {
   render() {
     return (
       <Fragment>
-        <Index />
+        <Converter />
       </Fragment>
     )
   }

@@ -1,24 +1,35 @@
-import {observable, action, computed} from 'mobx'
+import {observable, action} from 'mobx'
 import {isNumber} from './common'
 import {currency} from '../config/conf'
 
 // menu state
 class Cash {
-  @observable input
-  @observable output
-  @observable ratio
-  @observable currencyInput
-  @observable currencyOutput
+  @observable
+  inputValue
+  @observable
+  outputValue
+  @observable
+  currencyInput
+  @observable
+  currencyOutput
 
   constructor() {
-    this.input = 0
-    this.output = 0
+    this.inputValue = 0
+    this.outputValue = 0
     this.currency = currency
     this.currencyInput = 0
     this.currencyOutput = 1
   }
 
-  _formatNumber = num => num[num.length - 1] !== '.'? +num: num
+  _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
+
+  _calcOutput = value =>
+    (value * this.currency[this.currencyInput].price_usd) /
+    this.currency[this.currencyOutput].price_usd
+
+  _calcInput = value =>
+    (value * this.currency[this.currencyOutput].price_usd) /
+    this.currency[this.currencyInput].price_usd
 
   //FIXME: add limits
   //FIXME: i cant type 0.0 in inputs
@@ -26,25 +37,27 @@ class Cash {
   changeInput = (value = 0) => {
     if (value === '') value = 0
     if (isNumber(value)) {
-      this.input = this._formatNumber(value)
-      this.output = value * this.currency[this.currencyInput].price_usd / this.currency[this.currencyOutput].price_usd
+      this.inputValue = this._allowNumberWithDot(value)
+      this.outputValue = this._calcOutput(value)
     }
   }
   @action('change output')
   changeOutput = (value = 0) => {
     if (value === '') value = 0
     if (isNumber(value)) {
-      this.output = this._formatNumber(value)
-      this.input = value * this.currency[this.currencyOutput].price_usd / this.currency[this.currencyInput].price_usd
+      this.outputValue = this._allowNumberWithDot(value)
+      this.inputValue = this._calcInput(value)
     }
   }
   @action('change currency output')
   changeCurrencyOutput = (id = 0) => {
     this.currencyOutput = id
+    this.outputValue = this._calcOutput(this.inputValue)
   }
   @action('change currency input')
   changeCurrencyInput = (id = 0) => {
     this.currencyInput = id
+    this.inputValue = this._calcInput(this.outputValue)
   }
 
   // returns true when menu is opened

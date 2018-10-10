@@ -1,3 +1,3 @@
 export const isNumber = num => {
-  return /^\d+[\.]?\d*$/.test(num) || ''
+  return /^\d+[.]?\d*$/.test(num) || ''
 }
