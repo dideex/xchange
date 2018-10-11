@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {Switch, Route} from 'react-router-dom'
 
-import {FAQ, IndexPage, NotFound} from './Routes'
+import {FAQ, IndexPage, NotFound} from './routes'
 import Navigation from './Nav'
 
 // Layout component;

@@ -9,11 +9,7 @@ const collect = (connect, monitor) => ({
 })
 
 const spec = {
-  beginDrag(props) {
-    return {
-      uid: props,
-    }
-  },
+  beginDrag : ({id}) => ({id}),
   endDrag(props, monitor) {
     console.log('end drag ', props, monitor)
   },
@@ -24,6 +20,7 @@ const spec = {
 export default class CurrencyBadge extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
   }
 
   render() {
