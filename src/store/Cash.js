@@ -49,13 +49,13 @@ class Cash {
       this.inputValue = this._calcInput(value)
     }
   }
-  @action('change currency output')
-  changeCurrencyOutput = (id = 0) => {
+  @action('set currency output')
+  setCurrencyOutput = (id = 0) => {
     this.currencyOutput = id
     this.outputValue = this._calcOutput(this.inputValue)
   }
-  @action('change currency input')
-  changeCurrencyInput = (id = 0) => {
+  @action('set currency input')
+  setCurrencyInput = (id = 0) => {
     this.currencyInput = id
     this.inputValue = this._calcInput(this.outputValue)
   }

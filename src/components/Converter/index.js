@@ -4,7 +4,7 @@ import {DragDropContextProvider} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
 import CurrencyBadge from './CurrencyBadge'
-import Input from './InputField'
+import Field from './InputField'
 
 @inject('cashStore')
 @observer
@@ -18,22 +18,24 @@ export default class Index extends Component {
       currency,
       currencyInput,
       currencyOutput,
-      changeCurrencyInput,
-      changeCurrencyOutput,
+      setCurrencyInput,
+      setCurrencyOutput,
     } = this.props.cashStore
     return (
       <DragDropContextProvider backend={HTML5Backend}>
-        <Input
+        <Field
           inputValue={inputValue}
           changeInput={changeInput}
-          onSelectChange={changeCurrencyInput}
+          onSelectChange={setCurrencyInput}
           currencyId={currencyInput}
+          disableCurrencyId={currencyOutput}
         />
-        <Input
+        <Field
           inputValue={outputValue}
           changeInput={changeOutput}
-          onSelectChange={changeCurrencyOutput}
+          onSelectChange={setCurrencyOutput}
           currencyId={currencyOutput}
+          disableCurrencyId={currencyInput}
         />
         <hr />
         <ul>

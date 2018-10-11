@@ -3,6 +3,9 @@ import {inject, observer} from 'mobx-react'
 import {DropTarget} from 'react-dnd'
 import PropTypes from 'prop-types'
 
+import Input from './controls/CurrencyInput'
+import Select from './controls/CurrencySelect'
+
 const collect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
@@ -21,15 +24,16 @@ const spec = {
 @observer
 class InputField extends Component {
   static propTypes = {
-    inputValue: PropTypes.string.isRequired,
-    currencyId: PropTypes.string.isRequired,
+    inputValue: PropTypes.number.isRequired,
+    currencyId: PropTypes.number.isRequired,
+    disableCurrencyId: PropTypes.number.isRequired,
     changeInput: PropTypes.func.isRequired,
     onSelectChange: PropTypes.func.isRequired,
   }
 
   render() {
-    const {inputValue, changeInput, cashStore, onSelectChange, currencyId} = this.props
-    const {currency, currencyOutput} = cashStore
+    const {inputValue, changeInput, onSelectChange, currencyId, disableCurrencyId} = this.props
+    const {currency, currencyOutput} = this.props.cashStore
 
     const {canDrop, isOver, connectDropTarget} = this.props
     const isActive = canDrop && isOver
@@ -42,28 +46,17 @@ class InputField extends Component {
     return (
       <Fragment>
         <span>{currency[currencyId].label}</span>
-        <input
-          type="text"
-          ref={input => (this.input = input)}
-          onChange={() => changeInput(this.input.value)}
+        <Input
           value={inputValue}
-          style={{backgroundColor}}
+          background={backgroundColor}
+          handleChange={changeInput}
         />
-        <select
-          defaultValue={currencyId}
-          name="currencyId"
-          ref={currencyId => (this.currencyId = currencyId)}
-          onChange={() => onSelectChange(this.currencyId.value)}
-        >
-          {currency.map(
-            ({name}, i) =>
-              i !== +currencyOutput ? (
-                <option value={i} key={i}>
-                  {name}
-                </option>
-              ) : null,
-          )}
-        </select>
+        <Select
+          id={currencyId}
+          currency={currency}
+          output={disableCurrencyId}
+          handleChange={onSelectChange}
+        />
       </Fragment>
     )
   }

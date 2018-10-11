@@ -24,16 +24,15 @@ const spec = {
 export default class CurrencyBadge extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    key: PropTypes.number.isRequired,
   }
 
   render() {
-    const {isDragging, connectDragSource, key, name} = this.props
+    const {isDragging, connectDragSource, name} = this.props
     const opacity = isDragging ? 0.4 : 1
     return (
       connectDragSource &&
       connectDragSource(
-        <li style={{opacity}} key={key}>
+        <li style={{opacity}}>
           {name}
         </li>,
       )
