@@ -9,7 +9,7 @@ import Select from './controls/CurrencySelect'
 const collect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
-  canDrop: monitor.canDrop(),
+  canDrop: monitor.canDrop(connect, monitor),
 })
 
 const spec = {
@@ -27,7 +27,6 @@ class InputField extends Component {
   static propTypes = {
     inputValue: PropTypes.number.isRequired,
     currencyId: PropTypes.number.isRequired,
-    disableCurrencyId: PropTypes.number.isRequired,
     changeInput: PropTypes.func.isRequired,
     onSelectChange: PropTypes.func.isRequired,
   }
@@ -38,7 +37,6 @@ class InputField extends Component {
       changeInput,
       onSelectChange,
       currencyId,
-      disableCurrencyId,
     } = this.props
     const {currency} = this.props.cashStore
 
@@ -63,7 +61,6 @@ class InputField extends Component {
           <Select
             id={currencyId}
             currency={currency}
-            output={disableCurrencyId}
             handleChange={onSelectChange}
           />
         </div>,

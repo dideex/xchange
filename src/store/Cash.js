@@ -51,13 +51,31 @@ class Cash {
   }
   @action('set currency output')
   setCurrencyOutput = (id = 0) => {
-    this.currencyOutput = id
-    this.outputValue = this._calcOutput(this.inputValue)
+    if (this.currencyInput === +id) {
+      this.currencyInput = this.currencyOutput
+      let temp = this.inputValue
+      this.inputValue = this.outputValue
+      this.outputValue = temp
+      this.currencyOutput = +id
+    } else {
+      this.currencyOutput = +id
+      this.outputValue = this._calcOutput(this.inputValue)
+    }
+    console.log(' LOG ___ this.currency ', this.currencyOutput)
   }
   @action('set currency input')
   setCurrencyInput = (id = 0) => {
-    this.currencyInput = id
-    this.inputValue = this._calcInput(this.outputValue)
+    if (this.currencyOutput === +id) {
+      this.currencyOutput = this.currencyInput
+      let temp = this.inputValue
+      this.inputValue = this.outputValue
+      this.outputValue = temp
+      this.currencyInput = +id
+    } else {
+      this.currencyInput = +id
+      this.inputValue = this._calcInput(this.outputValue)
+    }
+    console.log(' LOG ___ this.currency ', this.currencyInput)
   }
 
   // returns true when menu is opened

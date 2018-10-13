@@ -29,14 +29,12 @@ export default class Index extends Component {
             changeInput={changeInput}
             onSelectChange={setCurrencyInput}
             currencyId={currencyInput}
-            disableCurrencyId={currencyOutput}
           />
           <Field
             inputValue={outputValue}
             changeInput={changeOutput}
             onSelectChange={setCurrencyOutput}
             currencyId={currencyOutput}
-            disableCurrencyId={currencyInput}
           />
         </div>
         <hr />
