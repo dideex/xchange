@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx'
+import {observable, action, computed} from 'mobx'
 import {isNumber} from './common'
 import {currency} from '../config/conf'
 
@@ -12,6 +12,8 @@ class Cash {
   currencyInput
   @observable
   currencyOutput
+  @observable
+  paymentStatus
 
   constructor() {
     this.inputValue = 0
@@ -19,6 +21,7 @@ class Cash {
     this.currency = currency
     this.currencyInput = 0
     this.currencyOutput = 1
+    this.paymentStatus = 0 // 0 - null, 1 - created, 2 - sended, 3 - closed
   }
 
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
@@ -75,12 +78,20 @@ class Cash {
       this.inputValue = this._calcInput(this.outputValue)
     }
   }
+  @action('create payment')
+  createPayment = () => (this.paymentStatus = 1)
+  @action('cofirm payment')
+  cofirmPayment = () => (this.paymentStatus = 2)
 
   // returns true when menu is opened
-  // @computed
-  // get isOpen() {
-  //   return this.state !== 'close'
-  // }
+  @computed
+  get getInput() {
+    return `${this.inputValue} ${this.currency[this.currencyInput].label}`
+  }
+  @computed
+  get getOutput() {
+    return `${this.outputValue} ${this.currency[this.currencyOutput].label}`
+  }
 }
 
 export const cash = new Cash()
