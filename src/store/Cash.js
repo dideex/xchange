@@ -61,7 +61,6 @@ class Cash {
       this.currencyOutput = +id
       this.outputValue = this._calcOutput(this.inputValue)
     }
-    console.log(' LOG ___ this.currency ', this.currencyOutput)
   }
   @action('set currency input')
   setCurrencyInput = (id = 0) => {
@@ -75,7 +74,6 @@ class Cash {
       this.currencyInput = +id
       this.inputValue = this._calcInput(this.outputValue)
     }
-    console.log(' LOG ___ this.currency ', this.currencyInput)
   }
 
   // returns true when menu is opened

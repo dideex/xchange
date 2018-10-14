@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from 'react'
-import Converter from '../Converter'
+import Converter from '../components/Converter'
 
-// IndexPage component;
-export class IndexPage extends Component {
+// Home component;
+export class Home extends Component {
   render() {
     return (
       <Fragment>
@@ -12,4 +12,4 @@ export class IndexPage extends Component {
   }
 }
 
-export default IndexPage
+export default Home

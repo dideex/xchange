@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/Layout'
+import Layout from './Layout'
 import * as serviceWorker from './serviceWorker'
 import {Provider as MobxProvider} from 'mobx-react'
 import {BrowserRouter} from 'react-router-dom'
@@ -14,7 +14,7 @@ if (module.hot) {
 const app = (
   <MobxProvider cashStore={Cash}>
     <BrowserRouter>
-      <App />
+      <Layout />
     </BrowserRouter>
   </MobxProvider>
 )
