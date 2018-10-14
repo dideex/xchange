@@ -14,7 +14,6 @@ const collect = (connect, monitor) => ({
 
 const spec = {
   drop: (props, monitor) => {
-    console.log(' LOG ___ monitor ', monitor.getItem())
     props.onSelectChange(monitor.getItem().id)
     return {name: monitor.getItem()}
   },
@@ -32,12 +31,7 @@ class InputField extends Component {
   }
 
   render() {
-    const {
-      inputValue,
-      changeInput,
-      onSelectChange,
-      currencyId,
-    } = this.props
+    const {inputValue, changeInput, onSelectChange, currencyId} = this.props
     const {currency} = this.props.cashStore
 
     const {canDrop, isOver, connectDropTarget} = this.props
@@ -58,11 +52,7 @@ class InputField extends Component {
             background={backgroundColor}
             handleChange={changeInput}
           />
-          <Select
-            id={currencyId}
-            currency={currency}
-            handleChange={onSelectChange}
-          />
+          <Select id={currencyId} currency={currency} handleChange={onSelectChange} />
         </div>,
       )
     )

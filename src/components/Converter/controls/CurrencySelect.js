@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 // CurrencySelect stateless component;
 const CurrencySelect = ({id, currency, handleChange}) => (
-  <select name="id" onChange={({target}) => handleChange(target.value)}>
+  <select name="id" onChange={({target}) => handleChange(target.value)} value={id}>
     {currency.map(({name, id: _id}, i) => (
-      <option value={_id} key={i} selected={id === _id}>
+      <option value={_id} key={i}>
         {name}
       </option>
     ))}

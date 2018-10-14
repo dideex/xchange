@@ -83,7 +83,6 @@ class Cash {
   // }
 }
 
-const cash = new Cash()
+export const cash = new Cash()
 
-export default cash
-export {Cash}
+export default Cash

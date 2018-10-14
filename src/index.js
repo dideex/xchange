@@ -5,14 +5,14 @@ import * as serviceWorker from './serviceWorker'
 import {Provider as MobxProvider} from 'mobx-react'
 import {BrowserRouter} from 'react-router-dom'
 
-import Cash from './store/Cash'
+import {cash, user} from './store'
 
 if (module.hot) {
   module.hot.accept()
 }
 
 const app = (
-  <MobxProvider cashStore={Cash}>
+  <MobxProvider cashStore={cash} userStore={user}>
     <BrowserRouter>
       <Layout />
     </BrowserRouter>
