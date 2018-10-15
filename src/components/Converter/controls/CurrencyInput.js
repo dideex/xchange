@@ -1,14 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import Input from '../../common/Input'
+
 // CurrencyInput stateless component;
 const CurrencyInput = ({value, background, handleChange}) => (
-  <input
-    type="text"
-    onChange={({target}) => handleChange(target.value)}
-    value={value}
-    style={{background}}
-  />
+  <div style={{background}}>
+    <Input
+      handleChange={handleChange}
+      value={`${value}`}
+      placeholder="value"
+    />
+  </div>
 )
 
 CurrencyInput.propTypes = {

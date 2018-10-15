@@ -7,6 +7,7 @@ const theme = require('./src/theme')
 module.exports = function override(config, env) {
   config = injectBabelPlugin(['import', {libraryName: 'antd', style: true}], config)
   config = injectBabelPlugin('babel-plugin-styled-components', config)
+  config = injectBabelPlugin('emotion', config)
   config = rewireMobx(config, env)
   config = rewireLess.withLoaderOptions({
     modifyVars: theme,
