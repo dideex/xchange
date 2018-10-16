@@ -5,6 +5,7 @@ import {DragDropContextProvider} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
 import CurrencyBadge from './CurrencyBadge'
+import CustomerDragLayer from './CustomerDragLayer'
 import Field from './InputField'
 import UserData from './UserData'
 
@@ -61,6 +62,7 @@ export default class Index extends Component {
               currencyId={currencyOutput}
             />
           </div>
+          <CustomerDragLayer />
           <CurrencyBadgeWrap>
             {currency.map(({name, id}, i) => (
               <CurrencyBadge key={i} id={id} name={name} />

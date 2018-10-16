@@ -13,7 +13,6 @@ const StyledLabel = styled('span')`
 class Label extends Component {
   static propTypes = {
     caption: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
   }
 
   render() {

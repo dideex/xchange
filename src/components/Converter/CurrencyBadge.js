@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {DragSource} from 'react-dnd'
 // import styled from 'react-emotion'
+import { getEmptyImage } from "react-dnd-html5-backend";
 import PropTypes from 'prop-types'
 
 import Label from '../common/Label'
@@ -8,7 +9,7 @@ import Label from '../common/Label'
 const collect = (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
-  // connectPreview: connect.dragPreview(),
+  connectPreview: connect.dragPreview(),
 })
 
 const spec = {
@@ -26,6 +27,11 @@ export default class CurrencyBadge extends Component {
     id: PropTypes.number.isRequired,
   }
 
+  componentDidMount() {
+    // this.props.connectPreview(<span>⚛</span>)
+    this.props.connectPreview && this.props.connectPreview(getEmptyImage())
+  }
+
   render() {
     const {isDragging, connectDragSource, name, id} = this.props
     const opacity = isDragging ? 0.4 : 1
@@ -34,7 +40,7 @@ export default class CurrencyBadge extends Component {
       connectDragSource(
         <div style={{flex: '33% 0 0'}}>
           <Label icon={id} caption={name} style={{opacity, cursor: 'move'}} />
-        </div>
+        </div>,
       )
     )
   }

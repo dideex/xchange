@@ -52,7 +52,7 @@ class CurrencySelect extends Component {
   _getSelectionField = () => (
     <SelectBlock onMouseLeave={() => this.setState({open: false})}>
       {this.props.currency.map(({name, id}, i) => (
-        <Label key={i} onClick={this._handleSelect.bind(null, id)} caption={name} />
+        <Label key={i} icon="o" onClick={this._handleSelect.bind(null, id)} caption={name} />
       ))}
     </SelectBlock>
   )
