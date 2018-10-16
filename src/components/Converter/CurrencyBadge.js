@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import {DragSource} from 'react-dnd'
+// import styled from 'react-emotion'
+import PropTypes from 'prop-types'
+
+import Label from '../common/Label'
 
 const collect = (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
@@ -9,7 +12,7 @@ const collect = (connect, monitor) => ({
 })
 
 const spec = {
-  beginDrag : ({id}) => ({id}),
+  beginDrag: ({id}) => ({id}),
   endDrag(props, monitor) {
     console.log('end drag ', props, monitor)
   },
@@ -24,14 +27,14 @@ export default class CurrencyBadge extends Component {
   }
 
   render() {
-    const {isDragging, connectDragSource, name} = this.props
+    const {isDragging, connectDragSource, name, id} = this.props
     const opacity = isDragging ? 0.4 : 1
     return (
       connectDragSource &&
       connectDragSource(
-        <li style={{opacity}}>
-          {name}
-        </li>,
+        <div style={{flex: '33% 0 0'}}>
+          <Label icon={id} caption={name} style={{opacity, cursor: 'move'}} />
+        </div>
       )
     )
   }

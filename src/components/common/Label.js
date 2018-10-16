@@ -13,10 +13,16 @@ const StyledLabel = styled('span')`
 class Label extends Component {
   static propTypes = {
     caption: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
   }
 
   render() {
-    return <StyledLabel onClick={this.props.onClick}>⚛{this.props.caption}</StyledLabel>
+    return (
+      <StyledLabel style={{...this.props.style}} onClick={this.props.onClick}>
+        <i>{this.props.icon}</i>
+        <span>{this.props.caption}</span>
+      </StyledLabel>
+    )
   }
 }
 

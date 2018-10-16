@@ -58,14 +58,6 @@ class CurrencySelect extends Component {
   )
 
   render() {
-    // const {id, currency, handleChange} = this.props
-    // <select name="id" onChange={({target}) => handleChange(target.value)} value={id}>
-    //   {currency.map(({name, id: _id}, i) => (
-    //     <option value={_id} key={i}>
-    //       {name}
-    //     </option>
-    //   ))}
-    // </select>
     return (
       <Wrapper onClick={() => this.setState({open: true})}>
         >{this.state.open && this._getSelectionField()}
