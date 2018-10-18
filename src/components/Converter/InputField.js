@@ -1,10 +1,30 @@
 import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import {DropTarget} from 'react-dnd'
+import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
+import Svg from '../common/CurrencyIcons'
+import Colors from '../../config/Colors'
 import Input from './controls/CurrencyInput'
 import Select from './controls/CurrencySelect'
+import {SvgCurrency} from '../../config/Styles'
+
+const FieldStyled = styled('div')`
+  & {
+    position: relative;
+    border-radius: 5px;
+    padding: 5px 5px;
+  }
+`
+
+const BadgeIcon = styled('span')`
+  & {
+    position: absolute;
+    top: .8em;
+    left: 15px;
+  }
+`
 
 const collect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
@@ -36,23 +56,23 @@ class InputField extends Component {
 
     const {canDrop, isOver, connectDropTarget} = this.props
     const isActive = canDrop && isOver
-    let backgroundColor = 'yellowgreen'
+    let backgroundColor = Colors.accent
     if (isActive) {
-      backgroundColor = 'darkgreen'
+      backgroundColor = Colors.subAccent
     } else if (canDrop) {
-      backgroundColor = 'darkkhaki'
+      backgroundColor = Colors.darkAccent
     }
     return (
       connectDropTarget &&
       connectDropTarget(
         <div>
-          <span>{currency[currencyId].label}</span>
-          <Input
-            value={inputValue}
-            background={backgroundColor}
-            handleChange={changeInput}
-          />
-          <Select id={currencyId} currency={currency} handleChange={onSelectChange} />
+          <FieldStyled style={{backgroundColor}}>
+            <BadgeIcon>
+              <Svg style={SvgCurrency} id={currency[currencyId].name} />
+            </BadgeIcon>
+            <Input value={inputValue} handleChange={changeInput} />
+            <Select id={currencyId} currency={currency} handleChange={onSelectChange} />
+          </FieldStyled>
         </div>,
       )
     )

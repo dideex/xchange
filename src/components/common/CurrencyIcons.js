@@ -1,11 +1,11 @@
 import React from 'react'
 
 // Svg component;
-export const Svg = ({disabled, id}) => {
+export const Svg = ({disabled, id, style = {}}) => {
   if (!id) return null
   const entities = {
     Bitcoin: (
-      <svg version="1.1" x="0px" y="0px" viewBox="0 0 400 400">
+      <svg style={style} version="1.1" x="0px" y="0px" viewBox="0 0 400 400">
         <circle style={{fill: '#EDDA48'}} cx="199.5" cy="200.5" r="199.5" />
         <circle style={{fill: '#E2B255'}} cx="199.5" cy="200.5" r="168.3" />
         <path
@@ -17,7 +17,7 @@ export const Svg = ({disabled, id}) => {
       </svg>
     ),
     Dollar: (
-      <svg version="1.1" x="0px" y="0px" viewBox="0 0 400 400">
+      <svg style={style} version="1.1" x="0px" y="0px" viewBox="0 0 400 400">
         <circle style={{fill: '#EDDA48'}} cx="199.5" cy="200.5" r="199.5" />
         <circle style={{fill: '#E2B255'}} cx="199.5" cy="200.5" r="168.3" />
         <path
@@ -29,7 +29,7 @@ export const Svg = ({disabled, id}) => {
       </svg>
     ),
     Ruble: (
-      <svg version="1.1" x="0px" y="0px" viewBox="0 0 400 400">
+      <svg style={style} version="1.1" x="0px" y="0px" viewBox="0 0 400 400">
         <circle style={{fill: '#EDDA48'}} cx="199.5" cy="200.5" r="199.5" />
         <circle style={{fill: '#E2B255'}} cx="199.5" cy="200.5" r="168.3" />
         <path
