@@ -1,5 +1,5 @@
 import React from 'react'
-import {coinColors} from '../../config/Styles'
+import {coinColors} from './Styles'
 
 // Svg component;
 export const Svg = ({disabled, id, style = {}}) => {

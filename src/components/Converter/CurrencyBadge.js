@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {DragSource} from 'react-dnd'
 // import styled from 'react-emotion'
-import { getEmptyImage } from "react-dnd-html5-backend";
+import {getEmptyImage} from 'react-dnd-html5-backend'
 import PropTypes from 'prop-types'
 
 import Label from '../common/Label'

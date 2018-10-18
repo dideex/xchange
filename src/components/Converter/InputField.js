@@ -8,7 +8,7 @@ import Svg from '../common/CurrencyIcons'
 import Colors from '../../config/Colors'
 import Input from './controls/CurrencyInput'
 import Select from './controls/CurrencySelect'
-import {SvgCurrency} from '../../config/Styles'
+import {SvgCurrency} from '../common/Styles'
 
 const FieldStyled = styled('div')`
   & {

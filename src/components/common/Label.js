@@ -2,9 +2,14 @@ import React, {Component} from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
+import Svg from './CurrencyIcons'
+import {SvgCurrency} from './Styles'
+
 const StyledLabel = styled('span')`
   & {
     flex: 33% 0 0;
+    display: flex;
+    align-items: center;
     cursor: pointer;
   }
 `
@@ -16,10 +21,11 @@ class Label extends Component {
   }
 
   render() {
+    const {caption, style, onClick} = this.props
     return (
-      <StyledLabel style={{...this.props.style}} onClick={this.props.onClick}>
-        <i>{this.props.icon}</i>
-        <span>{this.props.caption}</span>
+      <StyledLabel style={{...style}} onClick={onClick}>
+        <Svg style={SvgCurrency} id={caption} />
+        <span>{caption}</span>
       </StyledLabel>
     )
   }

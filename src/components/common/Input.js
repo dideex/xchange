@@ -31,7 +31,6 @@ class Input extends Component {
 
   render() {
     const {value, handleChange, placeholder, style = {}} = this.props
-    console.log(" LOG ___ style ", style )
     return (
       <StyledInput
         style={style}
