@@ -5,4 +5,13 @@ export const SvgCurrency = {
   height: '25px',
 }
 
+export const coinColors = {
+  label: {
+    fill: '#edda48',
+  },
+  body: {
+    fill: '#e2b255',
+  },
+}
+
 export default Styles
