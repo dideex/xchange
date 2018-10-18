@@ -39,7 +39,11 @@ export default class CurrencyBadge extends Component {
       connectDragSource &&
       connectDragSource(
         <div style={{display: 'inline-block'}}>
-          <Label icon={id} caption={name} style={{opacity, cursor: 'move'}} />
+          <Label
+            icon={id}
+            caption={name}
+            style={{opacity, cursor: 'move', flex: '33% 0 0'}}
+          />
         </div>,
       )
     )

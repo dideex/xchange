@@ -1,40 +1,12 @@
-import React, {Component, Fragment} from 'react'
-import styled from 'react-emotion'
+import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import {DragDropContextProvider} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
-import CurrencyBadge from './CurrencyBadge'
 import CustomerDragLayer from './CustomerDragLayer'
 import Field from './InputField'
 import UserData from './UserData'
-
-const CurrencyBadgeItem = styled('div')`
-  & {
-    flex: 33% 0 0;
-  }
-`
-
-const CurrencyBadgeItems = styled('div')`
-  & {
-    display: flex;
-    flex-wrap: wrap;
-    border: rgba(255, 255, 255, 0.4) 5px solid;
-    border-radius: 5px;
-    padding: 8px 15px;
-    background: #fff;
-    background-clip: padding-box;
-    transition: border-color 0.3s ease-in-out;
-  }
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.7);
-  }
-  &:focus,
-  &:active {
-    outline: none;
-    border-color: #fff;
-  }
-`
+import CurrencyDNDArea from './CurrencyDNDArea'
 
 @inject('cashStore')
 @observer
@@ -52,7 +24,7 @@ export default class Index extends Component {
       setCurrencyOutput,
     } = this.props.cashStore
     return (
-      <Fragment>
+      <main>
         <DragDropContextProvider backend={HTML5Backend}>
           <div style={{display: 'flex'}}>
             <Field
@@ -69,16 +41,10 @@ export default class Index extends Component {
             />
           </div>
           <CustomerDragLayer />
-          <CurrencyBadgeItems>
-            {currency.map(({name, id}, i) => (
-              <CurrencyBadgeItem>
-                <CurrencyBadge key={i} id={id} name={name} />
-              </CurrencyBadgeItem>
-            ))}
-          </CurrencyBadgeItems>
+          <CurrencyDNDArea currency={currency} />
         </DragDropContextProvider>
         <UserData walletIncome={currencyInput} walletOutgo={currencyOutput} />
-      </Fragment>
+      </main>
     )
   }
 }

@@ -1,9 +1,18 @@
 import React, {Component, Fragment} from 'react'
 import {Switch, Route} from 'react-router-dom'
 
-import {FAQ, Home, CP, AboutUs, Reserved, Signup, ThankYou, PaymentProof} from './routes'
+import {
+  FAQ,
+  Home,
+  CP,
+  AboutUs,
+  Reserved,
+  Signup,
+  ThankYou,
+  PaymentProof,
+  PageNotFound,
+} from './routes'
 import Navigation from './components/Nav'
-import NotFound from './routes/404'
 
 // Layout component;
 class Layout extends Component {
@@ -20,7 +29,7 @@ class Layout extends Component {
           <Route exact path="/lichnii-kabinet" component={CP} />
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/" component={Home} />
-          <Route component={NotFound} />
+          <Route component={PageNotFound} />
         </Switch>
       </Fragment>
     )

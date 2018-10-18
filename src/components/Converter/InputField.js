@@ -50,6 +50,10 @@ class InputField extends Component {
     onSelectChange: PropTypes.func.isRequired,
   }
 
+  state = {
+    open: false,
+  }
+
   render() {
     const {inputValue, changeInput, onSelectChange, currencyId} = this.props
     const {currency} = this.props.cashStore
@@ -65,13 +69,19 @@ class InputField extends Component {
     return (
       connectDropTarget &&
       connectDropTarget(
-        <div>
+        <div onMouseLeave={() => this.setState({open: false})}>
           <FieldStyled style={{backgroundColor}}>
             <BadgeIcon>
               <Svg style={SvgCurrency} id={currency[currencyId].name} />
             </BadgeIcon>
             <Input value={inputValue} handleChange={changeInput} />
-            <Select id={currencyId} currency={currency} handleChange={onSelectChange} />
+            <Select
+              isOpen={this.state.open}
+              toggleField={e => this.setState({open: e})}
+              id={currencyId}
+              currency={currency}
+              handleChange={onSelectChange}
+            />
           </FieldStyled>
         </div>,
       )

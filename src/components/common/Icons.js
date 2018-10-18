@@ -2,7 +2,7 @@ import React from 'react'
 import Colors from './Colors'
 
 // Svg component;
-export const Svg = ({id, style = {}}) => {
+export const Icons = ({id, style = {}}) => {
   if (!id) return null
   const entities = {
     chevron: (
@@ -19,4 +19,4 @@ export const Svg = ({id, style = {}}) => {
   return entities[id] || <text>{id}</text>
 }
 
-export default Svg
+export default Icons

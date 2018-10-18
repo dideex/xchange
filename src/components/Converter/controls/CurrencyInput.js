@@ -15,7 +15,6 @@ const CurrencyInput = ({value, handleChange}) => (
 
 CurrencyInput.propTypes = {
   value: PropTypes.number.isRequired,
-  background: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 }
 export default CurrencyInput

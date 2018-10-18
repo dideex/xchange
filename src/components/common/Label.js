@@ -7,7 +7,6 @@ import {SvgCurrency} from './Styles'
 
 const StyledLabel = styled('span')`
   & {
-    flex: 33% 0 0;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -15,7 +14,7 @@ const StyledLabel = styled('span')`
 `
 
 // Label component;
-class Label extends Component {
+export class Label extends Component {
   static propTypes = {
     caption: PropTypes.string.isRequired,
   }

@@ -1,8 +1,8 @@
 import React from 'react'
 import {coinColors} from './Styles'
 
-// Svg component;
-export const Svg = ({id, style = {}}) => {
+// CurrencyIcons component;
+export const CurrencyIcons = ({id, style = {}}) => {
   if (!id) return null
   const currencyLabel = {
     Bitcoin: (
@@ -63,4 +63,4 @@ export const Svg = ({id, style = {}}) => {
   )
 }
 
-export default Svg
+export default CurrencyIcons
