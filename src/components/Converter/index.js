@@ -9,7 +9,13 @@ import CustomerDragLayer from './CustomerDragLayer'
 import Field from './InputField'
 import UserData from './UserData'
 
-const CurrencyBadgeWrap = styled('div')`
+const CurrencyBadgeItem = styled('div')`
+  & {
+    flex: 33% 0 0;
+  }
+`
+
+const CurrencyBadgeItems = styled('div')`
   & {
     display: flex;
     flex-wrap: wrap;
@@ -63,11 +69,13 @@ export default class Index extends Component {
             />
           </div>
           <CustomerDragLayer />
-          <CurrencyBadgeWrap>
+          <CurrencyBadgeItems>
             {currency.map(({name, id}, i) => (
-              <CurrencyBadge key={i} id={id} name={name} />
+              <CurrencyBadgeItem>
+                <CurrencyBadge key={i} id={id} name={name} />
+              </CurrencyBadgeItem>
             ))}
-          </CurrencyBadgeWrap>
+          </CurrencyBadgeItems>
         </DragDropContextProvider>
         <UserData walletIncome={currencyInput} walletOutgo={currencyOutput} />
       </Fragment>

@@ -2,15 +2,20 @@ import React, {Component} from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
+import Svg from '../../common/Icons'
+import {SvgCurrency} from '../../common/Styles'
 import Label from '../../common/Label'
 
 const Wrapper = styled('div')`
-  position: relative;
+  position: absolute;
+  right: 20px;
+  top: 14px;
   background-color: transparent;
 `
 
 const SelectBlock = styled('div')`
   & {
+    z-index: 10;
     position: absolute;
     top: 100%;
     display: flex;
@@ -52,7 +57,12 @@ class CurrencySelect extends Component {
   _getSelectionField = () => (
     <SelectBlock onMouseLeave={() => this.setState({open: false})}>
       {this.props.currency.map(({name, id}, i) => (
-        <Label key={i} icon="o" onClick={this._handleSelect.bind(null, id)} caption={name} />
+        <Label
+          key={i}
+          icon="o"
+          onClick={this._handleSelect.bind(null, id)}
+          caption={name}
+        />
       ))}
     </SelectBlock>
   )
@@ -60,7 +70,8 @@ class CurrencySelect extends Component {
   render() {
     return (
       <Wrapper onClick={() => this.setState({open: true})}>
-        >{this.state.open && this._getSelectionField()}
+        <Svg id="chevron" style={SvgCurrency} />
+        {this.state.open && this._getSelectionField()}
       </Wrapper>
     )
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import {coinColors} from './Styles'
 
 // Svg component;
-export const Svg = ({disabled, id, style = {}}) => {
+export const Svg = ({id, style = {}}) => {
   if (!id) return null
   const currencyLabel = {
     Bitcoin: (

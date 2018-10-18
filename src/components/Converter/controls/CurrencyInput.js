@@ -6,7 +6,7 @@ import Input from '../../common/Input'
 // CurrencyInput stateless component;
 const CurrencyInput = ({value, handleChange}) => (
   <Input
-    style={{padding: '8px 34px', textAlign: 'center'}}
+    style={{padding: '10px 34px', textAlign: 'center'}}
     handleChange={handleChange}
     value={`${value}`}
     placeholder="value"

@@ -5,7 +5,7 @@ import BudgePreview from './controls/BudgeDragPrview'
 const layerStyle = {
   position: 'fixed',
   pointerEvents: 'none',
-  left: 0,
+  left: -5,
   top: -15,
   width: '50px',
   heigth: '50px',

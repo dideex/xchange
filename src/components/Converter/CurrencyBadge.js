@@ -38,7 +38,7 @@ export default class CurrencyBadge extends Component {
     return (
       connectDragSource &&
       connectDragSource(
-        <div style={{flex: '33% 0 0'}}>
+        <div style={{display: 'inline-block'}}>
           <Label icon={id} caption={name} style={{opacity, cursor: 'move'}} />
         </div>,
       )
