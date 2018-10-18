@@ -14,6 +14,8 @@ class Cash {
   currencyOutput
   @observable
   paymentStatus
+  @observable
+  draggedBadgeCurrency
 
   constructor() {
     this.inputValue = 0
@@ -22,6 +24,7 @@ class Cash {
     this.currencyInput = 0
     this.currencyOutput = 1
     this.paymentStatus = 0 // 0 - null, 1 - created, 2 - sended, 3 - closed
+    this.draggedBadgeCurrency = null
   }
 
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
@@ -82,6 +85,8 @@ class Cash {
   createPayment = () => (this.paymentStatus = 1)
   @action('cofirm payment')
   cofirmPayment = () => (this.paymentStatus = 2)
+  @action('drag badge')
+  handleDragBadge = id => (this.draggedBadgeCurrency = id)
 
   // returns true when menu is opened
   @computed

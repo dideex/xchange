@@ -6,11 +6,9 @@ const layerStyle = {
   position: 'fixed',
   pointerEvents: 'none',
   left: 0,
-  top: 0,
+  top: -15,
   width: '50px',
   heigth: '50px',
-  bottom: 0,
-  right: 0,
   zIndex: 1000,
 }
 
@@ -19,10 +17,10 @@ const PreviewMap = {
 }
 
 const collect = monitor => ({
-  isDragging: monitor.isDragging(),
-  offset: monitor.getSourceClientOffset(),
   item: monitor.getItem(),
   itemType: monitor.getItemType(),
+  isDragging: monitor.isDragging(),
+  offset: monitor.getSourceClientOffset(),
 })
 
 // CustomDragLayer component;
@@ -30,26 +28,46 @@ const collect = monitor => ({
 export default class CustomDragLayer extends Component {
   static propTypes = {}
 
-  getItem() {
-    const {offset, item, itemType} = this.props
-    const Preview = PreviewMap[itemType]
-    if (!this.props.offset || !Preview) return null
-    const {x, y} = offset
-    const style = {
-      transform: `translate(${x}px, ${y}px)`,
-    }
+  constructor(props) {
+    super(props)
+    this.lastUpdate = +new Date()
+    this.updateTimer = null
+  }
 
-    return (
-      <div style={style}>
-        <Preview {...item} />
-      </div>
-    )
+  shouldComponentUpdate(nextProps, nextState) {
+    if (+new Date() - this.lastUpdate > 16) {
+      this.lastUpdate = +new Date()
+      clearTimeout(this.updateTimer)
+      return true
+    } else {
+      this.updateTimer = setTimeout(() => {
+        this.forceUpdate()
+      }, 100)
+    }
+    return false
+  }
+
+  getItemStyle(props) {
+    const {offset} = props
+    if (!offset) return null
+    let {x, y} = offset
+    const transform = `translate(${x}px, ${y}px)`
+    return {
+      ...layerStyle,
+      transform,
+      WebkitTransform: transform,
+    }
+  }
+
+  getItem() {
+    const {itemType} = this.props
+    const Preview = PreviewMap[itemType]
+    return <Preview {...this.props.item} />
   }
 
   render() {
     const {isDragging} = this.props
-
     if (!isDragging) return null
-    return <div style={layerStyle}>{this.getItem()}</div>
+    return <div style={this.getItemStyle(this.props)}>{this.getItem()}</div>
   }
 }
