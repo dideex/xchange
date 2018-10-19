@@ -1,13 +1,15 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
+
 import Converter from '../components/Converter'
+import Main from '../components/Main'
 
 // Home component;
 export class Home extends Component {
   render() {
     return (
-      <Fragment>
+      <Main>
         <Converter />
-      </Fragment>
+      </Main>
     )
   }
 }
