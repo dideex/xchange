@@ -25,6 +25,7 @@ const SelectBlock = styled('div')`
     padding: 8px 15px;
     background: #fff;
     background-clip: padding-box;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     transition: border-color 0.3s ease-in-out;
   }
   &:hover {

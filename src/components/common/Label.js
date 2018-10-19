@@ -13,7 +13,7 @@ const StyledLabel = styled('span')`
     padding: 10px 0;
     span {
       font-family: 'Roboto Slab';
-      padding-left: 10px;
+      padding-left: 15px;
       font-size: 20px;
     }
   }
