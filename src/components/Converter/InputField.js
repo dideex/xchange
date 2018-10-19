@@ -10,6 +10,8 @@ import Input from './controls/CurrencyInput'
 import Select from './controls/CurrencySelect'
 import {SvgCurrency} from '../common/Styles'
 
+import './css/inputStyles.css';
+
 const FieldStyled = styled('div')`
   & {
     position: relative;
@@ -21,7 +23,7 @@ const FieldStyled = styled('div')`
 const BadgeIcon = styled('span')`
   & {
     position: absolute;
-    top: 14px;
+    top: 18px;
     left: 20px;
   }
 `

@@ -1,8 +1,8 @@
 export const Styles = {}
 
 export const SvgCurrency = {
-  width: '25px',
-  height: '25px',
+  width: '32px',
+  height: '32px',
 }
 
 export const coinColors = {

@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
-
 import CurrencyBadge from './CurrencyBadge'
 
 const CurrencyBadgeItem = styled('div')`
@@ -9,6 +8,7 @@ const CurrencyBadgeItem = styled('div')`
     flex: 33% 0 0;
   }
 `
+// FIXME: Cannot have two HTML5 backends at the same time.
 
 const CurrencyBadgeItems = styled('div')`
   & {

@@ -10,6 +10,12 @@ const StyledLabel = styled('span')`
     display: flex;
     align-items: center;
     cursor: pointer;
+    padding: 10px 0;
+    span {
+      font-family: 'Roboto Slab';
+      padding-left: 10px;
+      font-size: 20px;
+    }
   }
 `
 

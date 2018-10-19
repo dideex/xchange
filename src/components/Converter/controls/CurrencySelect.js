@@ -8,7 +8,7 @@ const Wrapper = styled('div')`
   cursor: pointer;
   position: absolute;
   right: 20px;
-  top: 14px;
+  top: 18px;
   background-color: transparent;
 `
 
@@ -17,8 +17,7 @@ const SelectBlock = styled('div')`
     z-index: 10;
     position: absolute;
     top: calc(100% + 10px);
-    left: -200px;
-    right: -15px;
+    min-width: 450px;
     display: flex;
     flex-wrap: wrap;
     border: rgba(255, 255, 255, 0.4) 5px solid;
@@ -66,7 +65,7 @@ class CurrencySelect extends Component {
 
   render() {
     return (
-      <Wrapper onMouseEnter={() => this.props.toggleField(true)}>
+      <Wrapper className="dropdown" onMouseEnter={() => this.props.toggleField(true)}>
         <Icons id="chevron" style={SvgCurrency} />
         {this.props.isOpen && this._getSelectionField()}
       </Wrapper>
