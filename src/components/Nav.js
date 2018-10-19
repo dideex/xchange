@@ -1,20 +1,40 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import styled from 'react-emotion'
+
+import {Icons} from './common'
+
+const MenuWrap = styled('nav')`
+  & {
+    display: flex;
+    align-items: center;
+    a {
+      padding: 0 35px;
+      font-size: 18px;
+    }
+    a:first-child {
+      padding-left: 0;
+    }
+    a:last-child {
+      padding-right: 0;
+    }
+  }
+`
 
 // Nav component;
 class Nav extends Component {
   render() {
     return (
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/spasibo">Спасибо</Link>
+      <MenuWrap>
+        <Link to="/">Главная</Link>
         <Link to="/reservi">Резервы</Link>
         <Link to="/o-nas">О нас</Link>
         <Link to="/faq">FAQ</Link>
-        <Link to="/lichnii-kabinet">Личный кабинет</Link>
-        <Link to="/signup">Регистрация</Link>
-        <Link to="/Not-found">404</Link>
-      </nav>
+        <Link to="/">Rus</Link>
+        <Link to="/lichnii-kabinet">
+          <Icons style={{width: '33px'}} id="user" />
+        </Link>
+      </MenuWrap>
     )
   }
 }

@@ -1,7 +1,8 @@
 export const Colors = {
-  accent: '#AEE239',
-  darkAccent: '#8FBE00',
-  subAccent: '#40C0CB',
-  subDarkAccent: '#00A8C6',
+  accent: '#aee239',
+  darkAccent: '#8fbe00',
+  subAccent: '#40c0cb',
+  subDarkAccent: '#00a8c6',
+  black: '#191716',
 }
 export default Colors

@@ -5,6 +5,8 @@ import * as serviceWorker from './serviceWorker'
 import {Provider as MobxProvider} from 'mobx-react'
 import {BrowserRouter} from 'react-router-dom'
 
+import './fonts.css'
+import './reset.css'
 import {cash, user} from './store'
 
 if (module.hot) {

@@ -14,4 +14,9 @@ export const coinColors = {
   },
 }
 
+export const container = `
+  max-width: 1180px;
+  margin: 0 auto;
+`
+
 export default Styles

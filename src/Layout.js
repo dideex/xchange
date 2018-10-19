@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {Switch, Route} from 'react-router-dom'
 
+import Header from './components/Header'
 import {
   FAQ,
   Home,
@@ -12,14 +13,13 @@ import {
   PaymentProof,
   PageNotFound,
 } from './routes'
-import Navigation from './components/Nav'
 
 // Layout component;
 class Layout extends Component {
   render() {
     return (
       <Fragment>
-        <Navigation />
+        <Header />
         <Switch>
           <Route exact path="/podtverjdenie-oplati" component={PaymentProof} />
           <Route exact path="/spasibo" component={ThankYou} />

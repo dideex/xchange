@@ -34,7 +34,7 @@ const CurrencyBadgeItems = styled('div')`
 // CurrencyDNDArea component;
 class CurrencyDNDArea extends Component {
   static propTypes = {
-    currency: PropTypes.object.isRequired,
+    currency: PropTypes.array.isRequired,
   }
 
   state = {
@@ -56,8 +56,8 @@ class CurrencyDNDArea extends Component {
           onChange={({target}) => this.setState({search: target.value})}
         />
         {currency.filter(this._handleFilter).map(({name, id}, i) => (
-          <CurrencyBadgeItem>
-            <CurrencyBadge key={i} id={id} name={name} />
+          <CurrencyBadgeItem key={i}>
+            <CurrencyBadge id={id} name={name} />
           </CurrencyBadgeItem>
         ))}
       </CurrencyBadgeItems>

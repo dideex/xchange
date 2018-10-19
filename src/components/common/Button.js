@@ -21,7 +21,7 @@ const StyledButton = styled('button')`
   }
 `
 // Button component;
-class Button extends Component {
+export class Button extends Component {
   static propTypes = {
     toggle: PropTypes.func.isRequired,
     caption: PropTypes.string.isRequired,
