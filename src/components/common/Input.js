@@ -49,10 +49,18 @@ export class Input extends Component {
   constructor(props) {
     super(props)
     this.pattern = new RegExp(props.pattern ? props.pattern : '\\s|\\S', 'i')
+    this.handleErrorChange = this.props.handleErrorChange || (() => {})
   }
 
   state = {
-    error: false,
+    touched: false,
+  }
+
+  componentWillReceiveProps({validate}) {
+    if (validate && !this.state.touched) {
+      this.setState({touched: true})
+      this._handleChange({target: {value: this.props.value}})
+    }
   }
 
   _format = raw => {
@@ -84,8 +92,8 @@ export class Input extends Component {
     let raw = this._clean(value)
     let formatted = this._format(raw)
     if (this.pattern.test(raw) || raw === '') {
-      if (formatted.length !== this.props.mask.length) this.setState({error: true})
-      else this.setState({error: false})
+      if (formatted.length !== this.props.mask.length) this.handleErrorChange(true)
+      else this.handleErrorChange(false)
       return formatted
     }
     return null
@@ -94,25 +102,26 @@ export class Input extends Component {
   _handleChange = ({target}) => {
     let {value} = target
     if (this.props.mask) value = this._validateWithMask(value)
-    else if (this.pattern.test(value)) this.setState({error: false})
-    else this.setState({error: true})
+    else if (this.pattern.test(value)) this.handleErrorChange(false)
+    else this.handleErrorChange(true)
     if (value !== null) this.props.handleChange(value)
   }
 
   render() {
-    const {value, errorMsg, placeholder, style = {}} = this.props
+    const {value, isInvalid = false, errorMsg, placeholder, style = {}} = this.props
     return (
       <InputWrap>
         <StyledInput
-          borderColor={this.state.error ? Colors.error : 'rgba(255,255,255,.4)'}
-          borderColorHover={this.state.error ? Colors.errorHover : 'rgba(255,255,255,.7)'}
-          borderColorActive={this.state.error ? Colors.errorHover : '#fff'}
+          ref={input => (this.input = input)}
+          borderColor={isInvalid ? Colors.error : 'rgba(255,255,255,.4)'}
+          borderColorHover={isInvalid ? Colors.errorHover : 'rgba(255,255,255,.7)'}
+          borderColorActive={isInvalid ? Colors.errorHover : '#fff'}
           style={style}
           value={value}
           onChange={this._handleChange}
           placeholder={placeholder}
         />
-        {this.state.error && <ErrorField>{errorMsg}</ErrorField>}
+        {isInvalid && <ErrorField>{errorMsg}</ErrorField>}
       </InputWrap>
     )
   }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import styled from 'react-emotion'
-import {Route} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import {Input, Button} from '../common'
@@ -30,6 +30,7 @@ const ButtonWrap = styled('div')`
 `
 
 // UserData component;
+@withRouter
 @inject('userStore')
 @observer
 class UserData extends Component {
@@ -38,6 +39,36 @@ class UserData extends Component {
     // mobx
     walletIncome: PropTypes.number.isRequired,
     walletOutgo: PropTypes.number.isRequired,
+  }
+
+  state = {
+    username: null,
+    email: null,
+    income: null,
+    outgo: null,
+    validate: false,
+    loading: false,
+  }
+
+  componentDidUpdate(_, {loading}) {
+    if (loading && !this.state.loading) this._validate()
+  }
+
+  _handleSubmit = () => {
+    const {username, email, income, outgo} = this.state
+    if (~[username, email, income, outgo].indexOf(null))
+      this.setState({validate: true, loading: true}, () =>
+        this._validate(this.props.history),
+      )
+    else this._validate(this.props.history)
+  }
+
+  _validate = () => {
+    const {username, email, income, outgo} = this.state
+    if (this.state.loading) return null
+    if (!username && !email && !income && !outgo)
+      this.props.history.push('/podtverjdenie-oplati')
+    else console.log('invalid')
   }
 
   render() {
@@ -57,6 +88,9 @@ class UserData extends Component {
           placeholder="username"
           pattern="[a-zа-яё]{2,}"
           errorMsg="Введите ваше ФИО"
+          isInvalid={this.state.username}
+          handleErrorChange={username => this.setState({username, loading: false})}
+          validate={this.state.validate}
         />
         <Input
           value={email}
@@ -64,6 +98,9 @@ class UserData extends Component {
           placeholder="email"
           pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
           errorMsg="Введите ваш Email"
+          isInvalid={this.state.email}
+          handleErrorChange={email => this.setState({email, loading: false})}
+          validate={this.state.validate}
         />
         <Input
           value={wallets[this.props.walletIncome]}
@@ -72,6 +109,9 @@ class UserData extends Component {
           pattern="^\d+$"
           placeholder="income"
           errorMsg="Введите ваш Income"
+          isInvalid={this.state.income}
+          handleErrorChange={income => this.setState({income, loading: false})}
+          validate={this.state.validate}
         />
         <Input
           value={wallets[this.props.walletOutgo]}
@@ -80,15 +120,15 @@ class UserData extends Component {
           pattern="^\d+$"
           placeholder="outgo"
           errorMsg="Введите ваш Outgo"
+          isInvalid={this.state.outgo}
+          handleErrorChange={outgo => this.setState({outgo, loading: false})}
+          validate={this.state.validate}
         />
         <ButtonWrap>
-          <Route
-            render={({history}) => (
-              <Button
-                caption="Send"
-                toggle={() => history.push('/podtverjdenie-oplati')}
-              />
-            )}
+          <Button
+            caption="Send"
+            toggle={this._handleSubmit}
+            loading={this.state.loading}
           />
         </ButtonWrap>
       </StyledUserData>
