@@ -1,10 +1,33 @@
 import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
+import styled from 'react-emotion'
 import {Route} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import Input from '../common/Input'
-import Button from '../common/Button'
+import {Input, Button} from '../common'
+
+const StyledUserData = styled('div')`
+  & {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    input {
+      max-width: 37%;
+      flex: 37% 0 0;
+      margin-bottom: 50px;
+    }
+  }
+`
+
+const ButtonWrap = styled('div')`
+  & {
+    flex: 100% 0 0;
+    text-align: center;
+    button {
+      width: 37%;
+    }
+  }
+`
 
 // UserData component;
 @inject('userStore')
@@ -27,7 +50,7 @@ class UserData extends Component {
       changeWallet,
     } = this.props.userStore
     return (
-      <div>
+      <StyledUserData>
         <Input value={username} handleChange={changeUsername} placeholder="username" />
         <Input value={email} handleChange={changeEmail} placeholder="email" />
         <Input
@@ -40,12 +63,17 @@ class UserData extends Component {
           handleChange={val => changeWallet(this.props.walletOutgo)(val)}
           placeholder="income"
         />
-        <Route
-          render={({history}) => (
-            <Button caption="Send" toggle={() => history.push('/podtverjdenie-oplati')} />
-          )}
-        />
-      </div>
+        <ButtonWrap>
+          <Route
+            render={({history}) => (
+              <Button
+                caption="Send"
+                toggle={() => history.push('/podtverjdenie-oplati')}
+              />
+            )}
+          />
+        </ButtonWrap>
+      </StyledUserData>
     )
   }
 }

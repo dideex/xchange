@@ -25,7 +25,7 @@ const CurrencyFieldsWrap = styled('div')`
 `
 const CurrencyFieldWrap = styled('div')`
   & {
-    flex: 33% 0 0;
+    flex: 37% 0 0;
   }
 `
 const TipBlock = styled('div')`

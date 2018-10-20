@@ -12,19 +12,16 @@ const CurrencyBadgeItem = styled('div')`
 `
 // FIXME: Cannot have two HTML5 backends at the same time.
 
-const CurrencyBadgeItems = styled('div')`
+const CurrencyContainer = styled('div')`
   & {
-    display: flex;
     position: relative;
-    flex-wrap: wrap;
     border: rgba(255, 255, 255, 0.4) 5px solid;
     border-radius: 5px;
-    padding: 50px 15px 8px;
+    padding: 50px 50px 20px;
     margin-bottom: 50px;
     background: #fff;
     background-clip: padding-box;
     transition: border-color 0.3s ease-in-out;
-    min-height: ${({height}) => height}px;
   }
   &:hover {
     border-color: rgba(255, 255, 255, 0.7);
@@ -33,6 +30,24 @@ const CurrencyBadgeItems = styled('div')`
   &:active {
     outline: none;
     border-color: #fff;
+  }
+`
+
+const CurrencyBadgeOverflowWrapper = styled('div')`
+  & {
+    height: 220px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+`
+
+const CurrencyBadgeItems = styled('div')`
+  & {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
   }
 `
 
@@ -85,7 +100,7 @@ class CurrencyDNDArea extends Component {
   render() {
     const {currency} = this.props
     return (
-      <CurrencyBadgeItems height={68 + 55 * (Math.round(currency.length % 3) + 1)}>
+      <CurrencyContainer>
         <SearchWrap>
           <Icons id="search" />
           <StyledInput
@@ -95,12 +110,16 @@ class CurrencyDNDArea extends Component {
             placeholder="Найти"
           />
         </SearchWrap>
-        {currency.filter(this._handleFilter).map(({name, id}, i) => (
-          <CurrencyBadgeItem key={i}>
-            <CurrencyBadge id={id} name={name} />
-          </CurrencyBadgeItem>
-        ))}
-      </CurrencyBadgeItems>
+        <CurrencyBadgeOverflowWrapper>
+          <CurrencyBadgeItems>
+            {currency.filter(this._handleFilter).map(({name, id}, i) => (
+              <CurrencyBadgeItem key={i}>
+                <CurrencyBadge id={id} name={name} />
+              </CurrencyBadgeItem>
+            ))}
+          </CurrencyBadgeItems>
+        </CurrencyBadgeOverflowWrapper>
+      </CurrencyContainer>
     )
   }
 }

@@ -22,7 +22,7 @@ const StyledInput = styled('input')`
 `
 
 // Input component;
-class Input extends Component {
+export class Input extends Component {
   static propTypes = {
     handleChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
