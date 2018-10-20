@@ -29,7 +29,7 @@ export class Label extends Component {
     const {caption, style, onClick} = this.props
     return (
       <StyledLabel style={{...style}} onClick={onClick}>
-        <Svg style={SvgCurrency} id={caption} />
+        <Svg style={{...SvgCurrency, zIndex: 1}} id={caption} />
         <span>{caption}</span>
       </StyledLabel>
     )

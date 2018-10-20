@@ -11,7 +11,7 @@ const StyledUserData = styled('div')`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    input {
+    label {
       max-width: 37%;
       flex: 37% 0 0;
       margin-bottom: 50px;
@@ -51,17 +51,35 @@ class UserData extends Component {
     } = this.props.userStore
     return (
       <StyledUserData>
-        <Input value={username} handleChange={changeUsername} placeholder="username" />
-        <Input value={email} handleChange={changeEmail} placeholder="email" />
+        <Input
+          value={username}
+          handleChange={changeUsername}
+          placeholder="username"
+          pattern="[a-zа-яё]{2,}"
+          errorMsg="Введите ваше ФИО"
+        />
+        <Input
+          value={email}
+          handleChange={changeEmail}
+          placeholder="email"
+          pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
+          errorMsg="Введите ваш Email"
+        />
         <Input
           value={wallets[this.props.walletIncome]}
           handleChange={val => changeWallet(this.props.walletIncome)(val)}
+          mask="____ ____ ____ ____"
+          pattern="^\d+$"
           placeholder="income"
+          errorMsg="Введите ваш Income"
         />
         <Input
           value={wallets[this.props.walletOutgo]}
           handleChange={val => changeWallet(this.props.walletOutgo)(val)}
-          placeholder="income"
+          mask="____ ____ ____ ____"
+          pattern="^\d+$"
+          placeholder="outgo"
+          errorMsg="Введите ваш Outgo"
         />
         <ButtonWrap>
           <Route

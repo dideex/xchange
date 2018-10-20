@@ -25,6 +25,7 @@ const BadgeIcon = styled('span')`
     position: absolute;
     top: 18px;
     left: 20px;
+    z-index: 1;
   }
 `
 

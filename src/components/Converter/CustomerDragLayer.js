@@ -23,6 +23,7 @@ const collect = monitor => ({
   offset: monitor.getSourceClientOffset(),
 })
 
+//FIXME: remove layout after drop
 // CustomDragLayer component;
 @DragLayer(collect)
 export default class CustomDragLayer extends Component {

@@ -23,6 +23,7 @@ const ContentWrap = styled('div')`
     ${container};
     position: relative;
     padding: 100px 60px 220px;
+    margin-top: auto;
     h1 {
       font-family: 'Roboto Slab';
       font-size: 64px;

@@ -10,6 +10,7 @@ const StyledButton = styled('button')`
     background: #fff;
     background-clip: padding-box;
     transition: border-color 0.3s ease-in-out;
+    cursor: pointer;
   }
   &:hover {
     border-color: rgba(255, 255, 255, 0.7);

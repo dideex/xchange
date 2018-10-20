@@ -56,7 +56,7 @@ const StyledInput = styled('input')`
     flex-grow: 1;
     padding: 3px 15px;
     border: none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 2px solid #ccc;
     transition: border-bottom-color 0.3s ease-in-out;
   }
   &:active,

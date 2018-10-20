@@ -28,7 +28,6 @@ export default class CurrencyBadge extends Component {
   }
 
   componentDidMount() {
-    // this.props.connectPreview(<span>⚛</span>)
     this.props.connectPreview && this.props.connectPreview(getEmptyImage())
   }
 
@@ -42,7 +41,7 @@ export default class CurrencyBadge extends Component {
           <Label
             icon={id}
             caption={name}
-            style={{opacity, cursor: 'move', flex: '33% 0 0'}}
+            style={{opacity, cursor: 'move', flex: '33% 0 0', zIndex: 1}}
           />
         </div>,
       )

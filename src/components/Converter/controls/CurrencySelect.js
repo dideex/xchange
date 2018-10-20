@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import {Icons, Label, SvgCurrency} from '../../common'
 
 const Wrapper = styled('div')`
-  cursor: pointer;
   position: absolute;
   right: 20px;
   top: 18px;
@@ -17,7 +16,7 @@ const SelectBlock = styled('div')`
     z-index: 10;
     position: absolute;
     top: calc(100% + 10px);
-    min-width: 450px;
+    min-width: 750px;
     display: flex;
     flex-wrap: wrap;
     border: rgba(255, 255, 255, 0.4) 5px solid;
@@ -25,7 +24,7 @@ const SelectBlock = styled('div')`
     padding: 8px 15px;
     background: #fff;
     background-clip: padding-box;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 5px 10px -4px rgba(0, 0, 0, 0.5);
     transition: border-color 0.3s ease-in-out;
   }
   &:hover {
@@ -58,7 +57,7 @@ class CurrencySelect extends Component {
           key={i}
           onClick={this._handleSelect.bind(null, id)}
           caption={name}
-          style={{flex: '50% 0 0'}}
+          style={{flex: '33% 0 0'}}
         />
       ))}
     </SelectBlock>
