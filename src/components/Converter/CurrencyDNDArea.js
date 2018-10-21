@@ -3,7 +3,7 @@ import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 import CurrencyBadge from './CurrencyBadge'
 
-import {Icons} from '../common'
+import {Icons, Colors} from '../common'
 
 const CurrencyBadgeItem = styled('div')`
   & {
@@ -39,6 +39,21 @@ const CurrencyBadgeOverflowWrapper = styled('div')`
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: scroll;
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-button {
+    height: 0;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: ${Colors.accent};
   }
 `
 
