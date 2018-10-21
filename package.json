@@ -33,10 +33,10 @@
   "scripts": {
     "build-css": "node-sass-chokidar src/sass/ -o src/css",
     "watch-css": "npm run build-css && node-sass-chokidar src/sass/ -o src/css --watch --recursive",
-    "start-js": "react-app-rewired start dotenv_config_path=.env",
-    "build-js": "react-app-rewired build dotenv_config_path=.env.production",
-    "start": "npm-run-all -p watch-css start-js",
-    "build": "npm-run-all build-css build-js",
+    "start": "react-app-rewired start dotenv_config_path=.env",
+    "build": "react-app-rewired build dotenv_config_path=.env.production",
+    "start-js": "npm-run-all -p watch-css start-js",
+    "build-js": "npm-run-all build-css build-js",
     "test": "react-app-rewired test --env=jsdom --watch",
     "test:coverage": "react-app-rewired test --env=jsdom --coverage",
     "eject": "react-app-rewired eject"

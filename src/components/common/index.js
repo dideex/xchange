@@ -1,5 +1,5 @@
 export {Colors} from './Colors'
-export {SvgCurrency, coinColors, container} from './Styles'
+export {SvgCurrency, coinColors, container, robotoSlab, H2} from './Styles'
 export {Button} from './Button'
 export {Label} from './Label'
 export {Icons} from './Icons'

@@ -24,6 +24,7 @@ const MainBG = styled('div')`
 const AfterMainWrap = styled('div')`
   & {
     position: relative;
+    min-height: 400px;
   }
   & svg {
     position: absolute;
@@ -75,16 +76,8 @@ class Main extends Component {
             id="Bitcoin"
             style={{width: 84}}
           />
-          <Icons
-            className="main__bottom-dollar"
-            id="dollar"
-            style={{width: 204}}
-          />
-          <Icons
-            className="main__bottom-card"
-            id="creditCard"
-            style={{width: 186}}
-          />
+          <Icons className="main__bottom-dollar" id="dollar" style={{width: 204}} />
+          <Icons className="main__bottom-card" id="creditCard" style={{width: 186}} />
         </AfterMainWrap>
       </Fragment>
     )
