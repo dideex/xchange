@@ -23,7 +23,6 @@ const collect = monitor => ({
   offset: monitor.getSourceClientOffset(),
 })
 
-//FIXME: remove layout after drop
 // CustomDragLayer component;
 @DragLayer(collect)
 export default class CustomDragLayer extends Component {
@@ -47,13 +46,13 @@ export default class CustomDragLayer extends Component {
   }
 
   getItemStyle(props) {
+    if (!props.offset) return {display: 'none'}
     const {
       offset,
       item: {
         cursorPosition: {dragX, dragY},
       },
     } = props
-    if (!offset) return null
     let {x, y} = offset
     const transform = `translate(${x + dragX}px, ${y + dragY}px)`
     return {
