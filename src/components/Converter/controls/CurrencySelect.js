@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
+import {CSSTransition} from 'react-transition-group'
 import PropTypes from 'prop-types'
 
 import {Icons, Label, SvgCurrency} from '../../common'
@@ -25,7 +26,7 @@ const SelectBlock = styled('div')`
     background: #fff;
     background-clip: padding-box;
     box-shadow: 0px 5px 10px -4px rgba(0, 0, 0, 0.5);
-    transition: border-color 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
   &:hover {
     border-color: rgba(255, 255, 255, 0.7);
@@ -34,6 +35,22 @@ const SelectBlock = styled('div')`
   &:active {
     outline: none;
     border-color: #fff;
+  }
+  &.content--enter {
+    opacity: 0.01;
+    transform: scale(0.9) translateY(10px);
+  }
+  &.content--enter-active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  &.content--exit {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  &.content--exit-active {
+    opacity: 0.01;
+    transform: scale(0.9) translateY(10px);
   }
 `
 
@@ -51,7 +68,7 @@ class CurrencySelect extends Component {
   }
 
   _getSelectionField = () => (
-    <SelectBlock>
+    <SelectBlock className={this.props.isOpen ? 'dropdown__content' : ''}>
       {this.props.currency.map(({name, id}, i) => (
         <Label
           key={i}
@@ -67,7 +84,15 @@ class CurrencySelect extends Component {
     return (
       <Wrapper className="dropdown" onMouseEnter={() => this.props.toggleField(true)}>
         <Icons id="chevron" style={SvgCurrency} />
-        {this.props.isOpen && this._getSelectionField()}
+        <CSSTransition
+          in={this.props.isOpen}
+          timeout={300}
+          classNames="content-"
+          unmountOnExit
+          onExit={() => console.log('exit')}
+        >
+          {this._getSelectionField()}
+        </CSSTransition>
       </Wrapper>
     )
   }
