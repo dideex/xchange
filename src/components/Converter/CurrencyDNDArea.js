@@ -105,6 +105,8 @@ class CurrencyDNDArea extends Component {
 
   state = {
     search: '',
+    dragX: 0,
+    dragY: 0,
   }
 
   _handleFilter = ({name, label}) => {
@@ -112,8 +114,14 @@ class CurrencyDNDArea extends Component {
     return regex.test(name) || regex.test(label)
   }
 
+  _handleMouseDown = e => {
+    const {x, y} = e.currentTarget.getBoundingClientRect()
+    this.setState({dragX: e.clientX - x, dragY: e.clientY - y})
+  }
+
   render() {
     const {currency} = this.props
+    const {dragX, dragY} = this.state
     return (
       <CurrencyContainer>
         <SearchWrap>
@@ -128,8 +136,8 @@ class CurrencyDNDArea extends Component {
         <CurrencyBadgeOverflowWrapper>
           <CurrencyBadgeItems>
             {currency.filter(this._handleFilter).map(({name, id}, i) => (
-              <CurrencyBadgeItem key={i}>
-                <CurrencyBadge id={id} name={name} />
+              <CurrencyBadgeItem onMouseDown={this._handleMouseDown} key={i}>
+                <CurrencyBadge id={id} name={name} cursorPosition={{dragX, dragY}} />
               </CurrencyBadgeItem>
             ))}
           </CurrencyBadgeItems>

@@ -5,8 +5,8 @@ import BudgePreview from './controls/BudgeDragPrview'
 const layerStyle = {
   position: 'fixed',
   pointerEvents: 'none',
-  left: -5,
-  top: -15,
+  left: -28,
+  top: -28,
   width: '50px',
   heigth: '50px',
   zIndex: 1000,
@@ -27,8 +27,6 @@ const collect = monitor => ({
 // CustomDragLayer component;
 @DragLayer(collect)
 export default class CustomDragLayer extends Component {
-  static propTypes = {}
-
   constructor(props) {
     super(props)
     this.lastUpdate = +new Date()
@@ -36,7 +34,7 @@ export default class CustomDragLayer extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (+new Date() - this.lastUpdate > 16) {
+    if (+new Date() - this.lastUpdate > 32) {
       this.lastUpdate = +new Date()
       clearTimeout(this.updateTimer)
       return true
@@ -49,10 +47,15 @@ export default class CustomDragLayer extends Component {
   }
 
   getItemStyle(props) {
-    const {offset} = props
+    const {
+      offset,
+      item: {
+        cursorPosition: {dragX, dragY},
+      },
+    } = props
     if (!offset) return null
     let {x, y} = offset
-    const transform = `translate(${x}px, ${y}px)`
+    const transform = `translate(${x + dragX}px, ${y + dragY}px)`
     return {
       ...layerStyle,
       transform,

@@ -13,7 +13,7 @@ const collect = (connect, monitor) => ({
 })
 
 const spec = {
-  beginDrag: ({id, name}) => ({id, name}),
+  beginDrag: ({id, name, cursorPosition}) => ({id, name, cursorPosition}),
   endDrag(props, monitor) {
     console.log('end drag ', props, monitor)
   },
