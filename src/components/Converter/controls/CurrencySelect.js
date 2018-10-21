@@ -89,7 +89,6 @@ class CurrencySelect extends Component {
           timeout={300}
           classNames="content-"
           unmountOnExit
-          onExit={() => console.log('exit')}
         >
           {this._getSelectionField()}
         </CSSTransition>

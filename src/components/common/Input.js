@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
+import {CSSTransition} from 'react-transition-group'
 import PropTypes from 'prop-types'
 
 import Colors from './Colors'
@@ -7,6 +8,8 @@ import Colors from './Colors'
 const StyledInput = styled('input')`
   & {
     width: 100%;
+    position: relative;
+    z-index: 0;
     border: ${({borderColor}) => borderColor} 5px solid;
     border-radius: 5px;
     padding: 8px 15px;
@@ -30,12 +33,32 @@ const InputWrap = styled('label')`
 `
 
 const ErrorField = styled('span')`
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 10px;
-  line-height: 1;
-  font-size: 14px;
-  color: #fff;
+  & {
+    position: absolute;
+    z-index: 2;
+    top: calc(100% + 10px);
+    left: 10px;
+    line-height: 1;
+    font-size: 14px;
+    color: #fff;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+  &.error--enter {
+    opacity: 0.01;
+    transform: translateY(-20px);
+  }
+  &.error--enter-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  &.error--exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  &.error--exit-active {
+    opacity: 0.01;
+    transform: translateY(-20px);
+  }
 `
 
 // Input component;
@@ -121,7 +144,9 @@ export class Input extends Component {
           onChange={this._handleChange}
           placeholder={placeholder}
         />
-        {isInvalid && <ErrorField>{errorMsg}</ErrorField>}
+        <CSSTransition in={isInvalid} timeout={300} classNames="error-" unmountOnExit>
+          <ErrorField>{errorMsg}</ErrorField>
+        </CSSTransition>
       </InputWrap>
     )
   }
