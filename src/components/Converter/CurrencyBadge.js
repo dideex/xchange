@@ -4,7 +4,7 @@ import {DragSource} from 'react-dnd'
 import {getEmptyImage} from 'react-dnd-html5-backend'
 import PropTypes from 'prop-types'
 
-import Label from '../common/Label'
+import {Label, Colors} from '../common'
 
 const collect = (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
@@ -33,7 +33,8 @@ export default class CurrencyBadge extends Component {
 
   render() {
     const {isDragging, connectDragSource, name, id} = this.props
-    const opacity = isDragging ? 0.4 : 1
+    const background = isDragging ? Colors.accent : 'transparent'
+    const color = isDragging ? '#fff' : Colors.black
     return (
       connectDragSource &&
       connectDragSource(
@@ -41,7 +42,14 @@ export default class CurrencyBadge extends Component {
           <Label
             icon={id}
             caption={name}
-            style={{opacity, cursor: 'move', flex: '33% 0 0', zIndex: 1}}
+            style={{
+              background,
+              color,
+              cursor: 'move',
+              flex: '33% 0 0',
+              zIndex: 1,
+              borderRadius: 10,
+            }}
           />
         </div>,
       )

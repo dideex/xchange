@@ -10,7 +10,8 @@ const StyledLabel = styled('span')`
     display: flex;
     align-items: center;
     cursor: pointer;
-    padding: 10px 0;
+    padding: 10px 5px;
+    transition: all 0.2s ease-in-out;
     span {
       font-family: 'Roboto Slab';
       padding-left: 15px;
