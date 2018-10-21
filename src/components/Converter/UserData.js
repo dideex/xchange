@@ -42,7 +42,7 @@ class UserData extends Component {
   }
 
   state = {
-    username: null,
+    username: null, //null - is not chekced, false - no error, true - have some errors
     email: null,
     income: null,
     outgo: null,
@@ -50,14 +50,14 @@ class UserData extends Component {
     loading: false,
   }
 
-  componentDidUpdate(_, {loading}) {
-    if (loading && !this.state.loading) this._validate()
+  componentDidUpdate(_, {validate}) {
+    if (validate && !this.state.validate) this._validate()
   }
 
   _handleSubmit = () => {
     const {username, email, income, outgo} = this.state
     if (~[username, email, income, outgo].indexOf(null))
-      this.setState({validate: true, loading: true}, () =>
+      this.setState({validate: true}, () =>
         this._validate(this.props.history),
       )
     else this._validate(this.props.history)
@@ -65,7 +65,7 @@ class UserData extends Component {
 
   _validate = () => {
     const {username, email, income, outgo} = this.state
-    if (this.state.loading) return null
+    if (this.state.validate) return null
     if (!username && !email && !income && !outgo)
       this.props.history.push('/podtverjdenie-oplati')
     else console.log('invalid')
@@ -89,7 +89,7 @@ class UserData extends Component {
           pattern="[a-zа-яё]{2,}"
           errorMsg="Введите ваше ФИО"
           isInvalid={this.state.username}
-          handleErrorChange={username => this.setState({username, loading: false})}
+          handleErrorChange={username => this.setState({username, validate: false})}
           validate={this.state.validate}
         />
         <Input
@@ -99,7 +99,7 @@ class UserData extends Component {
           pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
           errorMsg="Введите ваш Email"
           isInvalid={this.state.email}
-          handleErrorChange={email => this.setState({email, loading: false})}
+          handleErrorChange={email => this.setState({email, validate: false})}
           validate={this.state.validate}
         />
         <Input
@@ -110,7 +110,7 @@ class UserData extends Component {
           placeholder="income"
           errorMsg="Введите ваш Income"
           isInvalid={this.state.income}
-          handleErrorChange={income => this.setState({income, loading: false})}
+          handleErrorChange={income => this.setState({income, validate: false})}
           validate={this.state.validate}
         />
         <Input
@@ -121,7 +121,7 @@ class UserData extends Component {
           placeholder="outgo"
           errorMsg="Введите ваш Outgo"
           isInvalid={this.state.outgo}
-          handleErrorChange={outgo => this.setState({outgo, loading: false})}
+          handleErrorChange={outgo => this.setState({outgo, validate: false})}
           validate={this.state.validate}
         />
         <ButtonWrap>
