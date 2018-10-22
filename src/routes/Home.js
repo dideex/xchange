@@ -5,6 +5,7 @@ import Main from '../components/Main'
 import HowTo from '../components/HowTo'
 import Bg from '../components/ContainerWithBg'
 import LastOperations from '../components/LastOperations'
+import Graphic from '../components/Graphic'
 
 // Home component;
 export class Home extends Component {
@@ -17,6 +18,7 @@ export class Home extends Component {
         <HowTo />
         <Bg>
           <LastOperations />
+          <Graphic />
         </Bg>
       </Fragment>
     )
