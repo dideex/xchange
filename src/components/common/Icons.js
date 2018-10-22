@@ -13,11 +13,18 @@ import Colors from './Colors'
 // manHappy
 
 // Svg component;
-export const Icons = ({id, style = {}, className = ''}) => {
+export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
   if (!id) return null
   const entities = {
     chevron: (
-      <svg style={style} className={className} x="0px" y="0px" viewBox="0 0 400 400">
+      <svg
+        onClick={onClick}
+        style={style}
+        className={className}
+        x="0px"
+        y="0px"
+        viewBox="0 0 400 400"
+      >
         <path
           style={{fill: style.fill || Colors.accent}}
           d="M184.9,344.1L8.2,167.4c-8.5-8.5-8.5-22.3,0-30.9l20.6-20.6c8.5-8.5,22.3-8.5,30.8,0l140.7,140.1l140.7-140.1
