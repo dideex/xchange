@@ -16,6 +16,7 @@ const Section = styled('section')`
 const Operations = styled('div')`
   display: flex;
   justify-content: space-between;
+  padding-top: 50px;
 `
 
 const mockData = [
@@ -49,8 +50,9 @@ class LastOperations extends Component {
       <Section>
         <H2> Последние операции</H2>
         <Operations>
-          {mockData.map(({mail, valueFrom, valueTo, status, currency}) => (
+          {mockData.map(({mail, valueFrom, valueTo, status, currency}, i) => (
             <Operatoin
+              key={i}
               mail={mail}
               valueFrom={valueFrom}
               valueTo={valueTo}

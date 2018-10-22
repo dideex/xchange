@@ -103,8 +103,8 @@ export const Operations = ({currency, mail, valueFrom, valueTo, status}) => {
   )
 }
 
-OperationWrap.propTypes = {
-  currency: PropTypes.number.isRequired,
+Operations.propTypes = {
+  currency: PropTypes.string.isRequired,
   mail: PropTypes.string.isRequired,
   valueFrom: PropTypes.string.isRequired,
   valueTo: PropTypes.string.isRequired,
