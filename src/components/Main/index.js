@@ -12,7 +12,7 @@ const MainStyled = styled('main')`
   }
 `
 
-const MainBG = styled('div')`
+const MainBG = styled('section')`
   background-image: linear-gradient(
     90deg,
     white 50%,
@@ -21,7 +21,7 @@ const MainBG = styled('div')`
   );
 `
 
-const AfterMainWrap = styled('div')`
+const AfterMainWrap = styled('section')`
   & {
     position: relative;
     min-height: 400px;

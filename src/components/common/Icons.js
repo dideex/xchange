@@ -16,9 +16,15 @@ export const Icons = ({id, style = {}, className = ''}) => {
   if (!id) return null
   const entities = {
     chevron: (
-      <svg style={style} version="1.1" x="0px" y="0px" viewBox="0 0 400 400">
+      <svg
+        style={style}
+        className={className}
+        x="0px"
+        y="0px"
+        viewBox="0 0 400 400"
+      >
         <path
-          style={{fill: Colors.accent}}
+          style={{fill: style.fill || Colors.accent}}
           d="M184.9,344.1L8.2,167.4c-8.5-8.5-8.5-22.3,0-30.9l20.6-20.6c8.5-8.5,22.3-8.5,30.8,0l140.7,140.1l140.7-140.1
    c8.5-8.5,22.3-8.5,30.8,0l20.6,20.6c8.5,8.5,8.5,22.3,0,30.9L215.8,344.1C207.3,352.6,193.5,352.6,184.9,344.1L184.9,344.1z"
         />
@@ -58,8 +64,8 @@ export const Icons = ({id, style = {}, className = ''}) => {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M111.874 72.4742C113.259 67.5536 114 62.3633 114 57C114 25.5198 88.4802 0 57 0C25.5198 0 0 25.5198 0 57C0 88.4802 25.5198 114 57 114C63.0927 114 68.9622 113.044 74.4666 111.274L44 82.5L54 79.5L57 68.5L63 32L111.874 72.4742Z"
           style={{fill: Colors.accent}}
         />
@@ -205,6 +211,34 @@ export const Icons = ({id, style = {}, className = ''}) => {
         <path
           style={{fill: Colors.subAccent}}
           d="M0.5 -0.00012207C38.9999 261.5 357 375.5 856.5 440.5V-0.00012207H0.5Z"
+        />
+      </svg>
+    ),
+    beforeContactBg: (
+      <svg
+        className={className}
+        style={style}
+        viewBox="0 0 1443 468"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          style={{fill: Colors.subAccent}}
+          d="M1442.5 467.502C1442.5 355.002 1307 109 0.000183105 0.501465V467.502H1442.5Z"
+        />
+      </svg>
+    ),
+    afterContactBg: (
+      <svg
+        className={className}
+        style={style}
+        viewBox="0 0 1445 101"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          style={{fill: Colors.subAccent}}
+          d="M1444.5 0.499512C926 89.9998 653.5 82.9999 0 100.5V0.499512H1444.5Z"
         />
       </svg>
     ),
