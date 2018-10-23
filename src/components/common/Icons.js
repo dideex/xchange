@@ -303,6 +303,20 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
         />
       </svg>
     ),
+    afterFooterBg: (
+      <svg
+        style={style}
+        className={className}
+        viewBox="0 0 1443 916"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          style={{fill: Colors.subAccent}}
+          d="M1443 0C761.55 8.49644 367 37.5 -0.000183105 292V915.5H1443V0Z"
+        />
+      </svg>
+    ),
     beforeContactBg: (
       <svg
         className={className}

@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import {Switch, Route} from 'react-router-dom'
 
 import Header from './components/Header'
+import Footer from './components/Footer'
 import {
   FAQ,
   Home,
@@ -31,6 +32,7 @@ class Layout extends Component {
           <Route exact path="/" component={Home} />
           <Route component={PageNotFound} />
         </Switch>
+        <Footer />
       </Fragment>
     )
   }
