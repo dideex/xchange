@@ -106,6 +106,7 @@ class Footer extends Component {
     else console.log('invalid')
   }
 
+  // FIXME: Rework static size of background's svg
   render() {
     return (
       <FooterWrap>
@@ -140,7 +141,7 @@ class Footer extends Component {
         </Form>
         <Icons id="afterFooterBg" style={{width: '100%'}} />
         <Copy>
-          <strong>XChange (C) 2009 - 2018</strong>
+          <strong>XChange &copy; 2009 - 2018</strong>
           <a href="vk.com" target="_blank">Created by vk.com</a>
         </Copy>
       </FooterWrap>
