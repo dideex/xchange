@@ -8,6 +8,7 @@ import Comment from './Comment'
 const Section = styled('section')`
   & {
     ${container};
+    padding-top: 50px;
   }
   & .comments {
     display: flex;
@@ -37,6 +38,9 @@ const Section = styled('section')`
     top: 0;
     bottom: 0;
     transform: rotate(-90deg);
+  }
+  & .slick-slide {
+    min-height: 450px;
   }
 `
 

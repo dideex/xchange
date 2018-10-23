@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
-import {Colors} from '../common'
+import {Colors, robotoSlab} from '../common'
 
 const CommentWrap = styled('article')`
   & {
@@ -10,40 +10,61 @@ const CommentWrap = styled('article')`
     position: relative;
     border-radius: 10px;
     background-color: ${Colors.accent};
-    padding: 20px 15px;
+    padding: 20px 25px;
   }
 `
 
 const BacksideBlock = styled('div')`
   & {
     position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     z-index: -1;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    padding: 0 15px 3px;
+    padding: 25px 25px 10px;
     background-color: #fff;
     border-radius: 10px;
-    transform: translateY(35px);
+    transform: translateY(160px);
   }
-  & p {
-    position: absolute;
-    bottom: 3px;
-    left: 25px;
-    right: 25px;
+`
+
+const Image = styled('img')`
+  border-radius: 10px;
+`
+
+const ContentWrap = styled('div')`
+  & {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
   }
-  & span {
-    color: #fff;
+  & h3 {
+    font-family: ${robotoSlab};
+    font-size: 28px;
+  }
+  & hgroup {
+    padding-left: 30px;
   }
 `
 
 // Comment stateless component;
 const Comment = ({photo, name, role, message}) => (
   <CommentWrap>
-    <img src={photo} alt="Avatr" /> {message}{' '}
+    <ContentWrap>
+      <Image src={photo} alt="Avatr" />
+      <hgroup>
+        <h3>{name}</h3>
+        <p>{role}</p>
+      </hgroup>
+    </ContentWrap>
+    <BacksideBlock>
+      <p>
+        <span>{message}</span>
+      </p>
+    </BacksideBlock>
   </CommentWrap>
 )
 
