@@ -29,6 +29,12 @@ const BadgeIcon = styled('span')`
   }
 `
 
+const CurrencyLabel = styled('span')`
+  position: absolute;
+  top: 20px;
+  right: 66px;
+`
+
 const collect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
@@ -85,6 +91,7 @@ class InputField extends Component {
               currency={currency}
               handleChange={onSelectChange}
             />
+            <CurrencyLabel>{currency[currencyId].label}</CurrencyLabel>
           </FieldStyled>
         </div>,
       )

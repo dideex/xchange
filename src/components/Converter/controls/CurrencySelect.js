@@ -7,7 +7,7 @@ import {Icons, Label, SvgCurrency} from '../../common'
 
 const Wrapper = styled('div')`
   position: absolute;
-  right: 20px;
+  right: 24px;
   top: 18px;
   background-color: transparent;
 `

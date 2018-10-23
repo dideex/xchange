@@ -91,11 +91,11 @@ class Cash {
   // returns true when menu is opened
   @computed
   get getInput() {
-    return `${this.inputValue} ${this.currency[this.currencyInput].label}`
+    return `${this.inputValue}, ${this.currency[this.currencyInput].label.toUpperCase()}`
   }
   @computed
   get getOutput() {
-    return `${this.outputValue} ${this.currency[this.currencyOutput].label}`
+    return `${this.outputValue}, ${this.currency[this.currencyOutput].label.toUpperCase()}`
   }
 }
 
