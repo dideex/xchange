@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 
-import {Icons, Input, Colors, H2, Button} from '../common'
+import {Icons, Input, Colors, H2, Button, container} from '../common'
 
 const FooterWrap = styled('footer')`
   & {
     margin-top: 150px;
+    padding-bottom: 200px;
     position: relative;
     background-image: linear-gradient(white 0, white);
   }
@@ -57,6 +58,23 @@ const Form = styled('section')`
   padding: 20px 80px 50px;
   background: ${Colors.accent};
   border-radius: 10px;
+`
+
+const Copy = styled('div')`
+  & {
+    ${container}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    color: #fff;
+  }
+  & strong, & a {
+    font-size: 24px;
+  }
 `
 
 // Footer component;
@@ -121,6 +139,10 @@ class Footer extends Component {
           <Button caption="Отправить" toggle={this._handleSubmit} />
         </Form>
         <Icons id="afterFooterBg" style={{width: '100%'}} />
+        <Copy>
+          <strong>XChange (C) 2009 - 2018</strong>
+          <a href="vk.com" target="_blank">Created by vk.com</a>
+        </Copy>
       </FooterWrap>
     )
   }
