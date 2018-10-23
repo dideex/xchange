@@ -7,6 +7,7 @@ import Bg from '../components/ContainerWithBg'
 import LastOperations from '../components/LastOperations'
 import Graphic from '../components/Graphic'
 import Comments from '../components/Comments'
+import Staff from '../components/Staff'
 
 // Home component;
 export class Home extends Component {
@@ -22,6 +23,7 @@ export class Home extends Component {
           <Graphic />
           <Comments />
         </Bg>
+        <Staff />
       </Fragment>
     )
   }
