@@ -25,6 +25,8 @@ class Cash {
     this.currencyOutput = 3
     this.paymentStatus = 0 // 0 - null, 1 - created, 2 - sended, 3 - closed
     this.draggedBadgeCurrency = null
+    this.lessThenMinimal = false
+    this.moreThenReseved = false
   }
 
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
@@ -37,6 +39,27 @@ class Cash {
     (value * this.currency[this.currencyOutput].price_usd) /
     this.currency[this.currencyInput].price_usd
 
+  _checkCorrectAmount = () => {
+    const {minimal} = this.currency[this.currencyInput]
+    const {reserve} = this.currency[this.currencyOutput]
+    if (this.inputValue < minimal) {
+      this.lessThenMinimal = true
+      this.inputValue = minimal
+      this.outputValue = this._calcOutput(minimal)
+    }
+    if (this.outputValue > reserve) {
+      this.moreThenReseved = true
+      this.outputValue = reserve
+      this.inputValue = this._calcInput(reserve)
+    }
+    if (this.inputValue >= minimal && this.outputValue <= reserve) {
+      this.lessThenMinimal = false
+      this.moreThenReseved = false
+    }
+    console.log(" LOG ___ this.inputValue ", this.inputValue )
+    console.log(" LOG ___ this.outputValue ", this.outputValue )
+  }
+
   //FIXME: add limits
   //FIXME: i cant type 0.0 in inputs
   @action('change input')
@@ -48,6 +71,7 @@ class Cash {
       this.inputValue = this._allowNumberWithDot(value)
       this.outputValue = this._calcOutput(value)
     }
+    this._checkCorrectAmount()
   }
   @action('change output')
   changeOutput = (value = 0) => {
@@ -58,6 +82,7 @@ class Cash {
       this.outputValue = this._allowNumberWithDot(value)
       this.inputValue = this._calcInput(value)
     }
+    this._checkCorrectAmount()
   }
   @action('set currency output')
   setCurrencyOutput = (id = 0) => {
