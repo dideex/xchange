@@ -66,7 +66,6 @@ export class Input extends Component {
   static propTypes = {
     handleChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -125,7 +124,7 @@ export class Input extends Component {
     })
 
   render() {
-    const {value, isInvalid = false, errorMsg, placeholder, style = {}} = this.props
+    const {value, isInvalid = false, errorMsg, placeholder = '', style = {}} = this.props
     return (
       <InputWrap>
         <StyledInput

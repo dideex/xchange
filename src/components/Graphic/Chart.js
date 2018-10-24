@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled from 'react-emotion'
 import {ResponsiveContainer, ComposedChart, XAxis, YAxis, Area, Tooltip} from 'recharts'
 
-import {Colors} from '../common'
+import {Colors, Loading} from '../common'
 
 const ChartWrap = styled('div')`
   background-color: #ffffff;
@@ -74,7 +74,7 @@ class Chart extends Component {
   }
 
   render() {
-    return <ChartWrap>{this.state.loading ? 'Loading' : this._renderChart()}</ChartWrap>
+    return <ChartWrap>{this.state.loading ? <Loading /> : this._renderChart()}</ChartWrap>
   }
 }
 
