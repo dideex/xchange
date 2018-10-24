@@ -3,6 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
+import MenuNav from './components/Nav';
 import {
   FAQ,
   Home,
@@ -25,6 +26,7 @@ class Layout extends Component {
   render() {
     return (
       <Fragment>
+        <MenuNav />
         <Header />
         <Switch>
           <Route exact path="/podtverjdenie-oplati" component={PaymentProof} />

@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import styled from 'react-emotion'
 
 import {Icons, container, AccentButton} from '../common'
-import NavMenu from '../Nav'
 
 const StyledHeader = styled('header')`
   position: relative;
@@ -11,18 +10,12 @@ const StyledHeader = styled('header')`
   justify-content: space-between;
   min-height: 100vh;
 `
-const NavWrap = styled('nav')`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 50px;
-  ${container};
-`
+
 const ContentWrap = styled('div')`
   & {
     ${container};
     position: relative;
-    padding: 100px 60px 220px;
+    padding: 210px 60px 220px;
     margin-top: auto;
     h1 {
       font-family: 'Roboto Slab';
@@ -93,9 +86,6 @@ const manHappyStyle = {
   zIndex: 0,
 }
 
-const logoStyle = {
-  width: '215px',
-}
 
 // Header component;
 class Header extends Component {
@@ -104,10 +94,6 @@ class Header extends Component {
       <StyledHeader>
         <Icons style={headerBgTopStyle} id="headerBgTop" />
         <Icons style={headerBgBottomStyle} id="headerBgBottom" />
-        <NavWrap>
-          <Icons style={logoStyle} id="logo" />
-          <NavMenu />
-        </NavWrap>
         <ContentWrap>
           <h1>Обмен валют</h1>
           <p>
