@@ -58,6 +58,8 @@ export default class Index extends Component {
       currencyOutput,
       setCurrencyInput,
       setCurrencyOutput,
+      getMinimalAmount,
+      getCurrencyReserve,
     } = this.props.cashStore
     return (
       <Wrap>
@@ -72,7 +74,7 @@ export default class Index extends Component {
                 currencyId={currencyInput}
               />
               <TipBlock className="tip__block">
-                <span>Минимум: 1 000 руб</span>
+                <span>Минимум: {getMinimalAmount}</span>
               </TipBlock>
             </CurrencyFieldWrap>
             <CurrencyFieldWrap className="right__input">
@@ -84,7 +86,7 @@ export default class Index extends Component {
                 currencyId={currencyOutput}
               />
               <TipBlock className="tip__block">
-                <span>Резерв: 12 Btc</span>
+                <span>Резерв: {getCurrencyReserve}</span>
               </TipBlock>
             </CurrencyFieldWrap>
           </CurrencyFieldsWrap>

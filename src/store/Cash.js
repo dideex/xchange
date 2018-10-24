@@ -103,6 +103,20 @@ class Cash {
       this.currencyOutput
     ].label.toUpperCase()}`
   }
+  @computed
+  get getMinimalAmount() {
+    const formatter = new Intl.NumberFormat('ru', 'currency')
+    return `${formatter.format(this.currency[this.currencyInput].minimal)} ${
+      this.currency[this.currencyInput].label
+    }`
+  }
+  @computed
+  get getCurrencyReserve() {
+    const formatter = new Intl.NumberFormat('ru', 'currency')
+    return `${formatter.format(this.currency[this.currencyOutput].reserve)} ${
+      this.currency[this.currencyOutput].label
+    }`
+  }
 }
 
 export const cash = new Cash()

@@ -71,7 +71,6 @@ class InputField extends Component {
     const isActive = canDrop && isOver
     
     const formatter = new Intl.NumberFormat('ru', 'currency')
-    // return formatter.format(Math.round(price / 50) * 50)
     let backgroundColor = Colors.accent
     if (isActive) {
       backgroundColor = Colors.subAccent
