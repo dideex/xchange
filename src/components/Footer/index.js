@@ -62,8 +62,7 @@ const Form = styled('section')`
 
 const Copy = styled('div')`
   & {
-    ${container}
-    display: flex;
+    ${container} display: flex;
     justify-content: space-between;
     align-items: center;
     position: absolute;
@@ -72,7 +71,8 @@ const Copy = styled('div')`
     right: 0;
     color: #fff;
   }
-  & strong, & a {
+  & strong,
+  & a {
     font-size: 24px;
   }
 `
@@ -85,18 +85,22 @@ class Footer extends Component {
     phone: '',
     phoneError: null,
     message: '',
-    validate: false,
   }
 
-  componentDidUpdate(_, {validate}) {
-    if (validate && !this.state.validate) this._validate()
+  constructor(props) {
+    super(props)
+    this.inputs = []
   }
 
-  _handleSubmit = () => {
+  _handleSubmit = async () => {
     const {emailError, phoneError} = this.state
-    if (~[emailError, phoneError].indexOf(null))
-      this.setState({validate: true}, () => this._validate(this.props.history))
-    else this._validate(this.props.history)
+    // inputs have touched
+    if (~[emailError, phoneError].indexOf(null)) {
+      // call validate function from child directly
+      // await for promise has resolve
+      await this.inputs.map(async input => await input.handleChange())
+      this._validate()
+    } else this._validate()
   }
 
   _validate = () => {
@@ -113,25 +117,25 @@ class Footer extends Component {
         <Form>
           <H2>Остались вопросы?</H2>
           <Input
+            ref={child => this.inputs.push(child)}
             value={this.state.email}
             placeholder="email"
             pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
             errorMsg="Введите ваш Email"
             handleChange={email => this.setState({email})}
             isInvalid={this.state.emailError}
-            handleErrorChange={emailError => this.setState({emailError, validate: false})}
-            validate={this.state.validate}
+            handleErrorChange={(emailError, res) => this.setState({emailError}, res())}
           />
           <Input
+            ref={child => this.inputs.push(child)}
             value={this.state.phone}
             placeholder="phone"
             pattern="^\d+$"
-            mask='+_(___)-___-__-__'
+            mask="+_(___)-___-__-__"
             errorMsg="Введите ваш телефон"
             handleChange={phone => this.setState({phone})}
             isInvalid={this.state.phoneError}
-            handleErrorChange={phoneError => this.setState({phoneError, validate: false})}
-            validate={this.state.validate}
+            handleErrorChange={(phoneError, res) => this.setState({phoneError}, res())}
           />
           <Textarea
             value={this.state.message}
@@ -142,7 +146,9 @@ class Footer extends Component {
         <Icons id="afterFooterBg" style={{width: '100%'}} />
         <Copy>
           <strong>XChange &copy; 2009 - 2018</strong>
-          <a href="vk.com" target="_blank">Created by vk.com</a>
+          <a href="vk.com" target="_blank">
+            Created by vk.com
+          </a>
         </Copy>
       </FooterWrap>
     )
