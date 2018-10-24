@@ -17,6 +17,11 @@ import {
 
 // Layout component;
 class Layout extends Component {
+  componentDidMount() {
+    document.body.classList.add('loaded')
+    document.body.classList.remove('loading')
+  }
+
   render() {
     return (
       <Fragment>
