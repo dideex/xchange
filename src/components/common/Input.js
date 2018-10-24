@@ -79,13 +79,6 @@ export class Input extends Component {
     touched: false,
   }
 
-  componentWillReceiveProps({validate}) {
-    if (validate && !this.state.touched) {
-      this.setState({touched: true})
-      this._handleChange({target: {value: this.props.value}})
-    }
-  }
-
   _format = raw => {
     const {mask} = this.props
     const replsCount = (mask.match(/_/g) || []).length
@@ -111,24 +104,25 @@ export class Input extends Component {
     return raw
   }
 
-  _validateWithMask = value => {
+  _validateWithMask = (value, res) => {
     let raw = this._clean(value)
     let formatted = this._format(raw)
     if (this.pattern.test(raw) || raw === '') {
-      if (formatted.length !== this.props.mask.length) this.handleErrorChange(true)
-      else this.handleErrorChange(false)
+      if (formatted.length !== this.props.mask.length) this.handleErrorChange(true, res)
+      else this.handleErrorChange(false, res)
       return formatted
     }
     return null
   }
 
-  _handleChange = ({target}) => {
-    let {value} = target
-    if (this.props.mask) value = this._validateWithMask(value)
-    else if (this.pattern.test(value)) this.handleErrorChange(false)
-    else this.handleErrorChange(true)
-    if (value !== null) this.props.handleChange(value)
-  }
+  handleChange = e =>
+    new Promise(res => {
+      let {value} = (e && e.target) || this.input.props
+      if (this.props.mask) value = this._validateWithMask(value, res)
+      else if (this.pattern.test(value)) this.handleErrorChange(false, res)
+      else this.handleErrorChange(true, res)
+      if (value !== null) this.props.handleChange(value)
+    })
 
   render() {
     const {value, isInvalid = false, errorMsg, placeholder, style = {}} = this.props
@@ -141,7 +135,7 @@ export class Input extends Component {
           borderColorActive={isInvalid ? Colors.errorHover : '#fff'}
           style={style}
           value={value}
-          onChange={this._handleChange}
+          onChange={this.handleChange}
           placeholder={placeholder}
         />
         <CSSTransition in={isInvalid} timeout={300} classNames="error-" unmountOnExit>

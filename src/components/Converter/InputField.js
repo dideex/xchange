@@ -69,6 +69,9 @@ class InputField extends Component {
 
     const {canDrop, isOver, connectDropTarget} = this.props
     const isActive = canDrop && isOver
+    
+    const formatter = new Intl.NumberFormat('ru', 'currency')
+    // return formatter.format(Math.round(price / 50) * 50)
     let backgroundColor = Colors.accent
     if (isActive) {
       backgroundColor = Colors.subAccent
@@ -83,7 +86,7 @@ class InputField extends Component {
             <BadgeIcon>
               <Svg style={SvgCurrency} id={currency[currencyId].name} />
             </BadgeIcon>
-            <Input value={inputValue} handleChange={changeInput} />
+            <Input value={formatter.format(inputValue)} handleChange={changeInput} />
             <Select
               isOpen={this.state.open}
               toggleField={e => this.setState({open: e})}

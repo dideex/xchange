@@ -74,7 +74,6 @@ class Chart extends Component {
   }
 
   render() {
-    console.log(' LOG ___ this.state ', this.state)
     return <ChartWrap>{this.state.loading ? 'Loading' : this._renderChart()}</ChartWrap>
   }
 }

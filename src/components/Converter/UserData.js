@@ -41,31 +41,33 @@ class UserData extends Component {
     walletOutgo: PropTypes.number.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    this.inputs = []
+  }
+
   state = {
     username: null, //null - is not chekced, false - no error, true - have some errors
     email: null,
     income: null,
     outgo: null,
-    validate: false,
     loading: false,
   }
 
-  componentDidUpdate(_, {validate}) {
-    if (validate && !this.state.validate) this._validate()
-  }
-
-  _handleSubmit = () => {
+  _handleSubmit = async () => {
     const {username, email, income, outgo} = this.state
-    if (~[username, email, income, outgo].indexOf(null))
-      this.setState({validate: true}, () =>
-        this._validate(this.props.history),
-      )
-    else this._validate(this.props.history)
+    // inputs have touched
+    if (~[username, email, income, outgo].indexOf(null)) {
+      // call validate function from child directly
+      // await for promise has resolve
+      await this.inputs.map(async input => await input.handleChange())
+      this._validate()
+    } else this._validate()
   }
 
   _validate = () => {
     const {username, email, income, outgo} = this.state
-    if (this.state.validate) return null
+    // when some input has error throw exception
     if (!username && !email && !income && !outgo)
       this.props.history.push('/podtverjdenie-oplati')
     else console.log('invalid')
@@ -83,26 +85,27 @@ class UserData extends Component {
     return (
       <StyledUserData>
         <Input
+          ref={child => this.inputs.push(child)}
           value={username}
           handleChange={changeUsername}
           placeholder="username"
           pattern="[a-zа-яё]{2,}"
           errorMsg="Введите ваше ФИО"
           isInvalid={this.state.username}
-          handleErrorChange={username => this.setState({username, validate: false})}
-          validate={this.state.validate}
+          handleErrorChange={(username, res) => this.setState({username}, res())}
         />
         <Input
+          ref={child => this.inputs.push(child)}
           value={email}
           handleChange={changeEmail}
           placeholder="email"
           pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
           errorMsg="Введите ваш Email"
           isInvalid={this.state.email}
-          handleErrorChange={email => this.setState({email, validate: false})}
-          validate={this.state.validate}
+          handleErrorChange={(email, res) => this.setState({email}, res())}
         />
         <Input
+          ref={child => this.inputs.push(child)}
           value={wallets[this.props.walletIncome]}
           handleChange={val => changeWallet(this.props.walletIncome)(val)}
           mask="____ ____ ____ ____"
@@ -110,10 +113,10 @@ class UserData extends Component {
           placeholder="income"
           errorMsg="Введите ваш Income"
           isInvalid={this.state.income}
-          handleErrorChange={income => this.setState({income, validate: false})}
-          validate={this.state.validate}
+          handleErrorChange={(income, res) => this.setState({income}, res())}
         />
         <Input
+          ref={child => this.inputs.push(child)}
           value={wallets[this.props.walletOutgo]}
           handleChange={val => changeWallet(this.props.walletOutgo)(val)}
           mask="____ ____ ____ ____"
@@ -121,8 +124,7 @@ class UserData extends Component {
           placeholder="outgo"
           errorMsg="Введите ваш Outgo"
           isInvalid={this.state.outgo}
-          handleErrorChange={outgo => this.setState({outgo, validate: false})}
-          validate={this.state.validate}
+          handleErrorChange={(outgo, res) => this.setState({outgo}, res())}
         />
         <ButtonWrap>
           <Button

@@ -1,5 +1,5 @@
 import {observable, action, computed} from 'mobx'
-import {isNumber} from './common'
+import {isNumber} from './utils'
 import {currency} from '../config/conf'
 
 // menu state
@@ -22,7 +22,7 @@ class Cash {
     this.outputValue = 0
     this.currency = currency
     this.currencyInput = 0
-    this.currencyOutput = 1
+    this.currencyOutput = 3
     this.paymentStatus = 0 // 0 - null, 1 - created, 2 - sended, 3 - closed
     this.draggedBadgeCurrency = null
   }
@@ -42,6 +42,8 @@ class Cash {
   @action('change input')
   changeInput = (value = 0) => {
     if (value === '') value = 0
+    //FIXME: allow point in input value
+    else value = +value.replace(/\D/gi, '')
     if (isNumber(value)) {
       this.inputValue = this._allowNumberWithDot(value)
       this.outputValue = this._calcOutput(value)
@@ -50,6 +52,8 @@ class Cash {
   @action('change output')
   changeOutput = (value = 0) => {
     if (value === '') value = 0
+    //FIXME: allow point in input value
+    else value = +value.replace(/\D/gi, '')
     if (isNumber(value)) {
       this.outputValue = this._allowNumberWithDot(value)
       this.inputValue = this._calcInput(value)
@@ -95,7 +99,9 @@ class Cash {
   }
   @computed
   get getOutput() {
-    return `${this.outputValue}, ${this.currency[this.currencyOutput].label.toUpperCase()}`
+    return `${this.outputValue}, ${this.currency[
+      this.currencyOutput
+    ].label.toUpperCase()}`
   }
 }
 
