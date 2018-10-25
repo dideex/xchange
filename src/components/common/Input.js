@@ -4,7 +4,6 @@ import {CSSTransition} from 'react-transition-group'
 import PropTypes from 'prop-types'
 
 import Colors from './Colors'
-import { format } from './Utils';
 
 const StyledInput = styled('input')`
   & {
@@ -64,6 +63,13 @@ const ErrorField = styled('span')`
 
 // Input component;
 export class Input extends Component {
+  static defaultProps = {
+    isInvalid: false,
+    errorMsg: '',
+    placeholder: '',
+    style: {},
+    type: 'text',
+  }
   static propTypes = {
     handleChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
@@ -125,7 +131,7 @@ export class Input extends Component {
     })
 
   render() {
-    const {value, isInvalid = false, errorMsg, placeholder = '', style = {}} = this.props
+    const {isInvalid = false, errorMsg} = this.props
     return (
       <InputWrap>
         <StyledInput
@@ -133,10 +139,8 @@ export class Input extends Component {
           borderColor={isInvalid ? Colors.error : 'rgba(255,255,255,.4)'}
           borderColorHover={isInvalid ? Colors.errorHover : 'rgba(255,255,255,.7)'}
           borderColorActive={isInvalid ? Colors.errorHover : '#fff'}
-          style={style}
-          value={value}
           onChange={this.handleChange}
-          placeholder={placeholder}
+          {...this.props}
         />
         <CSSTransition in={isInvalid} timeout={300} classNames="error-" unmountOnExit>
           <ErrorField>{errorMsg}</ErrorField>
