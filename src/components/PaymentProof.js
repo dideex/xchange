@@ -63,8 +63,8 @@ class PaymentProof extends Component {
       0,
       this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
     )
-    console.log(" LOG ___  ", this.props.cashStore.paymentStatus )
     if (this.props.cashStore.paymentStatus === 0) this.props.history.push('/')
+    if (this.props.cashStore.paymentStatus === 2) this.props.history.push('/spasibo')
   }
 
   render() {
@@ -125,7 +125,6 @@ class PaymentProof extends Component {
             cashStore.cofirmPayment()
             this.props.history.push('/spasibo')
           }}
-        />
         />
         <Svg />
       </Wrap>

@@ -1,9 +1,19 @@
 import React, {Component, Fragment} from 'react'
 
+import ReservedContent from '../components/AboutUs'
+import Main from '../components/Main'
+import Staff from '../components/Staff'
 // AboutUs component;
 export class AboutUs extends Component {
   render() {
-    return <Fragment>AboutUs</Fragment>
+    return (
+      <Fragment>
+        <Main>
+          <ReservedContent />
+        </Main>
+        <Staff />
+      </Fragment>
+    )
   }
 }
 

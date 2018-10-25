@@ -36,7 +36,7 @@ export const ThankYou = () => (
     <Route
       render={({history}) => (
         <Button
-          caption="В личный кабинетл"
+          caption="В личный кабинет"
           toggle={() => {
             history.push(`/cp`)
           }}
