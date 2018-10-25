@@ -14,15 +14,15 @@ const MenuWrap = styled('nav')`
       position: relative;
     }
     & > span,
-    a {
+    & > a {
       cursor: pointer;
       padding: 0 35px;
       font-size: 18px;
     }
-    a:first-child {
+    & > a:first-child {
       padding-left: 0;
     }
-    a:last-child {
+    & > span:last-child {
       padding-right: 0;
     }
   }
@@ -86,6 +86,7 @@ class Nav extends Component {
     minimizeNav: false,
     hideMenu: false,
     showLangMenu: false,
+    showAuthMenu: false,
   }
 
   componentDidMount() {
@@ -110,7 +111,9 @@ class Nav extends Component {
     return (
       <NavWrap className={this._getStyle()}>
         <Icons style={logoStyle} id="logo" />
-        <MenuWrap onMouseLeave={() => this.setState({showLangMenu: false})}>
+        <MenuWrap
+          onMouseLeave={() => this.setState({showLangMenu: false, showAuthMenu: false})}
+        >
           <Link to="/">Главная</Link>
           <Link to="/reservi">Резервы</Link>
           <Link to="/o-nas">О нас</Link>
@@ -137,9 +140,24 @@ class Nav extends Component {
               </LangMenu>
             </CSSTransition>
           </span>
-          <Link to="/lichnii-kabinet">
+          <span
+            onClick={() =>
+              this.setState(({showAuthMenu}) => ({showAuthMenu: !showAuthMenu}))
+            }
+          >
             <Icons style={{width: '33px'}} id="user" />
-          </Link>
+            <CSSTransition
+              in={this.state.showAuthMenu}
+              timeout={300}
+              classNames="content-"
+              unmountOnExit
+            >
+              <LangMenu>
+                <Link to="/lichnii-kabinet">SignIn</Link>
+                <Link to="/registracya">SignUp</Link>
+              </LangMenu>
+            </CSSTransition>
+          </span>
         </MenuWrap>
       </NavWrap>
     )

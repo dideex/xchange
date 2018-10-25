@@ -31,7 +31,7 @@ class Layout extends Component {
         <Switch>
           <Route exact path="/podtverjdenie-oplati" component={PaymentProof} />
           <Route exact path="/spasibo" component={ThankYou} />
-          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/registracya" component={Signup} />
           <Route exact path="/reservi" component={Reserved} />
           <Route exact path="/o-nas" component={AboutUs} />
           <Route exact path="/lichnii-kabinet" component={CP} />
