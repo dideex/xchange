@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {Route} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 
 import {Button, format, currencyFormat, H2} from './common'
@@ -63,6 +63,8 @@ class PaymentProof extends Component {
       0,
       this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
     )
+    console.log(" LOG ___  ", this.props.cashStore.paymentStatus )
+    if (this.props.cashStore.paymentStatus === 0) this.props.history.push('/')
   }
 
   render() {
@@ -117,16 +119,13 @@ class PaymentProof extends Component {
             <strong>{this._statusArray[cashStore.paymentStatus]}</strong>
           </p>
         </UserInfo>
-        <Route
-          render={({history}) => (
-            <Button
-              caption="Я перевел"
-              toggle={() => {
-                cashStore.cofirmPayment()
-                history.push('/spasibo')
-              }}
-            />
-          )}
+        <Button
+          caption="Я перевел"
+          toggle={() => {
+            cashStore.cofirmPayment()
+            this.props.history.push('/spasibo')
+          }}
+        />
         />
         <Svg />
       </Wrap>
@@ -134,4 +133,4 @@ class PaymentProof extends Component {
   }
 }
 
-export default PaymentProof
+export default withRouter(PaymentProof)

@@ -1,9 +1,17 @@
 import React, {Component, Fragment} from 'react'
 
+import ReservedContent from '../components/FAQ'
+import Main from '../components/Main'
 // FAQ component;
 export class FAQ extends Component {
   render() {
-    return <Fragment>FAQ</Fragment>
+    return (
+      <Fragment>
+        <Main>
+          <ReservedContent />
+        </Main>
+      </Fragment>
+    )
   }
 }
 

@@ -33,6 +33,7 @@ const ButtonWrap = styled('div')`
 // UserData component;
 @withRouter
 @inject('userStore')
+@inject('cashStore')
 @observer
 class UserData extends Component {
   static propTypes = {
@@ -69,9 +70,10 @@ class UserData extends Component {
   _validate = () => {
     const {username, email, income, outgo} = this.state
     // when some input has error throw exception
-    if (!username && !email && !income && !outgo)
+    if (!username && !email && !income && !outgo) {
+      this.props.cashStore.createPayment()
       this.props.history.push('/podtverjdenie-oplati')
-    else console.log('invalid')
+    } else console.log('invalid')
   }
 
   render() {
@@ -128,11 +130,7 @@ class UserData extends Component {
           handleErrorChange={(outgo, res) => this.setState({outgo}, res())}
         />
         <ButtonWrap>
-          <Button
-            caption="Send"
-            toggle={this._handleSubmit}
-            loading={this.state.loading}
-          />
+          <Button caption="Send" toggle={this._handleSubmit} />
         </ButtonWrap>
       </StyledUserData>
     )
