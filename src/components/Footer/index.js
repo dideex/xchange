@@ -118,7 +118,7 @@ class Footer extends Component {
         <Form>
           <H2>Остались вопросы?</H2>
           <Input
-            ref={child => this.inputs.push(child)}
+            ref={child => this.inputs[0] = child}
             value={this.state.email}
             placeholder="email"
             pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
@@ -128,7 +128,7 @@ class Footer extends Component {
             handleErrorChange={(emailError, res) => this.setState({emailError}, res())}
           />
           <Input
-            ref={child => this.inputs.push(child)}
+            ref={child => this.inputs[1] = child}
             value={this.state.phone}
             placeholder="phone"
             pattern="^\d+$"

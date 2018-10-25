@@ -37,7 +37,7 @@ const Details = styled('div')`
 `
 
 const UserInfo = styled('div')`
-  & { 
+  & {
     max-width: 37%;
     margin: 50px auto;
   }
@@ -74,7 +74,7 @@ class PaymentProof extends Component {
     const {label: currencyInputLabel} = cashStore.currency[cashStore.currencyInput]
     return (
       <Wrap>
-       <H2>Совершите перевод</H2>
+        <H2>Совершите перевод</H2>
         <Details>
           <div ref={this.wrap}>
             <Details>
