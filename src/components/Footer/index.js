@@ -110,7 +110,8 @@ class Footer extends Component {
     else console.log('invalid')
   }
 
-  // FIXME: Rework static size of background's svg
+  // FIXME: Unhandled Rejection (TypeError): Cannot read property 'handleChange' of null
+  // TODO: Rework static size of background's svg
   render() {
     return (
       <FooterWrap>

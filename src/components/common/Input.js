@@ -4,6 +4,7 @@ import {CSSTransition} from 'react-transition-group'
 import PropTypes from 'prop-types'
 
 import Colors from './Colors'
+import { format } from './Utils';
 
 const StyledInput = styled('input')`
   & {
@@ -104,8 +105,8 @@ export class Input extends Component {
   }
 
   _validateWithMask = (value, res) => {
-    let raw = this._clean(value)
-    let formatted = this._format(raw)
+    const raw = this._clean(value)
+    const formatted = this._format(raw)
     if (this.pattern.test(raw) || raw === '') {
       if (formatted.length !== this.props.mask.length) this.handleErrorChange(true, res)
       else this.handleErrorChange(false, res)

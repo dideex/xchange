@@ -44,6 +44,7 @@ const CurrencyTitle = styled('h2')`
   text-align: center;
 `
 
+// TODO: add diffirences between currencies
 @inject('cashStore')
 @observer
 export default class Index extends Component {

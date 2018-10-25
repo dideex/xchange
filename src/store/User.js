@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx'
+import {observable, action, computed} from 'mobx'
 
 // menu state
 export default class User {
@@ -41,12 +41,10 @@ export default class User {
     this.username = 'mock user'
     this.email = 'mock email'
     this.wallets = {
-      0: '1234 5678',
-      1: '8765 4321',
-      2: '',
-      3: '',
-      4: '',
-      5: ''
+      '0': '0234 5678 1234 5678',
+      '1': '1765 4321 1234 5678',
+      '2': '2765 4321 1234 5678',
+      '3': '3765 4321 1234 5678',
     }
     // fetch data from server
   }

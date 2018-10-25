@@ -29,6 +29,7 @@ const ButtonWrap = styled('div')`
   }
 `
 
+//TODO: checkbox
 // UserData component;
 @withRouter
 @inject('userStore')
@@ -60,7 +61,7 @@ class UserData extends Component {
     if (~[username, email, income, outgo].indexOf(null)) {
       // call validate function from child directly
       // await for promise has resolve
-      await this.inputs.map(async input => await input.handleChange())
+      await Promise.all(this.inputs.map(input => input.handleChange()))
       this._validate()
     } else this._validate()
   }
@@ -85,7 +86,7 @@ class UserData extends Component {
     return (
       <StyledUserData>
         <Input
-          ref={child => this.inputs.push(child)}
+          ref={child => (this.inputs[0] = child)}
           value={username}
           handleChange={changeUsername}
           placeholder="username"
@@ -95,7 +96,7 @@ class UserData extends Component {
           handleErrorChange={(username, res) => this.setState({username}, res())}
         />
         <Input
-          ref={child => this.inputs.push(child)}
+          ref={child => (this.inputs[1] = child)}
           value={email}
           handleChange={changeEmail}
           placeholder="email"
@@ -105,7 +106,7 @@ class UserData extends Component {
           handleErrorChange={(email, res) => this.setState({email}, res())}
         />
         <Input
-          ref={child => this.inputs.push(child)}
+          ref={child => (this.inputs[2] = child)}
           value={wallets[this.props.walletIncome]}
           handleChange={val => changeWallet(this.props.walletIncome)(val)}
           mask="____ ____ ____ ____"
@@ -116,7 +117,7 @@ class UserData extends Component {
           handleErrorChange={(income, res) => this.setState({income}, res())}
         />
         <Input
-          ref={child => this.inputs.push(child)}
+          ref={child => (this.inputs[3] = child)}
           value={wallets[this.props.walletOutgo]}
           handleChange={val => changeWallet(this.props.walletOutgo)(val)}
           mask="____ ____ ____ ____"

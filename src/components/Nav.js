@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'react-emotion'
 
-import {Icons, container} from './common'
+import {Icons} from './common'
 import './Nav.css'
 
 const MenuWrap = styled('nav')`
@@ -52,6 +52,10 @@ class Nav extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this._handleScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._handleScroll)
   }
 
   _handleScroll = () => {

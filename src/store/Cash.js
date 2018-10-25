@@ -56,8 +56,6 @@ class Cash {
       this.lessThenMinimal = false
       this.moreThenReseved = false
     }
-    console.log(" LOG ___ this.inputValue ", this.inputValue )
-    console.log(" LOG ___ this.outputValue ", this.outputValue )
   }
 
   //FIXME: add limits
