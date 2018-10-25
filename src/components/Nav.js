@@ -1,15 +1,21 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'react-emotion'
+import {CSSTransition} from 'react-transition-group'
 
-import {Icons} from './common'
+import {Icons, Colors} from './common'
 import './Nav.css'
 
 const MenuWrap = styled('nav')`
   & {
     display: flex;
     align-items: center;
+    & > span {
+      position: relative;
+    }
+    & > span,
     a {
+      cursor: pointer;
       padding: 0 35px;
       font-size: 18px;
     }
@@ -38,6 +44,37 @@ const NavWrap = styled('nav')`
   transition: all 0.3s ease-in-out;
 `
 
+const LangMenu = styled('span')`
+  & {
+    position: absolute;
+    top: 100%;
+    left: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background: ${Colors.accent};
+    color: #fff;
+    padding: 5px 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  &.content--enter {
+    opacity: 0.01;
+    transform: scale(0.9) translateY(-10px);
+  }
+  &.content--enter-active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  &.content--exit {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  &.content--exit-active {
+    opacity: 0.01;
+    transform: scale(0.9) translateY(-10px);
+  }
+`
+
 // Nav component;
 class Nav extends Component {
   constructor(props) {
@@ -48,6 +85,7 @@ class Nav extends Component {
   state = {
     minimizeNav: false,
     hideMenu: false,
+    showLangMenu: false,
   }
 
   componentDidMount() {
@@ -72,12 +110,33 @@ class Nav extends Component {
     return (
       <NavWrap className={this._getStyle()}>
         <Icons style={logoStyle} id="logo" />
-        <MenuWrap>
+        <MenuWrap onMouseLeave={() => this.setState({showLangMenu: false})}>
           <Link to="/">Главная</Link>
           <Link to="/reservi">Резервы</Link>
           <Link to="/o-nas">О нас</Link>
           <Link to="/faq">FAQ</Link>
-          <Link to="/">Rus</Link>
+          <span
+            onClick={() =>
+              this.setState(({showLangMenu}) => ({showLangMenu: !showLangMenu}))
+            }
+          >
+            Rus
+            <Icons
+              id="chevron"
+              style={{width: '20px', marginBottom: '-2px', paddingLeft: '5px'}}
+            />
+            <CSSTransition
+              in={this.state.showLangMenu}
+              timeout={300}
+              classNames="content-"
+              unmountOnExit
+            >
+              <LangMenu>
+                <span>Eng</span>
+                <span>Rus</span>
+              </LangMenu>
+            </CSSTransition>
+          </span>
           <Link to="/lichnii-kabinet">
             <Icons style={{width: '33px'}} id="user" />
           </Link>
