@@ -1,5 +1,4 @@
 import {observable, action, computed} from 'mobx'
-import {isNumber} from './utils'
 import {currency} from '../config/conf'
 
 // menu state
@@ -35,11 +34,22 @@ class Cash {
     (value * this.currency[this.currencyInput].price_usd) /
     this.currency[this.currencyOutput].price_usd
 
+  _isNumber = num => /^\d+[.]?\d{0,3}$/.test(num)
+
+  _parseNumber = num => {
+    if (num === '') num = 0
+    else {
+      num = num.replace(/\s/g, '')
+      num = num.replace(',', '.')
+    }
+    return num
+  }
+
   _calcInput = value =>
     (value * this.currency[this.currencyOutput].price_usd) /
     this.currency[this.currencyInput].price_usd
 
-  _checkCorrectAmount = () => {
+  _correctValuesLimits = () => {
     const {minimal} = this.currency[this.currencyInput]
     const {reserve} = this.currency[this.currencyOutput]
     if (this.inputValue < minimal) {
@@ -58,29 +68,23 @@ class Cash {
     }
   }
 
-  //FIXME: add limits
-  //FIXME: i cant type 0.0 in inputs
   @action('change input')
-  changeInput = (value = 0) => {
-    if (value === '') value = 0
-    //FIXME: allow point in input value
-    else value = +value.replace(/\D/gi, '')
-    if (isNumber(value)) {
-      this.inputValue = this._allowNumberWithDot(value)
-      this.outputValue = this._calcOutput(value)
+  changeInput = (number = 0) => {
+    const parsedNumber = this._parseNumber(number)
+    if (this._isNumber(parsedNumber)) {
+      this.inputValue = parsedNumber
+      this.outputValue = this._calcOutput(parsedNumber)
     }
-    this._checkCorrectAmount()
+    this._correctValuesLimits()
   }
   @action('change output')
-  changeOutput = (value = 0) => {
-    if (value === '') value = 0
-    //FIXME: allow point in input value
-    else value = +value.replace(/\D/gi, '')
-    if (isNumber(value)) {
-      this.outputValue = this._allowNumberWithDot(value)
-      this.inputValue = this._calcInput(value)
+  changeOutput = (number = 0) => {
+    const parsedNumber = this._parseNumber(number)
+    if (this._isNumber(parsedNumber)) {
+      this.outputValue = parsedNumber
+      this.inputValue = this._calcInput(parsedNumber)
     }
-    this._checkCorrectAmount()
+    this._correctValuesLimits()
   }
   @action('set currency output')
   setCurrencyOutput = (id = 0) => {
@@ -109,7 +113,10 @@ class Cash {
     }
   }
   @action('create payment')
-  createPayment = () => (this.paymentStatus = 1)
+  createPayment = () => {
+    this._correctValuesLimits()
+    this.paymentStatus = 1
+  }
   @action('cofirm payment')
   cofirmPayment = () => (this.paymentStatus = 2)
   @action('drag badge')

@@ -76,7 +76,7 @@ const mockComments = [
   },
 ]
 
-function SampleNextArrow(props) {
+function SamplePrevArrow(props) {
   const {style, onClick} = props
   return (
     <Icons
@@ -88,7 +88,7 @@ function SampleNextArrow(props) {
   )
 }
 
-function SamplePrevArrow(props) {
+function SampleNextArrow(props) {
   const {style, onClick} = props
   return (
     <Icons

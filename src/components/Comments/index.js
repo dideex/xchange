@@ -78,7 +78,7 @@ const mockComments = [
   },
 ]
 
-function SampleNextArrow(props) {
+function SamplePrevArrow(props) {
   const {style, onClick} = props
   return (
     <Icons
@@ -90,7 +90,7 @@ function SampleNextArrow(props) {
   )
 }
 
-function SamplePrevArrow(props) {
+function SampleNextArrow(props) {
   const {style, onClick} = props
   return (
     <Icons
@@ -115,8 +115,8 @@ class Comments extends Component {
       slidesToScroll: 1,
       lazyLoad: true,
       arrows: true,
-      nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />,
+      prevArrow: <SampleNextArrow />,
+      nextArrow: <SamplePrevArrow />,
     }
     return (
       <Section>

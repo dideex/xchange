@@ -28,7 +28,14 @@ export const format = (value, mask) => {
   return formatted
 }
 
+const _allowLastCharDot = value => {
+  const lastChar = value[value.length - 1]
+  console.log(" LOG ___ lastChar ", lastChar )
+  return lastChar === '.' ? '.' : lastChar === ',' ? '.' : ''
+}
+
 export const currencyFormat = value => {
+  console.log(" LOG ___ value ", value )
   const formatter = new Intl.NumberFormat('ru', 'currency')
-  return formatter.format(value)
+  return `${formatter.format(value)}${_allowLastCharDot(`${value}`)}`
 }
