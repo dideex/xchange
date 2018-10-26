@@ -53,9 +53,13 @@ const LangMenu = styled('span')`
     display: flex;
     flex-direction: column;
     background: ${Colors.accent};
+    box-shadow: 0px 5px 10px -4px rgba(0, 0, 0, 0.5);
     color: #fff;
     padding: 5px 10px;
-    transition: transform 0.3s ease-in-out;
+    transition: all 300ms ease-in-out;
+  }
+  .auth-menu-item & {
+    left: -10px;
   }
   &.content--enter {
     opacity: 0.01;
@@ -120,7 +124,7 @@ class Nav extends Component {
           <Link to="/faq">FAQ</Link>
           <span
             onClick={() =>
-              this.setState(({showLangMenu}) => ({showLangMenu: !showLangMenu}))
+              this.setState(({showLangMenu}) => ({showLangMenu: !showLangMenu, showAuthMenu: false}))
             }
           >
             Rus
@@ -141,8 +145,9 @@ class Nav extends Component {
             </CSSTransition>
           </span>
           <span
+            className="auth-menu-item"
             onClick={() =>
-              this.setState(({showAuthMenu}) => ({showAuthMenu: !showAuthMenu}))
+              this.setState(({showAuthMenu}) => ({showAuthMenu: !showAuthMenu, showLangMenu: false}))
             }
           >
             <Icons style={{width: '33px'}} id="user" />
@@ -153,8 +158,8 @@ class Nav extends Component {
               unmountOnExit
             >
               <LangMenu>
-                <Link to="/lichnii-kabinet">SignIn</Link>
-                <Link to="/registracya">SignUp</Link>
+                <Link to="/lichnii-kabinet">Войти</Link>
+                <Link to="/registracya">Регистрация</Link>
               </LangMenu>
             </CSSTransition>
           </span>
