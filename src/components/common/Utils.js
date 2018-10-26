@@ -35,7 +35,10 @@ const _allowLastCharDot = value => {
 }
 
 export const currencyFormat = value => {
-  console.log(" LOG ___ value ", value )
   const formatter = new Intl.NumberFormat('ru', 'currency')
   return `${formatter.format(value)}${_allowLastCharDot(`${value}`)}`
 }
+
+export const isAllPropsFalse = object =>
+Object.values(object).filter(argument => argument === false).length ===
+Object.values(object).length

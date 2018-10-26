@@ -4,7 +4,7 @@ import styled from 'react-emotion'
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import {Input, Button} from '../common'
+import {Input, Button, isAllPropsFalse} from '../common'
 
 const StyledUserData = styled('div')`
   & {
@@ -56,16 +56,12 @@ class UserData extends Component {
     loading: false,
   }
 
-  _isAllFalse = e =>
-    Object.values(e).filter(argument => argument === false).length ===
-    Object.values(e).length
-
   _handleSubmit = async () => {
     // fix double click for premade input's values
     // or
     // await this.inputs.map(async input => await input.handleChange())
     await Promise.all(this.inputs.map(input => input.handleChange()))
-    if (this._isAllFalse(this.state)) {
+    if (isAllPropsFalse(this.state)) {
       this.props.cashStore.createPayment()
       this.props.history.push('/podtverjdenie-oplati')
     } else console.log('invalid')

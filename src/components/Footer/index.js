@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 
-import {Icons, Input, Colors, H2, Button, container} from '../common'
+import {Icons, Input, Colors, H2, Button, container, isAllPropsFalse} from '../common'
 
 const FooterWrap = styled('footer')`
   & {
@@ -94,23 +94,15 @@ class Footer extends Component {
 
   _handleSubmit = async () => {
     const {emailError, phoneError} = this.state
-    // inputs have touched
-    if (~[emailError, phoneError].indexOf(null)) {
-      // call validate function from child directly
-      // await for promise has resolve
-      await this.inputs.map(async input => await input.handleChange())
-      this._validate()
-    } else this._validate()
+    // fix double click for premade input's values
+    // or
+    // await this.inputs.map(async input => await input.handleChange())
+    await Promise.all(this.inputs.map(input => input.handleChange()))
+    if (isAllPropsFalse({emailError, phoneError})) {
+      console.log('send')
+    } else console.log('error')
   }
 
-  _validate = () => {
-    const {emailError, phoneError} = this.state
-    if (this.state.validate) return null
-    if (!emailError && !phoneError) console.log('SEND EMAIL !!!11')
-    else console.log('invalid')
-  }
-
-  // FIXME: Unhandled Rejection (TypeError): Cannot read property 'handleChange' of null
   // TODO: Rework static size of background's svg
   render() {
     return (
@@ -118,7 +110,7 @@ class Footer extends Component {
         <Form>
           <H2>Остались вопросы?</H2>
           <Input
-            ref={child => this.inputs[0] = child}
+            ref={child => (this.inputs[0] = child)}
             value={this.state.email}
             placeholder="email"
             pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
@@ -128,7 +120,7 @@ class Footer extends Component {
             handleErrorChange={(emailError, res) => this.setState({emailError}, res())}
           />
           <Input
-            ref={child => this.inputs[1] = child}
+            ref={child => (this.inputs[1] = child)}
             value={this.state.phone}
             placeholder="phone"
             pattern="^\d+$"

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 
-import {H2, Input, Button} from '../common'
+import {H2, Input, Button, isAllPropsFalse} from '../common'
 
 const Wrap = styled('div')`
   & {
@@ -29,24 +29,17 @@ class Signup extends Component {
     passwordError: null,
     email: '',
     emailError: null,
+    passwordRepeated: '',
   }
 
   _handleSubmit = async () => {
-    const {usernameError, passwordError} = this.state
-    // inputs have touched
-    if (~[usernameError, passwordError].indexOf(null)) {
-      // call validate function from child directly
-      // await for promise has resolve
-      await Promise.all(this.inputs.map(input => input.handleChange()))
-      this._validate()
-    } else this._validate()
-  }
-
-  _validate = () => {
-    const {usernameError, passwordError} = this.state
-    // when some input has error throw exception
-    if (!usernameError && !passwordError) {
-      console.log('REGISTER!!!')
+    const {usernameError, passwordError, emailError} = this.state
+    // fix double click for premade input's values
+    // or
+    // await this.inputs.map(async input => await input.handleChange())
+    await Promise.all(this.inputs.map(input => input.handleChange()))
+    if (isAllPropsFalse({usernameError, passwordError, emailError})) {
+      console.log('Register!')
     } else console.log('invalid')
   }
 
@@ -87,6 +80,19 @@ class Signup extends Component {
           isInvalid={this.state.passwordError}
           handleErrorChange={(passwordError, res) =>
             this.setState({passwordError}, res())
+          }
+        />
+        <Input
+          ref={child => (this.inputs[3] = child)}
+          value={this.state.passwordRepeated}
+          handleChange={e => this.setState({passwordRepeated: e})}
+          type="password"
+          pattern="\S{6,}"
+          placeholder="password"
+          errorMsg="Пароли не совпадают"
+          isInvalid={this.state.passwordRepeated !== this.state.password}
+          handleErrorChange={(passwordRepeatedError, res) =>
+            this.setState({passwordRepeatedError}, res())
           }
         />
         <Button toggle={this._handleSubmit} caption="Регистрация" />

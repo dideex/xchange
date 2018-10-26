@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 
-import {H2, Input, Button} from '../common'
+import {H2, Input, Button, isAllPropsFalse} from '../common'
 
 const Wrap = styled('div')`
   & {
@@ -30,21 +30,13 @@ class ContorlPanel extends Component {
   }
 
   _handleSubmit = async () => {
-    const {usernameError, passwordError} = this.state
-    // inputs have touched
-    if (~[usernameError, passwordError].indexOf(null)) {
-      // call validate function from child directly
-      // await for promise has resolve
-      await Promise.all(this.inputs.map(input => input.handleChange()))
-      this._validate()
-    } else this._validate()
-  }
-
-  _validate = () => {
-    const {usernameError, passwordError} = this.state
-    // when some input has error throw exception
-    if (!usernameError && !passwordError) {
-      console.log("LOOOGGGIN!!!")
+    const {usernameError, passowrdError} = this.state
+    // fix double click for premade input's values
+    // or
+    // await this.inputs.map(async input => await input.handleChange())
+    await Promise.all(this.inputs.map(input => input.handleChange()))
+    if (isAllPropsFalse({usernameError, passowrdError})) {
+      console.log('Auth')
     } else console.log('invalid')
   }
 
