@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
+import {inject, observer} from 'mobx-react'
 
 import {H2, Input, Button, isAllPropsFalse} from '../common'
 
@@ -16,6 +17,8 @@ const Wrap = styled('div')`
 `
 
 // ContorlPanel component;
+@inject('userStore')
+@observer
 class ContorlPanel extends Component {
   constructor(props) {
     super(props)
@@ -23,9 +26,7 @@ class ContorlPanel extends Component {
   }
 
   state = {
-    username: '',
     usernameError: null,
-    password: '',
     passwordError: null,
   }
 
@@ -41,13 +42,20 @@ class ContorlPanel extends Component {
   }
 
   render() {
+    const {
+      username,
+      password,
+      changeUsername,
+      changePassword,
+      fetchData,
+    } = this.props.userStore
     return (
       <Wrap>
         <H2>Войти в личный кабинет</H2>
         <Input
           ref={child => (this.inputs[0] = child)}
-          value={this.state.username}
-          handleChange={e => this.setState({username: e})}
+          value={username}
+          handleChange={changeUsername}
           placeholder="login"
           pattern="[a-zа-яё]{2,}"
           errorMsg="Введите ваш логин"
@@ -58,8 +66,8 @@ class ContorlPanel extends Component {
         />
         <Input
           ref={child => (this.inputs[1] = child)}
-          value={this.state.password}
-          handleChange={e => this.setState({password: e})}
+          value={password}
+          handleChange={changePassword}
           type="password"
           pattern="\S{6,}"
           placeholder="password"
@@ -69,7 +77,7 @@ class ContorlPanel extends Component {
             this.setState({passwordError}, res())
           }
         />
-        <Button toggle={this._handleSubmit} caption="Войти" />
+        <Button toggle={fetchData} caption="Войти" />
       </Wrap>
     )
   }
