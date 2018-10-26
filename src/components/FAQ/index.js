@@ -65,6 +65,7 @@ const Answer = styled('div')`
   }
 `
 
+// FIXME: make blocks instead inputs
 // FAQ component;
 class FAQ extends Component {
   state = {

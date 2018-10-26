@@ -56,21 +56,16 @@ class UserData extends Component {
     loading: false,
   }
 
-  _handleSubmit = async () => {
-    const {username, email, income, outgo} = this.state
-    // inputs have touched
-    if (~[username, email, income, outgo].indexOf(null)) {
-      // call validate function from child directly
-      // await for promise has resolve
-      await Promise.all(this.inputs.map(input => input.handleChange()))
-      this._validate()
-    } else this._validate()
-  }
+  _isAllFalse = e =>
+    Object.values(e).filter(argument => argument === false).length ===
+    Object.values(e).length
 
-  _validate = () => {
-    const {username, email, income, outgo} = this.state
-    // when some input has error throw exception
-    if (!username && !email && !income && !outgo) {
+  _handleSubmit = async () => {
+    // fix double click for premade input's values
+    // or
+    // await this.inputs.map(async input => await input.handleChange())
+    await Promise.all(this.inputs.map(input => input.handleChange()))
+    if (this._isAllFalse(this.state)) {
       this.props.cashStore.createPayment()
       this.props.history.push('/podtverjdenie-oplati')
     } else console.log('invalid')

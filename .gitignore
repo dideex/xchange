@@ -3,6 +3,8 @@ yarn.lock
 # dependencies
 /node_modules
 
+# protected
+/src/config/jwt.json
 # testing
 /coverage
 /design
