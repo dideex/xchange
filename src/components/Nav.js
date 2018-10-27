@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {observer, inject} from 'mobx-react'
 import {Link} from 'react-router-dom'
 import styled from 'react-emotion'
 import {CSSTransition} from 'react-transition-group'
@@ -80,6 +81,8 @@ const LangMenu = styled('span')`
 `
 
 // Nav component;
+@inject('userStore')
+@observer
 class Nav extends Component {
   constructor(props) {
     super(props)
@@ -111,7 +114,9 @@ class Nav extends Component {
 
   _getStyle = () =>
     `${this.state.minimizeNav ? 'min-nav' : ''} ${this.state.hideMenu ? 'hide-nav' : ''}`
+
   render() {
+    const {login, token} = this.props.userStore
     return (
       <NavWrap className={this._getStyle()}>
         <Icons style={logoStyle} id="logo" />
@@ -124,7 +129,10 @@ class Nav extends Component {
           <Link to="/faq">FAQ</Link>
           <span
             onClick={() =>
-              this.setState(({showLangMenu}) => ({showLangMenu: !showLangMenu, showAuthMenu: false}))
+              this.setState(({showLangMenu}) => ({
+                showLangMenu: !showLangMenu,
+                showAuthMenu: false,
+              }))
             }
           >
             Rus
@@ -147,7 +155,10 @@ class Nav extends Component {
           <span
             className="auth-menu-item"
             onClick={() =>
-              this.setState(({showAuthMenu}) => ({showAuthMenu: !showAuthMenu, showLangMenu: false}))
+              this.setState(({showAuthMenu}) => ({
+                showAuthMenu: !showAuthMenu,
+                showLangMenu: false,
+              }))
             }
           >
             <Icons style={{width: '33px'}} id="user" />
@@ -157,10 +168,17 @@ class Nav extends Component {
               classNames="content-"
               unmountOnExit
             >
-              <LangMenu>
-                <Link to="/lichnii-kabinet">Войти</Link>
-                <Link to="/registracya">Регистрация</Link>
-              </LangMenu>
+              {token ? (
+                <LangMenu>
+                  <Link to="/lichnii-kabinet">{login}</Link>
+                  <p to="/signout">Выйти</p>
+                </LangMenu>
+              ) : (
+                <LangMenu>
+                  <Link to="/lichnii-kabinet">Войти</Link>
+                  <Link to="/registracya">Регистрация</Link>
+                </LangMenu>
+              )}
             </CSSTransition>
           </span>
         </MenuWrap>

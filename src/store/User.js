@@ -27,6 +27,7 @@ export default class User {
   token
 
   constructor() {
+    this.login = ''
     this.username = ''
     this.password = ''
     this.email = ''
@@ -39,6 +40,8 @@ export default class User {
     this.fetchData()
   }
 
+  @action('change login')
+  changeLogin = login => (this.login = login)
   @action('change username')
   changeUsername = username => (this.username = username)
   @action('change password')
@@ -67,11 +70,12 @@ export default class User {
       },
     })
       .then(res => res.json())
-      .then(({wallets, lastOperations, username, email}) => {
-        this.wallets = wallets || {}
-        this.lastOperations = lastOperations || []
+      .then(({wallets, lastOperations, username, email, login}) => {
+        this.login = login
         this.username = username
         this.email = email
+        this.wallets = wallets || {}
+        this.lastOperations = lastOperations || []
       })
       .catch(err => console.error(err))
   }
@@ -98,7 +102,7 @@ export default class User {
 
   @action('Get token with username and passoword')
   getToken = async () => {
-    const {username, password} = this
+    const {login: username, password} = this
     await fetch('http://localhost:3030/token', {
       method: 'POST',
       headers: {

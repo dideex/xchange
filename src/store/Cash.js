@@ -15,6 +15,8 @@ class Cash {
   paymentStatus
   @observable
   draggedBadgeCurrency
+  @observable
+  orderId
 
   constructor() {
     this.inputValue = 0
@@ -26,6 +28,7 @@ class Cash {
     this.draggedBadgeCurrency = null
     this.lessThenMinimal = false
     this.moreThenReseved = false
+    this.orderId = null
   }
 
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
@@ -135,7 +138,8 @@ class Cash {
         },
         body: JSON.stringify({...data}),
       })
-        .then(res => console.log('success add order', res))
+        .then(res => res.json())
+        .then(({result}) => (this.orderId = result._id))
         .catch(err => console.error(err))
     else
       fetch('http://localhost:3030/api/guestOrders', {
@@ -146,12 +150,26 @@ class Cash {
         },
         body: JSON.stringify({...data}),
       })
-        .then(res => console.log('success add guest order', res))
+        .then(res => res.json())
+        .then(({result}) => (this.orderId = result._id))
         .catch(err => console.error(err))
   }
 
   @action('cofirm payment')
-  cofirmPayment = () => (this.paymentStatus = 2)
+  cofirmPayment = () => {
+    this.paymentStatus = 2
+    fetch('http://localhost:3030/api/confirmOrder', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({_id: this.orderId}),
+    })
+      .then(res => res.json())
+      .then(({result}) => console.log(result))
+      .catch(err => console.error(err))
+  }
   @action('drag badge')
   handleDragBadge = id => (this.draggedBadgeCurrency = id)
 
