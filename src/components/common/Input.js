@@ -64,6 +64,7 @@ const ErrorField = styled('span')`
 // Input component;
 export class Input extends Component {
   static defaultProps = {
+    value: '',
     isInvalid: false,
     errorMsg: '',
     placeholder: '',
@@ -72,7 +73,6 @@ export class Input extends Component {
   }
   static propTypes = {
     handleChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
   }
 
   constructor(props) {

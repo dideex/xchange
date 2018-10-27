@@ -30,7 +30,6 @@ export const format = (value, mask) => {
 
 const _allowLastCharDot = value => {
   const lastChar = value[value.length - 1]
-  console.log(" LOG ___ lastChar ", lastChar )
   return lastChar === '.' ? '.' : lastChar === ',' ? '.' : ''
 }
 

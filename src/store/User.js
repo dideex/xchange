@@ -68,12 +68,31 @@ export default class User {
     })
       .then(res => res.json())
       .then(({wallets, lastOperations, username, email}) => {
-        console.log(" LOG ___ username ",  )
-        this.wallets = wallets
-        this.lastOperations = lastOperations
+        this.wallets = wallets || {}
+        this.lastOperations = lastOperations || []
         this.username = username
         this.email = email
       })
+      .catch(err => console.error(err))
+  }
+
+  @action('udpate user data')
+  updateInfo = async () => {
+    const token = getToken()
+    if (!token) return null
+    this.token = token
+
+    const {username, wallets, email} = this
+    await fetch('http://localhost:3030/api/userData', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `bearer ${this.token}`,
+      },
+      body: JSON.stringify({username, wallets, email}),
+    })
+      .then(res => console.log('updateInfo ___ res', res))
       .catch(err => console.error(err))
   }
 
