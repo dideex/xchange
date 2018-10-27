@@ -62,7 +62,11 @@ class UserData extends Component {
     // await this.inputs.map(async input => await input.handleChange())
     await Promise.all(this.inputs.map(input => input.handleChange()))
     if (isAllPropsFalse(this.state)) {
-      this.props.cashStore.createPayment()
+      this.props.cashStore.createPayment({
+        token: this.props.userStore.token,
+        fromWallet: this.props.userStore.wallets[this.props.walletIncome],
+        toWallet: this.props.userStore.wallets[this.props.walletOutgo],
+      })
       this.props.userStore.updateInfo()
       this.props.history.push('/podtverjdenie-oplati')
     } else console.log('invalid')

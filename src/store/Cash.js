@@ -112,11 +112,44 @@ class Cash {
       this.inputValue = this._calcInput(this.outputValue)
     }
   }
-  @action('create payment')
-  createPayment = () => {
+  @action('create payment and push to server')
+  createPayment = ({token, fromWallet, toWallet}) => {
     this._correctValuesLimits()
     this.paymentStatus = 1
+    const data = {
+      inputValue: this.inputValue,
+      outputValue: this.outputValue,
+      currencyInput: this.currencyInput,
+      currencyOutput: this.currencyOutput,
+      paymentStatus: 1,
+      fromWallet,
+      toWallet,
+    }
+    if (token)
+      fetch('http://localhost:3030/api/orders', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `bearer ${token}`,
+        },
+        body: JSON.stringify({...data}),
+      })
+        .then(res => console.log('success add order', res))
+        .catch(err => console.error(err))
+    else
+      fetch('http://localhost:3030/api/guestOrders', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({...data}),
+      })
+        .then(res => console.log('success add guest order', res))
+        .catch(err => console.error(err))
   }
+
   @action('cofirm payment')
   cofirmPayment = () => (this.paymentStatus = 2)
   @action('drag badge')
