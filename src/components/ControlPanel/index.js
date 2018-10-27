@@ -47,7 +47,7 @@ class ContorlPanel extends Component {
       password,
       changeUsername,
       changePassword,
-      fetchData,
+      getToken,
     } = this.props.userStore
     return (
       <Wrap>
@@ -77,7 +77,7 @@ class ContorlPanel extends Component {
             this.setState({passwordError}, res())
           }
         />
-        <Button toggle={fetchData} caption="Войти" />
+        <Button toggle={getToken} caption="Войти" />
       </Wrap>
     )
   }

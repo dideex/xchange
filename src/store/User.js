@@ -1,4 +1,11 @@
 import {observable, action} from 'mobx'
+import Cookie from 'js-cookie'
+
+const setToken = token => Cookie.set('token', token)
+
+const logout = () => Cookie.remove('token')
+
+const getToken = () => Cookie.get('token') || null
 
 // menu state
 export default class User {
@@ -45,8 +52,33 @@ export default class User {
     this.wallets[currencyLabel] = value
   }
 
-  @action('fetch data')
+  @action('fetch user data from server')
   fetchData = async () => {
+    const token = getToken()
+    if (!token) return null
+    this.token = token
+
+    await fetch('http://localhost:3030/api/userData', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `bearer ${this.token}`,
+      },
+    })
+      .then(res => res.json())
+      .then(({wallets, lastOperations, username, email}) => {
+        console.log(" LOG ___ username ",  )
+        this.wallets = wallets
+        this.lastOperations = lastOperations
+        this.username = username
+        this.email = email
+      })
+      .catch(err => console.error(err))
+  }
+
+  @action('Get token with username and passoword')
+  getToken = async () => {
     const {username, password} = this
     await fetch('http://localhost:3030/token', {
       method: 'POST',
@@ -57,30 +89,12 @@ export default class User {
       body: JSON.stringify({username, password}),
     })
       .then(res => res.json())
-      .then(({token}) => (this.token = token))
+      .then(({token}) => {
+        this.token = token
+        setToken(token)
+        this.fetchData()
+      })
       .catch(err => console.error(err))
-
-    console.log(' LOG ___ token ', this.token)
-    if (!this.token) return null
-    await fetch('http://localhost:3030/api/cats', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${this.token}`,
-      },
-    })
-      .then(res => res.json())
-      .then(data => console.log(data))
-      .catch(err => console.error(err))
-
-    this.wallets = {
-      '0': '0234 5678 1234 5678',
-      '1': '1765 4321 1234 5678',
-      '2': '2765 4321 1234 5678',
-      '3': '3765 4321 1234 5678',
-    }
-    // fetch data from server
   }
 }
 
