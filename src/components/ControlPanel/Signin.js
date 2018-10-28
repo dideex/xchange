@@ -24,11 +24,19 @@ class ContorlPanel extends Component {
   constructor(props) {
     super(props)
     this.inputs = []
+    this.wrap = React.createRef()
   }
 
   state = {
     usernameError: null,
     passwordError: null,
+  }
+
+  componentDidMount() {
+    window.scrollTo(
+      0,
+      this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
+    )
   }
 
   _handleSubmit = async () => {
@@ -43,16 +51,12 @@ class ContorlPanel extends Component {
   }
 
   render() {
-    const {
-      login,
-      password,
-      changeLogin,
-      changePassword,
-      getToken,
-    } = this.props.userStore
+    const {login, password, changeLogin, changePassword, getToken} = this.props.userStore
     return (
       <Wrap>
-        <H2>Войти в личный кабинет</H2>
+        <div ref={this.wrap}>
+          <H2>Войти в личный кабинет</H2>
+        </div>
         <Input
           ref={child => (this.inputs[0] = child)}
           value={login}

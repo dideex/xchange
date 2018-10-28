@@ -15,13 +15,27 @@ const Wrap = styled('div')`
 @inject('userStore')
 @observer
 class ContorlPanel extends Component {
+  constructor(props) {
+    super(props)
+    this.wrap = React.createRef()
+  }
+  componentDidMount() {
+    this.wrap.current &&
+      window.scrollTo(
+        0,
+        this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
+      )
+  }
+
   render() {
     const {token} = this.props.userStore
     if (!token) return <Signin />
     return (
-      <Wrap>
-        <H2>Личный кабинет</H2>
-      </Wrap>
+      <div ref={this.wrap}>
+        <Wrap>
+          <H2>Личный кабинет</H2>
+        </Wrap>
+      </div>
     )
   }
 }
