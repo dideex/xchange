@@ -26,7 +26,7 @@ export default class User {
   @observable
   token
 
-  constructor() {
+  _setInitalData = () => {
     this.login = ''
     this.username = ''
     this.password = ''
@@ -37,6 +37,10 @@ export default class User {
     this.moneyConverted = 0
     this.loading = false
     this.token = 0
+  }
+
+  constructor() {
+    this._setInitalData()
     this.fetchData()
   }
 
@@ -53,6 +57,12 @@ export default class User {
   @action('change wallet')
   changeWallet = currencyLabel => value => {
     this.wallets[currencyLabel] = value
+  }
+
+  @action('sigon out')
+  signout = () => {
+    this._setInitalData()
+    logout()
   }
 
   @action('fetch user data from server')
