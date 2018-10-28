@@ -25,6 +25,8 @@ export default class User {
   loading
   @observable
   token
+  @observable
+  errorMessage
 
   _setInitalData = () => {
     this.login = ''
@@ -36,7 +38,8 @@ export default class User {
     this.lastOperations = []
     this.moneyConverted = 0
     this.loading = false
-    this.token = 0
+    this.token = ''
+    this.errorMessage = null
   }
 
   constructor() {
@@ -44,16 +47,33 @@ export default class User {
     this.fetchData()
   }
 
+  _clearErr = () => (this.errorMessage = null)
+
   @action('change login')
-  changeLogin = login => (this.login = login)
+  changeLogin = login => {
+    this._clearErr()
+    this.login = login
+  }
   @action('change username')
-  changeUsername = username => (this.username = username)
+  changeUsername = username => {
+    this._clearErr()
+    this.username = username
+  }
   @action('change password')
-  changePassword = password => (this.password = password)
+  changePassword = password => {
+    this._clearErr()
+    this.password = password
+  }
   @action('change email')
-  changeEmail = email => (this.email = email)
+  changeEmail = email => {
+    this._clearErr()
+    this.email = email
+  }
   @action('change phone')
-  changePhone = phone => (this.phone = phone)
+  changePhone = phone => {
+    this._clearErr()
+    this.phone = phone
+  }
   @action('change wallet')
   changeWallet = currencyLabel => value => {
     this.wallets[currencyLabel] = value
@@ -128,6 +148,28 @@ export default class User {
         this.fetchData()
       })
       .catch(err => console.error(err))
+  }
+
+  @action('Signup new user')
+  signupUser = async () => {
+    const {login, email, username, password} = this
+    await fetch('http://localhost:3030/api/signupUser', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({login, email, username, password}),
+    })
+      .then(res => res.json())
+      .then(data => {
+        const {token, err} = data
+        if (!token) return (this.errorMessage = err)
+        this.token = token
+        setToken(token)
+        this.fetchData()
+      })
+      .catch(err => console.log('error', err))
   }
 }
 
