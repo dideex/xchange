@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
+import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 import {inject, observer} from 'mobx-react'
 
 import {H2} from '../common'
 import Signin from './Signin'
 import Orders from './Orders'
+import Details from './Details'
 
 const Wrap = styled('div')`
   & {
@@ -19,6 +21,7 @@ const SummaryWrap = styled('p')`
 `
 
 // ContorlPanel component;
+@withRouter
 @inject('userStore')
 @observer
 class ContorlPanel extends Component {
@@ -34,16 +37,43 @@ class ContorlPanel extends Component {
       )
   }
 
+  componentDidUpdate() {
+    this.wrap.current &&
+      window.scrollTo(
+        0,
+        this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
+      )
+  }
+
+  /* 
+      id,
+      inputValue,
+      currencyInputLabel,
+      walletTo,
+      outputValue,
+      currencyOutputLabel,
+      email,
+      username,
+      paymentStatus, 
+      */
+
   render() {
     const {token} = this.props.userStore
+    const {id} = this.props.match.params
+    const {email, username, orders} = this.props.userStore
+    const order = id ? orders.find(({_id}) => id === _id) : []
+    const data = {email, username, ...order, id}
     if (!token) return <Signin />
     return (
       <div ref={this.wrap}>
         <Wrap>
           <H2>Личный кабинет</H2>
+          {id && <Details {...data} />}
           <Orders />
-          <SummaryWrap><span>Завершено переводов на общую сумму:</span>
-          <strong>{`${this.props.userStore.moneyConverted} руб`}</strong> </SummaryWrap>
+          <SummaryWrap>
+            <span>Завершено переводов на общую сумму:</span>
+            <strong>{`${this.props.userStore.moneyConverted} руб`}</strong>{' '}
+          </SummaryWrap>
         </Wrap>
       </div>
     )

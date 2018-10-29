@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
+import { withRouter } from 'react-router-dom';
 import styled from 'react-emotion'
 import {Table, Column, AutoSizer} from 'react-virtualized'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
@@ -28,9 +29,11 @@ const StyledTable = styled('div')`
       margin-right: 10px;
     }
     .ReactVirtualized__Table__row {
+      cursor: pointer;
       padding-left: 10px;
       padding-right: 10px !important;
     }
+    .ReactVirtualized__Table__row:focus,
     .ReactVirtualized__Grid:focus {
       outline: none;
     }
@@ -80,6 +83,7 @@ const Status = styled('span')`
 `
 
 // Orders component;
+@withRouter
 @inject('userStore')
 @observer
 class Orders extends Component {
@@ -129,6 +133,7 @@ class Orders extends Component {
                 rowHeight={60}
                 rowCount={parsedOrders.length}
                 rowGetter={({index}) => parsedOrders[index]}
+                onRowClick={({rowData: {id}}) => this.props.history.push(`/lichnii-kabinet/${id}`)}
               >
                 <Column
                   label="№"
@@ -139,7 +144,7 @@ class Orders extends Component {
                       text={cellData}
                       onCopy={() => this.setState({CopyId: cellData})}
                     >
-                      <span title={cellData}>
+                      <span title={cellData} onClick={e => e.stopPropagation()}>
                         <Icons
                           id="copy"
                           style={{width: 23}}

@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 
-import {Button, format, currencyFormat, H2} from './common'
+import {Button, format, currencyFormat, H2, statusArray} from './common'
 import Svg from './HowTo/Step2'
 
 const Wrap = styled('div')`
@@ -47,6 +47,7 @@ const UserInfo = styled('div')`
   }
 `
 
+// TODO: add wallet for payment
 // TODO: add click to copy
 // PaymentProof component;
 @inject('userStore')
@@ -56,7 +57,6 @@ class PaymentProof extends Component {
   constructor(props) {
     super(props)
     this.wrap = React.createRef()
-    this._statusArray = ['Ожидает перевода', 'Ожидает подтверждения', 'Переведено']
   }
 
   componentDidMount() {
@@ -117,7 +117,7 @@ class PaymentProof extends Component {
           </p>
           <p>
             <span>Статус:</span>
-            <strong>{this._statusArray[cashStore.paymentStatus]}</strong>
+            <strong>{statusArray[cashStore.paymentStatus]}</strong>
           </p>
         </UserInfo>
         <Button

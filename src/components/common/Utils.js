@@ -39,5 +39,12 @@ export const currencyFormat = value => {
 }
 
 export const isAllPropsFalse = object =>
-Object.values(object).filter(argument => argument === false).length ===
-Object.values(object).length
+  Object.values(object).filter(argument => argument === false).length ===
+  Object.values(object).length
+
+export const statusArray = [
+  'Не создан',
+  'Ожидает перевода',
+  'Ожидает подтверждения',
+  'Переведено',
+]

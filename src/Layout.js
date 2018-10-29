@@ -35,6 +35,7 @@ class Layout extends Component {
           <Route exact path="/reservi" component={Reserved} />
           <Route exact path="/o-nas" component={AboutUs} />
           <Route exact path="/lichnii-kabinet" component={CP} />
+          <Route exact path="/lichnii-kabinet/:id" component={CP} />
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/" component={Home} />
           <Route component={PageNotFound} />
