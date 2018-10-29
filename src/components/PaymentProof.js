@@ -47,6 +47,7 @@ const UserInfo = styled('div')`
   }
 `
 
+// TODO: add click to copy
 // PaymentProof component;
 @inject('userStore')
 @inject('cashStore')

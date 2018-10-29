@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import styled from 'react-emotion'
 import {Table, Column, AutoSizer} from 'react-virtualized'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 import 'react-virtualized/styles.css'
 
-import {Loading, Colors, currencyFormat} from '../common'
+import {Loading, Colors, currencyFormat, Icons} from '../common'
 
 const StyledTable = styled('div')`
   & {
@@ -50,6 +51,14 @@ const StyledTable = styled('div')`
         background-color: ${Colors.accent};
       }
     }
+    svg {
+      cursor: pointer;
+    }
+    .copyied {
+      path {
+        fill: ${Colors.accent}!important;
+      }
+    }
   }
 `
 
@@ -60,6 +69,7 @@ const TableWrap = styled('div')`
 `
 
 const ColorMap = ['transparent', '#FC0000', '#FFE712', '#8FBE00']
+const StatusMap = ['Не создан', 'Ожидает перевода', 'Ожидает подтверждения', 'Переведено']
 
 const Status = styled('span')`
   display: block;
@@ -73,6 +83,10 @@ const Status = styled('span')`
 @inject('userStore')
 @observer
 class Orders extends Component {
+  state = {
+    CopyId: null,
+  }
+
   componentDidMount() {
     this.props.userStore.fetchOrdersByToken()
   }
@@ -116,7 +130,25 @@ class Orders extends Component {
                 rowCount={parsedOrders.length}
                 rowGetter={({index}) => parsedOrders[index]}
               >
-                <Column label="№" dataKey="id" width={100} />
+                <Column
+                  label="№"
+                  dataKey="id"
+                  width={100}
+                  cellRenderer={({cellData}) => (
+                    <CopyToClipboard
+                      text={cellData}
+                      onCopy={() => this.setState({CopyId: cellData})}
+                    >
+                      <span title={cellData}>
+                        <Icons
+                          id="copy"
+                          style={{width: 23}}
+                          className={this.state.CopyId === cellData && 'copyied'}
+                        />
+                      </span>
+                    </CopyToClipboard>
+                  )}
+                />
                 <Column label="Дата" dataKey="created" width={100} />
                 <Column
                   label="Сумма перевода"
@@ -135,7 +167,9 @@ class Orders extends Component {
                   label="Статус"
                   dataKey="paymentStatus"
                   width={100}
-                  cellRenderer={({cellData}) => <Status color={ColorMap[cellData]} />}
+                  cellRenderer={({cellData}) => (
+                    <Status title={StatusMap[cellData]} color={ColorMap[cellData]} />
+                  )}
                 />
               </Table>
             )}

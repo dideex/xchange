@@ -12,6 +12,12 @@ const Wrap = styled('div')`
   }
 `
 
+const SummaryWrap = styled('p')`
+  padding: 50px;
+  display: flex;
+  justify-content: space-between;
+`
+
 // ContorlPanel component;
 @inject('userStore')
 @observer
@@ -36,6 +42,8 @@ class ContorlPanel extends Component {
         <Wrap>
           <H2>Личный кабинет</H2>
           <Orders />
+          <SummaryWrap><span>Завершено переводов на общую сумму:</span>
+          <strong>{`${this.props.userStore.moneyConverted} руб`}</strong> </SummaryWrap>
         </Wrap>
       </div>
     )
