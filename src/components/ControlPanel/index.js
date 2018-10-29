@@ -4,6 +4,7 @@ import {inject, observer} from 'mobx-react'
 
 import {H2} from '../common'
 import Signin from './Signin'
+import Orders from './Orders'
 
 const Wrap = styled('div')`
   & {
@@ -34,6 +35,7 @@ class ContorlPanel extends Component {
       <div ref={this.wrap}>
         <Wrap>
           <H2>Личный кабинет</H2>
+          <Orders />
         </Wrap>
       </div>
     )

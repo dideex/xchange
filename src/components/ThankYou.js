@@ -38,7 +38,7 @@ export const ThankYou = () => (
         <Button
           caption="В личный кабинет"
           toggle={() => {
-            history.push(`/cp`)
+            history.push(`/lichnii-kabinet`)
           }}
         />
       )}

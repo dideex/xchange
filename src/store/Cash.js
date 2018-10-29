@@ -124,6 +124,8 @@ class Cash {
       outputValue: this.outputValue,
       currencyInput: this.currencyInput,
       currencyOutput: this.currencyOutput,
+      currencyInputLabel: this.currency[this.currencyInput].label,
+      currencyOutputLabel: this.currency[this.currencyOutput].label,
       paymentStatus: 1,
       fromWallet,
       toWallet,

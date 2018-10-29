@@ -115,8 +115,8 @@ class Comments extends Component {
       slidesToScroll: 1,
       lazyLoad: true,
       arrows: true,
-      prevArrow: <SampleNextArrow />,
-      nextArrow: <SamplePrevArrow />,
+      prevArrow: <SamplePrevArrow />,
+      nextArrow: <SampleNextArrow />,
     }
     return (
       <Section>

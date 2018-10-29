@@ -27,6 +27,8 @@ export default class User {
   token
   @observable
   errorMessage
+  @observable.ref
+  orders
 
   _setInitalData = () => {
     this.login = ''
@@ -40,6 +42,7 @@ export default class User {
     this.loading = false
     this.token = ''
     this.errorMessage = null
+    this.orders = []
   }
 
   constructor() {
@@ -85,7 +88,7 @@ export default class User {
     logout()
   }
 
-  @action('fetch user data from server')
+  @action('fetch user data from the server')
   fetchData = async () => {
     const token = getToken()
     if (!token) return null
@@ -170,6 +173,26 @@ export default class User {
         this.fetchData()
       })
       .catch(err => console.log('error', err))
+  }
+
+  @action('fetch orders by token')
+  fetchOrdersByToken = async () => {
+    if (!this.token) return null
+    this.loading = true
+    await fetch('http://localhost:3030/api/orders', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `bearer ${this.token}`,
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.orders = data
+      })
+      .catch(err => console.error(err))
+    this.loading = false
   }
 }
 
