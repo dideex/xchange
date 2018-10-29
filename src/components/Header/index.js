@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 
-import {Icons, container, AccentButton} from '../common'
+import {Icons, container, AccentButton, ScrollTo} from '../common'
 
 const StyledHeader = styled('header')`
   position: relative;
@@ -86,7 +86,6 @@ const manHappyStyle = {
   zIndex: 0,
 }
 
-
 // Header component;
 class Header extends Component {
   render() {
@@ -100,7 +99,13 @@ class Header extends Component {
             Здесь вы можете конвертировать Ваши деньги
             <br /> С минимальной комиссией
           </p>
-          <AccentButton toggle={() => {}}>Смотреть</AccentButton>
+          <AccentButton
+            toggle={() =>
+              ScrollTo(document.querySelector('main').getBoundingClientRect().top + 100)
+            }
+          >
+            Начать
+          </AccentButton>
           <Icons style={manAndBasketStyle} id="manAndBasket" />
           <Icons style={girlWithCoinsStyle} id="girlWithCoins" />
           <Icons style={manWithGraphisStyle} id="manWithGraphis" />

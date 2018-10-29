@@ -126,7 +126,7 @@ class UserData extends Component {
           handleErrorChange={(outgo, res) => this.setState({outgo}, res())}
         />
         <ButtonWrap>
-          <Button caption="Send" toggle={this._handleSubmit} />
+          <Button caption="Создать" toggle={this._handleSubmit} />
         </ButtonWrap>
       </StyledUserData>
     )
