@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 import {inject, observer} from 'mobx-react'
 
-import {H2} from '../common'
+import {H2, ScrollTo} from '../common'
 import Signin from './Signin'
 import Orders from './Orders'
 import Details from './Details'
@@ -39,23 +39,8 @@ class ContorlPanel extends Component {
 
   componentDidUpdate() {
     this.wrap.current &&
-      window.scrollTo(
-        0,
-        this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
-      )
+      ScrollTo(this.wrap.current.getBoundingClientRect().top - 150)
   }
-
-  /* 
-      id,
-      inputValue,
-      currencyInputLabel,
-      walletTo,
-      outputValue,
-      currencyOutputLabel,
-      email,
-      username,
-      paymentStatus, 
-      */
 
   render() {
     const {token} = this.props.userStore

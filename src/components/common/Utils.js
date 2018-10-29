@@ -48,3 +48,20 @@ export const statusArray = [
   'Ожидает подтверждения',
   'Переведено',
 ]
+
+export const ScrollTo = top => {
+  const V = 0.3
+  const w = window.pageYOffset
+  let start = null
+  requestAnimationFrame(step)
+  function step(time) {
+    if (start === null) start = time
+    let progress = time - start
+    let r =
+      top < 0 ? Math.max(w - progress / V, w + top) : Math.min(w + progress / V, w + top)
+    window.scrollTo(0, r)
+    if (r !== w + top) {
+      requestAnimationFrame(step)
+    }
+  }
+}
