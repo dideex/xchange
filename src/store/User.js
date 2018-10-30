@@ -194,6 +194,24 @@ export default class User {
       .catch(err => console.error(err))
     this.loading = false
   }
+
+  @action('fetch order without token')
+  fetchGuestOrder = async id => {
+    this.loading = true
+    const response = await fetch(`http://localhost:3030/api/order?_id=${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(data => data)
+      .catch(err => console.error(err))
+    this.loading = false
+    console.log(" LOG ___ response ", response )
+    if(response) return response
+  }
 }
 
 export const user = new User()

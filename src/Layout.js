@@ -14,6 +14,7 @@ import {
   ThankYou,
   PaymentProof,
   PageNotFound,
+  Order,
 } from './routes'
 
 // Layout component;
@@ -36,6 +37,7 @@ class Layout extends Component {
           <Route exact path="/o-nas" component={AboutUs} />
           <Route exact path="/lichnii-kabinet" component={CP} />
           <Route exact path="/lichnii-kabinet/:id" component={CP} />
+          <Route exact path="/perevod/:id" component={Order} />
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/" component={Home} />
           <Route component={PageNotFound} />

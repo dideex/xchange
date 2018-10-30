@@ -1,4 +1,5 @@
 import React from 'react'
+import {observer, inject} from 'mobx-react'
 import {Route} from 'react-router-dom'
 import styled from 'react-emotion'
 
@@ -7,7 +8,7 @@ import {H2, Button, Icons} from './common'
 const Wrap = styled('div')`
   & {
   }
-  h2{
+  h2 {
     text-decoration: underline;
   }
   & p,
@@ -26,25 +27,31 @@ const SubTitle = styled('p')`
 `
 
 // ThankYou stateless component;
-export const ThankYou = () => (
-  <Wrap>
-    <H2>Мы фиксируем Ваш перевод!</H2>
-    <SubTitle>
-      Сразу после того как Выши средства поступят на наши реквизиты, операторы переведут
-      на указаный вами кошелек нужную сумму
-    </SubTitle>
-    <Route
-      render={({history}) => (
-        <Button
-          caption="В личный кабинет"
-          toggle={() => {
-            history.push(`/lichnii-kabinet`)
-          }}
-        />
-      )}
-    />
-    <Icons id="mrGadget" />
-  </Wrap>
-)
+const ThankYou = ({userStore, cashStore}) => {
+  const url = userStore.token
+    ? '/lichnii-kabinet'
+    : `/perevod/${cashStore.orderId}`
+  const caption = userStore.token ? 'В личный кабинет' : 'Следить за переводом'
+  return (
+    <Wrap>
+      <H2>Мы фиксируем Ваш перевод!</H2>
+      <SubTitle>
+        Сразу после того как Выши средства поступят на наши реквизиты, операторы переведут
+        на указаный вами кошелек нужную сумму
+      </SubTitle>
+      <Route
+        render={({history}) => (
+          <Button
+            caption={caption}
+            toggle={() => {
+              history.push(url)
+            }}
+          />
+        )}
+      />
+      <Icons id="mrGadget" />
+    </Wrap>
+  )
+}
 
-export default ThankYou
+export default inject('cashStore')(inject('userStore')(observer(ThankYou)))

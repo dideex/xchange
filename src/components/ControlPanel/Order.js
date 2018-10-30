@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
+import {observer, inject} from 'mobx-react'
 import styled from 'react-emotion'
+import {withRouter} from 'react-router-dom'
 
-import {currencyFormat, statusArray} from '../common'
+import {currencyFormat, statusArray, Loading} from '../common'
 
 const Wrap = styled('div')`
   & {
@@ -48,23 +50,35 @@ const UserInfo = styled('div')`
   }
 `
 // DetailsComponent component;
+@withRouter
+@inject('userStore')
+@observer
 class DetailsComponent extends Component {
+  constructor(props) {
+    super(props)
+    this.id = props.match.params.id
+    this.state = {}
+  }
+
+  componentDidMount() {
+    this.props.userStore
+      .fetchGuestOrder(this.id)
+      .then(data => this.setState(data))
+  }
 
   render() {
+    if(this.props.userStore.loading) return <Loading />
     const {
-      id,
       inputValue,
       currencyInputLabel,
       toWallet,
       outputValue,
       currencyOutputLabel,
-      email,
-      username,
       paymentStatus,
-    } = this.props
+    } = this.state
     return (
       <Wrap>
-        <h3>Перевод № {id}</h3>
+        <h3>Перевод № {this.id}</h3>
         <Details>
           <div>
             <Details>
@@ -88,14 +102,6 @@ class DetailsComponent extends Component {
           </div>
         </Details>
         <UserInfo>
-          <p>
-            <span>Email:</span>
-            <strong>{email}</strong>
-          </p>
-          <p>
-            <span>ФИО:</span>
-            <strong>{username}</strong>
-          </p>
           <p>
             <span>Статус:</span>
             <strong>{statusArray[paymentStatus]}</strong>

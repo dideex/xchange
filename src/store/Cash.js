@@ -3,20 +3,13 @@ import {currency} from '../config/conf'
 
 // menu state
 class Cash {
-  @observable
-  inputValue
-  @observable
-  outputValue
-  @observable
-  currencyInput
-  @observable
-  currencyOutput
-  @observable
-  paymentStatus
-  @observable
-  draggedBadgeCurrency
-  @observable
-  orderId
+  @observable inputValue
+  @observable outputValue
+  @observable currencyInput
+  @observable currencyOutput
+  @observable paymentStatus
+  @observable draggedBadgeCurrency
+  @observable orderId
 
   constructor() {
     this.inputValue = 0
