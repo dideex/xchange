@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import styled from 'react-emotion'
 
-import {H2, Input, Icons, CurrencyIcons, SvgCurrency} from '../common'
+import {H2, Icons, CurrencyIcons, SvgCurrency, AccentBlock} from '../common'
 
 const ReservedWrap = styled('div')`
   & {
@@ -31,9 +31,9 @@ const InputWrap = styled('div')`
     left: 11px;
     top: 11px;
   }
-  & .currency-item input {
-    padding-left: 43px;
-    padding-right: 43px;
+  & .currency-item div {
+    padding-left: 23px;
+    padding-right: 23px;
   }
 `
 
@@ -55,7 +55,7 @@ class Reserved extends Component {
           {currency.map(({name}, i) => (
             <InputWrap key={i}>
               <div className="currency-item">
-                <Input value={this._getCurrencyReservedById(i)} handleChange={() => {}} />
+                <AccentBlock value={this._getCurrencyReservedById(i)}/>
                 <CurrencyIcons id={name} style={SvgCurrency} />
               </div>
             </InputWrap>

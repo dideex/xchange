@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled from 'react-emotion'
 import {CSSTransition} from 'react-transition-group'
 
-import {H2, Input, Icons, SvgCurrency} from '../common'
+import {H2, AccentBlock, Icons, SvgCurrency} from '../common'
 import {questions} from './mockQuestions.js'
 
 const ReservedWrap = styled('div')`
@@ -35,9 +35,9 @@ const InputWrap = styled('div')`
     transform: rotate(${({rotate}) => rotate});
     transition: transform 0.3s ease-in-out;
   }
-  & .currency-item input {
-    padding-left: 43px;
-    padding-right: 43px;
+  & .currency-item div {
+    padding-left: 23px;
+    padding-right: 23px;
     cursor: pointer;
   }
 `
@@ -65,7 +65,6 @@ const Answer = styled('div')`
   }
 `
 
-// FIXME: make blocks instead inputs
 // FAQ component;
 class FAQ extends Component {
   state = {
@@ -84,7 +83,7 @@ class FAQ extends Component {
           {questions.map(({question, answer}, i) => (
             <InputWrap key={i} rotate={this.state.active === i ? '0deg' : '-90deg'}>
               <div onClick={() => this._handleClick(i)} className="currency-item">
-                <Input value={question} handleChange={() => {}} />
+                <AccentBlock value={question}/>
                 <Icons id="chevron" style={SvgCurrency} />
               </div>
               <CSSTransition
