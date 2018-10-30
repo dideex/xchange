@@ -63,6 +63,7 @@ class Chart extends Component {
           />
           <Tooltip />
           <Area
+            fillOpacity={1}
             type="stepBefore"
             dataKey="USD"
             stroke={Colors.darkAccent}
@@ -74,7 +75,11 @@ class Chart extends Component {
   }
 
   render() {
-    return <ChartWrap>{this.state.loading ? <Loading size="big" /> : this._renderChart()}</ChartWrap>
+    return (
+      <ChartWrap>
+        {this.state.loading ? <Loading size="big" /> : this._renderChart()}
+      </ChartWrap>
+    )
   }
 }
 

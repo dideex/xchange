@@ -209,7 +209,6 @@ export default class User {
       .then(data => data)
       .catch(err => console.error(err))
     this.loading = false
-    console.log(" LOG ___ response ", response )
     if(response) return response
   }
 }

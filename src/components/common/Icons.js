@@ -322,13 +322,13 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
       <svg
         style={style}
         className={className}
-        viewBox="0 0 1443 916"
+        viewBox="0 0 1440 295"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           style={{fill: Colors.subAccent}}
-          d="M1443 0C761.55 8.49644 367 37.5 -0.000183105 292V915.5H1443V0Z"
+          d="M1439.5 294.5H0.5C263.303 123.383 457.877 36.3363 1439.5 0.5V294.5Z"
         />
       </svg>
     ),

@@ -6,15 +6,8 @@ import {Icons, Input, Colors, H2, Button, container, isAllPropsFalse} from '../c
 const FooterWrap = styled('footer')`
   & {
     margin-top: 150px;
-    padding-bottom: 200px;
     position: relative;
     background-image: linear-gradient(white 0, white);
-  }
-  & svg {
-    position: absolute;
-    top: 150px;
-    left: 0;
-    right: 0;
   }
   & label,
   & textarea {
@@ -26,6 +19,21 @@ const FooterWrap = styled('footer')`
     margin: 0 auto;
   }
 `
+
+const WithBackground = styled('div')`
+  & {
+    position: relative;
+    margin-top: -100px;
+    background: ${Colors.subAccent};
+    svg {
+      position: absolute;
+      bottom: calc(100% - 1px);
+      left: 0;
+      right: 0;
+    }
+  }
+`
+
 const Textarea = styled('textarea')`
   & {
     width: 100%;
@@ -65,11 +73,8 @@ const Copy = styled('div')`
     ${container} display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    right: 0;
     color: #fff;
+    padding: 350px 0 30px;
   }
   & strong,
   & a {
@@ -103,7 +108,6 @@ class Footer extends Component {
     } else console.log('error')
   }
 
-  // TODO: Rework static size of background's svg
   render() {
     return (
       <FooterWrap>
@@ -136,13 +140,15 @@ class Footer extends Component {
           />
           <Button caption="Отправить" toggle={this._handleSubmit} />
         </Form>
-        <Icons id="afterFooterBg" style={{width: '100%'}} />
-        <Copy>
-          <strong>XChange &copy; 2009 - 2018</strong>
-          <a href="vk.com" target="_blank">
-            Created by vk.com
-          </a>
-        </Copy>
+        <WithBackground>
+          <Icons id="afterFooterBg" style={{width: '100%'}} />
+          <Copy>
+            <strong>XChange &copy; 2009 - 2018</strong>
+            <a href="vk.com" target="_blank">
+              Created by vk.com
+            </a>
+          </Copy>
+        </WithBackground>
       </FooterWrap>
     )
   }

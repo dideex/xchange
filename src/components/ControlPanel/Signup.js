@@ -84,7 +84,7 @@ class Signup extends Component {
       token,
       errorMessage,
     } = this.props.userStore
-
+    console.log(token)
     return (
       <Wrap>
         <div ref={this.wrap}>
