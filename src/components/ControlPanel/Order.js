@@ -67,7 +67,7 @@ class DetailsComponent extends Component {
   }
 
   render() {
-    if(this.props.userStore.loading) return <Loading />
+    if(this.props.userStore.loading) return <Loading size='small' />
     const {
       inputValue,
       currencyInputLabel,

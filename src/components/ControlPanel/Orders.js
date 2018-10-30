@@ -97,7 +97,7 @@ class Orders extends Component {
 
   render() {
     const {orders, loading} = this.props.userStore
-    if (loading) return <Loading />
+    if (loading) return <Loading size="small" />
     const parsedOrders = orders.map(
       ({
         _id,
