@@ -50,6 +50,7 @@ class Cash {
     this.currency[this.currencyInput].price_usd
 
   _correctValuesLimits = () => {
+    console.log(" LOG ___ this.currency ", this.currency )
     const {minimal} = this.currency[this.currencyInput]
     const {reserve} = this.currency[this.currencyOutput]
     if (this.inputValue < minimal) {
@@ -166,8 +167,7 @@ class Cash {
     })
       .then(response => response.json())
       .then(data => {
-        this.currency = data || currency
-        console.log(" LOG ___ this.currency ", this.currency )
+        this.currency = data.map((row, i) => ({...row, id: i}))
       })
       .catch(err => console.error(err))
     this.loading = false
