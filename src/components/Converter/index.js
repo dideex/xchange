@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import styled from 'react-emotion'
-import {DragDropContextProvider, DragDropContext} from 'react-dnd'
+import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
 import CustomerDragLayer from './CustomerDragLayer'

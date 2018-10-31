@@ -33,18 +33,16 @@ export default class CurrencyBadge extends Component {
 
   render() {
     const {isDragging, connectDragSource, name, id} = this.props
-    const background = isDragging ? Colors.accent : 'transparent'
-    const color = isDragging ? '#fff' : Colors.black
     return (
       connectDragSource &&
       connectDragSource(
         <div style={{display: 'inline-block'}}>
           <Label
+            isDragging={isDragging}
+            big={true}
             icon={id}
             caption={name}
             style={{
-              background,
-              color,
               cursor: 'move',
               flex: '33% 0 0',
               zIndex: 1,
