@@ -10,11 +10,12 @@ class Cash {
   @observable paymentStatus
   @observable draggedBadgeCurrency
   @observable orderId
+  @observable loading
+  @observable.ref currency
 
   constructor() {
     this.inputValue = 0
     this.outputValue = 0
-    this.currency = currency
     this.currencyInput = 0
     this.currencyOutput = 3
     this.paymentStatus = 0 // 0 - null, 1 - created, 2 - sended, 3 - closed
@@ -22,6 +23,9 @@ class Cash {
     this.lessThenMinimal = false
     this.moreThenReseved = false
     this.orderId = null
+    this.loading = false
+    this.currency = currency
+    this.fetchCurrency()
   }
 
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
@@ -148,6 +152,25 @@ class Cash {
         .then(res => res.json())
         .then(({result}) => (this.orderId = result._id))
         .catch(err => console.error(err))
+  }
+
+  @action('get currency from the server')
+  fetchCurrency = async () => {
+    this.loading = true
+    await fetch('http://localhost:3030/api/currency', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.currency = data || currency
+        console.log(" LOG ___ this.currency ", this.currency )
+      })
+      .catch(err => console.error(err))
+    this.loading = false
   }
 
   @action('cofirm payment')

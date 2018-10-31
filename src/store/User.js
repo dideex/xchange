@@ -9,26 +9,16 @@ const getToken = () => Cookie.get('token') || null
 
 // menu state
 export default class User {
-  @observable
-  username
-  @observable
-  email
-  @observable
-  phone
-  @observable
-  wallets
-  @observable
-  lastOperations
-  @observable
-  moneyConverted
-  @observable
-  loading
-  @observable
-  token
-  @observable
-  errorMessage
-  @observable.ref
-  orders
+  @observable username
+  @observable email
+  @observable phone
+  @observable wallets
+  @observable lastOperations
+  @observable moneyConverted
+  @observable loading
+  @observable token
+  @observable errorMessage
+  @observable.ref orders
 
   _setInitalData = () => {
     this.login = ''
