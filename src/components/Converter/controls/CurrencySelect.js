@@ -69,9 +69,10 @@ class CurrencySelect extends Component {
 
   _getSelectionField = () => (
     <SelectBlock className={this.props.isOpen ? 'dropdown__content' : ''}>
-      {this.props.currency.map(({name, id}, i) => (
+      {this.props.currency.map(({name, id, icon}, i) => (
         <Label
           key={i}
+          icon={icon}
           onClick={this._handleSelect.bind(null, id)}
           caption={name}
           style={{flex: '33% 0 0'}}

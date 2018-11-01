@@ -50,7 +50,7 @@ const IconWrap = ({style}) => (
 c-49.6,83.2-138.3,140.3-240.8,146c-5.6,0.3-11.3,0.5-17,0.5C134.3,600,0,465.7,0,300S134.3,0,300,0S600,134.3,600,300z"
     />
     <path
-      style={{fill: Colors.accent}}
+      style={{fill: Colors.darkAccent}}
       d="M443,160.7c-36.2-36.9-86.6-59.8-142.4-59.8c-110.2,0-199.5,89.3-199.5,199.5c0,54.4,21.8,103.8,57.2,139.8l0,0
 l0.6,0.6c0.4,0.4,0.9,0.9,1.3,1.3l157,157.4c102.5-5.7,191.2-62.8,240.8-146c20.3-34.1,34.1-72.5,39.6-113.7c1-7.4,1.7-15,2.1-22.6
 L443,160.7z"
@@ -62,10 +62,11 @@ L443,160.7z"
 export class Label extends Component {
   static propTypes = {
     caption: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
   }
 
   render() {
-    const {caption, style, onClick, big = false, isDragging = false} = this.props
+    const {caption, style, onClick, big = false, isDragging = false, icon} = this.props
 
     const background = isDragging ? Colors.accent : 'transparent'
     const color = isDragging ? '#fff' : Colors.black
@@ -76,7 +77,7 @@ export class Label extends Component {
         <Svg
           className="currency_coin"
           style={{...SvgCurrency, zIndex: 1, opacity}}
-          id={caption}
+          id={icon}
         />
         <span style={{marginLeft: isDragging ? -60 : 0}}>{caption}</span>
       </StyledLabel>

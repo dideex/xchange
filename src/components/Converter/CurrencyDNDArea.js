@@ -135,9 +135,14 @@ class CurrencyDNDArea extends Component {
         </SearchWrap>
         <CurrencyBadgeOverflowWrapper>
           <CurrencyBadgeItems>
-            {currency.filter(this._handleFilter).map(({name, id}, i) => (
+            {currency.filter(this._handleFilter).map(({name, id, icon}, i) => (
               <CurrencyBadgeItem onMouseDown={this._handleMouseDown} key={i}>
-                <CurrencyBadge id={id} name={name} cursorPosition={{dragX, dragY}} />
+                <CurrencyBadge
+                  id={id}
+                  icon={icon}
+                  name={name}
+                  cursorPosition={{dragX, dragY}}
+                />
               </CurrencyBadgeItem>
             ))}
           </CurrencyBadgeItems>

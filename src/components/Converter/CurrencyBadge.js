@@ -4,7 +4,7 @@ import {DragSource} from 'react-dnd'
 import {getEmptyImage} from 'react-dnd-html5-backend'
 import PropTypes from 'prop-types'
 
-import {Label, Colors} from '../common'
+import {Label} from '../common'
 
 const collect = (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
@@ -13,7 +13,7 @@ const collect = (connect, monitor) => ({
 })
 
 const spec = {
-  beginDrag: ({id, name, cursorPosition}) => ({id, name, cursorPosition}),
+  beginDrag: ({id, icon, cursorPosition}) => ({id, icon, cursorPosition}),
   endDrag(props, monitor) {
     console.log('end drag ', props, monitor)
   },
@@ -24,7 +24,8 @@ const spec = {
 export default class CurrencyBadge extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
   }
 
   componentDidMount() {
@@ -32,15 +33,15 @@ export default class CurrencyBadge extends Component {
   }
 
   render() {
-    const {isDragging, connectDragSource, name, id} = this.props
+    const {isDragging, connectDragSource, name, icon} = this.props
     return (
       connectDragSource &&
       connectDragSource(
         <div style={{display: 'inline-block'}}>
           <Label
+            icon={icon}
             isDragging={isDragging}
             big={true}
-            icon={id}
             caption={name}
             style={{
               cursor: 'move',

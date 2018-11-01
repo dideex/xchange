@@ -80,7 +80,7 @@ class InputField extends Component {
         <div onMouseLeave={() => this.setState({open: false})}>
           <FieldStyled style={{backgroundColor}}>
             <BadgeIcon>
-              <CurrencyIcons style={SvgCurrency} id={currency[currencyId].name} />
+              <CurrencyIcons style={SvgCurrency} id={currency[currencyId].icon} />
             </BadgeIcon>
             <Input value={currencyFormat(inputValue)} handleChange={changeInput} />
             <Select

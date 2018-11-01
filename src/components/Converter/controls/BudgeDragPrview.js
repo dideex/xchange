@@ -3,10 +3,10 @@ import Icon from '../../common/CurrencyIcons'
 
 // BudgeDragPrview component;
 export const BudgeDragPrview = props => {
-  const {name} = props
+  const {icon} = props
   return (
     <div>
-      <Icon id={name} />
+      <Icon id={icon} />
     </div>
   )
 }
