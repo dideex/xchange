@@ -76,7 +76,7 @@ const StyledInput = styled('input')`
   }
   &:active,
   &:focus {
-    border-bottom-color: #000;
+    border-bottom-color: #323232;
   }
 `
 const SearchWrap = styled('div')`
@@ -109,9 +109,9 @@ class CurrencyDNDArea extends Component {
     dragY: 0,
   }
 
-  _handleFilter = ({name, label}) => {
+  _handleFilter = ({name, label, icon}) => {
     const regex = new RegExp(this.state.search, 'i')
-    return regex.test(name) || regex.test(label)
+    return regex.test(name) || regex.test(label) || regex.test(icon)
   }
 
   _handleMouseDown = e => {

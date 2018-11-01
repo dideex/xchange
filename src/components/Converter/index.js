@@ -4,6 +4,7 @@ import styled from 'react-emotion'
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
+import ExchangeRate from './ExchangeRate'
 import CustomerDragLayer from './CustomerDragLayer'
 import Field from './InputField'
 import UserData from './UserData'
@@ -28,6 +29,11 @@ const CurrencyFieldWrap = styled('div')`
     flex: 37% 0 0;
   }
 `
+const CurrencyRateWrap = styled('div')`
+  & {
+    flex: 26% 0 0;
+  }
+`
 const TipBlock = styled('div')`
   & {
     color: #fff;
@@ -38,7 +44,7 @@ const TipBlock = styled('div')`
   }
 `
 
-const CurrencyTitle = styled('h2')`
+export const CurrencyTitle = styled('h2')`
   font-family: 'Roboto Slab';
   font-size: 30px;
   text-align: center;
@@ -78,6 +84,12 @@ export default class Index extends Component {
               <span>Минимум: {getMinimalAmount}</span>
             </TipBlock>
           </CurrencyFieldWrap>
+          <CurrencyRateWrap>
+            <ExchangeRate
+              inputCurrency={currency[currencyInput].price_usd}
+              outputCurrency={currency[currencyOutput].price_usd}
+            />
+          </CurrencyRateWrap>
           <CurrencyFieldWrap className="right__input">
             <CurrencyTitle>Получаете</CurrencyTitle>
             <Field
