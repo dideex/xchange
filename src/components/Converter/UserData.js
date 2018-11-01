@@ -4,7 +4,7 @@ import styled from 'react-emotion'
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import {Input, Button, isAllPropsFalse} from '../common'
+import {Input, Button, isAllPropsFalse, Colors} from '../common'
 
 const StyledUserData = styled('div')`
   & {
@@ -26,6 +26,64 @@ const ButtonWrap = styled('div')`
     button {
       width: 37%;
     }
+  }
+`
+
+const CheckboxWrap = styled('div')`
+  & {
+    position: relative;
+    flex: 37% 0 0;
+    margin: 0 auto 30px;
+    text-align: center;
+    padding-left: 30px;
+    input {
+      display: none;
+    }
+  }
+
+  label::after {
+    content: '';
+    position: absolute;
+    display: block;
+    left: 13px;
+    top: 0;
+    bottom: 7px;
+    margin: auto 0;
+    border-bottom: 4px solid ${Colors.accent};
+    border-right: 4px solid ${Colors.accent};
+    width: 11px;
+    height: 22px;
+    border-radius: 5px;
+    transform: rotate(45deg) scale(0);
+    transition: transform 150ms ease-in-out;
+  }
+  label.checked::after {
+    transform: rotate(45deg) scale(1);
+  }
+  label::before {
+    content: '';
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    width: 30px;
+    height: 30px;
+    z-index: 0;
+    border: rgba(255, 255, 255, 0.4) 5px solid;
+    border-radius: 5px;
+    background: #fff;
+    background-clip: padding-box;
+    transition: border-color 0.3s ease-in-out;
+  }
+  &:hover label::before {
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+  &:hover label::before,
+  &:hover label::before {
+    outline: none;
+    border-color: #fff;
   }
 `
 
@@ -54,9 +112,12 @@ class UserData extends Component {
     income: null,
     outgo: null,
     loading: false,
+    agree: false,
   }
 
-  _handleSubmit = async () => {
+  _handleCheckboxChange = () => this.setState(({agree}) => ({agree: !agree}))
+
+  hanldeSubmit = async () => {
     // fix double click for premade input's values
     // or
     // await this.inputs.map(async input => await input.handleChange())
@@ -125,8 +186,27 @@ class UserData extends Component {
           isInvalid={this.state.outgo}
           handleErrorChange={(outgo, res) => this.setState({outgo}, res())}
         />
+        <CheckboxWrap>
+          <label
+            className={this.state.agree ? 'checked' : ''}
+            htmlFor="agree"
+            onClick={this._handleCheckboxChange}
+          >
+            <input
+              id="agree"
+              type="checkbox"
+              onChange={this._handleCheckboxChange}
+              checked={this.state.agree}
+            />
+            Я согласен на обработку личных данных
+          </label>
+        </CheckboxWrap>
         <ButtonWrap>
-          <Button caption="Создать" toggle={this._handleSubmit} />
+          <Button
+            disabled={!this.state.agree}
+            caption="Создать"
+            toggle={this.hanldeSubmit}
+          />
         </ButtonWrap>
       </StyledUserData>
     )

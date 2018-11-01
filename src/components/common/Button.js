@@ -10,7 +10,7 @@ const StyledButton = styled('button')`
     background: #fff;
     background-clip: padding-box;
     transition: border-color 0.3s ease-in-out;
-    cursor: pointer;
+    cursor: ${({cursor}) => cursor};
   }
   &:hover {
     border-color: rgba(255, 255, 255, 0.7);
@@ -29,8 +29,15 @@ export class Button extends Component {
   }
 
   render() {
-    const {caption, toggle} = this.props
-    return <StyledButton onClick={toggle}>{caption}</StyledButton>
+    const {caption, toggle, disabled = false} = this.props
+    return (
+      <StyledButton
+        cursor={disabled ? 'not-allowed' : 'pointer'}
+        onClick={disabled ? () => {} : toggle}
+      >
+        {caption}
+      </StyledButton>
+    )
   }
 }
 

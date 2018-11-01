@@ -25,15 +25,18 @@ const InputWrap = styled('div')`
     position: relative;
     flex: 37% 0 0;
     margin-bottom: 50px;
-  }
-  & .currency-item svg {
-    position: absolute;
-    left: 11px;
-    top: 11px;
-  }
-  & .currency-item div {
-    padding-left: 23px;
-    padding-right: 23px;
+    p {
+      padding-left: 11px;
+    }
+    .currency-item svg {
+      position: absolute;
+      left: 11px;
+      bottom: 11px;
+    }
+    .currency-item div {
+      padding-left: 23px;
+      padding-right: 23px;
+    }
   }
 `
 
@@ -52,11 +55,12 @@ class Reserved extends Component {
       <ReservedWrap>
         <H2>Наши резервы</H2>
         <ContentWrap>
-          {currency.map(({name}, i) => (
+          {currency.map(({icon, name}, i) => (
             <InputWrap key={i}>
+              <p>{name}</p>
               <div className="currency-item">
-                <AccentBlock value={this._getCurrencyReservedById(i)}/>
-                <CurrencyIcons id={name} style={SvgCurrency} />
+                <AccentBlock value={this._getCurrencyReservedById(i)} />
+                <CurrencyIcons id={icon} style={SvgCurrency} />
               </div>
             </InputWrap>
           ))}
