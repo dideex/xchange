@@ -9,12 +9,17 @@ const SvgWrap = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 `
-
+const heightMap = {
+  small: 200,
+  inline: 50,
+  big: 500,
+}
 // Loading stateless component;
 export const Loading = ({size}) => {
   const width = size === 'inline' ? '32px' : '100%'
-  const height = size === 'small' ? 200 : size === 'inline' ? 50 : 500
+  const height = heightMap[size]
   switch (size) {
     case 'inline':
     case 'small':

@@ -3,7 +3,7 @@ import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 import CurrencyBadge from './CurrencyBadge'
 
-import {Icons, Colors} from '../common'
+import {Icons, Colors, Loading} from '../common'
 
 const CurrencyBadgeItem = styled('div')`
   & {
@@ -120,7 +120,7 @@ class CurrencyDNDArea extends Component {
   }
 
   render() {
-    const {currency} = this.props
+    const {currency, loading} = this.props
     const {dragX, dragY} = this.state
     return (
       <CurrencyContainer>
@@ -133,20 +133,24 @@ class CurrencyDNDArea extends Component {
             placeholder="Найти"
           />
         </SearchWrap>
-        <CurrencyBadgeOverflowWrapper>
-          <CurrencyBadgeItems>
-            {currency.filter(this._handleFilter).map(({name, id, icon}, i) => (
-              <CurrencyBadgeItem onMouseDown={this._handleMouseDown} key={i}>
-                <CurrencyBadge
-                  id={id}
-                  icon={icon}
-                  name={name}
-                  cursorPosition={{dragX, dragY}}
-                />
-              </CurrencyBadgeItem>
-            ))}
-          </CurrencyBadgeItems>
-        </CurrencyBadgeOverflowWrapper>
+        {loading && currency.length === 0 ? (
+          <Loading size="small" />
+        ) : (
+          <CurrencyBadgeOverflowWrapper>
+            <CurrencyBadgeItems>
+              {currency.filter(this._handleFilter).map(({name, id, icon}, i) => (
+                <CurrencyBadgeItem onMouseDown={this._handleMouseDown} key={i}>
+                  <CurrencyBadge
+                    id={id}
+                    icon={icon}
+                    name={name}
+                    cursorPosition={{dragX, dragY}}
+                  />
+                </CurrencyBadgeItem>
+              ))}
+            </CurrencyBadgeItems>
+          </CurrencyBadgeOverflowWrapper>
+        )}
       </CurrencyContainer>
     )
   }

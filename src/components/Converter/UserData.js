@@ -118,21 +118,30 @@ class UserData extends Component {
   _handleCheckboxChange = () => this.setState(({agree}) => ({agree: !agree}))
 
   hanldeSubmit = async () => {
+    this.setState({loading: true})
     // fix double click for premade input's values
     // or
     // await this.inputs.map(async input => await input.handleChange())
     await Promise.all(this.inputs.map(input => input.handleChange()))
     const {agree, loading, ...state} = this.state
     if (isAllPropsFalse(state)) {
-      this.props.cashStore.createPayment({
-        token: this.props.userStore.token,
-        fromWallet: this.props.userStore.wallets[this.props.walletIncome],
-        toWallet: this.props.userStore.wallets[this.props.walletOutgo],
-      })
-      this.props.userStore
-        .updateInfo()
-        .then(() => this.props.history.push('/podtverjdenie-oplati'))
-        .catch(err => console.error(err))
+      this.props.cashStore
+        .createPayment({
+          token: this.props.userStore.token,
+          fromWallet: this.props.userStore.wallets[this.props.walletIncome],
+          toWallet: this.props.userStore.wallets[this.props.walletOutgo],
+        })
+        .then(() => {
+          this.props.userStore
+            .updateInfo()
+            .then(() => {
+              console.log('userStore done')
+            })
+            .catch(err => console.error(err))
+          this.props.history.push('/podtverjdenie-oplati')
+          this.setState({loadng: false})
+        })
+        .catch(err => console.error('createpayment erorr', err))
     } else console.log('invalid')
   }
 
@@ -144,7 +153,6 @@ class UserData extends Component {
       email,
       wallets,
       changeWallet,
-      loading
     } = this.props.userStore
     return (
       <StyledUserData>
@@ -210,7 +218,7 @@ class UserData extends Component {
             disabled={!this.state.agree}
             caption="Создать"
             toggle={this.hanldeSubmit}
-            loading={loading}
+            loading={this.state.loading}
           />
         </ButtonWrap>
       </StyledUserData>

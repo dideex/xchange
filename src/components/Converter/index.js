@@ -57,6 +57,7 @@ export const CurrencyTitle = styled('h2')`
 export default class Index extends Component {
   render() {
     const {
+      loading,
       inputValue,
       outputValue,
       changeInput,
@@ -86,8 +87,9 @@ export default class Index extends Component {
           </CurrencyFieldWrap>
           <CurrencyRateWrap>
             <ExchangeRate
-              inputCurrency={`${currency[currencyInput].price_usd}`}
-              outputCurrency={`${currency[currencyOutput].price_usd}`}
+              loading={loading && currency.length === 0}
+              inputCurrency={`${currency.length && currency[currencyInput].price_usd}`}
+              outputCurrency={`${currency.length && currency[currencyOutput].price_usd}`}
             />
           </CurrencyRateWrap>
           <CurrencyFieldWrap className="right__input">
@@ -104,7 +106,7 @@ export default class Index extends Component {
           </CurrencyFieldWrap>
         </CurrencyFieldsWrap>
         <CustomerDragLayer />
-        <CurrencyDNDArea currency={currency} />
+        <CurrencyDNDArea currency={currency} loading={loading}/>
         <UserData walletIncome={currencyInput} walletOutgo={currencyOutput} />
       </Wrap>
     )

@@ -1,5 +1,4 @@
 import {observable, action, computed} from 'mobx'
-import {currency} from '../config/conf'
 
 // menu state
 class Cash {
@@ -25,7 +24,7 @@ class Cash {
     this.moreThenReseved = false
     this.orderId = null
     this.loading = false
-    this.currency = currency
+    this.currency = []
     this.errorMessage = ''
     this.fetchCurrency()
   }
@@ -115,68 +114,77 @@ class Cash {
     }
   }
   @action('create payment and push to server')
-  createPayment = async ({token, fromWallet, toWallet}) => {
+  createPayment = ({token, fromWallet, toWallet}) => {
     this.loading = true
     this._correctValuesLimits()
-    await this.fetchCurrency()
-    this.paymentStatus = 1
-    const data = {
-      inputValue: this.inputValue,
-      outputValue: this.outputValue,
-      currencyInput: this.currencyInput,
-      currencyOutput: this.currencyOutput,
-      currencyInputLabel: this.currency[this.currencyInput].label,
-      currencyOutputLabel: this.currency[this.currencyOutput].label,
-      paymentStatus: 1,
-      fromWallet,
-      toWallet,
-    }
-    if (token)
-      await fetch('http://localhost:3030/api/orders', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `bearer ${token}`,
-        },
-        body: JSON.stringify({...data}),
+    return this.fetchCurrency()
+      .then(async () => {
+        this.paymentStatus = 1
+        const data = {
+          inputValue: this.inputValue,
+          outputValue: this.outputValue,
+          currencyInput: this.currencyInput,
+          currencyOutput: this.currencyOutput,
+          currencyInputLabel: this.currency[this.currencyInput].label,
+          currencyOutputLabel: this.currency[this.currencyOutput].label,
+          paymentStatus: 1,
+          fromWallet,
+          toWallet,
+        }
+        if (token)
+          await fetch('http://localhost:3030/api/orders', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `bearer ${token}`,
+            },
+            body: JSON.stringify({...data}),
+          })
+            .then(res => res.json())
+            .then(({result}) => (this.orderId = result._id))
+            .catch(err => (this.errorMessage = err))
+        else
+          await fetch('http://localhost:3030/api/guestOrders', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({...data}),
+          })
+            .then(res => res.json())
+            .then(({result}) => (this.orderId = result._id))
+            .catch(err => (this.errorMessage = err))
+        this.loading = false
       })
-        .then(res => res.json())
-        .then(({result}) => (this.orderId = result._id))
-        .catch(err => this.errorMessage = err)
-    else
-      await fetch('http://localhost:3030/api/guestOrders', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({...data}),
-      })
-        .then(res => res.json())
-        .then(({result}) => (this.orderId = result._id))
-        .catch(err => this.errorMessage = err)
-    this.loading = false
+      .catch(err => console.error('createPayment', err))
   }
 
   @action('get currency from the server')
-  fetchCurrency = async () => {
-    this.loading = true
-    await fetch('http://localhost:3030/api/currency', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        this.currency = data.map((row, i) => ({...row, id: i}))
+  fetchCurrency = async () =>
+    new Promise((resolve, reject) => {
+      this.loading = true
+      fetch('http://localhost:3030/api/currency', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
       })
-      .catch(err => console.error(err))
-    this.loading = false
-    return Promise.resolve()
-  }
+        .then(response => response.json())
+        .then(data => {
+          this.currency = data.map((row, i) => ({...row, id: i}))
+          this.loading = false
+          console.log(' fetchCurrency ___ resolve ', data)
+          resolve()
+        })
+        .catch(err => {
+          console.error(err)
+          this.loading = false
+          reject()
+        })
+    })
 
   @action('cofirm payment')
   cofirmPayment = () => {
@@ -210,6 +218,7 @@ class Cash {
   @computed
   get getMinimalAmount() {
     const formatter = new Intl.NumberFormat('ru', 'currency')
+    if(!this.currency.length) return null
     return `${formatter.format(this.currency[this.currencyInput].minimal)} ${
       this.currency[this.currencyInput].label
     }`
@@ -217,6 +226,7 @@ class Cash {
   @computed
   get getCurrencyReserve() {
     const formatter = new Intl.NumberFormat('ru', 'currency')
+    if(!this.currency.length) return null
     return `${formatter.format(this.currency[this.currencyOutput].reserve)} ${
       this.currency[this.currencyOutput].label
     }`
