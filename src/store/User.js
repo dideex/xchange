@@ -179,7 +179,8 @@ export default class User {
     })
       .then(res => res.json())
       .then(data => {
-        this.orders = data
+        if(data.err) this.errorMessage = data.err
+        else this.orders = data
       })
       .catch(err => console.error(err))
     this.loading = false

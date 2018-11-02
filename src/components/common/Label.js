@@ -62,7 +62,7 @@ L443,160.7z"
 export class Label extends Component {
   static propTypes = {
     caption: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.string,
   }
 
   render() {

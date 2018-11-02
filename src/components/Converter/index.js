@@ -75,7 +75,7 @@ export default class Index extends Component {
           <CurrencyFieldWrap className="left__input">
             <CurrencyTitle>Отдаете</CurrencyTitle>
             <Field
-              inputValue={inputValue}
+              inputValue={`${inputValue}`}
               changeInput={changeInput}
               onSelectChange={setCurrencyInput}
               currencyId={currencyInput}
@@ -86,14 +86,14 @@ export default class Index extends Component {
           </CurrencyFieldWrap>
           <CurrencyRateWrap>
             <ExchangeRate
-              inputCurrency={currency[currencyInput].price_usd}
-              outputCurrency={currency[currencyOutput].price_usd}
+              inputCurrency={`${currency[currencyInput].price_usd}`}
+              outputCurrency={`${currency[currencyOutput].price_usd}`}
             />
           </CurrencyRateWrap>
           <CurrencyFieldWrap className="right__input">
             <CurrencyTitle>Получаете</CurrencyTitle>
             <Field
-              inputValue={outputValue}
+              inputValue={`${outputValue}`}
               changeInput={changeOutput}
               onSelectChange={setCurrencyOutput}
               currencyId={currencyOutput}

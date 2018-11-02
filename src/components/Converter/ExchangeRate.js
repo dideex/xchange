@@ -10,6 +10,10 @@ const Wrap = styled('div')`
     span {
       margin-top: auto;
     }
+    h2 {
+      font-size: 20px;
+      padding-bottom: 17px;
+    }
   }
 `
 
@@ -27,8 +31,8 @@ const ExchangeRateContent = styled('div')`
 // ExchangeRate component;
 class ExchangeRate extends Component {
   static propTypes = {
-    inputCurrency: PropTypes.number.isRequired,
-    outputCurrency: PropTypes.number.isRequired,
+    inputCurrency: PropTypes.string.isRequired,
+    outputCurrency: PropTypes.string.isRequired,
   }
 
   render() {

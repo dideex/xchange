@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 import {Table, Column, AutoSizer} from 'react-virtualized'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
@@ -98,88 +98,96 @@ class Orders extends Component {
   render() {
     const {orders, loading} = this.props.userStore
     if (loading) return <Loading size="small" />
-    const parsedOrders = orders.map(
-      ({
-        _id,
-        created,
-        inputValue,
-        currencyInputLabel,
-        outputValue,
-        currencyOutputLabel,
-        paymentStatus,
-        toWallet,
-      }) => {
-        const date = new Date(Date.parse(created))
-        return {
-          id: _id,
+    const parsedOrders =
+      orders &&
+      orders.map(
+        ({
+          _id,
+          created,
+          inputValue,
+          currencyInputLabel,
+          outputValue,
+          currencyOutputLabel,
           paymentStatus,
           toWallet,
-          created: `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`,
-          inputValue: `${currencyFormat(inputValue)}, ${currencyInputLabel}`,
-          outputValue: `${currencyFormat(outputValue)}, ${currencyOutputLabel}`,
-        }
-      },
-    )
+        }) => {
+          const date = new Date(Date.parse(created))
+          return {
+            id: _id,
+            paymentStatus,
+            toWallet,
+            created: `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`,
+            inputValue: `${currencyFormat(inputValue)}, ${currencyInputLabel}`,
+            outputValue: `${currencyFormat(outputValue)}, ${currencyOutputLabel}`,
+          }
+        },
+      )
     return (
       <StyledTable>
-        <h3>Таблица послдених операций</h3>
-        <TableWrap>
-          <AutoSizer disableHeight>
-            {({width}) => (
-              <Table
-                width={width}
-                height={330}
-                headerHeight={20}
-                rowHeight={60}
-                rowCount={parsedOrders.length}
-                rowGetter={({index}) => parsedOrders[index]}
-                onRowClick={({rowData: {id}}) => this.props.history.push(`/lichnii-kabinet/${id}`)}
-              >
-                <Column
-                  label="№"
-                  dataKey="id"
-                  width={100}
-                  cellRenderer={({cellData}) => (
-                    <CopyToClipboard
-                      text={cellData}
-                      onCopy={() => this.setState({CopyId: cellData})}
-                    >
-                      <span title={cellData} onClick={e => e.stopPropagation()}>
-                        <Icons
-                          id="copy"
-                          style={{width: 23}}
-                          className={this.state.CopyId === cellData && 'copyied'}
-                        />
-                      </span>
-                    </CopyToClipboard>
-                  )}
-                />
-                <Column label="Дата" dataKey="created" width={100} />
-                <Column
-                  label="Сумма перевода"
-                  dataKey="inputValue"
-                  width={300}
-                  flexGrow={1}
-                />
-                <Column
-                  label="Сумма получения"
-                  dataKey="outputValue"
-                  width={300}
-                  flexGrow={1}
-                />
-                <Column label="На номер" dataKey="toWallet" width={300} flexGrow={1} />
-                <Column
-                  label="Статус"
-                  dataKey="paymentStatus"
-                  width={100}
-                  cellRenderer={({cellData}) => (
-                    <Status title={StatusMap[cellData]} color={ColorMap[cellData]} />
-                  )}
-                />
-              </Table>
-            )}
-          </AutoSizer>
-        </TableWrap>
+        {parsedOrders.length ? <h3>Таблица послдених операций</h3>: null}
+        {parsedOrders.length ? (
+          <TableWrap>
+            <AutoSizer disableHeight>
+              {({width}) => (
+                <Table
+                  width={width}
+                  height={330}
+                  headerHeight={20}
+                  rowHeight={60}
+                  rowCount={parsedOrders.length}
+                  rowGetter={({index}) => parsedOrders[index]}
+                  onRowClick={({rowData: {id}}) =>
+                    this.props.history.push(`/lichnii-kabinet/${id}`)
+                  }
+                >
+                  <Column
+                    label="№"
+                    dataKey="id"
+                    width={100}
+                    cellRenderer={({cellData}) => (
+                      <CopyToClipboard
+                        text={cellData}
+                        onCopy={() => this.setState({CopyId: cellData})}
+                      >
+                        <span title={cellData} onClick={e => e.stopPropagation()}>
+                          <Icons
+                            id="copy"
+                            style={{width: 23}}
+                            className={this.state.CopyId === cellData && 'copyied'}
+                          />
+                        </span>
+                      </CopyToClipboard>
+                    )}
+                  />
+                  <Column label="Дата" dataKey="created" width={100} />
+                  <Column
+                    label="Сумма перевода"
+                    dataKey="inputValue"
+                    width={300}
+                    flexGrow={1}
+                  />
+                  <Column
+                    label="Сумма получения"
+                    dataKey="outputValue"
+                    width={300}
+                    flexGrow={1}
+                  />
+                  <Column label="На номер" dataKey="toWallet" width={300} flexGrow={1} />
+                  <Column
+                    label="Статус"
+                    dataKey="paymentStatus"
+                    width={100}
+                    cellRenderer={({cellData}) => (
+                      <Status title={StatusMap[cellData]} color={ColorMap[cellData]} />
+                    )}
+                  />
+                </Table>
+              )}
+            </AutoSizer>
+          </TableWrap>
+        ) : (
+          <h3>Вы еще не сделали перевода</h3>
+        )}
       </StyledTable>
     )
   }

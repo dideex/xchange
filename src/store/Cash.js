@@ -50,7 +50,6 @@ class Cash {
     this.currency[this.currencyInput].price_usd
 
   _correctValuesLimits = () => {
-    console.log(" LOG ___ this.currency ", this.currency )
     const {minimal} = this.currency[this.currencyInput]
     const {reserve} = this.currency[this.currencyOutput]
     if (this.inputValue < minimal) {

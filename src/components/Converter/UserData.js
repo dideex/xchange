@@ -122,7 +122,8 @@ class UserData extends Component {
     // or
     // await this.inputs.map(async input => await input.handleChange())
     await Promise.all(this.inputs.map(input => input.handleChange()))
-    if (isAllPropsFalse(this.state)) {
+    const {agree, loading, ...state} = this.state
+    if (isAllPropsFalse(state)) {
       this.props.cashStore.createPayment({
         token: this.props.userStore.token,
         fromWallet: this.props.userStore.wallets[this.props.walletIncome],

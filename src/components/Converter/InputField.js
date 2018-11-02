@@ -51,7 +51,7 @@ const spec = {
 @observer
 class InputField extends Component {
   static propTypes = {
-    inputValue: PropTypes.number.isRequired,
+    inputValue: PropTypes.string.isRequired,
     currencyId: PropTypes.number.isRequired,
     changeInput: PropTypes.func.isRequired,
     onSelectChange: PropTypes.func.isRequired,

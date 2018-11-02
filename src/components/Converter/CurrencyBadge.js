@@ -24,7 +24,7 @@ const spec = {
 export default class CurrencyBadge extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.string,
     id: PropTypes.number.isRequired,
   }
 
