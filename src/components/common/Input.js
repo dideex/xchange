@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
+import WAValidator from 'wallet-address-validator'
 import {CSSTransition} from 'react-transition-group'
 import PropTypes from 'prop-types'
 
@@ -70,6 +71,7 @@ export class Input extends Component {
     placeholder: '',
     style: {},
     type: 'text',
+    mask: '',
   }
   static propTypes = {
     handleChange: PropTypes.func.isRequired,
@@ -79,14 +81,12 @@ export class Input extends Component {
     super(props)
     this.pattern = new RegExp(props.pattern ? props.pattern : '\\s|\\S', 'i')
     this.handleErrorChange = this.props.handleErrorChange || (() => {})
+    this.mask = '____ ____ ____ ____'
   }
 
-  state = {
-    touched: false,
-  }
 
   _format = raw => {
-    const {mask} = this.props
+    const {mask} = this
     const replsCount = (mask.match(/_/g) || []).length
     let formatted = mask
     const rawLen = raw.length
@@ -101,7 +101,7 @@ export class Input extends Component {
   }
 
   _clean = value => {
-    const {mask} = this.props
+    const {mask} = this
     const maskChars = mask.replace('_', '').split('')
     let raw = value
     for (let i = 0; i < maskChars.length; i++) {
@@ -113,8 +113,12 @@ export class Input extends Component {
   _validateWithMask = (value, res) => {
     const raw = this._clean(value)
     const formatted = this._format(raw)
+    if (this.props.mask !== 'RUR') {
+      this.handleErrorChange(!WAValidator.validate(value, this.props.mask), res)
+      return value
+    }
     if (this.pattern.test(raw) || raw === '') {
-      if (formatted.length !== this.props.mask.length) this.handleErrorChange(true, res)
+      if (formatted.length !== this.mask.length) this.handleErrorChange(true, res)
       else this.handleErrorChange(false, res)
       return formatted
     }

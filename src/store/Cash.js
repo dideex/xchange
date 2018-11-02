@@ -17,7 +17,7 @@ class Cash {
     this.inputValue = 0
     this.outputValue = 0
     this.currencyInput = 0
-    this.currencyOutput = 3
+    this.currencyOutput = 25
     this.paymentStatus = 0 // 0 - null, 1 - created, 2 - sended, 3 - closed
     this.draggedBadgeCurrency = null
     this.lessThenMinimal = false
@@ -176,7 +176,6 @@ class Cash {
         .then(data => {
           this.currency = data.map((row, i) => ({...row, id: i}))
           this.loading = false
-          console.log(' fetchCurrency ___ resolve ', data)
           resolve()
         })
         .catch(err => {

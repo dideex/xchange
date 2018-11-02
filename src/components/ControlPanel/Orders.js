@@ -25,9 +25,6 @@ const StyledTable = styled('div')`
       margin-right: 0;
       border-bottom: 3px solid ${Colors.black};
     }
-    .ReactVirtualized__Table__headerColumn:last-child {
-      margin-right: 10px;
-    }
     .ReactVirtualized__Table__row {
       cursor: pointer;
       padding-left: 10px;

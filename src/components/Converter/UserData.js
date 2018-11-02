@@ -142,7 +142,10 @@ class UserData extends Component {
           this.setState({loadng: false})
         })
         .catch(err => console.error('createpayment erorr', err))
-    } else console.log('invalid')
+    } else {
+      this.setState({loading: false})
+      console.log('invalid')
+    }
   }
 
   render() {
@@ -154,6 +157,7 @@ class UserData extends Component {
       wallets,
       changeWallet,
     } = this.props.userStore
+    const {currency, currencyInput, currencyOutput} = this.props.cashStore
     return (
       <StyledUserData>
         <Input
@@ -180,10 +184,10 @@ class UserData extends Component {
           ref={child => (this.inputs[2] = child)}
           value={wallets[this.props.walletIncome]}
           handleChange={val => changeWallet(this.props.walletIncome)(val)}
-          mask="____ ____ ____ ____"
-          pattern="^\d+$"
+          mask={currency.length && currency[currencyInput].label}
+          /* pattern="^\d+$" */
           placeholder="income"
-          errorMsg="Введите ваш Income"
+          errorMsg="Введите номер кошелька с которого вы будете переводить"
           isInvalid={this.state.income}
           handleErrorChange={(income, res) => this.setState({income}, res())}
         />
@@ -191,10 +195,10 @@ class UserData extends Component {
           ref={child => (this.inputs[3] = child)}
           value={wallets[this.props.walletOutgo]}
           handleChange={val => changeWallet(this.props.walletOutgo)(val)}
-          mask="____ ____ ____ ____"
-          pattern="^\d+$"
+          mask={currency.length && currency[currencyOutput].label}
+          /* pattern="^\d+$" */
           placeholder="outgo"
-          errorMsg="Введите ваш Outgo"
+          errorMsg="Введите номер вашего кошелька для получения"
           isInvalid={this.state.outgo}
           handleErrorChange={(outgo, res) => this.setState({outgo}, res())}
         />

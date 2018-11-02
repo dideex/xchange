@@ -74,11 +74,11 @@ class PaymentProof extends Component {
 
   render() {
     const {cashStore, userStore} = this.props
-    const {id: currencyOutputId, label: currencyOutputLabel} = cashStore.currency[
+    const {id: currencyOutputId, label: currencyOutputLabel, mask} = cashStore.currency[
       cashStore.currencyOutput
-    ]
-
-    const {label: currencyInputLabel} = cashStore.currency[cashStore.currencyInput]
+    ] || {}
+    console.log(" LOG ___ mask ", mask )
+    const {label: currencyInputLabel} = cashStore.currency[cashStore.currencyInput] || {}
     return (
       <Wrap>
         <H2>Совершите перевод</H2>
@@ -99,7 +99,10 @@ class PaymentProof extends Component {
             <Details>
               <span>Получить на кошелек:</span>
               <strong>
-                {format(userStore.wallets[currencyOutputId], '____ ____ ____ ____')}
+                {format(
+                  userStore.wallets[currencyOutputId],
+                  mask
+                )}
               </strong>
             </Details>
             <Details>
@@ -125,7 +128,10 @@ class PaymentProof extends Component {
           </p>
         </UserInfo>
         <p onClick={() => this.props.history.goBack()}>
-          <span role="img" aria-label="back">👈</span> Вернуться
+          <span role="img" aria-label="back">
+            👈
+          </span>{' '}
+          Вернуться
         </p>
         <Button
           caption="Я перевел"

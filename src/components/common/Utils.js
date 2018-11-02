@@ -14,6 +14,7 @@ const _clean = (value = '', mask = '') => {
  * @public
  */
 export const format = (value, mask) => {
+  if (!mask) return value
   const raw = _clean(value, mask)
   const replsCount = (mask.match(/_/g) || []).length
   let formatted = mask
