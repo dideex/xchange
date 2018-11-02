@@ -4,7 +4,7 @@ import styled from 'react-emotion'
 import {Colors} from './Colors'
 
 const SvgWrap = styled('div')`
-  width: 100%;
+  width: ${({width}) => width};
   height: ${({height}) => height}px;
   display: flex;
   justify-content: center;
@@ -13,15 +13,18 @@ const SvgWrap = styled('div')`
 
 // Loading stateless component;
 export const Loading = ({size}) => {
+  const width = size === 'inline' ? '32px' : '100%'
+  const height = size === 'small' ? 200 : size === 'inline' ? 50 : 500
   switch (size) {
+    case 'inline':
     case 'small':
     case 'big':
       return (
-        <SvgWrap height={size === 'small' ? 200 : 500}>
+        <SvgWrap width={width} height={height}>
           <svg
             className="loading"
-            width="96"
-            height="96"
+            width={size === 'inline' ? 32 : 96}
+            height={size === 'inline' ? 32 : 96}
             viewBox="0 0 256 256"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

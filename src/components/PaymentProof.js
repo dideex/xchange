@@ -20,6 +20,10 @@ const Wrap = styled('div')`
     display: block;
     margin: 50px auto 30px;
   }
+  & > p {
+    text-align: center;
+    cursor: pointer;
+  }
 `
 
 const Details = styled('div')`
@@ -120,6 +124,9 @@ class PaymentProof extends Component {
             <strong>{statusArray[cashStore.paymentStatus]}</strong>
           </p>
         </UserInfo>
+        <p onClick={() => this.props.history.goBack()}>
+          <span role="img" aria-label="back">👈</span> Вернуться
+        </p>
         <Button
           caption="Я перевел"
           toggle={() => {

@@ -1,4 +1,4 @@
-const _clean = (value, mask) => {
+const _clean = (value = '', mask = '') => {
   const maskChars = mask.replace('_', '').split('')
   let raw = value
   for (let i = 0; i < maskChars.length; i++) {

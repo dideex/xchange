@@ -11,6 +11,7 @@ class Cash {
   @observable draggedBadgeCurrency
   @observable orderId
   @observable loading
+  @observable errorMessage
   @observable.ref currency
 
   constructor() {
@@ -25,6 +26,7 @@ class Cash {
     this.orderId = null
     this.loading = false
     this.currency = currency
+    this.errorMessage = ''
     this.fetchCurrency()
   }
 
@@ -113,8 +115,10 @@ class Cash {
     }
   }
   @action('create payment and push to server')
-  createPayment = ({token, fromWallet, toWallet}) => {
+  createPayment = async ({token, fromWallet, toWallet}) => {
+    this.loading = true
     this._correctValuesLimits()
+    await this.fetchCurrency()
     this.paymentStatus = 1
     const data = {
       inputValue: this.inputValue,
@@ -128,7 +132,7 @@ class Cash {
       toWallet,
     }
     if (token)
-      fetch('http://localhost:3030/api/orders', {
+      await fetch('http://localhost:3030/api/orders', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -139,9 +143,9 @@ class Cash {
       })
         .then(res => res.json())
         .then(({result}) => (this.orderId = result._id))
-        .catch(err => console.error(err))
+        .catch(err => this.errorMessage = err)
     else
-      fetch('http://localhost:3030/api/guestOrders', {
+      await fetch('http://localhost:3030/api/guestOrders', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -151,7 +155,8 @@ class Cash {
       })
         .then(res => res.json())
         .then(({result}) => (this.orderId = result._id))
-        .catch(err => console.error(err))
+        .catch(err => this.errorMessage = err)
+    this.loading = false
   }
 
   @action('get currency from the server')
@@ -170,6 +175,7 @@ class Cash {
       })
       .catch(err => console.error(err))
     this.loading = false
+    return Promise.resolve()
   }
 
   @action('cofirm payment')

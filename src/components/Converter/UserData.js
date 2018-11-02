@@ -129,8 +129,10 @@ class UserData extends Component {
         fromWallet: this.props.userStore.wallets[this.props.walletIncome],
         toWallet: this.props.userStore.wallets[this.props.walletOutgo],
       })
-      this.props.userStore.updateInfo()
-      this.props.history.push('/podtverjdenie-oplati')
+      this.props.userStore
+        .updateInfo()
+        .then(() => this.props.history.push('/podtverjdenie-oplati'))
+        .catch(err => console.error(err))
     } else console.log('invalid')
   }
 
@@ -142,6 +144,7 @@ class UserData extends Component {
       email,
       wallets,
       changeWallet,
+      loading
     } = this.props.userStore
     return (
       <StyledUserData>
@@ -207,6 +210,7 @@ class UserData extends Component {
             disabled={!this.state.agree}
             caption="Создать"
             toggle={this.hanldeSubmit}
+            loading={loading}
           />
         </ButtonWrap>
       </StyledUserData>
