@@ -1,17 +1,28 @@
 import {observable, action, computed} from 'mobx'
+import openSocket from 'socket.io-client'
 
 // menu state
 class Cash {
-  @observable inputValue
-  @observable outputValue
-  @observable currencyInput
-  @observable currencyOutput
-  @observable paymentStatus
-  @observable draggedBadgeCurrency
-  @observable orderId
-  @observable loading
-  @observable errorMessage
-  @observable.ref currency
+  @observable
+  inputValue
+  @observable
+  outputValue
+  @observable
+  currencyInput
+  @observable
+  currencyOutput
+  @observable
+  paymentStatus
+  @observable
+  draggedBadgeCurrency
+  @observable
+  orderId
+  @observable
+  loading
+  @observable
+  errorMessage
+  @observable.ref
+  currency
 
   constructor() {
     this.inputValue = 0
@@ -26,6 +37,7 @@ class Cash {
     this.loading = false
     this.currency = []
     this.errorMessage = ''
+    this.socket = openSocket('http://localhost:3040')
     this.fetchCurrency()
   }
 
@@ -139,10 +151,12 @@ class Cash {
               'Content-Type': 'application/json',
               Authorization: `bearer ${token}`,
             },
-            body: JSON.stringify({...data}),
+            body: JSON.stringify(data),
           })
             .then(res => res.json())
-            .then(({result}) => (this.orderId = result._id))
+            .then(({result}) => {
+              this.orderId = result._id
+            })
             .catch(err => (this.errorMessage = err))
         else
           await fetch('http://localhost:3030/api/guestOrders', {
@@ -151,7 +165,7 @@ class Cash {
               Accept: 'application/json',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({...data}),
+            body: JSON.stringify(data),
           })
             .then(res => res.json())
             .then(({result}) => (this.orderId = result._id))
@@ -186,7 +200,7 @@ class Cash {
     })
 
   @action('cofirm payment')
-  cofirmPayment = () => {
+  cofirmPayment = email => {
     this.paymentStatus = 2
     fetch('http://localhost:3030/api/confirmOrder', {
       method: 'POST',
@@ -197,7 +211,15 @@ class Cash {
       body: JSON.stringify({_id: this.orderId}),
     })
       .then(res => res.json())
-      .then(({result}) => console.log(result))
+      .then(() => {
+        this.socket.emit('newOrder', {
+          email,
+          currency: this.currency[this.currencyOutput].icon,
+          inputValue: this.inputValue,
+          outputValue: this.outputValue,
+          paymentStatus: this.paymentStatus,
+        })
+      })
       .catch(err => console.error(err))
   }
   @action('drag badge')
@@ -217,7 +239,7 @@ class Cash {
   @computed
   get getMinimalAmount() {
     const formatter = new Intl.NumberFormat('ru', 'currency')
-    if(!this.currency.length) return null
+    if (!this.currency.length) return null
     return `${formatter.format(this.currency[this.currencyInput].minimal)} ${
       this.currency[this.currencyInput].label
     }`
@@ -225,7 +247,7 @@ class Cash {
   @computed
   get getCurrencyReserve() {
     const formatter = new Intl.NumberFormat('ru', 'currency')
-    if(!this.currency.length) return null
+    if (!this.currency.length) return null
     return `${formatter.format(this.currency[this.currencyOutput].reserve)} ${
       this.currency[this.currencyOutput].label
     }`

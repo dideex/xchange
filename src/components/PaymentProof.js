@@ -77,7 +77,6 @@ class PaymentProof extends Component {
     const {id: currencyOutputId, label: currencyOutputLabel, mask} = cashStore.currency[
       cashStore.currencyOutput
     ] || {}
-    console.log(" LOG ___ mask ", mask )
     const {label: currencyInputLabel} = cashStore.currency[cashStore.currencyInput] || {}
     return (
       <Wrap>
@@ -130,13 +129,13 @@ class PaymentProof extends Component {
         <p onClick={() => this.props.history.goBack()}>
           <span role="img" aria-label="back">
             👈
-          </span>{' '}
+          </span>
           Вернуться
         </p>
         <Button
           caption="Я перевел"
           toggle={() => {
-            cashStore.cofirmPayment()
+            cashStore.cofirmPayment(userStore.email)
             this.props.history.push('/spasibo')
           }}
         />

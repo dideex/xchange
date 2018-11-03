@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
+import openSocket from 'socket.io-client'
 import styled from 'react-emotion'
 
-import {H2, container} from '../common'
+import {H2, container, Loading} from '../common'
 import Operatoin from './Operation'
 
 const Section = styled('section')`
@@ -13,54 +14,61 @@ const Section = styled('section')`
   }
 `
 
+const OperationsWrap = styled('div')`
+  overflow: hidden;
+`
+
 const Operations = styled('div')`
   display: flex;
   justify-content: space-between;
   padding-top: 50px;
+  transform: translate3d(${({offset}) => offset}%, 0, 0);
+  transition: transform 0.3s ease-in-out;
 `
 
-const mockData = [
-  {
-    mail: 'w***n@mail.ru',
-    valueFrom: '3 000',
-    valueTo: '3 000',
-    status: 'ожидает оплаты',
-    currency: 'Bitcoin',
-  },
-  {
-    mail: 'd***x@yandex.ru',
-    valueFrom: '2 000',
-    valueTo: '3 550',
-    status: 'переведено',
-    currency: 'Bitcoin',
-  },
-  {
-    mail: 's***n@gmail.com',
-    valueFrom: '5 721',
-    valueTo: '33 550',
-    status: 'переведено',
-    currency: 'Bitcoin',
-  },
-]
+const socket = openSocket('http://localhost:3040')
 
 // LastOperations component;
 class LastOperations extends Component {
+  state = {
+    data: [],
+    loading: true,
+  }
+  componentDidMount() {
+    socket.on('message', this._socketResolver)
+  }
+
+  componentWillUpdate(nextProps, {data}) {
+    // if(this.state.date.length !== data.length) null
+  }
+
+  _socketResolver = ({type, data, order}) => {
+    switch (type) {
+      case 'broadcast':
+        return this.setState({data: [...this.state.data, order]})
+      case 'init':
+        return this.setState({loading: false, data})
+
+      default:
+        return console.log('unknown message')
+    }
+  }
+
   render() {
     return (
       <Section>
         <H2> Последние операции</H2>
-        <Operations>
-          {mockData.map(({mail, valueFrom, valueTo, status, currency}, i) => (
-            <Operatoin
-              key={i}
-              mail={mail}
-              valueFrom={valueFrom}
-              valueTo={valueTo}
-              status={status}
-              currency={currency}
-            />
-          ))}
-        </Operations>
+        {this.state.loading ? (
+          <Loading size="big" />
+        ) : (
+          <OperationsWrap>
+            <Operations offset={(this.state.data.length - 3) * -33.33}>
+              {this.state.data.map((props, i) => (
+                <Operatoin key={i} {...props} />
+              ))}
+            </Operations>
+          </OperationsWrap>
+        )}
       </Section>
     )
   }

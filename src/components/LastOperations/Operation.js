@@ -2,15 +2,25 @@ import React from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
-import {Icons, CurrencyIcons, Colors, robotoSlab} from '../common'
+import {
+  Icons,
+  CurrencyIcons,
+  Colors,
+  robotoSlab,
+  statusArray,
+  currencyFormat,
+} from '../common'
 
 const OperationWrap = styled('div')`
   & {
-    flex: 30% 0 0;
+    flex: 30.33% 0 0;
     position: relative;
     border-radius: 10px;
     background-color: ${Colors.accent};
     padding: 20px 15px;
+    margin-bottom: 35px;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
   }
 `
 const BacksideBlock = styled('div')`
@@ -68,9 +78,12 @@ const SvgWrap = styled('div')`
   margin: auto;
 `
 
-const Value = styled('span')`
+const Value = styled('div')`
+  flex: 45% 0 0;
+  max-width: 45%;
+  text-align: center;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 20px;
 `
 
 const CoinStyles = {
@@ -81,22 +94,26 @@ const CoinStyles = {
 }
 
 // Operations stateless component;
-export const Operations = ({currency, mail, valueFrom, valueTo, status}) => {
+export const Operations = ({currency, email, inputValue, outputValue, paymentStatus}) => {
   return (
     <OperationWrap>
       <CurrencyIcons id={currency} style={CoinStyles} />
-      <Title>{mail}</Title>
+      <Title>{email}</Title>
       <Values>
-        <Value>{valueFrom}</Value>
+        <Value>
+          <span>{currencyFormat(inputValue)}</span>
+        </Value>
         <SvgWrap>
           <Icons id="chevron" style={{fill: Colors.black}} className="separator" />
         </SvgWrap>
-        <Value>{valueTo}</Value>
+        <Value>
+          <span>{currencyFormat(outputValue)}</span>
+        </Value>
       </Values>
       <BacksideBlock>
         <p>
           <span>Статус:</span>
-          <span>{status}</span>
+          <span>{statusArray[paymentStatus]}</span>
         </p>
       </BacksideBlock>
     </OperationWrap>
@@ -105,9 +122,9 @@ export const Operations = ({currency, mail, valueFrom, valueTo, status}) => {
 
 Operations.propTypes = {
   currency: PropTypes.string.isRequired,
-  mail: PropTypes.string.isRequired,
-  valueFrom: PropTypes.string.isRequired,
-  valueTo: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  inputValue: PropTypes.string.isRequired,
+  outputValue: PropTypes.string.isRequired,
+  paymentStatus: PropTypes.string.isRequired,
 }
 export default Operations
