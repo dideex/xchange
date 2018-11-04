@@ -89,9 +89,9 @@ const Value = styled('div')`
     max-width: 45%;
     text-align: center;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     span > span {
-      font-size: 15px;
+      font-size: 13px;
       padding-left: 5px;
     }
   }
@@ -148,9 +148,6 @@ export const Operations = ({
 Operations.propTypes = {
   currency: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  inputValue: PropTypes.string.isRequired,
-  outputValue: PropTypes.string.isRequired,
-  paymentStatus: PropTypes.string.isRequired,
   inputLabel: PropTypes.string.isRequired,
   outputLabel: PropTypes.string.isRequired,
 }

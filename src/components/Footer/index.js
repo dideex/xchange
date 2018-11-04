@@ -66,6 +66,10 @@ const Form = styled('section')`
   padding: 20px 80px 50px;
   background: ${Colors.accent};
   border-radius: 10px;
+  span {
+    display: block;
+    text-align: center;
+  }
 `
 
 const Copy = styled('div')`
@@ -90,6 +94,8 @@ class Footer extends Component {
     phone: '',
     phoneError: null,
     message: '',
+    loading: false,
+    messageFromBack: '',
   }
 
   constructor(props) {
@@ -98,14 +104,28 @@ class Footer extends Component {
   }
 
   _handleSubmit = async () => {
-    const {emailError, phoneError} = this.state
+    const {emailError, phoneError, email, phone, message} = this.state
+    this.setState({loading: true, messageFromBack: ''})
     // fix double click for premade input's values
     // or
     // await this.inputs.map(async input => await input.handleChange())
     await Promise.all(this.inputs.map(input => input.handleChange()))
     if (isAllPropsFalse({emailError, phoneError})) {
-      console.log('send')
-    } else console.log('error')
+      fetch('http://localhost:3030/api/sendMessage', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({email, phone, message}),
+      })
+        .then(res => res.json())
+        .then(({status}) => this.setState({loading: false, messageFromBack: status}))
+        .catch(({status}) => this.setState({loading: false, messageFromBack: status}))
+    } else {
+      this.setState({loading: false})
+      console.log('error')
+    }
   }
 
   render() {
@@ -128,7 +148,7 @@ class Footer extends Component {
             value={this.state.phone}
             placeholder="phone"
             pattern="^\d+$"
-            mask="+_(___)-___-__-__"
+            mask="phone"
             errorMsg="Введите ваш телефон"
             handleChange={phone => this.setState({phone})}
             isInvalid={this.state.phoneError}
@@ -138,7 +158,12 @@ class Footer extends Component {
             value={this.state.message}
             onChange={({target}) => this.setState({message: target.value})}
           />
-          <Button caption="Отправить" toggle={this._handleSubmit} />
+          <span>{this.state.messageFromBack}</span>
+          <Button
+            loading={this.state.loading}
+            caption="Отправить"
+            toggle={this._handleSubmit}
+          />
         </Form>
         <WithBackground>
           <Icons id="afterFooterBg" style={{width: '100%'}} />

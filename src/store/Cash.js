@@ -3,26 +3,16 @@ import openSocket from 'socket.io-client'
 
 // menu state
 class Cash {
-  @observable
-  inputValue
-  @observable
-  outputValue
-  @observable
-  currencyInput
-  @observable
-  currencyOutput
-  @observable
-  paymentStatus
-  @observable
-  draggedBadgeCurrency
-  @observable
-  orderId
-  @observable
-  loading
-  @observable
-  errorMessage
-  @observable.ref
-  currency
+  @observable inputValue
+  @observable outputValue
+  @observable currencyInput
+  @observable currencyOutput
+  @observable paymentStatus
+  @observable draggedBadgeCurrency
+  @observable orderId
+  @observable loading
+  @observable errorMessage
+  @observable.ref currency
 
   constructor() {
     this.inputValue = 0
@@ -188,11 +178,9 @@ class Cash {
       })
         .then(response => response.json())
         .then(data => {
-          console.table( data )
           this.currency = data
             .sort((a, b) => a.order - b.order)
             .map((row, i) => ({...row, id: i}))
-          console.table(this.currency )
           this.loading = false
           resolve()
         })

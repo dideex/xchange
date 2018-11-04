@@ -34,12 +34,13 @@ class LastOperations extends Component {
     data: [],
     loading: true,
   }
+
   componentDidMount() {
     socket.on('message', this._socketResolver)
   }
 
-  componentWillUpdate(nextProps, {data}) {
-    // if(this.state.date.length !== data.length) null
+  componentWillUnmount() {
+    socket.removeListener('message', this._socketResolver)
   }
 
   _socketResolver = ({type, data, order}) => {

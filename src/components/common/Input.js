@@ -79,15 +79,11 @@ export class Input extends Component {
     handleChange: PropTypes.func.isRequired,
   }
 
-  componentDidMount() {
-    window.WAValidator = WAValidator
-  }
-
   constructor(props) {
     super(props)
     this.pattern = new RegExp(props.pattern ? props.pattern : '\\s|\\S', 'i')
     this.handleErrorChange = this.props.handleErrorChange || (() => {})
-    this.mask = '____ ____ ____ ____'
+    this.mask = props.mask === 'phone' ? '+_(___)-___-__-__' : '____ ____ ____ ____'
   }
 
   _format = raw => {
@@ -119,7 +115,7 @@ export class Input extends Component {
     const raw = this._clean(value)
     const formatted = this._format(raw)
     if (~currencyWithoutValidation.indexOf(this.props.mask)) return value
-    if (!~['RUR', 'USD'].indexOf(this.props.mask)) {
+    if (!~['RUR', 'USD', 'phone'].indexOf(this.props.mask)) {
       this.handleErrorChange(!WAValidator.validate(value, this.props.mask || 'Btc'), res)
       return value
     }
