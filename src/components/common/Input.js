@@ -82,7 +82,6 @@ export class Input extends Component {
   componentDidMount() {
     window.WAValidator = WAValidator
   }
-  
 
   constructor(props) {
     super(props)
@@ -90,7 +89,6 @@ export class Input extends Component {
     this.handleErrorChange = this.props.handleErrorChange || (() => {})
     this.mask = '____ ____ ____ ____'
   }
-
 
   _format = raw => {
     const {mask} = this
@@ -120,8 +118,8 @@ export class Input extends Component {
   _validateWithMask = (value, res) => {
     const raw = this._clean(value)
     const formatted = this._format(raw)
-    if(~currencyWithoutValidation.indexOf(this.props.mask)) return value
-    if (this.props.mask !== 'RUR') {
+    if (~currencyWithoutValidation.indexOf(this.props.mask)) return value
+    if (!~['RUR', 'USD'].indexOf(this.props.mask)) {
       this.handleErrorChange(!WAValidator.validate(value, this.props.mask || 'Btc'), res)
       return value
     }

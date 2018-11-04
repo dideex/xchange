@@ -28,7 +28,7 @@ class Cash {
     this.inputValue = 0
     this.outputValue = 0
     this.currencyInput = 0
-    this.currencyOutput = 3
+    this.currencyOutput = 2
     this.paymentStatus = 0 // 0 - null, 1 - created, 2 - sended, 3 - closed
     this.draggedBadgeCurrency = null
     this.lessThenMinimal = false

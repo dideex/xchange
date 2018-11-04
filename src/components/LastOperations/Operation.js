@@ -14,6 +14,7 @@ import {
 const OperationWrap = styled('div')`
   & {
     flex: 30.33% 0 0;
+    max-width: 30.33%;
     position: relative;
     border-radius: 10px;
     background-color: ${Colors.accent};
@@ -52,6 +53,10 @@ const BacksideBlock = styled('div')`
 const Title = styled('h3')`
   font-family: ${robotoSlab};
   text-align: center;
+  padding: 0 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const Values = styled('div')`
@@ -79,11 +84,17 @@ const SvgWrap = styled('div')`
 `
 
 const Value = styled('div')`
-  flex: 45% 0 0;
-  max-width: 45%;
-  text-align: center;
-  font-weight: 700;
-  font-size: 20px;
+  & {
+    flex: 45% 0 0;
+    max-width: 45%;
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    span > span {
+      font-size: 15px;
+      padding-left: 5px;
+    }
+  }
 `
 
 const CoinStyles = {
@@ -109,13 +120,19 @@ export const Operations = ({
       <Title>{email}</Title>
       <Values>
         <Value>
-          <span>{`${currencyFormat(inputValue)}${inputLabel}`}</span>
+          <span>
+            {currencyFormat(inputValue)}
+            <span className="currency__label">{inputLabel}</span>
+          </span>
         </Value>
         <SvgWrap>
           <Icons id="chevron" style={{fill: Colors.black}} className="separator" />
         </SvgWrap>
         <Value>
-          <span>{`${currencyFormat(outputValue)}${outputLabel}`}</span>
+          <span>
+            {currencyFormat(outputValue)}
+            <span className="currency__label">{outputLabel}</span>
+          </span>
         </Value>
       </Values>
       <BacksideBlock>

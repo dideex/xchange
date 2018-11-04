@@ -750,6 +750,7 @@ c11.2-19,43.3,0,32,18.9l0,0c-5.7,8-9.1,17.7-9.1,28.2c0,26.8,21.7,48.4,48.4,48.4s
       y="0px"
       viewBox="0 0 400 400"
     >
+      <title>{id}</title>
       <circle style={coinColors.label} cx="199.5" cy="200.5" r="199.5" />
       <circle style={coinColors.body} cx="199.5" cy="200.5" r="168.3" />
       {currencyLabel[id] || <text>{id}</text>}
