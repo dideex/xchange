@@ -28,7 +28,7 @@ class Cash {
     this.inputValue = 0
     this.outputValue = 0
     this.currencyInput = 0
-    this.currencyOutput = 25
+    this.currencyOutput = 3
     this.paymentStatus = 0 // 0 - null, 1 - created, 2 - sended, 3 - closed
     this.draggedBadgeCurrency = null
     this.lessThenMinimal = false
@@ -188,7 +188,11 @@ class Cash {
       })
         .then(response => response.json())
         .then(data => {
-          this.currency = data.map((row, i) => ({...row, id: i}))
+          console.table( data )
+          this.currency = data
+            .sort((a, b) => a.order - b.order)
+            .map((row, i) => ({...row, id: i}))
+          console.table(this.currency )
           this.loading = false
           resolve()
         })
@@ -217,6 +221,8 @@ class Cash {
           currency: this.currency[this.currencyOutput].icon,
           inputValue: this.inputValue,
           outputValue: this.outputValue,
+          inputLabel: this.currency[this.currencyInput].label,
+          outputLabel: this.currency[this.currencyOutput].label,
           paymentStatus: this.paymentStatus,
         })
       })

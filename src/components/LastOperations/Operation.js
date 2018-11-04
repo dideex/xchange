@@ -94,20 +94,28 @@ const CoinStyles = {
 }
 
 // Operations stateless component;
-export const Operations = ({currency, email, inputValue, outputValue, paymentStatus}) => {
+export const Operations = ({
+  currency,
+  email,
+  inputValue,
+  outputValue,
+  paymentStatus,
+  inputLabel,
+  outputLabel,
+}) => {
   return (
     <OperationWrap>
       <CurrencyIcons id={currency} style={CoinStyles} />
       <Title>{email}</Title>
       <Values>
         <Value>
-          <span>{currencyFormat(inputValue)}</span>
+          <span>{`${currencyFormat(inputValue)}${inputLabel}`}</span>
         </Value>
         <SvgWrap>
           <Icons id="chevron" style={{fill: Colors.black}} className="separator" />
         </SvgWrap>
         <Value>
-          <span>{currencyFormat(outputValue)}</span>
+          <span>{`${currencyFormat(outputValue)}${outputLabel}`}</span>
         </Value>
       </Values>
       <BacksideBlock>
@@ -126,5 +134,7 @@ Operations.propTypes = {
   inputValue: PropTypes.string.isRequired,
   outputValue: PropTypes.string.isRequired,
   paymentStatus: PropTypes.string.isRequired,
+  inputLabel: PropTypes.string.isRequired,
+  outputLabel: PropTypes.string.isRequired,
 }
 export default Operations

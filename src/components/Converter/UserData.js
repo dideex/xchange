@@ -125,6 +125,7 @@ class UserData extends Component {
     await Promise.all(this.inputs.map(input => input.handleChange()))
     const {agree, loading, ...state} = this.state
     if (isAllPropsFalse(state)) {
+      console.log(" LOG ___ 'lol' ", 'lol' )
       this.props.cashStore
         .createPayment({
           token: this.props.userStore.token,

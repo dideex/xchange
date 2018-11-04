@@ -62,6 +62,8 @@ const ErrorField = styled('span')`
   }
 `
 
+const currencyWithoutValidation = ['LSK']
+
 // Input component;
 export class Input extends Component {
   static defaultProps = {
@@ -76,6 +78,11 @@ export class Input extends Component {
   static propTypes = {
     handleChange: PropTypes.func.isRequired,
   }
+
+  componentDidMount() {
+    window.WAValidator = WAValidator
+  }
+  
 
   constructor(props) {
     super(props)
@@ -113,8 +120,9 @@ export class Input extends Component {
   _validateWithMask = (value, res) => {
     const raw = this._clean(value)
     const formatted = this._format(raw)
+    if(~currencyWithoutValidation.indexOf(this.props.mask)) return value
     if (this.props.mask !== 'RUR') {
-      this.handleErrorChange(!WAValidator.validate(value, this.props.mask), res)
+      this.handleErrorChange(!WAValidator.validate(value, this.props.mask || 'Btc'), res)
       return value
     }
     if (this.pattern.test(raw) || raw === '') {
