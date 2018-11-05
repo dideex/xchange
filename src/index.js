@@ -7,14 +7,14 @@ import {BrowserRouter} from 'react-router-dom'
 
 import './fonts.css'
 import './reset.css'
-import {cash, user} from './store'
+import {cash, user, lastOperations} from './store'
 
 if (module.hot) {
   module.hot.accept()
 }
 
 const app = (
-  <MobxProvider cashStore={cash} userStore={user}>
+  <MobxProvider lastOperationsStore={lastOperations} cashStore={cash} userStore={user}>
     <BrowserRouter>
       <Layout />
     </BrowserRouter>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {observer, inject} from 'mobx-react'
 import openSocket from 'socket.io-client'
 import styled from 'react-emotion'
 
@@ -29,42 +30,21 @@ const Operations = styled('div')`
 const socket = openSocket('http://localhost:3040')
 
 // LastOperations component;
+@inject('lastOperationsStore')
+@observer
 class LastOperations extends Component {
-  state = {
-    data: [],
-    loading: true,
-  }
-
-  componentDidMount() {
-    socket.on('message', this._socketResolver)
-  }
-
-  componentWillUnmount() {
-    socket.removeListener('message', this._socketResolver)
-  }
-
-  _socketResolver = ({type, data, order}) => {
-    switch (type) {
-      case 'broadcast':
-        return this.setState({data: [...this.state.data, order]})
-      case 'init':
-        return this.setState({loading: false, data})
-
-      default:
-        return console.log('unknown message')
-    }
-  }
 
   render() {
+    const {loading, data} = this.props.lastOperationsStore
     return (
       <Section>
         <H2> Последние операции</H2>
-        {this.state.loading ? (
+        {loading ? (
           <Loading size="big" />
         ) : (
           <OperationsWrap>
-            <Operations offset={(this.state.data.length - 3) * -33.33}>
-              {this.state.data.map((props, i) => (
+            <Operations offset={(data.length - 3) * -33.33}>
+              {data.map((props, i) => (
                 <Operatoin key={i} {...props} />
               ))}
             </Operations>

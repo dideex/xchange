@@ -3,26 +3,16 @@ import openSocket from 'socket.io-client'
 
 // menu state
 class Cash {
-  @observable
-  inputValue
-  @observable
-  outputValue
-  @observable
-  currencyInput
-  @observable
-  currencyOutput
-  @observable
-  paymentStatus
-  @observable
-  draggedBadgeCurrency
-  @observable
-  orderId
-  @observable
-  loading
-  @observable
-  errorMessage
-  @observable.ref
-  currency
+  @observable inputValue
+  @observable outputValue
+  @observable currencyInput
+  @observable currencyOutput
+  @observable paymentStatus
+  @observable draggedBadgeCurrency
+  @observable orderId
+  @observable loading
+  @observable errorMessage
+  @observable.ref currency
 
   constructor() {
     this.inputValue = 0
