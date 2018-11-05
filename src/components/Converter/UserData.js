@@ -116,8 +116,8 @@ class UserData extends Component {
   }
 
   _handleCheckboxChange = () => this.setState(({agree}) => ({agree: !agree}))
-
-  hanldeSubmit = async () => {
+  
+  handleSubmit = async () => {
     this.setState({loading: true})
     // fix double click for premade input's values
     // or
@@ -191,6 +191,7 @@ class UserData extends Component {
           errorMsg="Введите номер кошелька с которого вы будете переводить"
           isInvalid={this.state.income}
           handleErrorChange={(income, res) => this.setState({income}, res())}
+          handleEnterPress={this.handleSubmit}
         />
         <Input
           ref={child => (this.inputs[3] = child)}
@@ -202,6 +203,7 @@ class UserData extends Component {
           errorMsg="Введите номер вашего кошелька для получения"
           isInvalid={this.state.outgo}
           handleErrorChange={(outgo, res) => this.setState({outgo}, res())}
+          handleEnterPress={this.handleSubmit}
         />
         <CheckboxWrap>
           <label
@@ -222,7 +224,7 @@ class UserData extends Component {
           <Button
             disabled={!this.state.agree}
             caption="Создать"
-            toggle={this.hanldeSubmit}
+            toggle={this.handleSubmit}
             loading={this.state.loading}
           />
         </ButtonWrap>

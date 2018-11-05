@@ -15,6 +15,11 @@ const Wrap = styled('div')`
     }
   }
 `
+const ErrorField = styled('p')`
+  color: #f44336;
+  font-weight: 700;
+  text-align: center;
+`
 
 // FIXME: remove password from mobx after login
 // ContorlPanel component;
@@ -33,25 +38,34 @@ class ContorlPanel extends Component {
   }
 
   componentDidMount() {
+    this.props.userStore.clearErr()
     window.scrollTo(
       0,
       this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
     )
   }
 
-  _handleSubmit = async () => {
-    const {usernameError, passowrdError} = this.state
+  handleSubmit = async () => {
+    const {usernameError, passwordError} = this.state
     // fix double click for premade input's values
     // or
-    // await this.inputs.map(async input => await input.handleChange())
-    await Promise.all(this.inputs.map(input => input.handleChange()))
-    if (isAllPropsFalse({usernameError, passowrdError})) {
-      console.log('Auth')
-    } else console.log('invalid')
+    await this.inputs.map(async input => await input.handleChange())
+    // await Promise.all(this.inputs.map(input => input.handleChange()))
+    if (isAllPropsFalse({usernameError, passwordError})) {
+      this.props.userStore.getToken()
+    } else {
+      console.log('invalid')
+    }
   }
 
   render() {
-    const {login, password, changeLogin, changePassword, getToken} = this.props.userStore
+    const {
+      login,
+      password,
+      changeLogin,
+      changePassword,
+      errorMessage,
+    } = this.props.userStore
     return (
       <Wrap>
         <div ref={this.wrap}>
@@ -68,6 +82,7 @@ class ContorlPanel extends Component {
           handleErrorChange={(usernameError, res) =>
             this.setState({usernameError}, res())
           }
+          handleEnterPress={this.handleSubmit}
         />
         <Input
           ref={child => (this.inputs[1] = child)}
@@ -81,8 +96,10 @@ class ContorlPanel extends Component {
           handleErrorChange={(passwordError, res) =>
             this.setState({passwordError}, res())
           }
+          handleEnterPress={this.handleSubmit}
         />
-        <Button toggle={getToken} caption="Войти" />
+        {errorMessage && <ErrorField className="error-field">{errorMessage}</ErrorField>}
+        <Button toggle={this.handleSubmit} caption="Войти" />
       </Wrap>
     )
   }

@@ -40,31 +40,32 @@ export default class User {
     this.fetchData()
   }
 
-  _clearErr = () => (this.errorMessage = null)
+  @action('clear message error field')
+  clearErr = () => (this.errorMessage = null)
 
   @action('change login')
   changeLogin = login => {
-    this._clearErr()
+    this.clearErr()
     this.login = login
   }
   @action('change username')
   changeUsername = username => {
-    this._clearErr()
+    this.clearErr()
     this.username = username
   }
   @action('change password')
   changePassword = password => {
-    this._clearErr()
+    this.clearErr()
     this.password = password
   }
   @action('change email')
   changeEmail = email => {
-    this._clearErr()
+    this.clearErr()
     this.email = email
   }
   @action('change phone')
   changePhone = phone => {
-    this._clearErr()
+    this.clearErr()
     this.phone = phone
   }
   @action('change wallet')
@@ -125,6 +126,8 @@ export default class User {
 
   @action('Get token with username and passoword')
   getToken = async () => {
+    this.loading = true
+    this.errorMessage = ''
     const {login: username, password} = this
     await fetch('http://localhost:3030/token', {
       method: 'POST',
@@ -135,12 +138,20 @@ export default class User {
       body: JSON.stringify({username, password}),
     })
       .then(res => res.json())
-      .then(({token}) => {
-        this.token = token
-        setToken(token)
-        this.fetchData()
+      .then(({token, error}) => {
+        this.loading = false
+        if (!error) {
+          this.token = token
+          setToken(token)
+          this.fetchData()
+        } else {
+          this.errorMessage = error
+        }
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        this.loading = false
+        console.error(err)
+      })
   }
 
   @action('Signup new user')
@@ -179,7 +190,7 @@ export default class User {
     })
       .then(res => res.json())
       .then(data => {
-        if(data.err) this.errorMessage = data.err
+        if (data.err) this.errorMessage = data.err
         else this.orders = data
       })
       .catch(err => console.error(err))
@@ -200,7 +211,7 @@ export default class User {
       .then(data => data)
       .catch(err => console.error(err))
     this.loading = false
-    if(response) return response
+    if (response) return response
   }
 }
 

@@ -35,6 +35,7 @@ class Signup extends Component {
   }
 
   componentDidMount() {
+    this.props.userStore.clearErr()
     window.scrollTo(
       0,
       this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
@@ -55,7 +56,7 @@ class Signup extends Component {
     passwordRepeatedError: null,
   }
 
-  _handleSubmit = async () => {
+  handleSubmit = async () => {
     const {usernameError, passwordError, emailError} = this.state
     // fix double click for premade input's values
     // or
@@ -99,6 +100,7 @@ class Signup extends Component {
           errorMsg="Введите ваш логин"
           isInvalid={this.state.loginError}
           handleErrorChange={(loginError, res) => this.setState({loginError}, res())}
+          handleEnterPress={this.handleSubmit}
         />
         <Input
           ref={child => (this.inputs[1] = child)}
@@ -110,6 +112,7 @@ class Signup extends Component {
           handleErrorChange={(usernameError, res) =>
             this.setState({usernameError}, res())
           }
+          handleEnterPress={this.handleSubmit}
         />
         <Input
           ref={child => (this.inputs[2] = child)}
@@ -120,6 +123,7 @@ class Signup extends Component {
           errorMsg="Введите ваш email"
           isInvalid={this.state.emailError}
           handleErrorChange={(emailError, res) => this.setState({emailError}, res())}
+          handleEnterPress={this.handleSubmit}
         />
         <Input
           ref={child => (this.inputs[3] = child)}
@@ -133,6 +137,7 @@ class Signup extends Component {
           handleErrorChange={(passwordError, res) =>
             this.setState({passwordError}, res())
           }
+          handleEnterPress={this.handleSubmit}
         />
         <Input
           ref={child => (this.inputs[4] = child)}
@@ -146,9 +151,10 @@ class Signup extends Component {
           handleErrorChange={(passwordRepeatedError, res) =>
             this.setState({passwordRepeatedError}, res())
           }
+          handleEnterPress={this.handleSubmit}
         />
         {errorMessage && <ErrorField>{errorMessage}</ErrorField>}
-        <Button toggle={this._handleSubmit} caption="Регистрация" />
+        <Button toggle={this.handleSubmit} caption="Регистрация" />
       </Wrap>
     )
   }

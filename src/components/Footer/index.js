@@ -86,6 +86,12 @@ const Copy = styled('div')`
   }
 `
 
+const ErrorField = styled('p')`
+  color: #f44336;
+  font-weight: 700;
+  text-align: center;
+`
+
 // Footer component;
 class Footer extends Component {
   state = {
@@ -103,7 +109,7 @@ class Footer extends Component {
     this.inputs = []
   }
 
-  _handleSubmit = async () => {
+  handleSubmit = async () => {
     const {emailError, phoneError, email, phone, message} = this.state
     this.setState({loading: true, messageFromBack: ''})
     // fix double click for premade input's values
@@ -142,6 +148,7 @@ class Footer extends Component {
             handleChange={email => this.setState({email})}
             isInvalid={this.state.emailError}
             handleErrorChange={(emailError, res) => this.setState({emailError}, res())}
+            handleEnterPress={this.handleSubmit}
           />
           <Input
             ref={child => (this.inputs[1] = child)}
@@ -153,16 +160,17 @@ class Footer extends Component {
             handleChange={phone => this.setState({phone})}
             isInvalid={this.state.phoneError}
             handleErrorChange={(phoneError, res) => this.setState({phoneError}, res())}
+            handleEnterPress={this.handleSubmit}
           />
           <Textarea
             value={this.state.message}
             onChange={({target}) => this.setState({message: target.value})}
           />
-          <span>{this.state.messageFromBack}</span>
+          <ErrorField>{this.state.messageFromBack}</ErrorField>
           <Button
             loading={this.state.loading}
             caption="Отправить"
-            toggle={this._handleSubmit}
+            toggle={this.handleSubmit}
           />
         </Form>
         <WithBackground>

@@ -142,6 +142,7 @@ export class Input extends Component {
       <InputWrap>
         <StyledInput
           ref={input => (this.input = input)}
+          onKeyPress={({which}) => which === 13? this.props.handleEnterPress(): true}
           borderColor={isInvalid ? Colors.error : 'rgba(255,255,255,.4)'}
           borderColorHover={isInvalid ? Colors.errorHover : 'rgba(255,255,255,.7)'}
           borderColorActive={isInvalid ? Colors.errorHover : '#fff'}

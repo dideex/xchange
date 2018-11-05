@@ -3,16 +3,26 @@ import openSocket from 'socket.io-client'
 
 // menu state
 class Cash {
-  @observable inputValue
-  @observable outputValue
-  @observable currencyInput
-  @observable currencyOutput
-  @observable paymentStatus
-  @observable draggedBadgeCurrency
-  @observable orderId
-  @observable loading
-  @observable errorMessage
-  @observable.ref currency
+  @observable
+  inputValue
+  @observable
+  outputValue
+  @observable
+  currencyInput
+  @observable
+  currencyOutput
+  @observable
+  paymentStatus
+  @observable
+  draggedBadgeCurrency
+  @observable
+  orderId
+  @observable
+  loading
+  @observable
+  errorMessage
+  @observable.ref
+  currency
 
   constructor() {
     this.inputValue = 0
@@ -200,7 +210,11 @@ class Cash {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({_id: this.orderId}),
+      body: JSON.stringify({
+        _id: this.orderId,
+        currency: this.currency[this.currencyOutput].icon,
+        value: this.outputValue,
+      }),
     })
       .then(res => res.json())
       .then(() => {
