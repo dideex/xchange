@@ -33,4 +33,12 @@ export const H2 = styled('h2')`
   margin: 20px 0 40px;
 `
 
+export const StatusIconColors = ['transparent', '#FC0000', '#FFE712', '#8FBE00']
+
+export const StatusTitles = [
+  'Не создан',
+  'Ожидает перевода',
+  'Ожидает подтверждения',
+  'Переведено',
+]
 export default Styles

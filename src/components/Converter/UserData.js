@@ -87,6 +87,14 @@ const CheckboxWrap = styled('div')`
   }
 `
 
+const ErrorField = styled('p')`
+  flex: 100% 0 0;
+  padding-top: 15px;
+  color: #f44336;
+  font-weight: 700;
+  text-align: center;
+`
+
 //TODO: checkbox
 // UserData component;
 @withRouter
@@ -116,7 +124,7 @@ class UserData extends Component {
   }
 
   _handleCheckboxChange = () => this.setState(({agree}) => ({agree: !agree}))
-  
+
   handleSubmit = async () => {
     this.setState({loading: true})
     // fix double click for premade input's values
@@ -125,7 +133,6 @@ class UserData extends Component {
     await Promise.all(this.inputs.map(input => input.handleChange()))
     const {agree, loading, ...state} = this.state
     if (isAllPropsFalse(state)) {
-      console.log(" LOG ___ 'lol' ", 'lol' )
       this.props.cashStore
         .createPayment({
           token: this.props.userStore.token,
@@ -135,12 +142,13 @@ class UserData extends Component {
         .then(() => {
           this.props.userStore
             .updateInfo()
-            .then(() => {
-              console.log('userStore done')
+            .then(data => {
+              console.log('userStore done', data)
             })
             .catch(err => console.error(err))
-          this.props.history.push('/podtverjdenie-oplati')
-          this.setState({loadng: false})
+          if (!this.props.cashStore.errorMessage)
+            this.props.history.push('/podtverjdenie-oplati')
+          this.setState({loading: false})
         })
         .catch(err => console.error('createpayment erorr', err))
     } else {
@@ -228,6 +236,9 @@ class UserData extends Component {
             loading={this.state.loading}
           />
         </ButtonWrap>
+        {this.props.cashStore.errorMessage && (
+          <ErrorField>{this.props.cashStore.errorMessage}</ErrorField>
+        )}
       </StyledUserData>
     )
   }

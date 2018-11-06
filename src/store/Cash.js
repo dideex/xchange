@@ -71,8 +71,12 @@ class Cash {
     }
   }
 
+  @action('clear message error field')
+  clearErr = () => (this.errorMessage = null)
+
   @action('change input')
   changeInput = (number = 0) => {
+    this.clearErr()
     const parsedNumber = this._parseNumber(number)
     if (this._isNumber(parsedNumber)) {
       this.inputValue = parsedNumber
@@ -82,6 +86,7 @@ class Cash {
   }
   @action('change output')
   changeOutput = (number = 0) => {
+    this.clearErr()
     const parsedNumber = this._parseNumber(number)
     if (this._isNumber(parsedNumber)) {
       this.outputValue = parsedNumber
@@ -91,6 +96,7 @@ class Cash {
   }
   @action('set currency output')
   setCurrencyOutput = (id = 0) => {
+    this.clearErr()
     if (this.currencyInput === +id) {
       this.currencyInput = this.currencyOutput
       let temp = this.inputValue
@@ -104,6 +110,7 @@ class Cash {
   }
   @action('set currency input')
   setCurrencyInput = (id = 0) => {
+    this.clearErr()
     if (this.currencyOutput === +id) {
       this.currencyOutput = this.currencyInput
       let temp = this.inputValue
@@ -117,6 +124,7 @@ class Cash {
   }
   @action('create payment and push to server')
   createPayment = ({token, fromWallet, toWallet}) => {
+    this.clearErr()
     this.loading = true
     this._correctValuesLimits()
     return this.fetchCurrency()
@@ -125,8 +133,8 @@ class Cash {
         const data = {
           inputValue: this.inputValue,
           outputValue: this.outputValue,
-          currencyInput: this.currencyInput,
-          currencyOutput: this.currencyOutput,
+          currencyInput: this.currency[this.currencyInput].name,
+          currencyOutput: this.currency[this.currencyOutput].name,
           currencyInputLabel: this.currency[this.currencyInput].label,
           currencyOutputLabel: this.currency[this.currencyOutput].label,
           paymentStatus: 1,
@@ -144,10 +152,14 @@ class Cash {
             body: JSON.stringify(data),
           })
             .then(res => res.json())
-            .then(({result}) => {
-              this.orderId = result._id
+            .then(data => {
+              const {result, error} = data
+              if(!error) {
+                this.orderId = result._id
+              } else {
+                this.errorMessage = error
+              }
             })
-            .catch(err => (this.errorMessage = err))
         else
           await fetch('http://localhost:3030/api/guestOrders', {
             method: 'POST',
@@ -159,10 +171,8 @@ class Cash {
           })
             .then(res => res.json())
             .then(({result}) => (this.orderId = result._id))
-            .catch(err => (this.errorMessage = err))
         this.loading = false
       })
-      .catch(err => console.error('createPayment', err))
   }
 
   @action('get currency from the server')

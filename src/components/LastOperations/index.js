@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import openSocket from 'socket.io-client'
 import styled from 'react-emotion'
 
 import {H2, container, Loading} from '../common'
@@ -26,8 +25,6 @@ const Operations = styled('div')`
   transform: translate3d(${({offset}) => offset}%, 0, 0);
   transition: transform 0.3s ease-in-out;
 `
-
-const socket = openSocket('http://localhost:3040')
 
 // LastOperations component;
 @inject('lastOperationsStore')

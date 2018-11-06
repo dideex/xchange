@@ -116,7 +116,7 @@ class Nav extends Component {
     `${this.state.minimizeNav ? 'min-nav' : ''} ${this.state.hideMenu ? 'hide-nav' : ''}`
 
   render() {
-    const {login, token, signout} = this.props.userStore
+    const {login, token, signout, isAdmin} = this.props.userStore
     return (
       <NavWrap className={this._getStyle()}>
         <Icons style={logoStyle} id="logo" />
@@ -170,6 +170,7 @@ class Nav extends Component {
             >
               {token ? (
                 <LangMenu>
+                  {isAdmin && <Link to="/summary">Admin</Link>}
                   <Link to="/lichnii-kabinet">{login}</Link>
                   <p
                     onClick={e => {

@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
-import MenuNav from './components/Nav';
+import MenuNav from './components/Nav'
 import {
   FAQ,
   Home,
@@ -15,6 +15,7 @@ import {
   PaymentProof,
   PageNotFound,
   Order,
+  Summary,
 } from './routes'
 
 // Layout component;
@@ -35,10 +36,12 @@ class Layout extends Component {
           <Route exact path="/registracya" component={Signup} />
           <Route exact path="/reservi" component={Reserved} />
           <Route exact path="/o-nas" component={AboutUs} />
-          <Route exact path="/lichnii-kabinet" component={CP} />
           <Route exact path="/lichnii-kabinet/:id" component={CP} />
+          <Route exact path="/lichnii-kabinet" component={CP} />
           <Route exact path="/perevod/:id" component={Order} />
           <Route exact path="/faq" component={FAQ} />
+          <Route exact path="/summary/:id" component={Summary} />
+          <Route exact path="/summary" component={Summary} />
           <Route exact path="/" component={Home} />
           <Route component={PageNotFound} />
         </Switch>

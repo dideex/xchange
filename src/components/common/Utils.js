@@ -66,3 +66,28 @@ export const ScrollTo = top => {
     }
   }
 }
+
+export const parseOrders = orders =>
+  orders &&
+  orders.map(
+    ({
+      _id,
+      created,
+      inputValue,
+      currencyInputLabel,
+      outputValue,
+      currencyOutputLabel,
+      paymentStatus,
+      toWallet,
+    }) => {
+      const date = new Date(Date.parse(created))
+      return {
+        id: _id,
+        paymentStatus,
+        toWallet,
+        created: `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`,
+        inputValue: `${currencyFormat(inputValue)}, ${currencyInputLabel}`,
+        outputValue: `${currencyFormat(outputValue)}, ${currencyOutputLabel}`,
+      }
+    },
+  )

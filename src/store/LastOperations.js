@@ -7,7 +7,7 @@ class LastOperations {
   @observable loading
   
   constructor() {
-    this.loading = false
+    this.loading = true
     this.data = []
     this.socket = openSocket('http://localhost:3040')
     this.socket.on('message', this._socketResolver)

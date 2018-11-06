@@ -2,11 +2,9 @@ import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
-import {Table, Column, AutoSizer} from 'react-virtualized'
-import {CopyToClipboard} from 'react-copy-to-clipboard'
 import 'react-virtualized/styles.css'
 
-import {Loading, Colors, currencyFormat, Icons} from '../common'
+import {Loading, Colors, currencyFormat, Virtualized, parseOrders} from '../common'
 
 const StyledTable = styled('div')`
   & {
@@ -62,23 +60,6 @@ const StyledTable = styled('div')`
   }
 `
 
-const TableWrap = styled('div')`
-  padding: 10px 15px;
-  border-radius: 10px;
-  background-color: #ffffff;
-`
-
-const ColorMap = ['transparent', '#FC0000', '#FFE712', '#8FBE00']
-const StatusMap = ['Не создан', 'Ожидает перевода', 'Ожидает подтверждения', 'Переведено']
-
-const Status = styled('span')`
-  display: block;
-  width: 32px;
-  height: 32px;
-  background: ${({color}) => color};
-  border-radius: 50%;
-`
-
 // Orders component;
 @withRouter
 @inject('userStore')
@@ -95,93 +76,12 @@ class Orders extends Component {
   render() {
     const {orders, loading} = this.props.userStore
     if (loading) return <Loading size="small" />
-    const parsedOrders =
-      orders &&
-      orders.map(
-        ({
-          _id,
-          created,
-          inputValue,
-          currencyInputLabel,
-          outputValue,
-          currencyOutputLabel,
-          paymentStatus,
-          toWallet,
-        }) => {
-          const date = new Date(Date.parse(created))
-          return {
-            id: _id,
-            paymentStatus,
-            toWallet,
-            created: `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`,
-            inputValue: `${currencyFormat(inputValue)}, ${currencyInputLabel}`,
-            outputValue: `${currencyFormat(outputValue)}, ${currencyOutputLabel}`,
-          }
-        },
-      )
+    const parsedOrders = parseOrders(orders)
     return (
       <StyledTable>
-        {parsedOrders.length ? <h3>Таблица послдених операций</h3>: null}
+        {parsedOrders.length ? <h3>Таблица послдених операций</h3> : null}
         {parsedOrders.length ? (
-          <TableWrap>
-            <AutoSizer disableHeight>
-              {({width}) => (
-                <Table
-                  width={width}
-                  height={330}
-                  headerHeight={20}
-                  rowHeight={60}
-                  rowCount={parsedOrders.length}
-                  rowGetter={({index}) => parsedOrders[index]}
-                  onRowClick={({rowData: {id}}) =>
-                    this.props.history.push(`/lichnii-kabinet/${id}`)
-                  }
-                >
-                  <Column
-                    label="№"
-                    dataKey="id"
-                    width={100}
-                    cellRenderer={({cellData}) => (
-                      <CopyToClipboard
-                        text={cellData}
-                        onCopy={() => this.setState({CopyId: cellData})}
-                      >
-                        <span title={cellData} onClick={e => e.stopPropagation()}>
-                          <Icons
-                            id="copy"
-                            style={{width: 23}}
-                            className={this.state.CopyId === cellData && 'copyied'}
-                          />
-                        </span>
-                      </CopyToClipboard>
-                    )}
-                  />
-                  <Column label="Дата" dataKey="created" width={100} />
-                  <Column
-                    label="Сумма перевода"
-                    dataKey="inputValue"
-                    width={300}
-                    flexGrow={1}
-                  />
-                  <Column
-                    label="Сумма получения"
-                    dataKey="outputValue"
-                    width={300}
-                    flexGrow={1}
-                  />
-                  <Column label="На номер" dataKey="toWallet" width={300} flexGrow={1} />
-                  <Column
-                    label="Статус"
-                    dataKey="paymentStatus"
-                    width={100}
-                    cellRenderer={({cellData}) => (
-                      <Status title={StatusMap[cellData]} color={ColorMap[cellData]} />
-                    )}
-                  />
-                </Table>
-              )}
-            </AutoSizer>
-          </TableWrap>
+          <Virtualized parsedOrders={parsedOrders} endpoint="lichnii-kabinet" />
         ) : (
           <h3>Вы еще не сделали перевода</h3>
         )}

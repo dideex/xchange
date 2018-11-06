@@ -1,11 +1,20 @@
 import {observable, action} from 'mobx'
 import Cookie from 'js-cookie'
 
-const setToken = token => Cookie.set('token', token)
+const setToken = (token, isAdmin) => {
+  if (isAdmin) {
+    Cookie.set('token', token)
+    Cookie.set('isAdmin', true)
+  } else Cookie.set('token', token)
+}
 
-const logout = () => Cookie.remove('token')
+const logout = () => {
+  Cookie.remove('token')
+  Cookie.remove('isAdmin')
+}
 
 const getToken = () => Cookie.get('token') || null
+const getAdminStatus = () => Cookie.get('isAdmin') || null
 
 // menu state
 export default class User {
@@ -17,6 +26,7 @@ export default class User {
   @observable moneyConverted
   @observable loading
   @observable token
+  @observable isAdmin
   @observable errorMessage
   @observable.ref orders
 
@@ -31,12 +41,14 @@ export default class User {
     this.moneyConverted = 0
     this.loading = false
     this.token = ''
+    this.isAdmin = false
     this.errorMessage = null
     this.orders = []
   }
 
   constructor() {
     this._setInitalData()
+    if(getAdminStatus()) this.isAdmin = true
     this.fetchData()
   }
 
@@ -138,12 +150,13 @@ export default class User {
       body: JSON.stringify({username, password}),
     })
       .then(res => res.json())
-      .then(({token, error}) => {
+      .then(({token, error, isAdmin}) => {
         this.loading = false
         if (!error) {
           this.token = token
-          setToken(token)
+          setToken(token, isAdmin)
           this.fetchData()
+          if (isAdmin) this.isAdmin = true
         } else {
           this.errorMessage = error
         }
