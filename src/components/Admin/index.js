@@ -35,6 +35,7 @@ class Admin extends Component {
     loadingUserData: false,
     loading: true,
     orderDetails: {},
+    filter: '',
   }
   //prettier-ignore
   componentWillReceiveProps({ match: { params: {id}}}) {
@@ -122,7 +123,11 @@ class Admin extends Component {
   render() {
     const {orders} = this.state
     const {id} = this.props.match.params
-    const parsedOrders = parseOrders(orders)
+    const parsedOrders = parseOrders(
+      orders
+        .map(order => ({...order, toWallet: order.fromWallet}))
+        .filter(({toWallet}) => ~toWallet.indexOf(this.state.filter)),
+    )
     if (this.state.loading) return <Loading size="big" />
     return (
       <Wrap>
@@ -143,6 +148,10 @@ class Admin extends Component {
           <div onClick={() => this._fetchOrdersByPaymentStatus('denied')}>Удаленные</div>
         </PaymentSelector>
         <Virtualized parsedOrders={parsedOrders} endpoint={'summary'} />
+        <p>
+          Поиск по номеру
+          <input type="text" onChange={e => this.setState({filter: e.target.value})} />
+        </p>
       </Wrap>
     )
   }

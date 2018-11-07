@@ -47,6 +47,9 @@ const Details = styled('div')`
 
 const WalletsWrap = styled('ul')`
   & {
+    h3 {
+      cursor: pointer;
+    }
   }
 `
 
@@ -146,7 +149,7 @@ class DetailsComponent extends Component {
           )}
         </UserInfo>
         <PaymentController>
-          {[1,2,3,4].map(i => (
+          {[1, 2, 3, 4].map(i => (
             <PaymentIconStatus
               key={i}
               onClick={() => updatePaymentStatus(id, i)}

@@ -11,6 +11,18 @@ const Wrap = styled('div')`
   }
 `
 
+const CurrencyContainer = styled('div')`
+  & {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    div {
+      flex: 50% 0 0;
+      max-width: 50%;
+    }
+  }
+`
+
 // Settings component;
 @inject('userStore')
 @inject('cashStore')
@@ -22,11 +34,11 @@ class Settings extends Component {
     const {currency} = this.props.cashStore
     return (
       <Wrap>
-        <ul>
+        <CurrencyContainer>
           {currency.map((cur, i) => (
             <Label key={i} token={this.props.userStore.token} data={cur} />
           ))}
-        </ul>
+        </CurrencyContainer>
       </Wrap>
     )
   }
