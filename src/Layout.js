@@ -16,6 +16,7 @@ import {
   PageNotFound,
   Order,
   Summary,
+  Settings,
 } from './routes'
 
 // Layout component;
@@ -42,6 +43,7 @@ class Layout extends Component {
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/summary/:id" component={Summary} />
           <Route exact path="/summary" component={Summary} />
+          <Route exact path="/settings" component={Settings} />
           <Route exact path="/" component={Home} />
           <Route component={PageNotFound} />
         </Switch>

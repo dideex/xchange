@@ -55,6 +55,10 @@ export const CurrencyTitle = styled('h2')`
 @inject('cashStore')
 @observer
 export default class Index extends Component {
+  componentDidMount() {
+    this.props.cashStore.fetchCurrency()
+  }
+
   render() {
     const {
       loading,

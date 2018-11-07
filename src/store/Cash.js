@@ -28,7 +28,7 @@ class Cash {
     this.currency = []
     this.errorMessage = ''
     this.socket = openSocket('http://localhost:3040')
-    this.fetchCurrency()
+    if(this.currency.length === 0) this.fetchCurrency()
   }
 
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)

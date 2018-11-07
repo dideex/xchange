@@ -171,6 +171,7 @@ class Nav extends Component {
               {token ? (
                 <LangMenu>
                   {isAdmin && <Link to="/summary">Admin</Link>}
+                  {isAdmin && <Link to="/settings">Settings</Link>}
                   <Link to="/lichnii-kabinet">{login}</Link>
                   <p
                     onClick={e => {
