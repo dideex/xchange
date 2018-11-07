@@ -1,5 +1,13 @@
 export {Colors} from './Colors'
-export {SvgCurrency, coinColors, container, robotoSlab, H2} from './Styles'
+export {
+  SvgCurrency,
+  coinColors,
+  container,
+  robotoSlab,
+  H2,
+  StatusIconColors,
+  StatusTitles,
+} from './Styles'
 export {Button} from './Button'
 export {Label} from './Label'
 export {Icons} from './Icons'
@@ -16,4 +24,4 @@ export {
   parseOrders,
 } from './Utils'
 export {AccentBlock} from './AccentBlock'
-export {Virtualized} from './Virtualized'
+export {Virtualized, Status as PaymentIconStatus} from './Virtualized'

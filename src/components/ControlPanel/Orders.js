@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 import 'react-virtualized/styles.css'
 
-import {Loading, Colors, currencyFormat, Virtualized, parseOrders} from '../common'
+import {Loading, Colors, Virtualized, parseOrders} from '../common'
 
 const StyledTable = styled('div')`
   & {

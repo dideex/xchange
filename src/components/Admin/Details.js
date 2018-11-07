@@ -2,7 +2,14 @@ import React, {Component, Fragment} from 'react'
 import {inject, observer} from 'mobx-react'
 import styled from 'react-emotion'
 
-import {currencyFormat, statusArray, Loading} from '../common'
+import {
+  currencyFormat,
+  statusArray,
+  Loading,
+  PaymentIconStatus,
+  StatusTitles,
+  StatusIconColors,
+} from '../common'
 
 const Wrap = styled('div')`
   & {
@@ -53,6 +60,17 @@ const UserInfo = styled('div')`
     justify-content: space-between;
   }
 `
+
+const PaymentController = styled('div')`
+  & {
+    display: flex;
+    justify-content: center;
+    span {
+      cursor: pointer;
+      margin: 0 5px;
+    }
+  }
+`
 // DetailsComponent component;
 @inject('cashStore')
 @observer
@@ -60,12 +78,14 @@ class DetailsComponent extends Component {
   state = {
     showWallets: false,
   }
+
   render() {
     const {
       id,
       inputValue,
       currencyInputLabel,
       toWallet,
+      fromWallet,
       outputValue,
       currencyOutputLabel,
       email,
@@ -74,19 +94,19 @@ class DetailsComponent extends Component {
       loading,
       wallets,
       login,
+      updatePaymentStatus,
     } = this.props
-    console.log(' LOG ___ this.Details ', this.props)
     return (
       <Wrap>
         <h3>Перевод № {id}</h3>
         <Details>
           <div>
             <Details>
-              <span>Кошелек для перевода:</span>
-              <strong>1234 4321 1234 5643</strong>
+              <span>Кошелек с которого перевели:</span>
+              <strong>{fromWallet}</strong>
             </Details>
             <Details>
-              <span>Сумму для перевода:</span>
+              <span>Сумма перевода:</span>
               <strong>{`${currencyFormat(inputValue)} ${currencyInputLabel}`}</strong>
             </Details>
           </div>
@@ -125,13 +145,25 @@ class DetailsComponent extends Component {
             </Fragment>
           )}
         </UserInfo>
+        <PaymentController>
+          {[1,2,3,4].map(i => (
+            <PaymentIconStatus
+              key={i}
+              onClick={() => updatePaymentStatus(id, i)}
+              title={`Перевести в статус ${StatusTitles[i]}`}
+              color={StatusIconColors[i]}
+            />
+          ))}
+        </PaymentController>
         <WalletsWrap
           onClick={() => this.setState(({showWallets}) => ({showWallets: !showWallets}))}
         >
           {wallets && Object.values(wallets).length && <h3>Все кошельки пользователя</h3>}
           {wallets && this.state.showWallets
             ? Object.values(wallets).map((wallet, i) => (
-                <li key={i}>{`${this.props.cashStore.currency[i].name} : ${wallet}`}</li>
+                <li onClick={e => e.stopPropagation()} key={i}>{`${
+                  this.props.cashStore.currency[i].name
+                } : ${wallet}`}</li>
               ))
             : null}
         </WalletsWrap>

@@ -7,14 +7,20 @@ import PropTypes from 'prop-types'
 
 import {StatusIconColors, StatusTitles} from './Styles'
 import Icons from './Icons'
+import Colors from './Colors'
 
 const TableWrap = styled('div')`
+ &{
   padding: 10px 15px;
   border-radius: 10px;
   background-color: #ffffff;
+  .ReactVirtualized__Table__row.active {
+    background: ${Colors.accent};
+  }
+}
 `
 
-const Status = styled('span')`
+export const Status = styled('span')`
   display: block;
   width: 32px;
   height: 32px;
@@ -29,7 +35,7 @@ export class Virtualized extends Component {
     parsedOrders: PropTypes.array.isRequired,
     endpoint: PropTypes.string.isRequired,
   }
-  state = {CopyId: null}
+  state = {CopyId: null, selectedId: ''}
 
   render() {
     const {parsedOrders, endpoint} = this.props
@@ -44,14 +50,18 @@ export class Virtualized extends Component {
               rowHeight={60}
               rowCount={parsedOrders.length}
               rowGetter={({index}) => parsedOrders[index]}
-              onRowClick={({rowData: {id}}) =>
-                this.props.history.push(`/${endpoint}/${id}`)
+              rowClassName={({index}) =>
+                index === this.state.selectedId ? 'active' : ''
               }
+              onRowClick={({index, rowData: {id}}) => {
+                this.setState({selectedId: index})
+                this.props.history.push(`/${endpoint}/${id}`)
+              }}
             >
               <Column
                 label="№"
                 dataKey="id"
-                width={100}
+                width={50}
                 cellRenderer={({cellData}) => (
                   <CopyToClipboard
                     text={cellData}

@@ -13,8 +13,15 @@ const Wrap = styled('div')`
 `
 
 const PaymentSelector = styled('div')`
-  display: flex;
-  justify-content: space-between;
+  & {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    div {
+      cursor: pointer;
+      font-weight: 700;
+    }
+  }
 `
 
 // Admin component;
@@ -31,31 +38,39 @@ class Admin extends Component {
   }
   //prettier-ignore
   componentWillReceiveProps({ match: { params: {id}}}) {
-    console.log(" LOG ___ id ", id )
     if (id !== this.props.match.params.id) this._fetchOrdersDetail(id)
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     if (!this.props.userStore.isAdmin) this.props.history.push('/')
-    this._fetchOrdersByPaymentStatus('expectation')
+    await this._fetchOrdersByPaymentStatus('all')
+    if (this.props.match.params.id) this._fetchOrdersDetail(this.props.match.params.id)
   }
 
   _fetchOrdersByPaymentStatus = status => {
-    this.setState({loading: true})
-    fetch(`http://localhost:3030/api/summaryOrders/${status}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${this.props.userStore.token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(orders => this.setState({loading: false, orders}))
-      .catch(err => console.log(err))
+    this.setState({loading: true, route: status})
+    return new Promise((res, rej) =>
+      fetch(`http://localhost:3030/api/summaryOrders/${status}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `bearer ${this.props.userStore.token}`,
+        },
+      })
+        .then(response => response.json())
+        .then(orders => this.setState({loading: false, orders}, res))
+        .catch(err => {
+          console.log(err)
+          rej()
+        }),
+    )
   }
 
+  // FIXME: http://localhost:3000/summary/5bd7ed59b210d44274fb8915 error
+
   _fetchOrdersDetail = async id => {
+    if (!id) return null
     const orderDetails = this.state.orders.find(({_id}) => id === _id)
     this.setState({loadingUserData: true})
     if (orderDetails.user !== 'Guest') {
@@ -76,7 +91,7 @@ class Admin extends Component {
           console.error(err)
         })
       this.setState({
-        orderDetails: {...orderDetails, ...userDetails, id},
+        orderDetails: {...userDetails, ...orderDetails, id},
         loadingUserData: false,
       })
     } else {
@@ -87,6 +102,23 @@ class Admin extends Component {
     }
   }
 
+  updatePaymentStatus = async (_id, paymentStatus) => {
+    await fetch(`http://localhost:3030/api/summaryOrderChangeStatus`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `bearer ${this.props.userStore.token}`,
+      },
+      body: JSON.stringify({_id, paymentStatus}),
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(err => console.log(err))
+
+    this._fetchOrdersByPaymentStatus(this.state.route)
+  }
+
   render() {
     const {orders} = this.state
     const {id} = this.props.match.params
@@ -95,9 +127,12 @@ class Admin extends Component {
     return (
       <Wrap>
         {id && (
-          <Details loading={this.state.loadingUserData} {...this.state.orderDetails} />
+          <Details
+            updatePaymentStatus={this.updatePaymentStatus}
+            loading={this.state.loadingUserData}
+            {...this.state.orderDetails}
+          />
         )}
-        <Virtualized parsedOrders={parsedOrders} endpoint={'summary'} />
         <PaymentSelector>
           <div onClick={() => this._fetchOrdersByPaymentStatus('all')}>Все</div>
           <div onClick={() => this._fetchOrdersByPaymentStatus('created')}>Созданные</div>
@@ -107,6 +142,7 @@ class Admin extends Component {
           <div onClick={() => this._fetchOrdersByPaymentStatus('closed')}>Закрытые</div>
           <div onClick={() => this._fetchOrdersByPaymentStatus('denied')}>Удаленные</div>
         </PaymentSelector>
+        <Virtualized parsedOrders={parsedOrders} endpoint={'summary'} />
       </Wrap>
     )
   }
