@@ -18,17 +18,28 @@ const getAdminStatus = () => Cookie.get('isAdmin') || null
 
 // menu state
 export default class User {
-  @observable username
-  @observable email
-  @observable phone
-  @observable wallets
-  @observable lastOperations
-  @observable convertedAmount
-  @observable loading
-  @observable token
-  @observable isAdmin
-  @observable errorMessage
-  @observable.ref orders
+  @observable
+  username
+  @observable
+  email
+  @observable
+  phone
+  @observable
+  wallets
+  @observable
+  lastOperations
+  @observable
+  convertedAmount
+  @observable
+  loading
+  @observable
+  token
+  @observable
+  isAdmin
+  @observable
+  errorMessage
+  @observable.ref
+  orders
 
   _setInitalData = () => {
     this.login = ''
@@ -47,9 +58,30 @@ export default class User {
   }
 
   constructor() {
+    this.token = getToken()
     this._setInitalData()
-    if(getAdminStatus()) this.isAdmin = true
+    this._checkToken()
+    if (getAdminStatus()) this.isAdmin = true
     this.fetchData()
+  }
+
+  _checkToken = () => {
+    const token = getToken()
+    if (!token) return null
+    fetch('http://localhost:3030/api/token', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `bearer ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(({success}) => !success && logout())
+      .catch(err => {
+        console.error(err)
+        logout()
+      })
   }
 
   @action('clear message error field')

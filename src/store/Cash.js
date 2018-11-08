@@ -3,26 +3,16 @@ import openSocket from 'socket.io-client'
 
 // menu state
 class Cash {
-  @observable
-  inputValue
-  @observable
-  outputValue
-  @observable
-  currencyInput
-  @observable
-  currencyOutput
-  @observable
-  paymentStatus
-  @observable
-  draggedBadgeCurrency
-  @observable
-  orderId
-  @observable
-  loading
-  @observable
-  errorMessage
-  @observable.ref
-  currency
+  @observable inputValue
+  @observable outputValue
+  @observable currencyInput
+  @observable currencyOutput
+  @observable paymentStatus
+  @observable draggedBadgeCurrency
+  @observable orderId
+  @observable loading
+  @observable errorMessage
+  @observable.ref currency
 
   constructor() {
     this.inputValue = 0
@@ -40,7 +30,7 @@ class Cash {
     this.errorMessage = ''
     this.userRate = 1.1
     this.socket = openSocket('http://localhost:3040')
-    if (this.currency.length === 0) this.fetchCurrency()
+    this.fetchCurrency()
   }
 
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
