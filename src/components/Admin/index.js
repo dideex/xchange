@@ -26,6 +26,7 @@ const PaymentSelector = styled('div')`
 
 // Admin component;
 @withRouter
+@inject('cashStore')
 @inject('userStore')
 @observer
 class Admin extends Component {
@@ -67,8 +68,6 @@ class Admin extends Component {
         }),
     )
   }
-
-  // FIXME: http://localhost:3000/summary/5bd7ed59b210d44274fb8915 error
 
   _fetchOrdersDetail = async id => {
     if (!id) return null
@@ -114,7 +113,31 @@ class Admin extends Component {
       body: JSON.stringify({_id, paymentStatus}),
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(
+        ({
+          email,
+          currencyOutputLabel,
+          inputValue,
+          outputValue,
+          currencyInputLabel,
+          currencyOutput,
+        }) => {
+          const currency = this.props.cashStore.currency.find(
+            ({name}) => name === currencyOutput,
+          ).icon
+          if (paymentStatus === 3)
+            this.props.cashStore.emitSocket({
+              email,
+              currencyOutputLabel,
+              inputValue,
+              outputValue,
+              currencyInputLabel,
+              currencyOutputLabel,
+              currency,
+              paymentStatus: 3,
+            })
+        },
+      )
       .catch(err => console.log(err))
 
     this._fetchOrdersByPaymentStatus(this.state.route)

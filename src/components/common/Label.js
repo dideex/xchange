@@ -16,9 +16,8 @@ const StyledLabel = styled('span')`
     transition: all 0.2s ease-in-out;
     span {
       font-family: 'Roboto Slab';
-      padding-left: 45px;
       font-size: 20px;
-      transition: margin-left 0.3s ease-in-out;
+      transition: padding-left 0.3s ease-in-out;
     }
     svg {
       transition: opacity 0.3s ease-in-out;
@@ -79,7 +78,7 @@ export class Label extends Component {
           style={{...SvgCurrency, zIndex: 1, opacity}}
           id={icon}
         />
-        <span style={{marginLeft: isDragging ? -60 : 0}}>{caption}</span>
+        <span style={{paddingLeft: isDragging ? 0 : 45}}>{caption}</span>
       </StyledLabel>
     )
   }

@@ -17,6 +17,7 @@ class Cash {
   constructor() {
     this.inputValue = 0
     this.outputValue = 0
+    this.outputValueInUsd = 0
     this.currencyInput = 0
     this.currencyOutput = 2
     this.paymentStatus = 0 // 0 - null, 1 - created, 2 - sended, 3 - closed
@@ -28,7 +29,7 @@ class Cash {
     this.currency = []
     this.errorMessage = ''
     this.socket = openSocket('http://localhost:3040')
-    if(this.currency.length === 0) this.fetchCurrency()
+    if (this.currency.length === 0) this.fetchCurrency()
   }
 
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
@@ -36,6 +37,10 @@ class Cash {
   _calcOutput = value =>
     (value * this.currency[this.currencyInput].price_usd) /
     this.currency[this.currencyOutput].price_usd
+
+  _calcOutputInUsd = () =>
+    (this.outputValueInUsd =
+      this.outputValue * this.currency[this.currencyOutput].price_usd)
 
   _isNumber = num => /^\d+[.]?\d{0,3}$/.test(num)
 
@@ -83,6 +88,7 @@ class Cash {
       this.outputValue = this._calcOutput(parsedNumber)
     }
     this._correctValuesLimits()
+    this._calcOutputInUsd()
   }
   @action('change output')
   changeOutput = (number = 0) => {
@@ -93,6 +99,7 @@ class Cash {
       this.inputValue = this._calcInput(parsedNumber)
     }
     this._correctValuesLimits()
+    this._calcOutputInUsd()
   }
   @action('set currency output')
   setCurrencyOutput = (id = 0) => {
@@ -127,52 +134,53 @@ class Cash {
     this.clearErr()
     this.loading = true
     this._correctValuesLimits()
-    return this.fetchCurrency()
-      .then(async () => {
-        this.paymentStatus = 1
-        const data = {
-          inputValue: this.inputValue,
-          outputValue: this.outputValue,
-          currencyInput: this.currency[this.currencyInput].name,
-          currencyOutput: this.currency[this.currencyOutput].name,
-          currencyInputLabel: this.currency[this.currencyInput].label,
-          currencyOutputLabel: this.currency[this.currencyOutput].label,
-          paymentStatus: 1,
-          fromWallet,
-          toWallet,
-        }
-        if (token)
-          await fetch('http://localhost:3030/api/orders', {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              Authorization: `bearer ${token}`,
-            },
-            body: JSON.stringify(data),
+    this._calcOutputInUsd()
+    return this.fetchCurrency().then(async () => {
+      this.paymentStatus = 1
+      const data = {
+        inputValue: this.inputValue,
+        outputValue: this.outputValue,
+        outputValueInUsd: this.outputValueInUsd,
+        currencyInput: this.currency[this.currencyInput].name,
+        currencyOutput: this.currency[this.currencyOutput].name,
+        currencyInputLabel: this.currency[this.currencyInput].label,
+        currencyOutputLabel: this.currency[this.currencyOutput].label,
+        paymentStatus: 1,
+        fromWallet,
+        toWallet,
+      }
+      if (token)
+        await fetch('http://localhost:3030/api/orders', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        })
+          .then(res => res.json())
+          .then(data => {
+            const {result, error} = data
+            if (!error) {
+              this.orderId = result._id
+            } else {
+              this.errorMessage = error
+            }
           })
-            .then(res => res.json())
-            .then(data => {
-              const {result, error} = data
-              if(!error) {
-                this.orderId = result._id
-              } else {
-                this.errorMessage = error
-              }
-            })
-        else
-          await fetch('http://localhost:3030/api/guestOrders', {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          })
-            .then(res => res.json())
-            .then(({result}) => (this.orderId = result._id))
-        this.loading = false
-      })
+      else
+        await fetch('http://localhost:3030/api/guestOrders', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then(res => res.json())
+          .then(({result}) => (this.orderId = result._id))
+      this.loading = false
+    })
   }
 
   @action('get currency from the server')
@@ -201,6 +209,9 @@ class Cash {
         })
     })
 
+  @action('emit socket')
+  emitSocket = data => this.socket.emit('newOrder', data)
+
   @action('cofirm payment')
   cofirmPayment = email => {
     this.paymentStatus = 2
@@ -218,7 +229,7 @@ class Cash {
     })
       .then(res => res.json())
       .then(() => {
-        this.socket.emit('newOrder', {
+        this.emitSocket({
           email,
           currency: this.currency[this.currencyOutput].icon,
           inputValue: this.inputValue,

@@ -57,7 +57,7 @@ class ContorlPanel extends Component {
           <Orders />
           <SummaryWrap>
             <span>Завершено переводов на общую сумму:</span>
-            <strong>{`${this.props.userStore.moneyConverted} руб`}</strong>{' '}
+            <strong>{`${this.props.userStore.convertedAmount} usd`}</strong>{' '}
           </SummaryWrap>
         </Wrap>
       </div>

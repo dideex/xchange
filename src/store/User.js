@@ -23,7 +23,7 @@ export default class User {
   @observable phone
   @observable wallets
   @observable lastOperations
-  @observable moneyConverted
+  @observable convertedAmount
   @observable loading
   @observable token
   @observable isAdmin
@@ -38,7 +38,7 @@ export default class User {
     this.phone = ''
     this.wallets = {}
     this.lastOperations = []
-    this.moneyConverted = 0
+    this.convertedAmount = 0
     this.loading = false
     this.token = ''
     this.isAdmin = false
@@ -106,12 +106,13 @@ export default class User {
       },
     })
       .then(res => res.json())
-      .then(({wallets, lastOperations, username, email, login}) => {
+      .then(({wallets, lastOperations, username, email, login, convertedAmount}) => {
         this.login = login
         this.username = username
         this.email = email
         this.wallets = wallets || {}
         this.lastOperations = lastOperations || []
+        this.convertedAmount = convertedAmount
       })
       .catch(err => console.error(err))
   }
