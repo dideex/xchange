@@ -136,7 +136,7 @@ class Cash {
     }
   }
   @action('create payment and push to server')
-  createPayment = ({token, fromWallet, toWallet}) => {
+  createPayment = ({token, fromWallet, toWallet, email}) => {
     this.clearErr()
     this.loading = true
     this._correctValuesLimits()
@@ -152,6 +152,7 @@ class Cash {
         currencyInputLabel: this.currency[this.currencyInput].label,
         currencyOutputLabel: this.currency[this.currencyOutput].label,
         paymentStatus: 1,
+        email,
         fromWallet,
         toWallet,
       }
@@ -231,6 +232,7 @@ class Cash {
         _id: this.orderId,
         currency: this.currency[this.currencyOutput].icon,
         value: this.outputValue,
+        email,
       }),
     })
       .then(res => res.json())

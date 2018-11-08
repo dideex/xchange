@@ -135,6 +135,7 @@ class UserData extends Component {
     if (isAllPropsFalse(state)) {
       this.props.cashStore
         .createPayment({
+          email: this.props.userStore.email,
           token: this.props.userStore.token,
           fromWallet: this.props.userStore.wallets[this.props.walletIncome],
           toWallet: this.props.userStore.wallets[this.props.walletOutgo],
