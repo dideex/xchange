@@ -128,7 +128,6 @@ class Admin extends Component {
           if (paymentStatus === 3)
             this.props.cashStore.emitSocket({
               email,
-              currencyOutputLabel,
               inputValue,
               outputValue,
               currencyInputLabel,

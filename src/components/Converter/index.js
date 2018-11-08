@@ -73,6 +73,7 @@ export default class Index extends Component {
       setCurrencyOutput,
       getMinimalAmount,
       getCurrencyReserve,
+      userRate,
     } = this.props.cashStore
     return (
       <Wrap>
@@ -94,6 +95,7 @@ export default class Index extends Component {
               loading={loading && currency.length === 0}
               inputCurrency={`${currency.length && currency[currencyInput].price_usd}`}
               outputCurrency={`${currency.length && currency[currencyOutput].price_usd}`}
+              rate={userRate}
             />
           </CurrencyRateWrap>
           <CurrencyFieldWrap className="right__input">

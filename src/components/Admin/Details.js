@@ -99,6 +99,7 @@ class DetailsComponent extends Component {
       login,
       updatePaymentStatus,
     } = this.props
+    console.log(" LOG ___ this.props ", this.props )
     return (
       <Wrap>
         <h3>Перевод № {id}</h3>

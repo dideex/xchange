@@ -3,7 +3,6 @@ import {observer, inject} from 'mobx-react'
 import styled from 'react-emotion'
 
 import Label from './CurrencyBadge'
-import {Loading} from '../common'
 
 const Wrap = styled('div')`
   & {

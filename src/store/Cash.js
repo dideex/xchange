@@ -3,16 +3,26 @@ import openSocket from 'socket.io-client'
 
 // menu state
 class Cash {
-  @observable inputValue
-  @observable outputValue
-  @observable currencyInput
-  @observable currencyOutput
-  @observable paymentStatus
-  @observable draggedBadgeCurrency
-  @observable orderId
-  @observable loading
-  @observable errorMessage
-  @observable.ref currency
+  @observable
+  inputValue
+  @observable
+  outputValue
+  @observable
+  currencyInput
+  @observable
+  currencyOutput
+  @observable
+  paymentStatus
+  @observable
+  draggedBadgeCurrency
+  @observable
+  orderId
+  @observable
+  loading
+  @observable
+  errorMessage
+  @observable.ref
+  currency
 
   constructor() {
     this.inputValue = 0
@@ -28,6 +38,7 @@ class Cash {
     this.loading = false
     this.currency = []
     this.errorMessage = ''
+    this.userRate = 1.1
     this.socket = openSocket('http://localhost:3040')
     if (this.currency.length === 0) this.fetchCurrency()
   }
@@ -35,14 +46,21 @@ class Cash {
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
 
   _calcOutput = value =>
-    (value * this.currency[this.currencyInput].price_usd) /
+    (value * this.currency[this.currencyInput].price_usd * this.userRate) /
     this.currency[this.currencyOutput].price_usd
+
+  _calcInput = value =>
+    (value * this.currency[this.currencyOutput].price_usd * this.userRate) /
+    this.currency[this.currencyInput].price_usd
 
   _calcOutputInUsd = () =>
     (this.outputValueInUsd =
       this.outputValue * this.currency[this.currencyOutput].price_usd)
 
   _isNumber = num => /^\d+[.]?\d{0,3}$/.test(num)
+
+  _isSameCurrencyLabel = (id1, id2) =>
+    this.currency[id1].label === this.currency[id2].label
 
   _parseNumber = num => {
     if (num === '') num = 0
@@ -52,10 +70,6 @@ class Cash {
     }
     return num
   }
-
-  _calcInput = value =>
-    (value * this.currency[this.currencyOutput].price_usd) /
-    this.currency[this.currencyInput].price_usd
 
   _correctValuesLimits = () => {
     const {minimal} = this.currency[this.currencyInput]
@@ -104,7 +118,8 @@ class Cash {
   @action('set currency output')
   setCurrencyOutput = (id = 0) => {
     this.clearErr()
-    if (this.currencyInput === +id) {
+    if (this.currencyOutput === +id) return null
+    if (this._isSameCurrencyLabel(id, this.currencyInput)) {
       this.currencyInput = this.currencyOutput
       let temp = this.inputValue
       this.inputValue = this.outputValue
@@ -118,7 +133,8 @@ class Cash {
   @action('set currency input')
   setCurrencyInput = (id = 0) => {
     this.clearErr()
-    if (this.currencyOutput === +id) {
+    if (this.currencyInput === +id) return null
+    if (this._isSameCurrencyLabel(id, this.currencyOutput)) {
       this.currencyOutput = this.currencyInput
       let temp = this.inputValue
       this.inputValue = this.outputValue
