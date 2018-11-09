@@ -1,5 +1,6 @@
 import {observable, action} from 'mobx'
 import Cookie from 'js-cookie'
+import Api from '../components/Api'
 
 const setToken = (token, isAdmin) => {
   if (isAdmin) {
@@ -18,28 +19,17 @@ const getAdminStatus = () => Cookie.get('isAdmin') || null
 
 // menu state
 export default class User {
-  @observable
-  username
-  @observable
-  email
-  @observable
-  phone
-  @observable
-  wallets
-  @observable
-  lastOperations
-  @observable
-  convertedAmount
-  @observable
-  loading
-  @observable
-  token
-  @observable
-  isAdmin
-  @observable
-  errorMessage
-  @observable.ref
-  orders
+  @observable username
+  @observable email
+  @observable phone
+  @observable wallets
+  @observable lastOperations
+  @observable convertedAmount
+  @observable loading
+  @observable token
+  @observable isAdmin
+  @observable errorMessage
+  @observable.ref orders
 
   _setInitalData = () => {
     this.login = ''
@@ -68,14 +58,7 @@ export default class User {
   _checkToken = () => {
     const token = getToken()
     if (!token) return null
-    fetch('http://localhost:3030/api/token', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${token}`,
-      },
-    })
+    Api.get('token', '', token)
       .then(response => response.json())
       .then(({success}) => !success && logout())
       .catch(err => {
@@ -129,14 +112,7 @@ export default class User {
     if (!token) return null
     this.token = token
 
-    await fetch('http://localhost:3030/api/userData', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${this.token}`,
-      },
-    })
+    await Api.get('userData', '', token)
       .then(res => res.json())
       .then(({wallets, lastOperations, username, email, login, convertedAmount}) => {
         this.login = login
@@ -150,38 +126,23 @@ export default class User {
   }
 
   @action('udpate user data')
-  updateInfo = async () => {
+  updateInfo = () => {
     const token = getToken()
     if (!token) return null
     this.token = token
 
     const {username, wallets, email} = this
-    await fetch('http://localhost:3030/api/userData', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${this.token}`,
-      },
-      body: JSON.stringify({username, wallets, email}),
-    })
+    return Api.post('userData', {username, wallets, email}, this.token)
       .then(res => console.log('updateInfo ___ res', res))
       .catch(err => console.error(err))
   }
 
   @action('Get token with username and passoword')
-  getToken = async () => {
+  getToken = () => {
     this.loading = true
     this.errorMessage = ''
     const {login: username, password} = this
-    await fetch('http://localhost:3030/token', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({username, password}),
-    })
+    Api.post('signinUser', {username, password})
       .then(res => res.json())
       .then(({token, error, isAdmin}) => {
         this.loading = false
@@ -201,16 +162,9 @@ export default class User {
   }
 
   @action('Signup new user')
-  signupUser = async () => {
+  signupUser = () => {
     const {login, email, username, password} = this
-    await fetch('http://localhost:3030/api/signupUser', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({login, email, username, password}),
-    })
+    Api.post('signupUser', {login, email, username, password})
       .then(res => res.json())
       .then(data => {
         const {token, err} = data
@@ -226,14 +180,7 @@ export default class User {
   fetchOrdersByToken = async () => {
     if (!this.token) return null
     this.loading = true
-    await fetch('http://localhost:3030/api/orders', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${this.token}`,
-      },
-    })
+    await Api.get('orders', '', this.token)
       .then(res => res.json())
       .then(data => {
         if (data.err) this.errorMessage = data.err
@@ -246,13 +193,7 @@ export default class User {
   @action('fetch order without token')
   fetchGuestOrder = async id => {
     this.loading = true
-    const response = await fetch(`http://localhost:3030/api/order?_id=${id}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
+    const response = await Api.get('order', '', `?_id=${id}`)
       .then(res => res.json())
       .then(data => data)
       .catch(err => console.error(err))

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import styled from 'react-emotion'
 
 import {Icons, Input, Colors, H2, Button, container, isAllPropsFalse} from '../common'
+import Api from '../Api';
 
 const FooterWrap = styled('footer')`
   & {
@@ -117,14 +118,7 @@ class Footer extends Component {
     // await this.inputs.map(async input => await input.handleChange())
     await Promise.all(this.inputs.map(input => input.handleChange()))
     if (isAllPropsFalse({emailError, phoneError})) {
-      fetch('http://localhost:3030/api/sendMessage', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({email, phone, message}),
-      })
+      Api.post('sendMessage', {email, phone, message})
         .then(res => res.json())
         .then(({status}) => this.setState({loading: false, messageFromBack: status}))
         .catch(({status}) => this.setState({loading: false, messageFromBack: status}))

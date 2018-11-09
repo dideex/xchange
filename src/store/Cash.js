@@ -1,5 +1,6 @@
 import {observable, action, computed} from 'mobx'
 import openSocket from 'socket.io-client'
+import Api from '../components/Api'
 
 // menu state
 class Cash {
@@ -157,15 +158,7 @@ class Cash {
         toWallet,
       }
       if (token)
-        await fetch('http://localhost:3030/api/orders', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `bearer ${token}`,
-          },
-          body: JSON.stringify(data),
-        })
+        await Api.post('orders', data, token)
           .then(res => res.json())
           .then(data => {
             const {result, error} = data
@@ -176,14 +169,7 @@ class Cash {
             }
           })
       else
-        await fetch('http://localhost:3030/api/guestOrders', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
+        await Api.post('guestOrders', data)
           .then(res => res.json())
           .then(({result}) => (this.orderId = result._id))
       this.loading = false
@@ -191,16 +177,10 @@ class Cash {
   }
 
   @action('get currency from the server')
-  fetchCurrency = async () =>
+  fetchCurrency = () =>
     new Promise((resolve, reject) => {
       this.loading = true
-      fetch('http://localhost:3030/api/currency', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      })
+      return Api.get('currency')
         .then(response => response.json())
         .then(data => {
           this.currency = data
@@ -222,19 +202,13 @@ class Cash {
   @action('cofirm payment')
   cofirmPayment = email => {
     this.paymentStatus = 2
-    fetch('http://localhost:3030/api/confirmOrder', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        _id: this.orderId,
-        currency: this.currency[this.currencyOutput].icon,
-        value: this.outputValue,
-        email,
-      }),
-    })
+    const data = {
+      _id: this.orderId,
+      currency: this.currency[this.currencyOutput].icon,
+      value: this.outputValue,
+      email,
+    }
+    Api.post('confirmOrder', data)
       .then(res => res.json())
       .then(() => {
         this.emitSocket({

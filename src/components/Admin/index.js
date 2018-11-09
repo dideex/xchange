@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 
 import {Loading, Virtualized, parseOrders} from '../common'
+import Api from '../Api'
 import Details from './Details'
 
 const Wrap = styled('div')`
@@ -52,14 +53,7 @@ class Admin extends Component {
   _fetchOrdersByPaymentStatus = status => {
     this.setState({loading: true, route: status})
     return new Promise((res, rej) =>
-      fetch(`http://localhost:3030/api/summaryOrders/${status}`, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `bearer ${this.props.userStore.token}`,
-        },
-      })
+      Api.get('summaryOrders', `/${status}`, this.props.userStore.token)
         .then(response => response.json())
         .then(orders => this.setState({loading: false, orders}, res))
         .catch(err => {
@@ -74,16 +68,10 @@ class Admin extends Component {
     const orderDetails = this.state.orders.find(({_id}) => id === _id)
     this.setState({loadingUserData: true})
     if (orderDetails.user !== 'Guest') {
-      const userDetails = await fetch(
-        `http://localhost:3030/api/summaryOrderUserInfo/${orderDetails.user}`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `bearer ${this.props.userStore.token}`,
-          },
-        },
+      const userDetails = await Api.get(
+        'summaryOrderUserInfo',
+        `/${orderDetails.user}`,
+        this.props.userStore.token,
       )
         .then(response => response.json())
         .then(userDetails => userDetails)
@@ -103,15 +91,11 @@ class Admin extends Component {
   }
 
   updatePaymentStatus = async (_id, paymentStatus) => {
-    await fetch(`http://localhost:3030/api/summaryOrderChangeStatus`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${this.props.userStore.token}`,
-      },
-      body: JSON.stringify({_id, paymentStatus}),
-    })
+    await Api.post(
+      'summaryOrderChangeStatus',
+      {_id, paymentStatus},
+      this.props.userStore.token,
+    )
       .then(response => response.json())
       .then(
         ({
