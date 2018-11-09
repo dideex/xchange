@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 
-import {Loading, Virtualized, parseOrders} from '../common'
+import {Loading, Virtualized, parseOrders, noty, StatusTitles} from '../common'
 import Api from '../Api'
 import Details from './Details'
 
@@ -57,7 +57,7 @@ class Admin extends Component {
         .then(response => response.json())
         .then(orders => this.setState({loading: false, orders}, res))
         .catch(err => {
-          console.log(err)
+          noty(err, 'error')
           rej()
         }),
     )
@@ -76,7 +76,7 @@ class Admin extends Component {
         .then(response => response.json())
         .then(userDetails => userDetails)
         .catch(err => {
-          console.error(err)
+          noty(err, 'error')
         })
       this.setState({
         orderDetails: {...userDetails, ...orderDetails, id},
@@ -101,27 +101,28 @@ class Admin extends Component {
         ({
           email,
           currencyOutputLabel,
+          currencyInputLabel,
           inputValue,
           outputValue,
-          currencyInputLabel,
           currencyOutput,
         }) => {
           const currency = this.props.cashStore.currency.find(
             ({name}) => name === currencyOutput,
           ).icon
+          noty(`Статус изменен на ${StatusTitles[paymentStatus]}`)
           if (paymentStatus === 3)
             this.props.cashStore.emitSocket({
               email,
               inputValue,
               outputValue,
-              currencyInputLabel,
-              currencyOutputLabel,
+              inputLabel: currencyInputLabel,
+              outputLabel: currencyOutputLabel,
               currency,
               paymentStatus: 3,
             })
         },
       )
-      .catch(err => console.log(err))
+      .catch(err => noty(err, 'error'))
 
     this._fetchOrdersByPaymentStatus(this.state.route)
   }

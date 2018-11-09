@@ -33,7 +33,7 @@ const logoStyle = {
 }
 
 const NavWrap = styled('nav')`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -97,11 +97,11 @@ class Nav extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this._handleScroll)
+    // window.addEventListener('scroll', this._handleScroll)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this._handleScroll)
+    // window.removeEventListener('scroll', this._handleScroll)
   }
 
   _handleScroll = () => {
@@ -112,13 +112,13 @@ class Nav extends Component {
     this.lastOffsetTop = window.pageYOffset
   }
 
-  _getStyle = () =>
-    `${this.state.minimizeNav ? 'min-nav' : ''} ${this.state.hideMenu ? 'hide-nav' : ''}`
+  // _getStyle = () =>
+  //   `${this.state.minimizeNav ? 'min-nav' : ''} ${this.state.hideMenu ? 'hide-nav' : ''}`
 
   render() {
     const {login, token, signout, isAdmin} = this.props.userStore
     return (
-      <NavWrap className={this._getStyle()}>
+      <NavWrap>
         <Icons style={logoStyle} id="logo" />
         <MenuWrap
           onMouseLeave={() => this.setState({showLangMenu: false, showAuthMenu: false})}

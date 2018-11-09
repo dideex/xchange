@@ -113,7 +113,7 @@ class Comments extends Component {
       speed: 500,
       slidesToShow: 2,
       slidesToScroll: 1,
-      lazyLoad: true,
+      lazyLoad: false,
       arrows: true,
       prevArrow: <SamplePrevArrow />,
       nextArrow: <SampleNextArrow />,

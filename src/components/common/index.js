@@ -25,3 +25,4 @@ export {
 } from './Utils'
 export {AccentBlock} from './AccentBlock'
 export {Virtualized, Status as PaymentIconStatus} from './Virtualized'
+export {noty} from './Noty'

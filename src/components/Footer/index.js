@@ -1,8 +1,17 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 
-import {Icons, Input, Colors, H2, Button, container, isAllPropsFalse} from '../common'
-import Api from '../Api';
+import {
+  Icons,
+  Input,
+  Colors,
+  H2,
+  Button,
+  container,
+  isAllPropsFalse,
+  noty,
+} from '../common'
+import Api from '../Api'
 
 const FooterWrap = styled('footer')`
   & {
@@ -87,12 +96,6 @@ const Copy = styled('div')`
   }
 `
 
-const ErrorField = styled('p')`
-  color: #f44336;
-  font-weight: 700;
-  text-align: center;
-`
-
 // Footer component;
 class Footer extends Component {
   state = {
@@ -102,7 +105,6 @@ class Footer extends Component {
     phoneError: null,
     message: '',
     loading: false,
-    messageFromBack: '',
   }
 
   constructor(props) {
@@ -112,7 +114,7 @@ class Footer extends Component {
 
   handleSubmit = async () => {
     const {emailError, phoneError, email, phone, message} = this.state
-    this.setState({loading: true, messageFromBack: ''})
+    this.setState({loading: true})
     // fix double click for premade input's values
     // or
     // await this.inputs.map(async input => await input.handleChange())
@@ -120,8 +122,14 @@ class Footer extends Component {
     if (isAllPropsFalse({emailError, phoneError})) {
       Api.post('sendMessage', {email, phone, message})
         .then(res => res.json())
-        .then(({status}) => this.setState({loading: false, messageFromBack: status}))
-        .catch(({status}) => this.setState({loading: false, messageFromBack: status}))
+        .then(() => {
+          noty('Ваше письмо успешно отправлено', 'success')
+          this.setState({loading: false})
+        })
+        .catch(({status}) => {
+          noty(status, 'error')
+          this.setState({loading: false})
+        })
     } else {
       this.setState({loading: false})
       console.log('error')
@@ -160,7 +168,6 @@ class Footer extends Component {
             value={this.state.message}
             onChange={({target}) => this.setState({message: target.value})}
           />
-          <ErrorField>{this.state.messageFromBack}</ErrorField>
           <Button
             loading={this.state.loading}
             caption="Отправить"

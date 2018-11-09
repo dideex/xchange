@@ -149,7 +149,7 @@ export const Operations = ({
 Operations.propTypes = {
   currency: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  // inputLabel: PropTypes.string.isRequired,
-  // outputLabel: PropTypes.string.isRequired,
+  inputLabel: PropTypes.string.isRequired,
+  outputLabel: PropTypes.string.isRequired,
 }
 export default Operations

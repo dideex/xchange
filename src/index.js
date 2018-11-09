@@ -5,6 +5,9 @@ import * as serviceWorker from './serviceWorker'
 import {Provider as MobxProvider} from 'mobx-react'
 import {BrowserRouter} from 'react-router-dom'
 
+import 'noty/lib/noty.css'
+import 'noty/lib/themes/metroui.css'
+import './Noty.css';
 import './fonts.css'
 import './reset.css'
 import {cash, user, lastOperations} from './store'

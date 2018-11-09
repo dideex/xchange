@@ -1,6 +1,7 @@
 import {observable, action, computed} from 'mobx'
 import openSocket from 'socket.io-client'
 import Api from '../components/Api'
+import {noty} from '../components/common'
 
 // menu state
 class Cash {
@@ -164,14 +165,20 @@ class Cash {
             const {result, error} = data
             if (!error) {
               this.orderId = result._id
+              noty('Ваш перевод успешно создан')
             } else {
-              this.errorMessage = error
+              noty(error, 'error')
             }
           })
+          .catch(() => noty('Ошибка создания', 'error'))
       else
         await Api.post('guestOrders', data)
           .then(res => res.json())
-          .then(({result}) => (this.orderId = result._id))
+          .then(({result}) => {
+            this.orderId = result._id
+            noty('Ваш перевод успешно создан')
+          })
+          .catch(() => noty('Ошибка создания', 'error'))
       this.loading = false
     })
   }
@@ -189,8 +196,8 @@ class Cash {
           this.loading = false
           resolve()
         })
-        .catch(err => {
-          console.error(err)
+        .catch(() => {
+          noty('Ошибка сервера', 'error')
           this.loading = false
           reject()
         })
@@ -211,6 +218,7 @@ class Cash {
     Api.post('confirmOrder', data)
       .then(res => res.json())
       .then(() => {
+        noty('Ваш перевод передан на обработку')
         this.emitSocket({
           email,
           currency: this.currency[this.currencyOutput].icon,
@@ -221,7 +229,7 @@ class Cash {
           paymentStatus: this.paymentStatus,
         })
       })
-      .catch(err => console.error(err))
+      .catch(() => noty('Ошибка перевода', 'error'))
   }
   @action('drag badge')
   handleDragBadge = id => (this.draggedBadgeCurrency = id)

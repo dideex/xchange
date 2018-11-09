@@ -1,0 +1,19 @@
+.noty_theme__metroui.noty_type__info {
+  background-color: #ffe712;
+}
+.noty_theme__metroui.noty_type__error {
+  background-color: #fc0000;
+}
+.noty_theme__metroui.noty_type__warning {
+  background-color: #ff9800;
+}
+.noty_theme__metroui.noty_type__success {
+  background-color: #aee239;
+}
+.noty_bar {
+  border-radius: 10px;
+}
+.noty_theme__metroui.noty_bar .noty_progressbar {
+  background-color: #8fbe00;
+  opacity: 1;
+}

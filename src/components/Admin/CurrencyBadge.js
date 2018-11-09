@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
-import {Loading} from '../common'
+import Api from '../Api'
+import {Loading, noty} from '../common'
 
 const Wrap = styled('div')`
   & {
@@ -35,23 +36,16 @@ class CurrencyBadge extends Component {
   _pushSettings = async () => {
     this.setState({loading: true})
     const {reserve, source, minimal} = this.state
-    await fetch(`http://localhost:3030/api/setCurrencyOptions`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${this.props.token}`,
-      },
-      body: JSON.stringify({
-        _id: this.props.data._id,
-        reserve,
-        source,
-        minimal,
-      }),
-    })
+    const data = {
+      _id: this.props.data._id,
+      reserve,
+      source,
+      minimal,
+    }
+    Api.post('setCurrencyOptions', data, this.props.token)
       .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(err => console.error(err))
+      .then(() => noty('Сохранено'))
+      .catch(err => noty(err, 'error'))
     this.setState({loading: false})
   }
 

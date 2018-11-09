@@ -1,6 +1,7 @@
 import {observable, action} from 'mobx'
 import Cookie from 'js-cookie'
 import Api from '../components/Api'
+import {noty} from '../components/common'
 
 const setToken = (token, isAdmin) => {
   if (isAdmin) {
@@ -60,9 +61,14 @@ export default class User {
     if (!token) return null
     Api.get('token', '', token)
       .then(response => response.json())
-      .then(({success}) => !success && logout())
-      .catch(err => {
-        console.error(err)
+      .then(({success}) => {
+        if (!success) {
+          noty('Ошибка входа в аккаунт', 'error')
+          logout()
+        }
+      })
+      .catch(() => {
+        noty('Ошибка сети', 'error')
         logout()
       })
   }
@@ -100,9 +106,10 @@ export default class User {
     this.wallets[currencyLabel] = value
   }
 
-  @action('sigon out')
+  @action('sign out')
   signout = () => {
     this._setInitalData()
+    noty('Вы вышли из аккаунта')
     logout()
   }
 
@@ -122,7 +129,7 @@ export default class User {
         this.lastOperations = lastOperations || []
         this.convertedAmount = convertedAmount
       })
-      .catch(err => console.error(err))
+      .catch(() => noty('Ошибка сети', 'error'))
   }
 
   @action('udpate user data')
@@ -132,9 +139,9 @@ export default class User {
     this.token = token
 
     const {username, wallets, email} = this
-    return Api.post('userData', {username, wallets, email}, this.token)
-      .then(res => console.log('updateInfo ___ res', res))
-      .catch(err => console.error(err))
+    return Api.post('userData', {username, wallets, email}, this.token).catch(() =>
+      noty('Ошибка сети', 'error'),
+    )
   }
 
   @action('Get token with username and passoword')
@@ -144,20 +151,25 @@ export default class User {
     const {login: username, password} = this
     Api.post('signinUser', {username, password})
       .then(res => res.json())
-      .then(({token, error, isAdmin}) => {
+      .then(({token, err, isAdmin}) => {
         this.loading = false
-        if (!error) {
+        if (token && !err) {
           this.token = token
           setToken(token, isAdmin)
           this.fetchData()
-          if (isAdmin) this.isAdmin = true
+          if (isAdmin) {
+            this.isAdmin = true
+            noty('Hello admin!')
+          } else {
+            noty('Вы успешно вошли в аккаунт')
+          }
         } else {
-          this.errorMessage = error
+          noty(err, 'error')
         }
       })
-      .catch(err => {
+      .catch(() => {
         this.loading = false
-        console.error(err)
+        noty('Ошибка сети', 'error')
       })
   }
 
@@ -168,12 +180,13 @@ export default class User {
       .then(res => res.json())
       .then(data => {
         const {token, err} = data
-        if (!token) return (this.errorMessage = err)
+        if (!token) return noty(err, 'error')
         this.token = token
+        noty('Вы успешно создали аккаунт')
         setToken(token)
         this.fetchData()
       })
-      .catch(err => console.log('error', err))
+      .catch(() => noty('Ошибка сети', 'error'))
   }
 
   @action('fetch orders by token')
@@ -186,7 +199,10 @@ export default class User {
         if (data.err) this.errorMessage = data.err
         else this.orders = data
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        noty('Ошибка сети', 'error')
+        console.error(err)
+      })
     this.loading = false
   }
 
@@ -196,7 +212,10 @@ export default class User {
     const response = await Api.get('order', '', `?_id=${id}`)
       .then(res => res.json())
       .then(data => data)
-      .catch(err => console.error(err))
+      .catch(err => {
+        noty('Ошибка сети', 'error')
+        console.error(err)
+      })
     this.loading = false
     if (response) return response
   }
