@@ -14,6 +14,7 @@ export class Api {
     })
   }
   get(endpoint, params = '', token = null) {
+    console.log(`${this.backend}/api/${endpoint}${params}`)
     return fetch(`${this.backend}/api/${endpoint}${params}`, {
       method: 'GET',
       headers: {

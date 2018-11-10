@@ -135,7 +135,7 @@ export default class User {
   @action('udpate user data')
   updateInfo = () => {
     const token = getToken()
-    if (!token) return null
+    if (!token) return Promise.resolve()
     this.token = token
 
     const {username, wallets, email} = this
@@ -209,7 +209,7 @@ export default class User {
   @action('fetch order without token')
   fetchGuestOrder = async id => {
     this.loading = true
-    const response = await Api.get('order', '', `?_id=${id}`)
+    const response = await Api.get('order', `?_id=${id}`)
       .then(res => res.json())
       .then(data => data)
       .catch(err => {

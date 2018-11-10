@@ -137,6 +137,7 @@ class Cash {
       this.inputValue = this._calcInput(this.outputValue)
     }
   }
+
   @action('create payment and push to server')
   createPayment = ({token, fromWallet, toWallet, email}) => {
     this.clearErr()
@@ -161,22 +162,27 @@ class Cash {
       if (token)
         await Api.post('orders', data, token)
           .then(res => res.json())
-          .then(data => {
-            const {result, error} = data
-            if (!error) {
+          .then(({result, err}) => {
+            if (!err) {
               this.orderId = result._id
               noty('Ваш перевод успешно создан')
             } else {
-              noty(error, 'error')
+              this.errorMessage = true
+              noty(err, 'error')
             }
           })
           .catch(() => noty('Ошибка создания', 'error'))
       else
         await Api.post('guestOrders', data)
           .then(res => res.json())
-          .then(({result}) => {
-            this.orderId = result._id
-            noty('Ваш перевод успешно создан')
+          .then(({result, err}) => {
+            if (!err) {
+              this.orderId = result._id
+              noty('Ваш перевод успешно создан')
+            } else {
+              this.errorMessage = true
+              noty(err, 'error')
+            }
           })
           .catch(() => noty('Ошибка создания', 'error'))
       this.loading = false

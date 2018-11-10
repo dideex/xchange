@@ -87,14 +87,6 @@ const CheckboxWrap = styled('div')`
   }
 `
 
-const ErrorField = styled('p')`
-  flex: 100% 0 0;
-  padding-top: 15px;
-  color: #f44336;
-  font-weight: 700;
-  text-align: center;
-`
-
 //TODO: checkbox
 // UserData component;
 @withRouter
@@ -237,9 +229,6 @@ class UserData extends Component {
             loading={this.state.loading}
           />
         </ButtonWrap>
-        {this.props.cashStore.errorMessage && (
-          <ErrorField>{this.props.cashStore.errorMessage}</ErrorField>
-        )}
       </StyledUserData>
     )
   }
