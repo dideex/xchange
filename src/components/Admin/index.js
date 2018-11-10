@@ -54,9 +54,13 @@ class Admin extends Component {
     this.setState({loading: true, route: status})
     return new Promise((res, rej) =>
       Api.get('summaryOrders', `/${status}`, this.props.userStore.token)
-        .then(response => response.json())
-        .then(orders => this.setState({loading: false, orders}, res))
+        .then(
+          Api.errorEmitter(orders =>
+            this.setState({loading: false, orders: Object.values(orders)}, res),
+          ),
+        )
         .catch(err => {
+          console.error(err)
           noty(err, 'error')
           rej()
         }),
@@ -73,9 +77,9 @@ class Admin extends Component {
         `/${orderDetails.user}`,
         this.props.userStore.token,
       )
-        .then(response => response.json())
         .then(userDetails => userDetails)
         .catch(err => {
+          console.error(err)
           noty(err, 'error')
         })
       this.setState({
@@ -96,7 +100,6 @@ class Admin extends Component {
       {_id, paymentStatus},
       this.props.userStore.token,
     )
-      .then(response => response.json())
       .then(
         ({
           email,
@@ -122,7 +125,10 @@ class Admin extends Component {
             })
         },
       )
-      .catch(err => noty(err, 'error'))
+      .catch(err => {
+        console.error(err)
+        noty(err, 'error')
+      })
 
     this._fetchOrdersByPaymentStatus(this.state.route)
   }

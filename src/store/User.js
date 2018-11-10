@@ -45,7 +45,9 @@ export default class User {
     this.token = ''
     this.isAdmin = false
     this.errorMessage = null
+    this.isNetworkError = false
     this.orders = []
+    this.errorEmitter = Api.errorEmitter.bind(this)
   }
 
   constructor() {
@@ -60,14 +62,14 @@ export default class User {
     const token = getToken()
     if (!token) return null
     Api.get('token', '', token)
-      .then(response => response.json())
       .then(({success}) => {
         if (!success) {
           noty('Ошибка входа в аккаунт', 'error')
           logout()
         }
       })
-      .catch(() => {
+      .catch(err => {
+        console.error(err)
         noty('Ошибка сети', 'error')
         logout()
       })
@@ -120,7 +122,6 @@ export default class User {
     this.token = token
 
     await Api.get('userData', '', token)
-      .then(res => res.json())
       .then(({wallets, lastOperations, username, email, login, convertedAmount}) => {
         this.login = login
         this.username = username
@@ -129,7 +130,10 @@ export default class User {
         this.lastOperations = lastOperations || []
         this.convertedAmount = convertedAmount
       })
-      .catch(() => noty('Ошибка сети', 'error'))
+      .catch(err => {
+        console.error(err)
+        noty('Ошибка сети', 'error')
+      })
   }
 
   @action('udpate user data')
@@ -139,21 +143,21 @@ export default class User {
     this.token = token
 
     const {username, wallets, email} = this
-    return Api.post('userData', {username, wallets, email}, this.token).catch(() =>
-      noty('Ошибка сети', 'error'),
-    )
+    return Api.post('userData', {username, wallets, email}, this.token).catch(err => {
+      console.error(err)
+      noty('Ошибка сети', 'error')
+    })
   }
 
   @action('Get token with username and passoword')
   getToken = () => {
     this.loading = true
-    this.errorMessage = ''
+    this.isNetworkError = false
     const {login: username, password} = this
     Api.post('signinUser', {username, password})
-      .then(res => res.json())
-      .then(({token, err, isAdmin}) => {
-        this.loading = false
-        if (token && !err) {
+      .then(
+        this.errorEmitter(({token, isAdmin}) => {
+          this.loading = false
           this.token = token
           setToken(token, isAdmin)
           this.fetchData()
@@ -163,12 +167,11 @@ export default class User {
           } else {
             noty('Вы успешно вошли в аккаунт')
           }
-        } else {
-          noty(err, 'error')
-        }
-      })
-      .catch(() => {
+        }),
+      )
+      .catch(err => {
         this.loading = false
+        console.error(err)
         noty('Ошибка сети', 'error')
       })
   }
@@ -177,16 +180,18 @@ export default class User {
   signupUser = () => {
     const {login, email, username, password} = this
     Api.post('signupUser', {login, email, username, password})
-      .then(res => res.json())
-      .then(data => {
-        const {token, err} = data
-        if (!token) return noty(err, 'error')
-        this.token = token
-        noty('Вы успешно создали аккаунт')
-        setToken(token)
-        this.fetchData()
+      .then(
+        this.errorEmitter(({token}) => {
+          this.token = token
+          noty('Вы успешно создали аккаунт')
+          setToken(token)
+          this.fetchData()
+        }),
+      )
+      .catch(err => {
+        noty('Ошибка сети', 'error')
+        console.error(err)
       })
-      .catch(() => noty('Ошибка сети', 'error'))
   }
 
   @action('fetch orders by token')
@@ -194,11 +199,11 @@ export default class User {
     if (!this.token) return null
     this.loading = true
     await Api.get('orders', '', this.token)
-      .then(res => res.json())
-      .then(data => {
-        if (data.err) this.errorMessage = data.err
-        else this.orders = data
-      })
+      .then(
+        this.errorEmitter(data => {
+          this.orders = Object.values(data)
+        }),
+      )
       .catch(err => {
         noty('Ошибка сети', 'error')
         console.error(err)
@@ -210,8 +215,7 @@ export default class User {
   fetchGuestOrder = async id => {
     this.loading = true
     const response = await Api.get('order', `?_id=${id}`)
-      .then(res => res.json())
-      .then(data => data)
+      .then(this.errorEmitter(data => data))
       .catch(err => {
         noty('Ошибка сети', 'error')
         console.error(err)

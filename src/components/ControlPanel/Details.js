@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 
-import {currencyFormat, statusArray} from '../common'
+import {currencyFormat, StatusTitles} from '../common'
 
 const Wrap = styled('div')`
   & {
@@ -98,7 +98,7 @@ class DetailsComponent extends Component {
           </p>
           <p>
             <span>Статус:</span>
-            <strong>{statusArray[paymentStatus]}</strong>
+            <strong>{StatusTitles[paymentStatus]}</strong>
           </p>
         </UserInfo>
       </Wrap>

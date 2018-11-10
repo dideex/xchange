@@ -43,13 +43,6 @@ export const isAllPropsFalse = object =>
   Object.values(object).filter(argument => argument === false).length ===
   Object.values(object).length
 
-export const statusArray = [
-  'Не создан',
-  'Ожидает перевода',
-  'Ожидает подтверждения',
-  'Переведено',
-]
-
 export const ScrollTo = top => {
   const V = 0.3
   const w = window.pageYOffset

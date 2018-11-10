@@ -121,18 +121,20 @@ class Footer extends Component {
     await Promise.all(this.inputs.map(input => input.handleChange()))
     if (isAllPropsFalse({emailError, phoneError})) {
       Api.post('sendMessage', {email, phone, message})
-        .then(res => res.json())
-        .then(() => {
-          noty('Ваше письмо успешно отправлено', 'success')
-          this.setState({loading: false})
-        })
-        .catch(({status}) => {
-          noty(status, 'error')
+        .then(
+          Api.errorEmitter(() => {
+            noty('Ваше письмо успешно отправлено', 'success')
+            this.setState({loading: false})
+          }),
+        )
+        .catch(err => {
+          noty(err.status, 'error')
+          console.error(err)
           this.setState({loading: false})
         })
     } else {
       this.setState({loading: false})
-      console.log('error')
+      console.err('error')
     }
   }
 

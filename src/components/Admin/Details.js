@@ -4,7 +4,6 @@ import styled from 'react-emotion'
 
 import {
   currencyFormat,
-  statusArray,
   Loading,
   PaymentIconStatus,
   StatusTitles,
@@ -144,7 +143,7 @@ class DetailsComponent extends Component {
               </p>
               <p>
                 <span>Статус:</span>
-                <strong>{statusArray[paymentStatus]}</strong>
+                <strong>{StatusTitles[paymentStatus]}</strong>
               </p>
             </Fragment>
           )}

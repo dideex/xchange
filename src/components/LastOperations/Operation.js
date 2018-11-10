@@ -7,7 +7,7 @@ import {
   CurrencyIcons,
   Colors,
   robotoSlab,
-  statusArray,
+  StatusTitles,
   currencyFormat,
 } from '../common'
 
@@ -138,14 +138,13 @@ export const Operations = ({
       <BacksideBlock>
         <p>
           <span>Статус:</span>
-          <span>{statusArray[paymentStatus]}</span>
+          <span>{StatusTitles[paymentStatus]}</span>
         </p>
       </BacksideBlock>
     </OperationWrap>
   )
 }
 
-//FIXME: resolve XCHANGE-62 ticket
 Operations.propTypes = {
   currency: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,

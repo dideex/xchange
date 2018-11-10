@@ -43,9 +43,11 @@ class CurrencyBadge extends Component {
       minimal,
     }
     Api.post('setCurrencyOptions', data, this.props.token)
-      .then(response => response.json())
-      .then(() => noty('Сохранено'))
-      .catch(err => noty(err, 'error'))
+      .then(Api.errorEmitter(() => noty('Сохранено')))
+      .catch(err => {
+        console.error(err)
+        noty(err, 'error')
+      })
     this.setState({loading: false})
   }
 

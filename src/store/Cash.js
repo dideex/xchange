@@ -30,8 +30,10 @@ class Cash {
     this.loading = false
     this.currency = []
     this.errorMessage = ''
+    this.isNetworkError = false
     this.userRate = 1.1
     this.socket = openSocket('http://localhost:3040')
+    this.errorEmitter = Api.errorEmitter.bind(this)
     this.fetchCurrency()
   }
 
@@ -161,30 +163,28 @@ class Cash {
       }
       if (token)
         await Api.post('orders', data, token)
-          .then(res => res.json())
-          .then(({result, err}) => {
-            if (!err) {
+          .then(
+            this.errorEmitter(({result}) => {
               this.orderId = result._id
               noty('Ваш перевод успешно создан')
-            } else {
-              this.errorMessage = true
-              noty(err, 'error')
-            }
+            }),
+          )
+          .catch(err => {
+            console.error(err)
+            noty('Ошибка создания', 'error')
           })
-          .catch(() => noty('Ошибка создания', 'error'))
       else
         await Api.post('guestOrders', data)
-          .then(res => res.json())
-          .then(({result, err}) => {
-            if (!err) {
+          .then(
+            this.errorEmitter(({result}) => {
               this.orderId = result._id
               noty('Ваш перевод успешно создан')
-            } else {
-              this.errorMessage = true
-              noty(err, 'error')
-            }
+            }),
+          )
+          .catch(err => {
+            console.error(err)
+            noty('Ошибка создания', 'error')
           })
-          .catch(() => noty('Ошибка создания', 'error'))
       this.loading = false
     })
   }
@@ -194,16 +194,18 @@ class Cash {
     new Promise((resolve, reject) => {
       this.loading = true
       return Api.get('currency')
-        .then(response => response.json())
-        .then(data => {
-          this.currency = data
-            .sort((a, b) => a.order - b.order)
-            .map((row, i) => ({...row, id: i}))
-          this.loading = false
-          resolve()
-        })
-        .catch(() => {
+        .then(
+          this.errorEmitter(data => {
+            this.currency = Object.values(data)
+              .sort((a, b) => a.order - b.order)
+              .map((row, i) => ({...row, id: i}))
+            this.loading = false
+            resolve()
+          }),
+        )
+        .catch(err => {
           noty('Ошибка сервера', 'error')
+          console.error(err)
           this.loading = false
           reject()
         })
@@ -222,20 +224,24 @@ class Cash {
       email,
     }
     Api.post('confirmOrder', data)
-      .then(res => res.json())
-      .then(() => {
-        noty('Ваш перевод передан на обработку')
-        this.emitSocket({
-          email,
-          currency: this.currency[this.currencyOutput].icon,
-          inputValue: this.inputValue,
-          outputValue: this.outputValue,
-          inputLabel: this.currency[this.currencyInput].label,
-          outputLabel: this.currency[this.currencyOutput].label,
-          paymentStatus: this.paymentStatus,
-        })
+      .then(
+        this.errorEmitter(() => {
+          noty('Ваш перевод передан на обработку')
+          this.emitSocket({
+            email,
+            currency: this.currency[this.currencyOutput].icon,
+            inputValue: this.inputValue,
+            outputValue: this.outputValue,
+            inputLabel: this.currency[this.currencyInput].label,
+            outputLabel: this.currency[this.currencyOutput].label,
+            paymentStatus: this.paymentStatus,
+          })
+        }),
+      )
+      .catch(err => {
+        console.error(err)
+        noty('Ошибка перевода', 'error')
       })
-      .catch(() => noty('Ошибка перевода', 'error'))
   }
   @action('drag badge')
   handleDragBadge = id => (this.draggedBadgeCurrency = id)
