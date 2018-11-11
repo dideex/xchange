@@ -1,8 +1,9 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {Link} from 'react-router-dom'
 import styled from 'react-emotion'
 import {CSSTransition} from 'react-transition-group'
+import {isMobile} from 'react-device-detect'
 
 import {Icons, Colors, ScrollTo} from './common'
 import './Nav.css'
@@ -31,7 +32,7 @@ const MenuWrap = styled('nav')`
     }
     @media (max-width: 767px) {
       display: none;
-    } 
+    }
   }
 `
 const logoStyle = {
@@ -72,7 +73,7 @@ const LangMenu = styled('span')`
     left: -10px;
     @media (max-width: 1024px) {
       left: -85px;
-    } 
+    }
   }
   &.content--enter {
     opacity: 0.01;
@@ -92,6 +93,30 @@ const LangMenu = styled('span')`
   }
 `
 
+const MobMenu = styled('div')`
+  & {
+    z-index: 1000;
+    background-color: ${Colors.accent};
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 10vh 15vw;
+    display: flex;
+    flex-direction: column;
+    transform: translatex(${({x}) => x});
+    transition: transform 0.3s ease-in-out;
+    a {
+      font-size: 3rem;
+    }
+    .close {
+      position: absolute;
+      right: 15px;
+    }
+  }
+`
+
 // Nav component;
 @inject('userStore')
 @observer
@@ -106,6 +131,7 @@ class Nav extends Component {
     hideMenu: false,
     showLangMenu: false,
     showAuthMenu: false,
+    showMobMenu: false,
   }
 
   componentDidMount() {
@@ -124,8 +150,10 @@ class Nav extends Component {
     this.lastOffsetTop = window.pageYOffset
   }
 
-  _handleClick = () =>
+  _handleClick = () => {
+    this.setState({showMobMenu: false})
     ScrollTo(document.querySelector('main').getBoundingClientRect().top)
+  }
 
   _getStyle = () =>
     `${this.state.minimizeNav ? 'min-nav' : ''} ${this.state.hideMenu ? 'hide-nav' : ''}`
@@ -133,96 +161,130 @@ class Nav extends Component {
   render() {
     const {login, token, signout, isAdmin} = this.props.userStore
     return (
-      <NavWrap className={this._getStyle()}>
-        <Icons style={logoStyle} id="logo" />
-        <MenuWrap
-          onMouseLeave={() => this.setState({showLangMenu: false, showAuthMenu: false})}
-        >
-          <Link onClick={this._handleClick} to="/">
-            Главная
-          </Link>
-          <Link onClick={this._handleClick} to="/reservi">
-            Резервы
-          </Link>
-          <Link onClick={this._handleClick} to="/o-nas">
-            О нас
-          </Link>
-          <Link onClick={this._handleClick} to="/faq">
-            FAQ
-          </Link>
-          <span
-            onClick={() =>
-              this.setState(({showLangMenu}) => ({
-                showLangMenu: !showLangMenu,
-                showAuthMenu: false,
-              }))
-            }
-          >
-            Rus
-            <Icons
-              id="chevron"
-              style={{width: '20px', marginBottom: '-2px', paddingLeft: '5px'}}
-            />
-            <CSSTransition
-              in={this.state.showLangMenu}
-              timeout={300}
-              classNames="content-"
-              unmountOnExit
+      <Fragment>
+        {isMobile && (
+          <MobMenu x={this.state.showMobMenu ? '0%' : '100%'}>
+            <div onClick={() => this.setState({showMobMenu: false})} className="close">
+              <Icons style={{width: 30}} id="close" />
+            </div>
+            <Link onClick={this._handleClick} to="/">
+              Главная
+            </Link>
+            <Link onClick={this._handleClick} to="/reservi">
+              Резервы
+            </Link>
+            <Link onClick={this._handleClick} to="/o-nas">
+              О нас
+            </Link>
+            <Link onClick={this._handleClick} to="/faq">
+              FAQ
+            </Link>
+          </MobMenu>
+        )}
+        <NavWrap className={this._getStyle()}>
+          <Icons style={logoStyle} id="logo" />
+
+          {!isMobile ? (
+            <MenuWrap
+              onMouseLeave={() =>
+                this.setState({showLangMenu: false, showAuthMenu: false})
+              }
             >
-              <LangMenu>
-                <span onClick={this._handleClick}>Eng</span>
-                <span onClick={this._handleClick}>Rus</span>
-              </LangMenu>
-            </CSSTransition>
-          </span>
-          <span
-            className="auth-menu-item"
-            onClick={() =>
-              this.setState(({showAuthMenu}) => ({
-                showAuthMenu: !showAuthMenu,
-                showLangMenu: false,
-              }))
-            }
-          >
-            <Icons style={{width: '33px'}} id="user" />
-            <CSSTransition
-              in={this.state.showAuthMenu}
-              timeout={300}
-              classNames="content-"
-              unmountOnExit
+              <Link onClick={this._handleClick} to="/">
+                Главная
+              </Link>
+              <Link onClick={this._handleClick} to="/reservi">
+                Резервы
+              </Link>
+              <Link onClick={this._handleClick} to="/o-nas">
+                О нас
+              </Link>
+              <Link onClick={this._handleClick} to="/faq">
+                FAQ
+              </Link>
+              <span
+                onClick={() =>
+                  this.setState(({showLangMenu}) => ({
+                    showLangMenu: !showLangMenu,
+                    showAuthMenu: false,
+                  }))
+                }
+              >
+                Rus
+                <Icons
+                  id="chevron"
+                  style={{width: '20px', marginBottom: '-2px', paddingLeft: '5px'}}
+                />
+                <CSSTransition
+                  in={this.state.showLangMenu}
+                  timeout={300}
+                  classNames="content-"
+                  unmountOnExit
+                >
+                  <LangMenu>
+                    <span onClick={this._handleClick}>Eng</span>
+                    <span onClick={this._handleClick}>Rus</span>
+                  </LangMenu>
+                </CSSTransition>
+              </span>
+              <span
+                className="auth-menu-item"
+                onClick={() =>
+                  this.setState(({showAuthMenu}) => ({
+                    showAuthMenu: !showAuthMenu,
+                    showLangMenu: false,
+                  }))
+                }
+              >
+                <Icons style={{width: '33px'}} id="user" />
+                <CSSTransition
+                  in={this.state.showAuthMenu}
+                  timeout={300}
+                  classNames="content-"
+                  unmountOnExit
+                >
+                  {token ? (
+                    <LangMenu>
+                      {isAdmin && (
+                        <Link onClick={this._handleClick} to="/summary">
+                          Admin
+                        </Link>
+                      )}
+                      {isAdmin && (
+                        <Link onClick={this._handleClick} to="/settings">
+                          Settings
+                        </Link>
+                      )}
+                      <Link to="/lichnii-kabinet">{login}</Link>
+                      <p
+                        onClick={e => {
+                          e.stopPropagation()
+                          signout()
+                        }}
+                      >
+                        Выйти
+                      </p>
+                    </LangMenu>
+                  ) : (
+                    <LangMenu>
+                      <Link to="/lichnii-kabinet">Войти</Link>
+                      <Link to="/registracya">Регистрация</Link>
+                    </LangMenu>
+                  )}
+                </CSSTransition>
+              </span>
+            </MenuWrap>
+          ) : (
+            <div
+              onClick={() =>
+                this.setState(({showMobMenu}) => ({showMobMenu: !showMobMenu}))
+              }
             >
-              {token ? (
-                <LangMenu>
-                  {isAdmin && (
-                    <Link onClick={this._handleClick} to="/summary">
-                      Admin
-                    </Link>
-                  )}
-                  {isAdmin && (
-                    <Link onClick={this._handleClick} to="/settings">
-                      Settings
-                    </Link>
-                  )}
-                  <Link to="/lichnii-kabinet">{login}</Link>
-                  <p
-                    onClick={e => {
-                      e.stopPropagation()
-                      signout()
-                    }}
-                  >
-                    Выйти
-                  </p>
-                </LangMenu>
-              ) : (
-                <LangMenu>
-                  <Link to="/lichnii-kabinet">Войти</Link>
-                  <Link to="/registracya">Регистрация</Link>
-                </LangMenu>
-              )}
-            </CSSTransition>
-          </span>
-        </MenuWrap>
-      </NavWrap>
+              <Icons id="menu" style={{width: 30}} />
+            </div>
+          )}
+        </NavWrap>
+      </Fragment>
     )
   }
 }

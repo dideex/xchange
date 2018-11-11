@@ -39,6 +39,9 @@ const AfterMainWrap = styled('section')`
     right: calc(50% - 150px);
     top: 50px;
     transform: rotate(50deg);
+    @media (max-width: 767px) {
+      transform: rotate(50deg) scale(0.9);
+    }
   }
   & .main__bottom-smallcoin {
     right: 150px;

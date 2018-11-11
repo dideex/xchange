@@ -9,6 +9,9 @@ const Section = styled('section')`
     position: relative;
     min-height: 569px;
     background-color: ${Colors.subAccent};
+    @media (max-width: 767px) {
+      margin-bottom: 50px;
+    } 
   }
 `
 

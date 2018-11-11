@@ -39,7 +39,8 @@ export const H2 = styled('h2')`
   margin: 20px 0 40px;
   @media (max-width: 767px) {
     font-size: 2.8rem;
-  } 
+    margin-top: 0;
+  }
 `
 
 export const StatusIconColors = [
@@ -63,7 +64,7 @@ export const MainSectionWrap = styled('div')`
     padding: 0 60px;
     @media (max-width: 1024px) {
       padding: 0 30px;
-    } 
+    }
   }
 `
 

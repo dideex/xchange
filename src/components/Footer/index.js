@@ -99,6 +99,9 @@ const Copy = styled('div')`
   & strong,
   & a {
     font-size: 2.4rem;
+    @media (max-width: 767px) {
+      font-size: 1.4rem;
+    } 
   }
 `
 

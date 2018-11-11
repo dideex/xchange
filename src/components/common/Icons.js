@@ -47,6 +47,41 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
         />
       </svg>
     ),
+    menu: (
+      <svg
+        style={style}
+        className={className}
+        viewBox="0 0 41 35"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect y="28.5" width="41" height="6" style={{fill: Colors.accent}} />
+        <path d="M0 0H41V6H0V0Z" style={{fill: Colors.accent}} />
+        <rect y="14.5" width="41" height="6" style={{fill: Colors.accent}} />
+      </svg>
+    ),
+    close: (
+      <svg
+        style={style}
+        className={className}
+        viewBox="0 0 35 34"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          x="0.882812"
+          y="29.3744"
+          width="41"
+          height="6"
+          transform="rotate(-45 0.882812 29.3744)"
+          fill="white"
+        />
+        <path
+          d="M5.12598 0.382996L34.1174 29.3744L29.8747 33.617L0.883336 4.62564L5.12598 0.382996Z"
+          fill="white"
+        />
+      </svg>
+    ),
     search: (
       <svg
         style={style}

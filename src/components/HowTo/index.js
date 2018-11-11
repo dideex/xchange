@@ -16,6 +16,8 @@ const Section = styled('section')`
 
 const Grid = styled('div')`
   & {
+    position: relative;
+    overflow: hidden;
     display: flex;
     padding-top: 40px;
     @media (max-width: 767px) {
@@ -25,10 +27,26 @@ const Grid = styled('div')`
         max-width: 100%;
       }
       & > div {
-        padding: 25px 15px;
+        padding: 15px 15px;
+      }
+      .howto__step1,
+      .howto__step3 {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 700px;
+        max-width: none;
+      }
+      .howto__step2 {
+        margin: 0 auto;
+        max-width: 60%;
       }
       .howto__step3 {
         margin-left: 0 !important;
+      }
+      &:nth-child(2),
+      &:nth-child(4) {
+        padding-bottom: 500px;
       }
       &:nth-child(3),
       &:nth-child(5) {
@@ -46,6 +64,10 @@ const Grid = styled('div')`
 const LeftContent = styled('div')`
   & {
     flex: 30% 0 0;
+    @media (max-width: 767px) {
+      flex: 100% 0 0;
+      text-align: center;
+    }
   }
 `
 const RightContent = styled('div')`
@@ -53,6 +75,8 @@ const RightContent = styled('div')`
     flex: 50% 0 0;
     margin-left: 150px;
     @media (max-width: 767px) {
+      flex: 100% 0 0;
+      text-align: center;
       margin-left: 0;
     }
   }
