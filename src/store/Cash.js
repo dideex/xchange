@@ -13,7 +13,7 @@ class Cash {
   @observable draggedBadgeCurrency
   @observable orderId
   @observable loading
-  @observable errorMessage
+  @observable isNetworkError
   @observable.ref currency
 
   constructor() {
@@ -29,7 +29,6 @@ class Cash {
     this.orderId = null
     this.loading = false
     this.currency = []
-    this.errorMessage = ''
     this.isNetworkError = false
     this.userRate = 1.1
     this.socket = openSocket('http://localhost:3040')
@@ -160,6 +159,7 @@ class Cash {
         email,
         fromWallet,
         toWallet,
+        token,
       }
       if (token)
         await Api.post('orders', data, token)

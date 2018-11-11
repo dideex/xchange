@@ -34,7 +34,7 @@ export class Api {
       this.isNetworkError = true
       console.error('errorEmitter ___ ', errCode)
       noty(err, 'error')
-    } else fn(data)
+    } else return fn(data)
   }
 }
 

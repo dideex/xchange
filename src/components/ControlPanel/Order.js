@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react'
 import styled from 'react-emotion'
 import {withRouter} from 'react-router-dom'
 
-import {currencyFormat, statusArray, Loading} from '../common'
+import {currencyFormat, StatusTitles, Loading} from '../common'
 
 const Wrap = styled('div')`
   & {
@@ -76,6 +76,7 @@ class DetailsComponent extends Component {
       currencyOutputLabel,
       paymentStatus,
     } = this.state
+    console.log(" LOG ___ this.state ", this.state )
     return (
       <Wrap>
         <h3>Перевод № {this.id}</h3>
@@ -104,7 +105,7 @@ class DetailsComponent extends Component {
         <UserInfo>
           <p>
             <span>Статус:</span>
-            <strong>{statusArray[paymentStatus]}</strong>
+            <strong>{StatusTitles[paymentStatus]}</strong>
           </p>
         </UserInfo>
       </Wrap>

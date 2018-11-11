@@ -19,7 +19,6 @@ export {
   format,
   currencyFormat,
   isAllPropsFalse,
-  statusArray,
   ScrollTo,
   parseOrders,
 } from './Utils'

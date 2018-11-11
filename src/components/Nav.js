@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import styled from 'react-emotion'
 import {CSSTransition} from 'react-transition-group'
 
-import {Icons, Colors} from './common'
+import {Icons, Colors, ScrollTo} from './common'
 import './Nav.css'
 
 const MenuWrap = styled('nav')`
@@ -33,7 +33,7 @@ const logoStyle = {
 }
 
 const NavWrap = styled('nav')`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -97,11 +97,11 @@ class Nav extends Component {
   }
 
   componentDidMount() {
-    // window.addEventListener('scroll', this._handleScroll)
+    window.addEventListener('scroll', this._handleScroll)
   }
 
   componentWillUnmount() {
-    // window.removeEventListener('scroll', this._handleScroll)
+    window.removeEventListener('scroll', this._handleScroll)
   }
 
   _handleScroll = () => {
@@ -112,21 +112,32 @@ class Nav extends Component {
     this.lastOffsetTop = window.pageYOffset
   }
 
-  // _getStyle = () =>
-  //   `${this.state.minimizeNav ? 'min-nav' : ''} ${this.state.hideMenu ? 'hide-nav' : ''}`
+  _handleClick = () =>
+    ScrollTo(document.querySelector('main').getBoundingClientRect().top)
+
+  _getStyle = () =>
+    `${this.state.minimizeNav ? 'min-nav' : ''} ${this.state.hideMenu ? 'hide-nav' : ''}`
 
   render() {
     const {login, token, signout, isAdmin} = this.props.userStore
     return (
-      <NavWrap>
+      <NavWrap className={this._getStyle()}>
         <Icons style={logoStyle} id="logo" />
         <MenuWrap
           onMouseLeave={() => this.setState({showLangMenu: false, showAuthMenu: false})}
         >
-          <Link to="/">Главная</Link>
-          <Link to="/reservi">Резервы</Link>
-          <Link to="/o-nas">О нас</Link>
-          <Link to="/faq">FAQ</Link>
+          <Link onClick={this._handleClick} to="/">
+            Главная
+          </Link>
+          <Link onClick={this._handleClick} to="/reservi">
+            Резервы
+          </Link>
+          <Link onClick={this._handleClick} to="/o-nas">
+            О нас
+          </Link>
+          <Link onClick={this._handleClick} to="/faq">
+            FAQ
+          </Link>
           <span
             onClick={() =>
               this.setState(({showLangMenu}) => ({
@@ -147,8 +158,8 @@ class Nav extends Component {
               unmountOnExit
             >
               <LangMenu>
-                <span>Eng</span>
-                <span>Rus</span>
+                <span onClick={this._handleClick}>Eng</span>
+                <span onClick={this._handleClick}>Rus</span>
               </LangMenu>
             </CSSTransition>
           </span>
@@ -170,8 +181,16 @@ class Nav extends Component {
             >
               {token ? (
                 <LangMenu>
-                  {isAdmin && <Link to="/summary">Admin</Link>}
-                  {isAdmin && <Link to="/settings">Settings</Link>}
+                  {isAdmin && (
+                    <Link onClick={this._handleClick} to="/summary">
+                      Admin
+                    </Link>
+                  )}
+                  {isAdmin && (
+                    <Link onClick={this._handleClick} to="/settings">
+                      Settings
+                    </Link>
+                  )}
                   <Link to="/lichnii-kabinet">{login}</Link>
                   <p
                     onClick={e => {

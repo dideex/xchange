@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 
-import {Button, format, currencyFormat, H2, statusArray} from './common'
+import {Button, format, currencyFormat, H2, StatusTitles} from './common'
 import Svg from './HowTo/Step2'
 
 const Wrap = styled('div')`
@@ -123,7 +123,7 @@ class PaymentProof extends Component {
           </p>
           <p>
             <span>Статус:</span>
-            <strong>{statusArray[cashStore.paymentStatus]}</strong>
+            <strong>{StatusTitles[cashStore.paymentStatus]}</strong>
           </p>
         </UserInfo>
         <p onClick={() => this.props.history.goBack()}>

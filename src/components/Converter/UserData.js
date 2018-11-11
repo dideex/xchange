@@ -139,7 +139,7 @@ class UserData extends Component {
               console.log('userStore done', data)
             })
             .catch(err => console.error(err))
-          if (!this.props.cashStore.errorMessage)
+          if (!this.props.cashStore.isNetworkError)
             this.props.history.push('/podtverjdenie-oplati')
           this.setState({loading: false})
         })

@@ -6,5 +6,6 @@ export const noty = (text, type = 'success') => {
     type,
     theme: 'metroui',
     timeout: 10000,
+    layout: 'bottomRight'
   }).show()
 }
