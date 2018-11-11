@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 
-import {H2} from './common'
-
-const Wrap = styled('div')`
-  padding: 0 60px;
-`
+import {H2, MainSectionWrap} from './common'
 
 const P = styled('p')`
   font-size: 2.4rem;
@@ -16,7 +12,7 @@ const P = styled('p')`
 class FAQ extends Component {
   render() {
     return (
-      <Wrap>
+      <MainSectionWrap>
         <H2>О нас</H2>
         <P>Наш сервис помогает производить обмен Биткоин безопасно и быстро.</P>
         <P>
@@ -31,7 +27,7 @@ class FAQ extends Component {
           нашим сервисом. Выгодные курсы и качественное обслуживание - залог работы с
           клиентами.
         </P>
-      </Wrap>
+      </MainSectionWrap>
     )
   }
 }

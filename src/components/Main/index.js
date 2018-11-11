@@ -9,6 +9,9 @@ const MainStyled = styled('main')`
     ${container}
     background-color: ${Colors.accent};
     border-radius: 10px;
+    @media (max-width: 1024px) {
+      padding: 25px 0;
+    } 
   }
 `
 

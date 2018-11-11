@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import styled from 'react-emotion'
+import {isMobile, isTablet} from 'react-device-detect'
 
 import {H2, container, Loading} from '../common'
 import Operatoin from './Operation'
@@ -26,13 +27,28 @@ const Operations = styled('div')`
   transition: transform 0.3s ease-in-out;
 `
 
+const AdaptiveSettings = [
+  {
+    amount: 3,
+    width: -33.33,
+  },
+  {
+    amount: 2,
+    width: -50,
+  },
+  {
+    amount: 1,
+    width: -100,
+  },
+]
+
 // LastOperations component;
 @inject('lastOperationsStore')
 @observer
 class LastOperations extends Component {
-
   render() {
     const {loading, data} = this.props.lastOperationsStore
+    const deviceType = isTablet ? 1 : isMobile ? 2 : 0
     return (
       <Section>
         <H2> Последние операции</H2>
@@ -40,7 +56,12 @@ class LastOperations extends Component {
           <Loading size="big" />
         ) : (
           <OperationsWrap>
-            <Operations offset={(data.length - 3) * -33.33}>
+            <Operations
+              offset={
+                (data.length - AdaptiveSettings[deviceType].amount) *
+                AdaptiveSettings[deviceType].width
+              }
+            >
               {data.map((props, i) => (
                 <Operatoin key={i} {...props} />
               ))}

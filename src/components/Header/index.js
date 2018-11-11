@@ -26,6 +26,70 @@ const ContentWrap = styled('div')`
       line-height: 1.5;
       margin: 20px 0;
     }
+    .manAndBasket {
+      width: 196px;
+      position: absolute;
+      bottom: 0px;
+      left: 90px;
+      z-index: 0;
+      @media (max-width: 1024px) {
+        width: 159px;
+      } 
+    }
+    .girlWithCoins {
+      width: 169px;
+      position: absolute;
+      bottom: 50px;
+      left: 44%;
+      z-index: 0;
+      @media (max-width: 1024px) {
+        width: 129px;
+        bottom: 20px;
+      } 
+    }
+    .manWithGraphis {
+      width: 127px;
+      position: absolute;
+      bottom: 180px;
+      left: 50.5%;
+      z-index: 0;
+      @media (max-width: 1024px) {
+        width: 87px;
+        bottom: 100px;
+      } 
+    }
+    .safe {
+      width: 85px;
+      position: absolute;
+      bottom: 210px;
+      right: 23.9%;
+      z-index: 0;
+      @media (max-width: 1024px) {
+        width: 45px;
+        bottom: 130px;
+      } 
+    }
+    .manWorking {
+      width: 179px;
+      position: absolute;
+      bottom: 210px;
+      right: 6.5%;
+      z-index: 0;
+      @media (max-width: 1024px) {
+        width: 139px;
+        bottom: 130px;
+      } 
+    }
+    .manHappy {
+      width: 121px;
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      z-index: 0;
+      @media (max-width: 1024px) {
+        width: 81px;
+      } 
+    }
   }
 `
 
@@ -40,49 +104,6 @@ const headerBgBottomStyle = {
   bottom: -1,
   right: -1,
   zIndex: -1,
-}
-const manAndBasketStyle = {
-  width: 196,
-  position: 'absolute',
-  bottom: 0,
-  left: 90,
-  zIndex: 0,
-}
-
-const girlWithCoinsStyle = {
-  width: 169,
-  position: 'absolute',
-  bottom: 50,
-  left: 590,
-  zIndex: 0,
-}
-const manWithGraphisStyle = {
-  width: 127,
-  position: 'absolute',
-  bottom: 180,
-  left: 670,
-  zIndex: 0,
-}
-const safeStyle = {
-  width: 85,
-  position: 'absolute',
-  bottom: 210,
-  right: 250,
-  zIndex: 0,
-}
-const manWorkingStyle = {
-  width: 179,
-  position: 'absolute',
-  bottom: 210,
-  right: 75,
-  zIndex: 0,
-}
-const manHappyStyle = {
-  width: 121,
-  position: 'absolute',
-  bottom: 0,
-  right: 0,
-  zIndex: 0,
 }
 
 // Header component;
@@ -105,12 +126,12 @@ class Header extends Component {
           >
             Начать
           </AccentButton>
-          <Icons style={manAndBasketStyle} id="manAndBasket" />
-          <Icons style={girlWithCoinsStyle} id="girlWithCoins" />
-          <Icons style={manWithGraphisStyle} id="manWithGraphis" />
-          <Icons style={safeStyle} id="safe" />
-          <Icons style={manWorkingStyle} id="manWorking" />
-          <Icons style={manHappyStyle} id="manHappy" />
+          <Icons className="manAndBasket" id="manAndBasket" />
+          <Icons className="girlWithCoins" id="girlWithCoins" />
+          <Icons className="manWithGraphis" id="manWithGraphis" />
+          <Icons className="safe" id="safe" />
+          <Icons className="manWorking" id="manWorking" />
+          <Icons className="manHappy" id="manHappy" />
         </ContentWrap>
       </StyledHeader>
     )

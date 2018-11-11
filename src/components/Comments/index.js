@@ -123,6 +123,14 @@ class Comments extends Component {
       arrows: true,
       prevArrow: <SamplePrevArrow />,
       nextArrow: <SampleNextArrow />,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 1,
+          },
+        },
+      ],
     }
     return (
       <Section>

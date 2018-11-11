@@ -3,12 +3,7 @@ import {observer, inject} from 'mobx-react'
 import styled from 'react-emotion'
 
 import Label from './CurrencyBadge'
-
-const Wrap = styled('div')`
-  & {
-    padding: 0 60px;
-  }
-`
+import {MainSectionWrap} from '../common'
 
 const CurrencyContainer = styled('div')`
   & {
@@ -32,13 +27,13 @@ class Settings extends Component {
   render() {
     const {currency} = this.props.cashStore
     return (
-      <Wrap>
+      <MainSectionWrap>
         <CurrencyContainer>
           {currency.map((cur, i) => (
             <Label key={i} token={this.props.userStore.token} data={cur} />
           ))}
         </CurrencyContainer>
-      </Wrap>
+      </MainSectionWrap>
     )
   }
 }

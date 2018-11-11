@@ -11,9 +11,6 @@ import {
 } from '../common'
 
 const Wrap = styled('div')`
-  & {
-    padding: 0 60px;
-  }
   & button {
     width: 37%;
     display: block;
@@ -86,11 +83,9 @@ class DetailsComponent extends Component {
     const {
       id,
       inputValue,
-      currencyInputLabel,
       toWallet,
       fromWallet,
       outputValue,
-      currencyOutputLabel,
       email,
       username,
       paymentStatus,
@@ -110,7 +105,7 @@ class DetailsComponent extends Component {
             </Details>
             <Details>
               <span>Сумма перевода:</span>
-              <strong>{`${currencyFormat(inputValue)} ${currencyInputLabel}`}</strong>
+              <strong>{`${currencyFormat(inputValue)} `}</strong>
             </Details>
           </div>
           <div>
@@ -120,7 +115,7 @@ class DetailsComponent extends Component {
             </Details>
             <Details>
               <span>Сумму получения:</span>
-              <strong>{`${currencyFormat(outputValue)} ${currencyOutputLabel}`}</strong>
+              <strong>{`${currencyFormat(outputValue)} `}</strong>
             </Details>
           </div>
         </Details>
@@ -166,7 +161,7 @@ class DetailsComponent extends Component {
             ? Object.values(wallets).map((wallet, i) => (
                 <li onClick={e => e.stopPropagation()} key={i}>{`${
                   this.props.cashStore.currency[i].name
-                } : ${wallet}`}</li>
+                } : `}</li>
               ))
             : null}
         </WalletsWrap>

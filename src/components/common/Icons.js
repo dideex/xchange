@@ -63,6 +63,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     user: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 33 38"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +77,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     howTo1: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 127 125"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +106,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     howTo2: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 121 118"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -137,6 +140,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     howTo3: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 121 119"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -162,6 +166,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     howTo4: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 123 119"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -183,6 +188,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     logo: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 216 62"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -435,6 +441,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     headerBgTop: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 1128 439"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -450,6 +457,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     headerBgBottom: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 940 368"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -463,6 +471,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     manAndBasket: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 196 170"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -556,6 +565,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     manWithGraphis: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 129 151"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -649,6 +659,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     girlWithCoins: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 169 172"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -725,6 +736,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     safe: (
       <svg
         style={style}
+        className={className}
         className={className}
         viewBox="0 0 85 128"
         fill="none"
@@ -838,6 +850,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     manWorking: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 179 159"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -924,6 +937,7 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
     manHappy: (
       <svg
         style={style}
+        className={className}
         viewBox="0 0 121 206"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

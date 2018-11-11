@@ -17,6 +17,7 @@ const CommentWrap = styled('article')`
     position: relative;
     z-index: 0;
     margin-top: -30px;
+    max-width: 50%;
   }
   & h3 {
     margin-top: 30px;
@@ -32,7 +33,7 @@ const Image = styled('img')`
   z-index: 1;
   border-radius: 10px;
   margin: 0 auto;
-  width: 140px;
+  width: 30%;
 `
 
 // Comment stateless component;

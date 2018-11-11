@@ -19,6 +19,9 @@ const MenuWrap = styled('nav')`
       cursor: pointer;
       padding: 0 35px;
       font-size: 1.8rem;
+      @media (max-width: 1024px) {
+        padding: 0 15px;
+      }
     }
     & > a:first-child {
       padding-left: 0;
@@ -43,6 +46,9 @@ const NavWrap = styled('nav')`
   justify-content: space-between;
   padding: 50px calc((100vw - 1180px) / 2) 0;
   transition: all 0.3s ease-in-out;
+  @media (max-width: 1024px) {
+    padding: 50px 15px 0;
+  }
 `
 
 const LangMenu = styled('span')`

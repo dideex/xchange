@@ -3,15 +3,9 @@ import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 
-import {Loading, Virtualized, parseOrders, noty, StatusTitles} from '../common'
+import {Loading, Virtualized, parseOrders, noty, StatusTitles, MainSectionWrap} from '../common'
 import Api from '../Api'
 import Details from './Details'
-
-const Wrap = styled('div')`
-  & {
-    padding: 0 60px;
-  }
-`
 
 const PaymentSelector = styled('div')`
   & {
@@ -143,7 +137,7 @@ class Admin extends Component {
     )
     if (this.state.loading) return <Loading size="big" />
     return (
-      <Wrap>
+      <MainSectionWrap>
         {id && (
           <Details
             updatePaymentStatus={this.updatePaymentStatus}
@@ -165,7 +159,7 @@ class Admin extends Component {
           Поиск по номеру
           <input type="text" onChange={e => this.setState({filter: e.target.value})} />
         </p>
-      </Wrap>
+      </MainSectionWrap>
     )
   }
 }

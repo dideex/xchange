@@ -10,11 +10,7 @@ import Field from './InputField'
 import UserData from './UserData'
 import CurrencyDNDArea from './CurrencyDNDArea'
 
-const Wrap = styled('div')`
-  & {
-    padding: 0 60px;
-  }
-`
+import {MainSectionWrap} from '../common'
 
 const CurrencyFieldsWrap = styled('div')`
   & {
@@ -76,7 +72,7 @@ export default class Index extends Component {
       userRate,
     } = this.props.cashStore
     return (
-      <Wrap>
+      <MainSectionWrap>
         <CurrencyFieldsWrap style={{display: 'flex', margin: '0 -5px'}}>
           <CurrencyFieldWrap className="left__input">
             <CurrencyTitle>Отдаете</CurrencyTitle>
@@ -112,9 +108,9 @@ export default class Index extends Component {
           </CurrencyFieldWrap>
         </CurrencyFieldsWrap>
         <CustomerDragLayer />
-        <CurrencyDNDArea currency={currency} loading={loading}/>
+        <CurrencyDNDArea currency={currency} loading={loading} />
         <UserData walletIncome={currencyInput} walletOutgo={currencyOutput} />
-      </Wrap>
+      </MainSectionWrap>
     )
   }
 }

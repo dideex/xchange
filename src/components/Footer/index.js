@@ -76,6 +76,9 @@ const Form = styled('section')`
   padding: 20px 80px 50px;
   background: ${Colors.accent};
   border-radius: 10px;
+  @media (max-width: 1024px) {
+    width: 100%;
+  } 
   span {
     display: block;
     text-align: center;
@@ -146,7 +149,7 @@ class Footer extends Component {
           <Input
             ref={child => (this.inputs[0] = child)}
             value={this.state.email}
-            placeholder="email"
+            placeholder="Ваша почта"
             pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
             errorMsg="Введите ваш Email"
             handleChange={email => this.setState({email})}
@@ -157,7 +160,7 @@ class Footer extends Component {
           <Input
             ref={child => (this.inputs[1] = child)}
             value={this.state.phone}
-            placeholder="phone"
+            placeholder="Ваш телефон"
             pattern="^\d+$"
             mask="phone"
             errorMsg="Введите ваш телефон"
@@ -169,6 +172,7 @@ class Footer extends Component {
           <Textarea
             value={this.state.message}
             onChange={({target}) => this.setState({message: target.value})}
+            placeholder="Ваше сообщение"
           />
           <Button
             loading={this.state.loading}

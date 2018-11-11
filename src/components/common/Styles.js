@@ -54,4 +54,14 @@ export const StatusTitles = [
   'Переведено',
   'Отменено',
 ]
+
+export const MainSectionWrap = styled('div')`
+  & {
+    padding: 0 60px;
+    @media (max-width: 1024px) {
+      padding: 0 30px;
+    } 
+  }
+`
+
 export default Styles

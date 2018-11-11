@@ -9,6 +9,10 @@ const ChartWrap = styled('div')`
   border-radius: 10px;
   width: 75%;
   padding: 30px;
+  @media (max-width: 1024px) {
+    padding: 3px;
+    width: 60%;
+  } 
 `
 
 const monthArray = [

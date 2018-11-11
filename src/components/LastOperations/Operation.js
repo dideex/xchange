@@ -22,6 +22,10 @@ const OperationWrap = styled('div')`
     margin-bottom: 35px;
     margin-left: 1.5%;
     margin-right: 1.5%;
+    @media (max-width: 1024px) {
+      flex: 47% 0 0;
+      max-width: 47%;
+    } 
   }
 `
 const BacksideBlock = styled('div')`

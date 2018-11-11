@@ -3,3 +3,11 @@
 
 .right__input .dropdown div {
   right: -19px; }
+
+@media (max-width: 1024px) {
+  .left__input .dropdown div {
+    left: -230px;  }
+  .right__input .dropdown div {
+    right: -39px; } }
+
+

@@ -3,16 +3,10 @@ import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 import {inject, observer} from 'mobx-react'
 
-import {H2, ScrollTo} from '../common'
+import {H2, ScrollTo, MainSectionWrap} from '../common'
 import Signin from './Signin'
 import Orders from './Orders'
 import Details from './Details'
-
-const Wrap = styled('div')`
-  & {
-    padding: 0 60px;
-  }
-`
 
 const SummaryWrap = styled('p')`
   padding: 50px;
@@ -51,7 +45,7 @@ class ContorlPanel extends Component {
     if (!token) return <Signin />
     return (
       <div ref={this.wrap}>
-        <Wrap>
+        <MainSectionWrap>
           <H2>Личный кабинет</H2>
           {id && <Details {...data} />}
           <Orders />
@@ -59,7 +53,7 @@ class ContorlPanel extends Component {
             <span>Завершено переводов на общую сумму:</span>
             <strong>{`${this.props.userStore.convertedAmount} usd`}</strong>{' '}
           </SummaryWrap>
-        </Wrap>
+        </MainSectionWrap>
       </div>
     )
   }

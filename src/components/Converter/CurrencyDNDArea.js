@@ -22,6 +22,12 @@ const CurrencyContainer = styled('div')`
     background: #fff;
     background-clip: padding-box;
     transition: border-color 0.3s ease-in-out;
+    @media (max-width: 1024px) {
+      padding: 50px 15px 20px;
+    } 
+    @media (max-width: 767px) {
+      display: none;
+    } 
   }
   &:hover {
     border-color: rgba(255, 255, 255, 0.7);
