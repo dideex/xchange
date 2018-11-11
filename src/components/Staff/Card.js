@@ -20,10 +20,10 @@ const CommentWrap = styled('article')`
   }
   & h3 {
     margin-top: 30px;
-    font-size: 36px;
+    font-size: 3.6rem;
   }
   & p {
-    font-size: 24px;
+    font-size: 2.4rem;
   }
 `
 

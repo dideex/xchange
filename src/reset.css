@@ -1,3 +1,6 @@
+html {
+  font-size: 10px;
+}
 body {
   min-width: 320px;
   position: relative;
@@ -5,8 +8,13 @@ body {
   overflow-x: hidden;
   opacity: 1;
   font-weight: 400;
-  overflow-scrolling: touch;
   margin: 0;
+  font-size: 1.6rem;
+}
+@media (max-width: 1024px) { 
+  body {
+    font-size: 1.3rem;
+  }
 }
 
 * {

@@ -40,7 +40,7 @@ const ErrorField = styled('span')`
     top: calc(100% + 10px);
     left: 10px;
     line-height: 1;
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #fff;
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   }

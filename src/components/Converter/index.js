@@ -37,7 +37,7 @@ const CurrencyRateWrap = styled('div')`
 const TipBlock = styled('div')`
   & {
     color: #fff;
-    font-size: 14px;
+    font-size: 1.4rem;
     padding: 0 10px;
     text-align: right;
     letter-spacing: 0.5px;
@@ -46,7 +46,7 @@ const TipBlock = styled('div')`
 
 export const CurrencyTitle = styled('h2')`
   font-family: 'Roboto Slab';
-  font-size: 30px;
+  font-size: 3rem;
   text-align: center;
 `
 

@@ -92,7 +92,7 @@ const Copy = styled('div')`
   }
   & strong,
   & a {
-    font-size: 24px;
+    font-size: 2.4rem;
   }
 `
 

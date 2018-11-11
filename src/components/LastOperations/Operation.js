@@ -89,9 +89,9 @@ const Value = styled('div')`
     max-width: 45%;
     text-align: center;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 1.8rem;
     span > span {
-      font-size: 13px;
+      font-size: 1.3rem;
       padding-left: 5px;
     }
   }

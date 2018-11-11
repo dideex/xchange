@@ -4,7 +4,7 @@ import {inject, observer} from 'mobx-react'
 
 import {H2, Input, Button, isAllPropsFalse} from '../common'
 
-const Wrap = styled('div')`
+const Wrap = styled.div`
   & {
     padding: 0 60px;
     button,
@@ -14,11 +14,6 @@ const Wrap = styled('div')`
       margin: 0 auto 50px;
     }
   }
-`
-const ErrorField = styled('p')`
-  color: #f44336;
-  font-weight: 700;
-  text-align: center;
 `
 
 // FIXME: remove password from mobx after login
@@ -64,7 +59,6 @@ class ContorlPanel extends Component {
       password,
       changeLogin,
       changePassword,
-      errorMessage,
     } = this.props.userStore
     return (
       <Wrap>
@@ -98,7 +92,6 @@ class ContorlPanel extends Component {
           }
           handleEnterPress={this.handleSubmit}
         />
-        {errorMessage && <ErrorField className="error-field">{errorMessage}</ErrorField>}
         <Button toggle={this.handleSubmit} caption="Войти" />
       </Wrap>
     )

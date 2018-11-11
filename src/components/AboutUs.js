@@ -8,7 +8,7 @@ const Wrap = styled('div')`
 `
 
 const P = styled('p')`
-  font-size: 24px;
+  font-size: 2.4rem;
   margin-bottom: 50px;
 `
 

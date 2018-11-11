@@ -166,7 +166,7 @@ class UserData extends Component {
           ref={child => (this.inputs[0] = child)}
           value={username}
           handleChange={changeUsername}
-          placeholder="username"
+          placeholder="ФИО"
           pattern="[a-zа-яё]{2,}"
           errorMsg="Введите ваше ФИО"
           isInvalid={this.state.username}
@@ -176,7 +176,7 @@ class UserData extends Component {
           ref={child => (this.inputs[1] = child)}
           value={email}
           handleChange={changeEmail}
-          placeholder="email"
+          placeholder="Почта"
           pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
           errorMsg="Введите ваш Email"
           isInvalid={this.state.email}
@@ -188,7 +188,8 @@ class UserData extends Component {
           handleChange={val => changeWallet(this.props.walletIncome)(val)}
           mask={currency.length && currency[currencyInput].label}
           /* pattern="^\d+$" */
-          placeholder="income"
+          placeholder={`Ваш ${currency[currencyInput] &&
+            currency[currencyInput].name.toLowerCase()} кошелек`}
           errorMsg="Введите номер кошелька с которого вы будете переводить"
           isInvalid={this.state.income}
           handleErrorChange={(income, res) => this.setState({income}, res())}
@@ -200,7 +201,8 @@ class UserData extends Component {
           handleChange={val => changeWallet(this.props.walletOutgo)(val)}
           mask={currency.length && currency[currencyOutput].label}
           /* pattern="^\d+$" */
-          placeholder="outgo"
+          placeholder={`Ваш номер для ${currency[currencyOutput] &&
+            currency[currencyOutput].name.toLowerCase()}`}
           errorMsg="Введите номер вашего кошелька для получения"
           isInvalid={this.state.outgo}
           handleErrorChange={(outgo, res) => this.setState({outgo}, res())}

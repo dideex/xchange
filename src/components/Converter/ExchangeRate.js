@@ -11,7 +11,7 @@ const Wrap = styled('div')`
       margin-top: auto;
     }
     h2 {
-      font-size: 20px;
+      font-size: 2rem;
       padding-bottom: 17px;
     }
   }

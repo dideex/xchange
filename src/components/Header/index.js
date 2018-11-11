@@ -8,7 +8,6 @@ const StyledHeader = styled('header')`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100vh;
 `
 
 const ContentWrap = styled('div')`
@@ -19,11 +18,11 @@ const ContentWrap = styled('div')`
     margin-top: auto;
     h1 {
       font-family: 'Roboto Slab';
-      font-size: 64px;
+      font-size: 6.4rem;
       line-height: 1.2;
     }
     p {
-      font-size: 18px;
+      font-size: 1.8rem;
       line-height: 1.5;
       margin: 20px 0;
     }

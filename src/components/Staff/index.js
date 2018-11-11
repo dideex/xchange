@@ -26,7 +26,10 @@ const Section = styled('section')`
     right: 100%;
     top: 0;
     bottom: 0;
-    transform: rotate(90deg);
+    path {
+      transform: rotate(90deg);
+      transform-origin: center;
+    }
   }
   & .chevron__right {
     cursor: pointer;
@@ -37,7 +40,10 @@ const Section = styled('section')`
     left: 100%;
     top: 0;
     bottom: 0;
-    transform: rotate(-90deg);
+    path {
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
   }
   & .slick-slide {
     min-height: 450px;

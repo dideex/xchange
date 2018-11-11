@@ -34,13 +34,13 @@ const RightContent = styled('div')`
 
 const H3 = styled('h3')`
   font-family: ${robotoSlab};
-  font-size: 36px;
+  font-size: 3.6rem;
   font-weight: 400;
   white-space: nowrap;
 `
 
 const P = styled('p')`
-  font-size: 19px;
+  font-size: 1.9rem;
   line-height: 1;
   padding-top: 20px;
 `

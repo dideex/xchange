@@ -18,11 +18,11 @@ export class Home extends Component {
           <Converter />
         </Main>
         <HowTo />
-        <Bg>
+         <Bg>
           <LastOperations />
           <Graphic />
           <Comments />
-        </Bg>
+        </Bg> 
         <Staff />
       </Fragment>
     )

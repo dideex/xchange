@@ -17,12 +17,6 @@ const Wrap = styled('div')`
   }
 `
 
-const ErrorField = styled('p')`
-  color: #f44336;
-  font-weight: 700;
-  text-align: center;
-`
-
 // Signup component;
 @withRouter
 @inject('userStore')
@@ -82,10 +76,7 @@ class Signup extends Component {
       changePassword,
       changeEmail,
       changeUsername,
-      token,
-      errorMessage,
     } = this.props.userStore
-    console.log(token)
     return (
       <Wrap>
         <div ref={this.wrap}>
@@ -153,7 +144,6 @@ class Signup extends Component {
           }
           handleEnterPress={this.handleSubmit}
         />
-        {errorMessage && <ErrorField>{errorMessage}</ErrorField>}
         <Button toggle={this.handleSubmit} caption="Регистрация" />
       </Wrap>
     )

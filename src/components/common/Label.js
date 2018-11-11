@@ -16,7 +16,7 @@ const StyledLabel = styled('span')`
     transition: all 0.2s ease-in-out;
     span {
       font-family: 'Roboto Slab';
-      font-size: 20px;
+      font-size: 2rem;
       transition: padding-left 0.3s ease-in-out;
     }
     svg {

@@ -18,7 +18,7 @@ const MenuWrap = styled('nav')`
     & > a {
       cursor: pointer;
       padding: 0 35px;
-      font-size: 18px;
+      font-size: 1.8rem;
     }
     & > a:first-child {
       padding-left: 0;

@@ -43,7 +43,7 @@ const ContentWrap = styled('div')`
   }
   & h3 {
     font-family: ${robotoSlab};
-    font-size: 28px;
+    font-size: 2.8rem;
   }
   & hgroup {
     padding-left: 30px;
