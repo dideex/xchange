@@ -16,18 +16,29 @@ const CurrencyFieldsWrap = styled('div')`
   & {
     display: flex;
     justify-content: space-between;
-    margin: 0 5px;
+    margin: 0 -5px;
     padding-bottom: 50px;
+    flex-wrap: wrap;
+    @media (max-width: 767px) {
+    }
   }
 `
 const CurrencyFieldWrap = styled('div')`
   & {
     flex: 37% 0 0;
+    @media (max-width: 767px) {
+      flex: 100% 0 0;
+      order: 1;
+    } 
   }
 `
 const CurrencyRateWrap = styled('div')`
   & {
     flex: 26% 0 0;
+    @media (max-width: 767px) {
+      flex: 100% 0 0;
+      order: 0;
+    } 
   }
 `
 const TipBlock = styled('div')`
@@ -73,7 +84,7 @@ export default class Index extends Component {
     } = this.props.cashStore
     return (
       <MainSectionWrap>
-        <CurrencyFieldsWrap style={{display: 'flex', margin: '0 -5px'}}>
+        <CurrencyFieldsWrap>
           <CurrencyFieldWrap className="left__input">
             <CurrencyTitle>Отдаете</CurrencyTitle>
             <Field

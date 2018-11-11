@@ -15,6 +15,10 @@ const Section = styled('section')`
     right: 0;
     bottom: 0;
     height: 430px;
+    @media (max-width: 767px) {
+      display: none;
+      height: 230px;
+    } 
   }
 `
 

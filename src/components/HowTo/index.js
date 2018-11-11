@@ -9,7 +9,8 @@ import Step4 from './Step4'
 
 const Section = styled('section')`
   & {
-    ${container} padding: 50px 0;
+    ${container} 
+    padding: 50px 0;
   }
 `
 
@@ -17,6 +18,28 @@ const Grid = styled('div')`
   & {
     display: flex;
     padding-top: 40px;
+    @media (max-width: 767px) {
+      flex-wrap: wrap;
+      & > * {
+        flex: 100% 0 0;
+        max-width: 100%;
+      }
+      & > div {
+        padding: 25px 15px;
+      }
+      .howto__step3 {
+        margin-left: 0 !important;
+      }
+      &:nth-child(3),
+      &:nth-child(5) {
+        svg {
+          order: 1;
+        }
+        & > div {
+          order: 0;
+        }
+      }
+    }
   }
 `
 
@@ -29,6 +52,9 @@ const RightContent = styled('div')`
   & {
     flex: 50% 0 0;
     margin-left: 150px;
+    @media (max-width: 767px) {
+      margin-left: 0;
+    }
   }
 `
 
@@ -37,6 +63,9 @@ const H3 = styled('h3')`
   font-size: 3.6rem;
   font-weight: 400;
   white-space: nowrap;
+  @media (max-width: 767px) {
+    font-size: 2.5rem;
+  }
 `
 
 const P = styled('p')`

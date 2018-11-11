@@ -2,7 +2,13 @@ import React from 'react'
 
 // Step2 stateless component;
 export const Step2 = ({style}) => (
-  <svg style={style} viewBox="0 0 298 373" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    style={style}
+    className="howto__step2"
+    viewBox="0 0 298 373"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M177.988 333.829H4.88133C2.16948 333.829 0 331.658 0 328.946V221.338C0 218.625 2.16948 216.455 4.88133 216.455H177.988C180.699 216.455 182.869 218.625 182.869 221.338V328.946C182.779 331.658 180.609 333.829 177.988 333.829Z"
       fill="#BBCADB"

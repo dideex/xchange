@@ -29,6 +29,9 @@ const MenuWrap = styled('nav')`
     & > span:last-child {
       padding-right: 0;
     }
+    @media (max-width: 767px) {
+      display: none;
+    } 
   }
 `
 const logoStyle = {

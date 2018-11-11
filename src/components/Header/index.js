@@ -16,15 +16,25 @@ const ContentWrap = styled('div')`
     position: relative;
     padding: 210px 60px 220px;
     margin-top: auto;
+    @media (max-width: 767px) {
+      padding-left: 15px;
+      padding-right: 15px;
+    } 
     h1 {
       font-family: 'Roboto Slab';
       font-size: 6.4rem;
       line-height: 1.2;
+      @media (max-width: 767px) {
+        font-size: 4.4rem;
+      } 
     }
     p {
       font-size: 1.8rem;
       line-height: 1.5;
       margin: 20px 0;
+      @media (max-width: 767px) {
+        font-size: 1.4rem;
+      } 
     }
     .manAndBasket {
       width: 196px;
@@ -34,6 +44,9 @@ const ContentWrap = styled('div')`
       z-index: 0;
       @media (max-width: 1024px) {
         width: 159px;
+      }
+      @media (max-width: 767px) {
+        width: 109px;
       } 
     }
     .girlWithCoins {
@@ -45,7 +58,10 @@ const ContentWrap = styled('div')`
       @media (max-width: 1024px) {
         width: 129px;
         bottom: 20px;
-      } 
+      }
+      @media (max-width: 767px) {
+        display: none;
+      }
     }
     .manWithGraphis {
       width: 127px;
@@ -56,6 +72,9 @@ const ContentWrap = styled('div')`
       @media (max-width: 1024px) {
         width: 87px;
         bottom: 100px;
+      }
+      @media (max-width: 767px) {
+        display: none;
       } 
     }
     .safe {
@@ -67,6 +86,11 @@ const ContentWrap = styled('div')`
       @media (max-width: 1024px) {
         width: 45px;
         bottom: 130px;
+      }
+      @media (max-width: 767px) {
+        width: 45px;
+        bottom: 40px;
+        right: 30%;
       } 
     }
     .manWorking {
@@ -78,6 +102,10 @@ const ContentWrap = styled('div')`
       @media (max-width: 1024px) {
         width: 139px;
         bottom: 130px;
+      }
+      @media (max-width: 767px) {
+        width: 89px;
+        bottom: 40px;
       } 
     }
     .manHappy {
@@ -88,6 +116,9 @@ const ContentWrap = styled('div')`
       z-index: 0;
       @media (max-width: 1024px) {
         width: 81px;
+      }
+      @media (max-width: 767px) {
+        display: none;
       } 
     }
   }

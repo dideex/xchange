@@ -13,6 +13,9 @@ const ChartWrap = styled('div')`
     padding: 3px;
     width: 60%;
   } 
+  @media (max-width: 767px) {
+    width: 100%;
+  } 
 `
 
 const monthArray = [

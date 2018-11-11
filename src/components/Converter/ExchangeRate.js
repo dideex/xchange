@@ -13,6 +13,9 @@ const Wrap = styled('div')`
     h2 {
       font-size: 2rem;
       padding-bottom: 17px;
+      @media (max-width: 767px) {
+        padding-bottom: 0;
+      } 
     }
   }
 `
@@ -22,6 +25,9 @@ const ExchangeRateContent = styled('div')`
     display: flex;
     justify-content: space-between;
     padding: 20px 20px;
+    @media (max-width: 767px) {
+      padding: 5px 40px;
+    } 
     span {
       font-weight: 700;
     }

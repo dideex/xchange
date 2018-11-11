@@ -12,6 +12,9 @@ const CommentWrap = styled('article')`
     border-radius: 10px;
     padding: 20px 25px;
     text-align: center;
+    @media (max-width: 767px) {
+      margin: 0 15px;
+    } 
   }
   & svg {
     position: relative;
@@ -22,6 +25,9 @@ const CommentWrap = styled('article')`
   & h3 {
     margin-top: 30px;
     font-size: 3.6rem;
+    @media (max-width: 767px) {
+      font-size: 2.5rem;
+    } 
   }
   & p {
     font-size: 2.4rem;

@@ -79,6 +79,9 @@ const Form = styled('section')`
   @media (max-width: 1024px) {
     width: 100%;
   } 
+  @media (max-width: 767px) {
+    padding: 20px 15px 50px;
+  } 
   span {
     display: block;
     text-align: center;
@@ -137,7 +140,7 @@ class Footer extends Component {
         })
     } else {
       this.setState({loading: false})
-      console.err('error')
+      console.error('error')
     }
   }
 

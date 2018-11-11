@@ -12,7 +12,7 @@ const StyledButton = styled('button')`
   border: rgba(174, 226, 57, 0.4) 5px solid;
   border-radius: 5px;
   padding: 8px 80px;
-  background: ${Colors.accent};
+  background: ${Colors.darkAccent};
   background-clip: padding-box;
   transition: border-color 0.3s ease-in-out;
 }

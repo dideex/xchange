@@ -37,6 +37,9 @@ export const H2 = styled('h2')`
   font-family: ${robotoSlab};
   font-size: 4.8rem;
   margin: 20px 0 40px;
+  @media (max-width: 767px) {
+    font-size: 2.8rem;
+  } 
 `
 
 export const StatusIconColors = [

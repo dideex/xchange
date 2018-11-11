@@ -15,6 +15,10 @@ const StyledUserData = styled('div')`
       max-width: 37%;
       flex: 37% 0 0;
       margin-bottom: 50px;
+      @media (max-width: 767px) {
+        max-width: 100%;
+        flex: 100% 0 0;
+      } 
     }
   }
 `
@@ -25,6 +29,9 @@ const ButtonWrap = styled('div')`
     text-align: center;
     button {
       width: 37%;
+      @media (max-width: 767px) {
+        width: 100%;
+      } 
     }
   }
 `
@@ -36,6 +43,9 @@ const CheckboxWrap = styled('div')`
     margin: 0 auto 30px;
     text-align: center;
     padding-left: 30px;
+    @media (max-width: 767px) {
+      flex: 100% 0 0;
+    } 
     input {
       display: none;
     }

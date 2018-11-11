@@ -4,6 +4,7 @@ import React from 'react'
 export const Step1 = ({style}) => (
   <svg
     style={style}
+    className="howto__step1"
     viewBox="0 0 874 417"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
