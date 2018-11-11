@@ -26,6 +26,9 @@ const InputWrap = styled('div')`
     position: relative;
     flex: 37% 0 0;
     margin-bottom: 50px;
+    @media (max-width: 1024px) {
+      flex: 100% 0 0;
+    } 
   }
   & .currency-item svg {
     position: absolute;

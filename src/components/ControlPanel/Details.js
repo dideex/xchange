@@ -27,9 +27,16 @@ const Details = styled('div')`
   & {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    @media (max-width: 1024px) {
+      justify-content: center;
+    } 
   }
   & > * {
     flex: 40% 0 0;
+    @media (max-width: 1024px) {
+      flex: 70% 0 0;
+    } 
   }
   & span,
   & strong {

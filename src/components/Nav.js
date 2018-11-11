@@ -67,6 +67,9 @@ const LangMenu = styled('span')`
   }
   .auth-menu-item & {
     left: -10px;
+    @media (max-width: 1024px) {
+      left: -85px;
+    } 
   }
   &.content--enter {
     opacity: 0.01;
