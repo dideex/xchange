@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
-import MenuNav from './components/Nav'
+import MenuNav from './components/Navigation'
 import {
   FAQ,
   Home,

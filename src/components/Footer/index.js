@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
+import {injectIntl} from 'react-intl'
 
 import {
   Icons,
@@ -78,10 +79,10 @@ const Form = styled('section')`
   border-radius: 10px;
   @media (max-width: 1024px) {
     width: 100%;
-  } 
+  }
   @media (max-width: 767px) {
     padding: 20px 15px 50px;
-  } 
+  }
   span {
     display: block;
     text-align: center;
@@ -101,11 +102,12 @@ const Copy = styled('div')`
     font-size: 2.4rem;
     @media (max-width: 767px) {
       font-size: 1.4rem;
-    } 
+    }
   }
 `
 
 // Footer component;
+@injectIntl
 class Footer extends Component {
   state = {
     email: '',
@@ -148,6 +150,9 @@ class Footer extends Component {
   }
 
   render() {
+    console.log(
+      this.props.intl.formatMessage({id: 'test', defaultMessage: 'Not implemented'}),
+    )
     return (
       <FooterWrap>
         <Form>
