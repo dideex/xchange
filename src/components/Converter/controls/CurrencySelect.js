@@ -10,6 +10,9 @@ const Wrapper = styled('div')`
   right: 24px;
   top: 18px;
   background-color: transparent;
+  @media (max-width: 1024px) {
+    top: 15px;
+  } 
 `
 
 const SelectBlock = styled('div')`

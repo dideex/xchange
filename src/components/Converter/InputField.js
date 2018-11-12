@@ -24,6 +24,9 @@ const BadgeIcon = styled('span')`
     top: 18px;
     left: 20px;
     z-index: 1;
+    @media (max-width: 1024px) {
+      top: 16px;
+    } 
   }
 `
 

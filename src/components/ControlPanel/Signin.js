@@ -4,14 +4,23 @@ import {inject, observer} from 'mobx-react'
 
 import {H2, Input, Button, isAllPropsFalse} from '../common'
 
-const Wrap = styled.div`
+export const Wrap = styled.div`
   & {
     padding: 0 60px;
+    @media (max-width: 1024px) {
+      padding: 0 30px;
+    } 
+    @media (max-width: 767px) {
+      padding: 0 15px;
+    } 
     button,
     label {
       display: block;
       width: 37%;
       margin: 0 auto 50px;
+      @media (max-width: 1024px) {
+        width: 100%;
+      } 
     }
   }
 `

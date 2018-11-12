@@ -6,6 +6,12 @@ import {currencyFormat, StatusTitles} from '../common'
 const Wrap = styled('div')`
   & {
     padding: 0 60px;
+    @media (max-width: 1024px) {
+      padding: 0 15px;
+    }
+    @media (max-width: 767px) {
+      padding: 0;
+    }
   }
   & button {
     width: 37%;
@@ -30,13 +36,13 @@ const Details = styled('div')`
     flex-wrap: wrap;
     @media (max-width: 1024px) {
       justify-content: center;
-    } 
+    }
   }
   & > * {
     flex: 40% 0 0;
     @media (max-width: 1024px) {
       flex: 70% 0 0;
-    } 
+    }
   }
   & span,
   & strong {
@@ -48,6 +54,9 @@ const UserInfo = styled('div')`
   & {
     max-width: 37%;
     margin: 50px auto;
+    @media (max-width: 1024px) {
+      max-width: 100%;
+    } 
   }
   & p {
     display: flex;
@@ -56,7 +65,6 @@ const UserInfo = styled('div')`
 `
 // DetailsComponent component;
 class DetailsComponent extends Component {
-
   render() {
     const {
       id,

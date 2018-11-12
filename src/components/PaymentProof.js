@@ -9,11 +9,17 @@ import Svg from './HowTo/Step2'
 const Wrap = styled('div')`
   & {
     padding: 0 60px;
+    @media (max-width: 1024px) {
+      padding: 0 5px;
+    } 
   }
   & button {
     width: 37%;
     display: block;
     margin: 50px auto 0;
+    @media (max-width: 1024px) {
+      width: 100%;
+    } 
   }
   & svg {
     width: 30%;
@@ -30,6 +36,7 @@ const Details = styled('div')`
   & {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
   & > * {
     flex: 40% 0 0;
@@ -44,6 +51,9 @@ const UserInfo = styled('div')`
   & {
     max-width: 37%;
     margin: 50px auto;
+    @media (max-width: 1024px) {
+      max-width: 100%;
+    } 
   }
   & p {
     display: flex;

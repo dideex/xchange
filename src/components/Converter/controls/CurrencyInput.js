@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Input from '../../common/Input'
+import {Input} from '../../common'
 
 // CurrencyInput stateless component;
 const CurrencyInput = ({value = '', handleChange}) => (

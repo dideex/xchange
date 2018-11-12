@@ -14,7 +14,9 @@ const CommentWrap = styled('article')`
     text-align: center;
     @media (max-width: 767px) {
       margin: 0 15px;
+      padding: 20px 0;
     } 
+    
   }
   & svg {
     position: relative;

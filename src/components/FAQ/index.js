@@ -8,6 +8,12 @@ import {questions} from './mockQuestions.js'
 const ReservedWrap = styled('div')`
   & {
     padding: 0 60px;
+    @media (max-width: 1024px) {
+      padding: 0 30px;
+    }
+    @media (max-width: 767px) {
+      padding: 0 15px;
+    }
   }
   & .icon-safe {
     display: block;
@@ -28,7 +34,7 @@ const InputWrap = styled('div')`
     margin-bottom: 50px;
     @media (max-width: 1024px) {
       flex: 100% 0 0;
-    } 
+    }
   }
   & .currency-item svg {
     position: absolute;
@@ -37,6 +43,9 @@ const InputWrap = styled('div')`
     cursor: pointer;
     transform: rotate(${({rotate}) => rotate});
     transition: transform 0.3s ease-in-out;
+    @media (max-width: 1024px) {
+      top: 8px;
+    } 
   }
   & .currency-item div {
     padding-left: 23px;
@@ -86,7 +95,7 @@ class FAQ extends Component {
           {questions.map(({question, answer}, i) => (
             <InputWrap key={i} rotate={this.state.active === i ? '0deg' : '-90deg'}>
               <div onClick={() => this._handleClick(i)} className="currency-item">
-                <AccentBlock value={question}/>
+                <AccentBlock value={question} />
                 <Icons id="chevron" style={SvgCurrency} />
               </div>
               <CSSTransition

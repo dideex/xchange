@@ -107,12 +107,13 @@ const MobMenu = styled('div')`
     flex-direction: column;
     transform: translatex(${({x}) => x});
     transition: transform 0.3s ease-in-out;
-    a {
+    a,
+    span {
       font-size: 3rem;
     }
     .close {
       position: absolute;
-      right: 15px;
+      right: 35px;
     }
   }
 `
@@ -150,35 +151,85 @@ class Nav extends Component {
     this.lastOffsetTop = window.pageYOffset
   }
 
-  _handleClick = () => {
-    this.setState({showMobMenu: false})
+  _handleLinkClick = () => {
+    this.setState({showMobMenu: false, showLangMenu: false})
     ScrollTo(document.querySelector('main').getBoundingClientRect().top)
   }
+
+  _toggleLangMenu = () =>
+    this.setState(({showLangMenu}) => ({
+      showLangMenu: !showLangMenu,
+      showAuthMenu: false,
+    }))
 
   _getStyle = () =>
     `${this.state.minimizeNav ? 'min-nav' : ''} ${this.state.hideMenu ? 'hide-nav' : ''}`
 
   render() {
     const {login, token, signout, isAdmin} = this.props.userStore
+    const {showLangMenu, showAuthMenu} = this.state
     return (
       <Fragment>
         {isMobile && (
           <MobMenu x={this.state.showMobMenu ? '0%' : '100%'}>
-            <div onClick={() => this.setState({showMobMenu: false})} className="close">
+            <div
+              onClick={() => this.setState({showMobMenu: false, showLangMenu: false})}
+              className="close"
+            >
               <Icons style={{width: 30}} id="close" />
             </div>
-            <Link onClick={this._handleClick} to="/">
+            <Link onClick={this._handleLinkClick} to="/">
               Главная
             </Link>
-            <Link onClick={this._handleClick} to="/reservi">
+            <Link onClick={this._handleLinkClick} to="/reservi">
               Резервы
             </Link>
-            <Link onClick={this._handleClick} to="/o-nas">
+            <Link onClick={this._handleLinkClick} to="/o-nas">
               О нас
             </Link>
-            <Link onClick={this._handleClick} to="/faq">
+            <Link onClick={this._handleLinkClick} to="/faq">
               FAQ
             </Link>
+            <span onClick={this._toggleLangMenu}>Язык</span>
+            {showLangMenu && (
+              <p>
+                <span onClick={this._handleLinkClick}>Eng</span>
+                <span onClick={this._handleLinkClick}>Rus</span>
+              </p>
+            )}
+
+            {token ? (
+              <Fragment>
+                {isAdmin && (
+                  <Link onClick={this._handleLinkClick} to="/summary">
+                    Admin
+                  </Link>
+                )}
+                {isAdmin && (
+                  <Link onClick={this._handleLinkClick} to="/settings">
+                    Settings
+                  </Link>
+                )}
+                <Link to="/lichnii-kabinet">{login}</Link>
+                <span
+                  onClick={e => {
+                    e.stopPropagation()
+                    signout()
+                  }}
+                >
+                  Выйти
+                </span>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Link onClick={this._handleLinkClick} to="/lichnii-kabinet">
+                  Войти
+                </Link>
+                <Link onClick={this._handleLinkClick} to="/registracya">
+                  Регистрация
+                </Link>
+              </Fragment>
+            )}
           </MobMenu>
         )}
         <NavWrap className={this._getStyle()}>
@@ -190,40 +241,33 @@ class Nav extends Component {
                 this.setState({showLangMenu: false, showAuthMenu: false})
               }
             >
-              <Link onClick={this._handleClick} to="/">
+              <Link onClick={this._handleLinkClick} to="/">
                 Главная
               </Link>
-              <Link onClick={this._handleClick} to="/reservi">
+              <Link onClick={this._handleLinkClick} to="/reservi">
                 Резервы
               </Link>
-              <Link onClick={this._handleClick} to="/o-nas">
+              <Link onClick={this._handleLinkClick} to="/o-nas">
                 О нас
               </Link>
-              <Link onClick={this._handleClick} to="/faq">
+              <Link onClick={this._handleLinkClick} to="/faq">
                 FAQ
               </Link>
-              <span
-                onClick={() =>
-                  this.setState(({showLangMenu}) => ({
-                    showLangMenu: !showLangMenu,
-                    showAuthMenu: false,
-                  }))
-                }
-              >
+              <span onClick={this._toggleLangMenu}>
                 Rus
                 <Icons
                   id="chevron"
                   style={{width: '20px', marginBottom: '-2px', paddingLeft: '5px'}}
                 />
                 <CSSTransition
-                  in={this.state.showLangMenu}
+                  in={showLangMenu}
                   timeout={300}
                   classNames="content-"
                   unmountOnExit
                 >
                   <LangMenu>
-                    <span onClick={this._handleClick}>Eng</span>
-                    <span onClick={this._handleClick}>Rus</span>
+                    <span onClick={this._handleLinkClick}>Eng</span>
+                    <span onClick={this._handleLinkClick}>Rus</span>
                   </LangMenu>
                 </CSSTransition>
               </span>
@@ -238,7 +282,7 @@ class Nav extends Component {
               >
                 <Icons style={{width: '33px'}} id="user" />
                 <CSSTransition
-                  in={this.state.showAuthMenu}
+                  in={showAuthMenu}
                   timeout={300}
                   classNames="content-"
                   unmountOnExit
@@ -246,12 +290,12 @@ class Nav extends Component {
                   {token ? (
                     <LangMenu>
                       {isAdmin && (
-                        <Link onClick={this._handleClick} to="/summary">
+                        <Link onClick={this._handleLinkClick} to="/summary">
                           Admin
                         </Link>
                       )}
                       {isAdmin && (
-                        <Link onClick={this._handleClick} to="/settings">
+                        <Link onClick={this._handleLinkClick} to="/settings">
                           Settings
                         </Link>
                       )}

@@ -10,7 +10,6 @@ const CurrencyBadgeItem = styled('div')`
     flex: 33% 0 0;
   }
 `
-// FIXME: Cannot have two HTML5 backends at the same time.
 
 const CurrencyContainer = styled('div')`
   & {

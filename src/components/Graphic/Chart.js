@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
+import {isMobile  } from 'react-device-detect';
 import {ResponsiveContainer, ComposedChart, XAxis, YAxis, Area, Tooltip} from 'recharts'
 
 import {Colors, Loading} from '../common'
@@ -14,7 +15,8 @@ const ChartWrap = styled('div')`
     width: 60%;
   } 
   @media (max-width: 767px) {
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
   } 
 `
 
@@ -60,7 +62,7 @@ class Chart extends Component {
 
   _renderChart = () => {
     return (
-      <ResponsiveContainer width={'100%'} height={450}>
+      <ResponsiveContainer width={'100%'} height={isMobile? 250 : 450}>
         <ComposedChart data={this.state.values}>
           <XAxis dataKey="date" />
           <YAxis

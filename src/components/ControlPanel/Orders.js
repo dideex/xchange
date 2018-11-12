@@ -27,6 +27,13 @@ const StyledTable = styled('div')`
       cursor: pointer;
       padding-left: 10px;
       padding-right: 10px !important;
+      @media (max-width: 767px) {
+        padding-left: 0;
+        & > div:nth-child(1),
+        & > div:nth-child(2) {
+          display: none;
+        }
+      }
     }
     .ReactVirtualized__Table__row:focus,
     .ReactVirtualized__Grid:focus {
@@ -55,6 +62,17 @@ const StyledTable = styled('div')`
     .copyied {
       path {
         fill: ${Colors.accent}!important;
+      }
+    }
+    @media (max-width: 767px) {
+      .ReactVirtualized__Table__headerColumn:first-of-type {
+        margin-left: 0;
+      }
+      .ReactVirtualized__Table__headerColumn:nth-child(1) {
+        display: none;
+      }
+      .ReactVirtualized__Table__headerColumn:nth-child(2) {
+        display: none;
       }
     }
   }

@@ -772,7 +772,6 @@ export const Icons = ({id, style = {}, className = '', onClick = () => {}}) => {
       <svg
         style={style}
         className={className}
-        className={className}
         viewBox="0 0 85 128"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

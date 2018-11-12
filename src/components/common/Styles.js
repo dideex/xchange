@@ -65,6 +65,9 @@ export const MainSectionWrap = styled('div')`
     @media (max-width: 1024px) {
       padding: 0 30px;
     }
+    @media (max-width: 767px) {
+      padding: 0 15px;
+    }
   }
 `
 

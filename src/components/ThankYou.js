@@ -6,8 +6,6 @@ import styled from 'react-emotion'
 import {H2, Button, Icons} from './common'
 
 const Wrap = styled('div')`
-  & {
-  }
   h2 {
     text-decoration: underline;
   }
@@ -18,8 +16,17 @@ const Wrap = styled('div')`
     display: block;
     margin: 50px auto;
   }
+  @media (max-width: 1024px) {
+    & button,
+    & p {
+      width: 100%;
+    }
+  }
   & p {
     margin-bottom: 150px;
+    @media (max-width: 1024px) {
+      margin-bottom: 50px;
+    } 
   }
 `
 const SubTitle = styled('p')`
@@ -28,9 +35,7 @@ const SubTitle = styled('p')`
 
 // ThankYou stateless component;
 const ThankYou = ({userStore, cashStore}) => {
-  const url = userStore.token
-    ? '/lichnii-kabinet'
-    : `/perevod/${cashStore.orderId}`
+  const url = userStore.token ? '/lichnii-kabinet' : `/perevod/${cashStore.orderId}`
   const caption = userStore.token ? 'В личный кабинет' : 'Следить за переводом'
   return (
     <Wrap>

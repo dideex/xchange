@@ -1,21 +1,10 @@
 import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
-import styled from 'react-emotion'
 
 import {H2, Input, Button, isAllPropsFalse} from '../common'
+import {Wrap} from './Signin';
 
-const Wrap = styled('div')`
-  & {
-    padding: 0 60px;
-    button,
-    label {
-      display: block;
-      width: 37%;
-      margin: 0 auto 50px;
-    }
-  }
-`
 
 // Signup component;
 @withRouter

@@ -7,6 +7,12 @@ import {H2, Icons, CurrencyIcons, SvgCurrency, AccentBlock} from '../common'
 const ReservedWrap = styled('div')`
   & {
     padding: 0 60px;
+    @media (max-width: 1024px) {
+      padding: 0 30px;
+    } 
+    @media (max-width: 767px) {
+      padding: 0 15px;
+    } 
   }
   & .icon-safe {
     display: block;
@@ -25,6 +31,9 @@ const InputWrap = styled('div')`
     position: relative;
     flex: 37% 0 0;
     margin-bottom: 50px;
+    @media (max-width: 1024px) {
+      flex: 100% 0 0;
+    } 
     p {
       padding-left: 11px;
     }
@@ -32,6 +41,9 @@ const InputWrap = styled('div')`
       position: absolute;
       left: 11px;
       bottom: 11px;
+      @media (max-width: 1024px) {
+        bottom: 8px;
+      } 
     }
     .currency-item div {
       padding-left: 23px;

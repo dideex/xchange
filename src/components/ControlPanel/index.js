@@ -12,6 +12,9 @@ const SummaryWrap = styled('p')`
   padding: 50px;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 767px) {
+    padding: 50px 0;
+  }
 `
 
 // ContorlPanel component;
@@ -32,8 +35,7 @@ class ContorlPanel extends Component {
   }
 
   componentDidUpdate() {
-    this.wrap.current &&
-      ScrollTo(this.wrap.current.getBoundingClientRect().top - 150)
+    this.wrap.current && ScrollTo(this.wrap.current.getBoundingClientRect().top - 150)
   }
 
   render() {

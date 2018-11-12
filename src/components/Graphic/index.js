@@ -9,6 +9,9 @@ const Section = styled('section')`
     ${container};
     min-height: 514px;
     position: relative;
+    @media (max-width: 1024px) {
+      min-height: 250px;
+    } 
   }
   & .chart__svg {
     position: absolute;
@@ -17,7 +20,6 @@ const Section = styled('section')`
     height: 430px;
     @media (max-width: 767px) {
       display: none;
-      height: 230px;
     } 
   }
 `

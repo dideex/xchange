@@ -14,6 +14,13 @@ const TableWrap = styled('div')`
   padding: 10px 15px;
   border-radius: 10px;
   background-color: #ffffff;
+  @media (max-width: 767px) {
+    padding: 10px 0px;
+    .ReactVirtualized__Table__rowColumn{
+      font-size: 1rem;
+      margin-right: 0;
+    }
+  } 
   .ReactVirtualized__Table__row.active {
     background: ${Colors.accent};
   }
@@ -26,6 +33,10 @@ export const Status = styled('span')`
   height: 32px;
   background: ${({color}) => color};
   border-radius: 50%;
+  @media (max-width: 767px) {
+    width: 16px;
+    height: 16px;
+  } 
 `
 
 // Virtualized component;
