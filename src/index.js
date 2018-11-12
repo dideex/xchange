@@ -4,10 +4,14 @@ import Layout from './Layout'
 import * as serviceWorker from './serviceWorker'
 import {Provider as MobxProvider} from 'mobx-react'
 import {BrowserRouter} from 'react-router-dom'
+// import {IntlProvider} from 'react-intl'
+
+import IntlProvider from './locale/CustomIntlProvider';
+import Locale from './locale'
 
 import 'noty/lib/noty.css'
 import 'noty/lib/themes/metroui.css'
-import './Noty.css';
+import './Noty.css'
 import './fonts.css'
 import './reset.css'
 import {cash, user, lastOperations} from './store'
@@ -16,11 +20,15 @@ if (module.hot) {
   module.hot.accept()
 }
 
+Locale.addLocaleData();
+
 const app = (
   <MobxProvider lastOperationsStore={lastOperations} cashStore={cash} userStore={user}>
-    <BrowserRouter>
-      <Layout />
-    </BrowserRouter>
+    <IntlProvider>
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
+    </IntlProvider>
   </MobxProvider>
 )
 

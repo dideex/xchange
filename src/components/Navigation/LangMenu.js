@@ -1,17 +1,29 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {Component, Fragment} from 'react'
+import {observer, inject} from 'mobx-react'
 import PropTypes from 'prop-types'
 
+import {locales} from '../../locale/CustomIntlProvider'
+
 // LangMenu component;
-class LangMenu extends PureComponent {
+@inject('userStore')
+@observer
+class LangMenu extends Component {
   static propTypes = {
     handleClick: PropTypes.func.isRequired,
   }
+
+  _handleLocaleChange = locale => {
+    this.props.userStore.changeLocale(locale)
+  }
+
   render() {
-    const {handleClick} = this.props
     return (
       <Fragment>
-        <span onClick={handleClick}>Eng</span>
-        <span onClick={handleClick}>Rus</span>
+        {Object.values(locales).map(({short, locale}) => (
+          <span key={short} onClick={() => this._handleLocaleChange(locale)}>
+            {short}
+          </span>
+        ))}
       </Fragment>
     )
   }

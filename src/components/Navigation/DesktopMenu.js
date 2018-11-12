@@ -99,7 +99,7 @@ class DesktopMenu extends PureComponent {
       <MenuWrap onMouseLeave={closeBothMenu}>
         <CommonLinks handleClick={handleClick} />
         <span onClick={toggleLangMenu}>
-          Rus
+          Язык
           <Icons
             id="chevron"
             style={{width: '20px', marginBottom: '-2px', paddingLeft: '5px'}}

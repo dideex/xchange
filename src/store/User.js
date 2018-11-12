@@ -29,6 +29,7 @@ export default class User {
   @observable loading
   @observable token
   @observable isAdmin
+  @observable locale
   @observable errorMessage
   @observable.ref orders
 
@@ -51,6 +52,7 @@ export default class User {
   }
 
   constructor() {
+    this.locale = 'ru-RU'
     this.token = getToken()
     this._setInitalData()
     this._checkToken()
@@ -78,6 +80,10 @@ export default class User {
   @action('clear message error field')
   clearErr = () => (this.errorMessage = null)
 
+  @action('change locale')
+  changeLocale = locale => {
+    this.locale = locale
+  }
   @action('change login')
   changeLogin = login => {
     this.clearErr()
