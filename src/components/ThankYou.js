@@ -1,6 +1,7 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react'
 import {Route} from 'react-router-dom'
+import {FormattedMessage, injectIntl} from 'react-intl'
 import styled from 'react-emotion'
 
 import {H2, Button, Icons} from './common'
@@ -26,7 +27,7 @@ const Wrap = styled('div')`
     margin-bottom: 150px;
     @media (max-width: 1024px) {
       margin-bottom: 50px;
-    } 
+    }
   }
 `
 const SubTitle = styled('p')`
@@ -34,15 +35,23 @@ const SubTitle = styled('p')`
 `
 
 // ThankYou stateless component;
-const ThankYou = ({userStore, cashStore}) => {
+const ThankYou = ({userStore, cashStore, intl}) => {
+  const {formatMessage} = intl
   const url = userStore.token ? '/lichnii-kabinet' : `/perevod/${cashStore.orderId}`
-  const caption = userStore.token ? 'В личный кабинет' : 'Следить за переводом'
+  const caption = formatMessage({
+    id: userStore.token ? 'ty.register.caption' : 'ty.guest.caption',
+    defaultMessage: 'Следить за переводом',
+  })
   return (
     <Wrap>
-      <H2>Мы фиксируем Ваш перевод!</H2>
+      <H2>
+        <FormattedMessage id="ty.header" defaultMessage="Мы фиксируем Ваш перевод!" />
+      </H2>
       <SubTitle>
-        Сразу после того как Выши средства поступят на наши реквизиты, операторы переведут
-        на указаный вами кошелек нужную сумму
+        <FormattedMessage
+          id="ty.subTitle"
+          defaultMessage="Сразу после того как Выши средства поступят на наши реквизиты, операторы переведут на указаный вами кошелек нужную сумму"
+        />
       </SubTitle>
       <Route
         render={({history}) => (
@@ -59,4 +68,4 @@ const ThankYou = ({userStore, cashStore}) => {
   )
 }
 
-export default inject('cashStore')(inject('userStore')(observer(ThankYou)))
+export default inject('cashStore')(inject('userStore')(observer(injectIntl(ThankYou))))

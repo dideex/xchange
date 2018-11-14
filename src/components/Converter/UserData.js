@@ -98,8 +98,8 @@ const CheckboxWrap = styled('div')`
   }
 `
 
-//TODO: checkbox
 // UserData component;
+@injectIntl
 @withRouter
 @inject('userStore')
 @inject('cashStore')
@@ -288,4 +288,4 @@ class UserData extends Component {
   }
 }
 
-export default injectIntl(UserData)
+export default UserData

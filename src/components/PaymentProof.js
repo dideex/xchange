@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
+import {FormattedMessage, injectIntl} from 'react-intl'
 
 import {Button, format, currencyFormat, H2, StatusTitles} from './common'
 import Svg from './HowTo/Step2'
@@ -11,7 +12,7 @@ const Wrap = styled('div')`
     padding: 0 60px;
     @media (max-width: 1024px) {
       padding: 0 5px;
-    } 
+    }
   }
   & button {
     width: 37%;
@@ -19,7 +20,7 @@ const Wrap = styled('div')`
     margin: 50px auto 0;
     @media (max-width: 1024px) {
       width: 100%;
-    } 
+    }
   }
   & svg {
     width: 30%;
@@ -53,7 +54,7 @@ const UserInfo = styled('div')`
     margin: 50px auto;
     @media (max-width: 1024px) {
       max-width: 100%;
-    } 
+    }
   }
   & p {
     display: flex;
@@ -64,6 +65,8 @@ const UserInfo = styled('div')`
 // TODO: add wallet for payment
 // TODO: add click to copy
 // PaymentProof component;
+@injectIntl
+@withRouter
 @inject('userStore')
 @inject('cashStore')
 @observer
@@ -84,21 +87,29 @@ class PaymentProof extends Component {
 
   render() {
     const {cashStore, userStore} = this.props
-    const {id: currencyOutputId, label: currencyOutputLabel, mask} = cashStore.currency[
-      cashStore.currencyOutput
-    ] || {}
+    const {formatMessage} = this.props.intl
+    const {id: currencyOutputId, label: currencyOutputLabel, mask} =
+      cashStore.currency[cashStore.currencyOutput] || {}
     const {label: currencyInputLabel} = cashStore.currency[cashStore.currencyInput] || {}
     return (
       <Wrap>
-        <H2>Совершите перевод</H2>
+        <H2>
+          <FormattedMessage id="proof.header" defaultMessage="Совершите перевод" />
+        </H2>
         <Details>
           <div ref={this.wrap}>
             <Details>
-              <span>Кошелек для перевода:</span>
+              <FormattedMessage
+                id="details.walletForPayment"
+                defaultMessage="Кошелек для перевода:"
+              />
               <strong>1234 4321 1234 5643</strong>
             </Details>
             <Details>
-              <span>Сумму для перевода:</span>
+              <FormattedMessage
+                id="details.inputAmount"
+                defaultMessage="Сумму для перевода:"
+              />
               <strong>{`${currencyFormat(
                 cashStore.inputValue,
               )} ${currencyInputLabel}`}</strong>
@@ -106,16 +117,17 @@ class PaymentProof extends Component {
           </div>
           <div>
             <Details>
-              <span>Получить на кошелек:</span>
-              <strong>
-                {format(
-                  userStore.wallets[currencyOutputId],
-                  mask
-                )}
-              </strong>
+              <FormattedMessage
+                id="details.walletForRecive"
+                defaultMessage="Получить на кошелек:"
+              />
+              <strong>{format(userStore.wallets[currencyOutputId], mask)}</strong>
             </Details>
             <Details>
-              <span>Сумму получения:</span>
+              <FormattedMessage
+                id="details.amountForRecieve"
+                defaultMessage="Сумму получения:"
+              />
               <strong>{`${currencyFormat(
                 cashStore.outputValue,
               )} ${currencyOutputLabel}`}</strong>
@@ -128,22 +140,27 @@ class PaymentProof extends Component {
             <strong>{userStore.email}</strong>
           </p>
           <p>
-            <span>ФИО:</span>
+            <FormattedMessage id="details.username" defaultMessage="ФИО:" />
             <strong>{userStore.username}</strong>
           </p>
           <p>
-            <span>Статус:</span>
-            <strong>{StatusTitles[cashStore.paymentStatus]}</strong>
+            <FormattedMessage id="home.lastOperations.status" defaultMessage="Статус:" />
+            <strong>
+              <FormattedMessage
+                id={`home.lastOperations.status${StatusTitles[cashStore.paymentStatus]}`}
+                defaultMessage={StatusTitles[cashStore.paymentStatus]}
+              />
+            </strong>
           </p>
         </UserInfo>
         <p onClick={() => this.props.history.goBack()}>
           <span role="img" aria-label="back">
             👈
           </span>
-          Вернуться
+          <FormattedMessage id="details.back" defaultMessage="Вернуться" />
         </p>
         <Button
-          caption="Я перевел"
+          caption={formatMessage({id: 'details.accept', defaultMessage: 'Я перевел'})}
           toggle={() => {
             cashStore.cofirmPayment(userStore.email)
             this.props.history.push('/spasibo')
@@ -155,4 +172,4 @@ class PaymentProof extends Component {
   }
 }
 
-export default withRouter(PaymentProof)
+export default PaymentProof

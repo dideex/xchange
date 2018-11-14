@@ -104,6 +104,7 @@ const SearchWrap = styled('div')`
 `
 
 // CurrencyDNDArea component;
+@injectIntl
 class CurrencyDNDArea extends Component {
   static propTypes = {
     currency: PropTypes.array.isRequired,
@@ -162,4 +163,4 @@ class CurrencyDNDArea extends Component {
   }
 }
 
-export default injectIntl(CurrencyDNDArea)
+export default CurrencyDNDArea

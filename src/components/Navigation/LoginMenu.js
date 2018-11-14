@@ -36,7 +36,7 @@ class LoginMenu extends Component {
             signout()
           }}
         >
-          <FormattedMessage id="home.nav.logout" defaultMessage="Выйти" />
+          <FormattedMessage id="home.nav.signout" defaultMessage="Выйти" />
         </p>
       </Fragment>
     ) : (
@@ -45,7 +45,7 @@ class LoginMenu extends Component {
           <FormattedMessage id="home.nav.signin" defaultMessage="Войти" />
         </Link>
         <Link onClick={handleClick} to="/registracya">
-          <FormattedMessage id="home.nav.singout" defaultMessage="Регистрация" />
+          <FormattedMessage id="home.nav.signup" defaultMessage="Регистрация" />
         </Link>
       </Fragment>
     )

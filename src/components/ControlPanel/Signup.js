@@ -7,6 +7,7 @@ import {H2, Input, Button, isAllPropsFalse} from '../common'
 import {Wrap} from './Signin'
 
 // Signup component;
+@injectIntl
 @withRouter
 @inject('userStore')
 @observer
@@ -178,4 +179,4 @@ class Signup extends Component {
   }
 }
 
-export default injectIntl(Signup)
+export default Signup

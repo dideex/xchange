@@ -28,6 +28,7 @@ export const Wrap = styled.div`
 
 // FIXME: remove password from mobx after login
 // ContorlPanel component;
+@injectIntl
 @inject('userStore')
 @observer
 class ContorlPanel extends Component {
@@ -122,4 +123,4 @@ class ContorlPanel extends Component {
   }
 }
 
-export default injectIntl(ContorlPanel)
+export default ContorlPanel

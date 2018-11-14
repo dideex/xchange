@@ -87,7 +87,9 @@ export default class Index extends Component {
       <MainSectionWrap>
         <CurrencyFieldsWrap>
           <CurrencyFieldWrap className="left__input">
-            <CurrencyTitle><FormattedMessage id="home.inputTitle" defaultMessage="Отдаете"/></CurrencyTitle>
+            <CurrencyTitle>
+              <FormattedMessage id="home.inputTitle" defaultMessage="Отдаете" />
+            </CurrencyTitle>
             <Field
               inputValue={`${inputValue}`}
               changeInput={changeInput}
@@ -95,7 +97,10 @@ export default class Index extends Component {
               currencyId={currencyInput}
             />
             <TipBlock className="tip__block">
-              <span><FormattedMessage id="home.minimum" defaultMessage="Минимум" />: {getMinimalAmount}</span>
+              <span>
+                <FormattedMessage id="home.minimum" defaultMessage="Минимум:" />
+                {getMinimalAmount}
+              </span>
             </TipBlock>
           </CurrencyFieldWrap>
           <CurrencyRateWrap>
@@ -117,7 +122,10 @@ export default class Index extends Component {
               currencyId={currencyOutput}
             />
             <TipBlock className="tip__block">
-              <span><FormattedMessage id="home.reserved" defaultMessage="Резерв" />: {getCurrencyReserve}</span>
+              <span>
+                <FormattedMessage id="home.reserved" defaultMessage="Резерв:" />
+                {getCurrencyReserve}
+              </span>
             </TipBlock>
           </CurrencyFieldWrap>
         </CurrencyFieldsWrap>

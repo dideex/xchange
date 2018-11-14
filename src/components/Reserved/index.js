@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import styled from 'react-emotion'
+import {FormattedMessage} from 'react-intl'
 
 import {H2, Icons, CurrencyIcons, SvgCurrency, AccentBlock} from '../common'
 
@@ -9,10 +10,10 @@ const ReservedWrap = styled('div')`
     padding: 0 60px;
     @media (max-width: 1024px) {
       padding: 0 30px;
-    } 
+    }
     @media (max-width: 767px) {
       padding: 0 15px;
-    } 
+    }
   }
   & .icon-safe {
     display: block;
@@ -33,7 +34,7 @@ const InputWrap = styled('div')`
     margin-bottom: 50px;
     @media (max-width: 1024px) {
       flex: 100% 0 0;
-    } 
+    }
     p {
       padding-left: 11px;
     }
@@ -43,7 +44,7 @@ const InputWrap = styled('div')`
       bottom: 11px;
       @media (max-width: 1024px) {
         bottom: 8px;
-      } 
+      }
     }
     .currency-item div {
       padding-left: 23px;
@@ -65,7 +66,9 @@ class Reserved extends Component {
     const {currency} = this.props.cashStore
     return (
       <ReservedWrap>
-        <H2>Наши резервы</H2>
+        <H2>
+          <FormattedMessage id="reserved.header" defaultMessage="Наши резервы" />
+        </H2>
         <ContentWrap>
           {currency.map(({icon, name}, i) => (
             <InputWrap key={i}>
