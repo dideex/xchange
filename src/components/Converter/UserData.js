@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import styled from 'react-emotion'
 import {withRouter} from 'react-router-dom'
+import {injectIntl, FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
 import {Input, Button, isAllPropsFalse, Colors} from '../common'
@@ -18,7 +19,7 @@ const StyledUserData = styled('div')`
       @media (max-width: 767px) {
         max-width: 100%;
         flex: 100% 0 0;
-      } 
+      }
     }
   }
 `
@@ -31,7 +32,7 @@ const ButtonWrap = styled('div')`
       width: 37%;
       @media (max-width: 767px) {
         width: 100%;
-      } 
+      }
     }
   }
 `
@@ -45,7 +46,7 @@ const CheckboxWrap = styled('div')`
     padding-left: 30px;
     @media (max-width: 767px) {
       flex: 100% 0 0;
-    } 
+    }
     input {
       display: none;
     }
@@ -170,15 +171,22 @@ class UserData extends Component {
       changeWallet,
     } = this.props.userStore
     const {currency, currencyInput, currencyOutput} = this.props.cashStore
+    const {formatMessage} = this.props.intl
     return (
       <StyledUserData>
         <Input
           ref={child => (this.inputs[0] = child)}
           value={username}
           handleChange={changeUsername}
-          placeholder="ФИО"
+          placeholder={formatMessage({
+            id: 'home.userDataPlaceholder.username',
+            defaultMessage: 'ФИО',
+          })}
           pattern="[a-zа-яё]{2,}"
-          errorMsg="Введите ваше ФИО"
+          errorMsg={formatMessage({
+            id: 'home.userDataError.username',
+            defaultMessage: 'Введите ваше ФИО',
+          })}
           isInvalid={this.state.username}
           handleErrorChange={(username, res) => this.setState({username}, res())}
         />
@@ -186,9 +194,15 @@ class UserData extends Component {
           ref={child => (this.inputs[1] = child)}
           value={email}
           handleChange={changeEmail}
-          placeholder="Почта"
+          placeholder={formatMessage({
+            id: 'home.userDataPlaceholder.email',
+            defaultMessage: 'Почта',
+          })}
           pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
-          errorMsg="Введите ваш Email"
+          errorMsg={formatMessage({
+            id: 'home.userDataError.email',
+            defaultMessage: 'Введите ваш Email',
+          })}
           isInvalid={this.state.email}
           handleErrorChange={(email, res) => this.setState({email}, res())}
         />
@@ -198,9 +212,20 @@ class UserData extends Component {
           handleChange={val => changeWallet(this.props.walletIncome)(val)}
           mask={currency.length && currency[currencyInput].label}
           /* pattern="^\d+$" */
-          placeholder={`Ваш ${currency[currencyInput] &&
-            currency[currencyInput].name.toLowerCase()} кошелек`}
-          errorMsg="Введите номер кошелька с которого вы будете переводить"
+          placeholder={formatMessage(
+            {
+              id: 'home.userDataPlaceholder.username',
+              defaultMessage: 'Ваш {wallet} кошелек',
+            },
+            {
+              wallet:
+                currency[currencyInput] && currency[currencyInput].name.toLowerCase(),
+            },
+          )}
+          errorMsg={formatMessage({
+            id: 'home.userDataError.userInputWallet',
+            defaultMessage: 'Введите номер кошелька с которого вы будете переводить',
+          })}
           isInvalid={this.state.income}
           handleErrorChange={(income, res) => this.setState({income}, res())}
           handleEnterPress={this.handleSubmit}
@@ -211,9 +236,20 @@ class UserData extends Component {
           handleChange={val => changeWallet(this.props.walletOutgo)(val)}
           mask={currency.length && currency[currencyOutput].label}
           /* pattern="^\d+$" */
-          placeholder={`Ваш номер для ${currency[currencyOutput] &&
-            currency[currencyOutput].name.toLowerCase()}`}
-          errorMsg="Введите номер вашего кошелька для получения"
+          placeholder={formatMessage(
+            {
+              id: 'home.userDataPlaceholder.username',
+              defaultMessage: 'Ваш номер для {wallet}',
+            },
+            {
+              wallet:
+                currency[currencyOutput] && currency[currencyOutput].name.toLowerCase(),
+            },
+          )}
+          errorMsg={formatMessage({
+            id: 'home.userDataError.userOutputWallet',
+            defaultMessage: 'Введите номер вашего кошелька для получения',
+          })}
           isInvalid={this.state.outgo}
           handleErrorChange={(outgo, res) => this.setState({outgo}, res())}
           handleEnterPress={this.handleSubmit}
@@ -230,13 +266,19 @@ class UserData extends Component {
               onChange={this._handleCheckboxChange}
               checked={this.state.agree}
             />
-            Я согласен на обработку личных данных
+            <FormattedMessage
+              id="home.acceptForTransfer"
+              defaultMessage="Я согласен на обработку личных данных"
+            />
           </label>
         </CheckboxWrap>
         <ButtonWrap>
           <Button
             disabled={!this.state.agree}
-            caption="Создать"
+            caption={formatMessage({
+              id: 'home.userData.create',
+              defaultMessage: 'Создать',
+            })}
             toggle={this.handleSubmit}
             loading={this.state.loading}
           />
@@ -246,4 +288,4 @@ class UserData extends Component {
   }
 }
 
-export default UserData
+export default injectIntl(UserData)

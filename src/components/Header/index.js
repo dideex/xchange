@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
+import {FormattedMessage} from 'react-intl'
 
-import {Icons, container, AccentButton, ScrollTo} from '../common'
+import {Icons, container, AccentButton, ScrollTo, linesToParagraphs} from '../common'
 
 const StyledHeader = styled('header')`
   position: relative;
@@ -19,14 +20,14 @@ const ContentWrap = styled('div')`
     @media (max-width: 767px) {
       padding-left: 15px;
       padding-right: 15px;
-    } 
+    }
     h1 {
       font-family: 'Roboto Slab';
       font-size: 6.4rem;
       line-height: 1.2;
       @media (max-width: 767px) {
         font-size: 4.4rem;
-      } 
+      }
     }
     p {
       font-size: 1.8rem;
@@ -34,7 +35,7 @@ const ContentWrap = styled('div')`
       margin: 20px 0;
       @media (max-width: 767px) {
         font-size: 1.4rem;
-      } 
+      }
     }
     .manAndBasket {
       width: 196px;
@@ -47,7 +48,7 @@ const ContentWrap = styled('div')`
       }
       @media (max-width: 767px) {
         width: 109px;
-      } 
+      }
     }
     .girlWithCoins {
       width: 169px;
@@ -75,7 +76,7 @@ const ContentWrap = styled('div')`
       }
       @media (max-width: 767px) {
         display: none;
-      } 
+      }
     }
     .safe {
       width: 85px;
@@ -91,7 +92,7 @@ const ContentWrap = styled('div')`
         width: 45px;
         bottom: 40px;
         right: 30%;
-      } 
+      }
     }
     .manWorking {
       width: 179px;
@@ -106,7 +107,7 @@ const ContentWrap = styled('div')`
       @media (max-width: 767px) {
         width: 89px;
         bottom: 40px;
-      } 
+      }
     }
     .manHappy {
       width: 121px;
@@ -119,7 +120,7 @@ const ContentWrap = styled('div')`
       }
       @media (max-width: 767px) {
         display: none;
-      } 
+      }
     }
   }
 `
@@ -145,17 +146,20 @@ class Header extends Component {
         <Icons style={headerBgTopStyle} id="headerBgTop" />
         <Icons style={headerBgBottomStyle} id="headerBgBottom" />
         <ContentWrap>
-          <h1>Обмен валют</h1>
+          <h1>
+            <FormattedMessage id="home.header" defaultMessage="Currency exchange" />
+          </h1>
           <p>
-            Здесь вы можете конвертировать Ваши деньги
-            <br /> С минимальной комиссией
+            <FormattedMessage id="home.subHeader" defaultMessage="Здесь вы можете конвертировать Ваши деньги">
+              {linesToParagraphs}
+            </FormattedMessage>
           </p>
           <AccentButton
             toggle={() =>
               ScrollTo(document.querySelector('main').getBoundingClientRect().top + 100)
             }
           >
-            Начать
+            <FormattedMessage id="home.acctionButton" defaultMessage="Начать" />
           </AccentButton>
           <Icons className="manAndBasket" id="manAndBasket" />
           <Icons className="girlWithCoins" id="girlWithCoins" />

@@ -1,6 +1,7 @@
-import React, {PureComponent} from 'react'
+import React, {Component} from 'react'
 import styled from 'react-emotion'
 import {CSSTransition} from 'react-transition-group'
+import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
 import {Icons, Colors} from '../common'
@@ -35,7 +36,6 @@ const MenuWrap = styled('nav')`
     }
   }
 `
-
 
 const Popover = styled('span')`
   & {
@@ -76,7 +76,7 @@ const Popover = styled('span')`
 `
 
 // DesktopMenu component;
-class DesktopMenu extends PureComponent {
+class DesktopMenu extends Component {
   static propTypes = {
     handleClick: PropTypes.func.isRequired,
     showLangMenu: PropTypes.bool.isRequired,
@@ -99,7 +99,7 @@ class DesktopMenu extends PureComponent {
       <MenuWrap onMouseLeave={closeBothMenu}>
         <CommonLinks handleClick={handleClick} />
         <span onClick={toggleLangMenu}>
-          Язык
+          <FormattedMessage id="nav.lang" defaultMessage="Language"/>
           <Icons
             id="chevron"
             style={{width: '20px', marginBottom: '-2px', paddingLeft: '5px'}}

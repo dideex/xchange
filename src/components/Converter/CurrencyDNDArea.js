@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 import CurrencyBadge from './CurrencyBadge'
+import {injectIntl} from 'react-intl'
 
 import {Icons, Colors, Loading} from '../common'
 
@@ -23,10 +24,10 @@ const CurrencyContainer = styled('div')`
     transition: border-color 0.3s ease-in-out;
     @media (max-width: 1024px) {
       padding: 50px 15px 20px;
-    } 
+    }
     @media (max-width: 767px) {
       display: none;
-    } 
+    }
   }
   &:hover {
     border-color: rgba(255, 255, 255, 0.7);
@@ -125,7 +126,7 @@ class CurrencyDNDArea extends Component {
   }
 
   render() {
-    const {currency, loading} = this.props
+    const {currency, loading, intl: {formatMessage}} = this.props
     const {dragX, dragY} = this.state
     return (
       <CurrencyContainer>
@@ -135,7 +136,7 @@ class CurrencyDNDArea extends Component {
             type="text"
             value={this.state.search}
             onChange={({target}) => this.setState({search: target.value})}
-            placeholder="Найти"
+            placeholder={formatMessage({id: 'home.find', defaultMessage: 'Найти'})}
           />
         </SearchWrap>
         {loading && currency.length === 0 ? (
@@ -161,4 +162,4 @@ class CurrencyDNDArea extends Component {
   }
 }
 
-export default CurrencyDNDArea
+export default injectIntl(CurrencyDNDArea)

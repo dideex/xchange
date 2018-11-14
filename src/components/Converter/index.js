@@ -3,6 +3,7 @@ import {inject, observer} from 'mobx-react'
 import styled from 'react-emotion'
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import {FormattedMessage} from 'react-intl'
 
 import ExchangeRate from './ExchangeRate'
 import CustomerDragLayer from './CustomerDragLayer'
@@ -29,7 +30,7 @@ const CurrencyFieldWrap = styled('div')`
     @media (max-width: 767px) {
       flex: 100% 0 0;
       order: 1;
-    } 
+    }
   }
 `
 const CurrencyRateWrap = styled('div')`
@@ -38,7 +39,7 @@ const CurrencyRateWrap = styled('div')`
     @media (max-width: 767px) {
       flex: 100% 0 0;
       order: 0;
-    } 
+    }
   }
 `
 const TipBlock = styled('div')`
@@ -86,7 +87,7 @@ export default class Index extends Component {
       <MainSectionWrap>
         <CurrencyFieldsWrap>
           <CurrencyFieldWrap className="left__input">
-            <CurrencyTitle>Отдаете</CurrencyTitle>
+            <CurrencyTitle><FormattedMessage id="home.inputTitle" defaultMessage="Отдаете"/></CurrencyTitle>
             <Field
               inputValue={`${inputValue}`}
               changeInput={changeInput}
@@ -94,7 +95,7 @@ export default class Index extends Component {
               currencyId={currencyInput}
             />
             <TipBlock className="tip__block">
-              <span>Минимум: {getMinimalAmount}</span>
+              <span><FormattedMessage id="home.minimum" defaultMessage="Минимум" />: {getMinimalAmount}</span>
             </TipBlock>
           </CurrencyFieldWrap>
           <CurrencyRateWrap>
@@ -106,7 +107,9 @@ export default class Index extends Component {
             />
           </CurrencyRateWrap>
           <CurrencyFieldWrap className="right__input">
-            <CurrencyTitle>Получаете</CurrencyTitle>
+            <CurrencyTitle>
+              <FormattedMessage id="home.outputTitle" defaultMessage="Получаете" />
+            </CurrencyTitle>
             <Field
               inputValue={`${outputValue}`}
               changeInput={changeOutput}
@@ -114,7 +117,7 @@ export default class Index extends Component {
               currencyId={currencyOutput}
             />
             <TipBlock className="tip__block">
-              <span>Резерв: {getCurrencyReserve}</span>
+              <span><FormattedMessage id="home.reserved" defaultMessage="Резерв" />: {getCurrencyReserve}</span>
             </TipBlock>
           </CurrencyFieldWrap>
         </CurrencyFieldsWrap>

@@ -1,3 +1,5 @@
+import React from 'react'
+
 const _clean = (value = '', mask = '') => {
   const maskChars = mask.replace('_', '').split('')
   let raw = value
@@ -84,3 +86,18 @@ export const parseOrders = orders =>
       }
     },
   )
+
+// replace \n to line break in FormattedMessage text
+export const linesToParagraphs = (...nodes) =>
+  nodes
+    .map(node =>
+      typeof node === 'string'
+        ? node.split('\n').map((text, key) => (
+            <span key={key}>
+              {text}
+              <br />
+            </span>
+          ))
+        : node,
+    )
+    .reduce((nodes, node) => nodes.concat(node), [])
