@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'react-emotion'
+import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
 import {
@@ -25,11 +26,11 @@ const OperationWrap = styled('div')`
     @media (max-width: 1024px) {
       flex: 47% 0 0;
       max-width: 47%;
-    } 
+    }
     @media (max-width: 767px) {
       flex: 97% 0 0;
       max-width: 97%;
-    } 
+    }
   }
 `
 const BacksideBlock = styled('div')`
@@ -145,8 +146,11 @@ export const Operations = ({
       </Values>
       <BacksideBlock>
         <p>
-          <span>Статус:</span>
-          <span>{StatusTitles[paymentStatus]}</span>
+          <FormattedMessage id="home.lastOperations.status" defaultMessage="Статус:" />
+          <FormattedMessage
+            id={`home.lastOperations.status${StatusTitles[paymentStatus]}`}
+            defaultMessage={StatusTitles[paymentStatus]}
+          />
         </p>
       </BacksideBlock>
     </OperationWrap>

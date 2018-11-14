@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
-import {injectIntl} from 'react-intl'
+import {injectIntl, FormattedMessage} from 'react-intl'
 
 import {
   Icons,
@@ -150,19 +150,28 @@ class Footer extends Component {
   }
 
   render() {
-    console.log(
-      this.props.intl.formatMessage({id: 'test', defaultMessage: 'Not implemented'}),
-    )
+    const {formatMessage} = this.props.intl
     return (
       <FooterWrap>
         <Form>
-          <H2>Остались вопросы?</H2>
+          <H2>
+            <FormattedMessage
+              id="home.footer.header"
+              defaultMessage="Остались вопросы?"
+            />
+          </H2>
           <Input
             ref={child => (this.inputs[0] = child)}
             value={this.state.email}
-            placeholder="Ваша почта"
+            placeholder={formatMessage({
+              id: 'home.userDataPlaceholder.email',
+              defaultMessage: 'Почта',
+            })}
             pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
-            errorMsg="Введите ваш Email"
+            errorMsg={formatMessage({
+              id: 'home.userDataError.email',
+              defaultMessage: 'Введите ваш Email',
+            })}
             handleChange={email => this.setState({email})}
             isInvalid={this.state.emailError}
             handleErrorChange={(emailError, res) => this.setState({emailError}, res())}
@@ -171,10 +180,16 @@ class Footer extends Component {
           <Input
             ref={child => (this.inputs[1] = child)}
             value={this.state.phone}
-            placeholder="Ваш телефон"
+            placeholder={formatMessage({
+              id: 'home.userDataPlaceholder.phone',
+              defaultMessage: 'Ваш телефон',
+            })}
             pattern="^\d+$"
             mask="phone"
-            errorMsg="Введите ваш телефон"
+            errorMsg={formatMessage({
+              id: 'home.userDataError.email',
+              defaultMessage: 'Введите ваш телефон',
+            })}
             handleChange={phone => this.setState({phone})}
             isInvalid={this.state.phoneError}
             handleErrorChange={(phoneError, res) => this.setState({phoneError}, res())}
@@ -183,11 +198,17 @@ class Footer extends Component {
           <Textarea
             value={this.state.message}
             onChange={({target}) => this.setState({message: target.value})}
-            placeholder="Ваше сообщение"
+            placeholder={formatMessage({
+              id: 'home.userDataPlaceholder.message',
+              defaultMessage: 'Ваше сообщение',
+            })}
           />
           <Button
             loading={this.state.loading}
-            caption="Отправить"
+            caption={formatMessage({
+              id: 'home.userData.send',
+              defaultMessage: 'Отправить',
+            })}
             toggle={this.handleSubmit}
           />
         </Form>

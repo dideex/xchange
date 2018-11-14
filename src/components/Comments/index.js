@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 import Slider from 'react-slick'
+import { FormattedMessage } from 'react-intl';
 
 import {container, Icons, Colors, H2} from '../common'
 import Comment from './Comment'
@@ -134,7 +135,7 @@ class Comments extends Component {
     }
     return (
       <Section>
-        <H2>Отзывы наших клиентов</H2>
+        <H2> <FormattedMessage id="home.comments.header" defaultMessage="Отзывы наших клиентов" /></H2>
         <SliderContainer>
           <Slider {...settings}>
             {mockComments.map((props, i) => (

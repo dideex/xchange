@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
-import {} from '../common'
 import Svg from './StaffSvg'
 
 const CommentWrap = styled('article')`

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
+import {FormattedMessage} from 'react-intl'
 
 import {container, H2, Icons} from '../common'
 import Chart from './Chart'
@@ -11,7 +12,7 @@ const Section = styled('section')`
     position: relative;
     @media (max-width: 1024px) {
       min-height: 250px;
-    } 
+    }
   }
   & .chart__svg {
     position: absolute;
@@ -20,7 +21,7 @@ const Section = styled('section')`
     height: 430px;
     @media (max-width: 767px) {
       display: none;
-    } 
+    }
   }
 `
 
@@ -29,7 +30,12 @@ class Graphic extends Component {
   render() {
     return (
       <Section>
-        <H2> Курс Bitcoin за последний месяц</H2>
+        <H2>
+          <FormattedMessage
+            id="home.chart.header"
+            defaultMessage="Курс Bitcoin за последний месяц"
+          />
+        </H2>
         <Chart />
         <Icons id="manByGraphic" className="chart__svg" />
       </Section>

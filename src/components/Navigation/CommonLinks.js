@@ -1,5 +1,6 @@
 import React, {PureComponent, Fragment} from 'react'
 import {Link} from 'react-router-dom'
+import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
 // CommonItems component;
@@ -13,16 +14,16 @@ class CommonItems extends PureComponent {
     return (
       <Fragment>
         <Link onClick={handleClick} to="/">
-          Главная
+          <FormattedMessage id="home.nav.home" defaultMessage="Главная" />
         </Link>
         <Link onClick={handleClick} to="/reservi">
-          Резервы
+          <FormattedMessage id="home.nav.reserved" defaultMessage="Резервы" />
         </Link>
         <Link onClick={handleClick} to="/o-nas">
-          О нас
+          <FormattedMessage id="home.nav.about" defaultMessage="О нас" />
         </Link>
         <Link onClick={handleClick} to="/faq">
-          FAQ
+          <FormattedMessage id="home.nav.faq" defaultMessage="FAQ" />
         </Link>
       </Fragment>
     )

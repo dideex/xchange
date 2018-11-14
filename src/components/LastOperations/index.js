@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import styled from 'react-emotion'
+import {FormattedMessage} from 'react-intl'
 import {isMobile, isTablet} from 'react-device-detect'
 
 import {H2, container, Loading} from '../common'
@@ -51,7 +52,12 @@ class LastOperations extends Component {
     const deviceType = isTablet ? 1 : isMobile ? 2 : 0
     return (
       <Section>
-        <H2> Последние операции</H2>
+        <H2>
+          <FormattedMessage
+            id="home.lastOperations.header"
+            defaultMessage="Последние операции"
+          />
+        </H2>
         {loading ? (
           <Loading size="big" />
         ) : (

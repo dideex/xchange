@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {Link} from 'react-router-dom'
 import {observer, inject} from 'mobx-react'
+import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
 // LoginMenu component;
@@ -26,20 +27,26 @@ class LoginMenu extends Component {
             Settings
           </Link>
         )}
-        <Link onClick={handleClick} to="/lichnii-kabinet">{login}</Link>
+        <Link onClick={handleClick} to="/lichnii-kabinet">
+          {login}
+        </Link>
         <p
           onClick={e => {
             e.stopPropagation()
             signout()
           }}
         >
-          Выйти
+          <FormattedMessage id="home.nav.logout" defaultMessage="Выйти" />
         </p>
       </Fragment>
     ) : (
       <Fragment>
-        <Link onClick={handleClick} to="/lichnii-kabinet">Войти</Link>
-        <Link onClick={handleClick} to="/registracya">Регистрация</Link>
+        <Link onClick={handleClick} to="/lichnii-kabinet">
+          <FormattedMessage id="home.nav.signin" defaultMessage="Войти" />
+        </Link>
+        <Link onClick={handleClick} to="/registracya">
+          <FormattedMessage id="home.nav.singout" defaultMessage="Регистрация" />
+        </Link>
       </Fragment>
     )
   }
