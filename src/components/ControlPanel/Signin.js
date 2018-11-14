@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 import {inject, observer} from 'mobx-react'
+import {FormattedMessage, injectIntl} from 'react-intl'
 
 import {H2, Input, Button, isAllPropsFalse} from '../common'
 
@@ -9,10 +10,10 @@ export const Wrap = styled.div`
     padding: 0 60px;
     @media (max-width: 1024px) {
       padding: 0 30px;
-    } 
+    }
     @media (max-width: 767px) {
       padding: 0 15px;
-    } 
+    }
     button,
     label {
       display: block;
@@ -20,7 +21,7 @@ export const Wrap = styled.div`
       margin: 0 auto 50px;
       @media (max-width: 1024px) {
         width: 100%;
-      } 
+      }
     }
   }
 `
@@ -63,24 +64,26 @@ class ContorlPanel extends Component {
   }
 
   render() {
-    const {
-      login,
-      password,
-      changeLogin,
-      changePassword,
-    } = this.props.userStore
+    const {login, password, changeLogin, changePassword} = this.props.userStore
+    const {formatMessage} = this.props.intl
     return (
       <Wrap>
         <div ref={this.wrap}>
-          <H2>Войти в личный кабинет</H2>
+          <H2><FormattedMessage id="cp.signin.header" defaultMessage="Войти в личный кабинет" /></H2>
         </div>
         <Input
           ref={child => (this.inputs[0] = child)}
           value={login}
           handleChange={changeLogin}
-          placeholder="login"
+          placeholder={formatMessage({
+            id: 'home.cpPlaceholder.login',
+            defaultMessage: 'Логин',
+          })}
           pattern="[a-zа-яё]{2,}"
-          errorMsg="Введите ваш логин"
+          errorMsg={formatMessage({
+            id: 'home.cpError.login',
+            defaultMessage: 'Введите ваш логин',
+          })}
           isInvalid={this.state.usernameError}
           handleErrorChange={(usernameError, res) =>
             this.setState({usernameError}, res())
@@ -93,18 +96,30 @@ class ContorlPanel extends Component {
           handleChange={changePassword}
           type="password"
           pattern="\S{6,}"
-          placeholder="password"
-          errorMsg="Введите ваш пароль"
+          placeholder={formatMessage({
+            id: 'home.cpPlaceholder.username',
+            defaultMessage: 'Пароль',
+          })}
+          errorMsg={formatMessage({
+            id: 'home.cpError.password',
+            defaultMessage: 'Введите ваш пароль',
+          })}
           isInvalid={this.state.passwordError}
           handleErrorChange={(passwordError, res) =>
             this.setState({passwordError}, res())
           }
           handleEnterPress={this.handleSubmit}
         />
-        <Button toggle={this.handleSubmit} caption="Войти" />
+        <Button
+          toggle={this.handleSubmit}
+          caption={formatMessage({
+            id: 'home.cp.enter',
+            defaultMessage: 'Войти',
+          })}
+        />
       </Wrap>
     )
   }
 }
 
-export default ContorlPanel
+export default injectIntl(ContorlPanel)

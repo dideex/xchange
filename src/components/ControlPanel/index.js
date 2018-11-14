@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 import {inject, observer} from 'mobx-react'
+import {FormattedMessage} from 'react-intl'
 
 import {H2, ScrollTo, MainSectionWrap} from '../common'
 import Signin from './Signin'
@@ -48,12 +49,19 @@ class ContorlPanel extends Component {
     return (
       <div ref={this.wrap}>
         <MainSectionWrap>
-          <H2>Личный кабинет</H2>
+          <H2>
+            <FormattedMessage id="cp.header" defaultMessage="Личный кабинет" />
+          </H2>
           {id && <Details {...data} />}
           <Orders />
           <SummaryWrap>
-            <span>Завершено переводов на общую сумму:</span>
-            <strong>{`${this.props.userStore.convertedAmount} usd`}</strong>{' '}
+            <span>
+              <FormattedMessage
+                id="cp.totalAmount"
+                deafultMessage="Завершено переводов на общую сумму:"
+              />
+            </span>
+            <strong>{`${this.props.userStore.convertedAmount} usd`}</strong>
           </SummaryWrap>
         </MainSectionWrap>
       </div>

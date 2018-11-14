@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {inject, observer} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
+import {injectIntl, FormattedMessage} from 'react-intl'
 
 import {H2, Input, Button, isAllPropsFalse} from '../common'
-import {Wrap} from './Signin';
-
+import {Wrap} from './Signin'
 
 // Signup component;
 @withRouter
@@ -66,18 +66,27 @@ class Signup extends Component {
       changeEmail,
       changeUsername,
     } = this.props.userStore
+    const {formatMessage} = this.props.intl
     return (
       <Wrap>
         <div ref={this.wrap}>
-          <H2>Регистрация</H2>
+          <H2>
+            <FormattedMessage id="cp.signun.header" defaultMessage="Регистрация" />
+          </H2>
         </div>
         <Input
           ref={child => (this.inputs[0] = child)}
           value={login}
           handleChange={changeLogin}
-          placeholder="login"
+          placeholder={formatMessage({
+            id: 'home.cpPlaceholder.login',
+            defaultMessage: 'Логин',
+          })}
           pattern="[a-zа-яё]{2,}"
-          errorMsg="Введите ваш логин"
+          errorMsg={formatMessage({
+            id: 'home.cpError.login',
+            defaultMessage: 'Введите ваш логин',
+          })}
           isInvalid={this.state.loginError}
           handleErrorChange={(loginError, res) => this.setState({loginError}, res())}
           handleEnterPress={this.handleSubmit}
@@ -86,8 +95,14 @@ class Signup extends Component {
           ref={child => (this.inputs[1] = child)}
           value={username}
           handleChange={changeUsername}
-          placeholder="ФИО"
-          errorMsg="Введите вашу ФИО"
+          placeholder={formatMessage({
+            id: 'home.cpPlaceholder.username',
+            defaultMessage: 'Логин',
+          })}
+          errorMsg={formatMessage({
+            id: 'home.cpError.username',
+            defaultMessage: 'Введите ваше ФИО',
+          })}
           isInvalid={this.state.usernameError}
           handleErrorChange={(usernameError, res) =>
             this.setState({usernameError}, res())
@@ -98,9 +113,15 @@ class Signup extends Component {
           ref={child => (this.inputs[2] = child)}
           value={email}
           handleChange={changeEmail}
-          placeholder="email"
+          placeholder={formatMessage({
+            id: 'home.cpPlaceholder.email',
+            defaultMessage: 'Почта',
+          })}
           pattern={`^(([^<>()\\[\\]\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$`}
-          errorMsg="Введите ваш email"
+          errorMsg={formatMessage({
+            id: 'home.cpError.email',
+            defaultMessage: 'Введите ваш email',
+          })}
           isInvalid={this.state.emailError}
           handleErrorChange={(emailError, res) => this.setState({emailError}, res())}
           handleEnterPress={this.handleSubmit}
@@ -111,8 +132,14 @@ class Signup extends Component {
           handleChange={changePassword}
           type="password"
           pattern="\S{6,}"
-          placeholder="password"
-          errorMsg="Введите ваш пароль"
+          placeholder={formatMessage({
+            id: 'home.cpPlaceholder.password',
+            defaultMessage: 'Пароль',
+          })}
+          errorMsg={formatMessage({
+            id: 'home.cpError.password',
+            defaultMessage: 'Введите ваш пароль',
+          })}
           isInvalid={this.state.passwordError}
           handleErrorChange={(passwordError, res) =>
             this.setState({passwordError}, res())
@@ -125,18 +152,30 @@ class Signup extends Component {
           handleChange={e => this.setState({passwordRepeated: e})}
           type="password"
           pattern="\S{6,}"
-          placeholder="password"
-          errorMsg="Пароли не совпадают"
+          placeholder={formatMessage({
+            id: 'home.cpPlaceholder.password2',
+            defaultMessage: 'Повторите пароль',
+          })}
+          errorMsg={formatMessage({
+            id: 'home.cpError.password2',
+            defaultMessage: 'Пароли не совпадают',
+          })}
           isInvalid={this.state.passwordRepeated !== password}
           handleErrorChange={(passwordRepeatedError, res) =>
             this.setState({passwordRepeatedError}, res())
           }
           handleEnterPress={this.handleSubmit}
         />
-        <Button toggle={this.handleSubmit} caption="Регистрация" />
+        <Button
+          toggle={this.handleSubmit}
+          caption={formatMessage({
+            id: 'home.cpSingup.register',
+            defaultMessage: 'Регистрация',
+          })}
+        />
       </Wrap>
     )
   }
 }
 
-export default Signup
+export default injectIntl(Signup)

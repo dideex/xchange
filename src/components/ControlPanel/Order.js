@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import styled from 'react-emotion'
 import {withRouter} from 'react-router-dom'
+import {FormattedMessage} from 'react-intl'
 
 import {currencyFormat, StatusTitles, Loading} from '../common'
 
@@ -61,13 +62,11 @@ class DetailsComponent extends Component {
   }
 
   componentDidMount() {
-    this.props.userStore
-      .fetchGuestOrder(this.id)
-      .then(data => this.setState(data))
+    this.props.userStore.fetchGuestOrder(this.id).then(data => this.setState(data))
   }
 
   render() {
-    if(this.props.userStore.loading) return <Loading size='small' />
+    if (this.props.userStore.loading) return <Loading size="small" />
     const {
       inputValue,
       currencyInputLabel,
@@ -76,36 +75,61 @@ class DetailsComponent extends Component {
       currencyOutputLabel,
       paymentStatus,
     } = this.state
-    console.log(" LOG ___ this.state ", this.state )
     return (
       <Wrap>
-        <h3>Перевод № {this.id}</h3>
+        <h3>
+          <FormattedMessage id="cp.order.num" defaultMessage="Перевод №" /> {this.id}
+        </h3>
         <Details>
           <div>
             <Details>
-              <span>Кошелек для перевода:</span>
+              <span>
+                <FormattedMessage
+                  id="details.walletForPayment"
+                  defaultMessage="Кошелек для перевода:"
+                />
+              </span>
+              {/* //FIXME: add data from the store */}
               <strong>1234 4321 1234 5643</strong>
             </Details>
             <Details>
-              <span>Сумму для перевода:</span>
+              <span>
+                <FormattedMessage
+                  id="details.inputAmount"
+                  defaultMessage="Сумму для перевода:"
+                />
+              </span>
               <strong>{`${currencyFormat(inputValue)} ${currencyInputLabel}`}</strong>
             </Details>
           </div>
           <div>
             <Details>
-              <span>Получить на кошелек:</span>
+              <span>
+                <FormattedMessage
+                  id="details.walletForRecive"
+                  defaultMessage="Получить на кошелек:"
+                />
+              </span>
               <strong>{toWallet}</strong>
             </Details>
             <Details>
-              <span>Сумму получения:</span>
+              <span>
+                <FormattedMessage
+                  id="details.amountForRecieve"
+                  defaultMessage="Сумму получения:"
+                />
+              </span>
               <strong>{`${currencyFormat(outputValue)} ${currencyOutputLabel}`}</strong>
             </Details>
           </div>
         </Details>
         <UserInfo>
           <p>
-            <span>Статус:</span>
-            <strong>{StatusTitles[paymentStatus]}</strong>
+            <FormattedMessage id="home.lastOperations.status" defaultMessage="Статус:" />
+            <FormattedMessage
+              id={`home.lastOperations.status${StatusTitles[paymentStatus]}`}
+              defaultMessage={StatusTitles[paymentStatus]}
+            />
           </p>
         </UserInfo>
       </Wrap>

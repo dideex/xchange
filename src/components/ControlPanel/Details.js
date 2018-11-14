@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
+import {FormattedMessage} from 'react-intl'
 
 import {currencyFormat, StatusTitles} from '../common'
 
@@ -56,7 +57,7 @@ const UserInfo = styled('div')`
     margin: 50px auto;
     @media (max-width: 1024px) {
       max-width: 100%;
-    } 
+    }
   }
   & p {
     display: flex;
@@ -83,21 +84,42 @@ class DetailsComponent extends Component {
         <Details>
           <div>
             <Details>
-              <span>Кошелек для перевода:</span>
+              <span>
+                <FormattedMessage
+                  id="details.walletForPayment"
+                  defaultMessage="Кошелек для перевода:"
+                />
+              </span>
+              {/* //FIXME: add data from the store */}
               <strong>1234 4321 1234 5643</strong>
             </Details>
             <Details>
-              <span>Сумму для перевода:</span>
+              <span>
+                <FormattedMessage
+                  id="details.inputAmount"
+                  defaultMessage="Сумму для перевода:"
+                />
+              </span>
               <strong>{`${currencyFormat(inputValue)} ${currencyInputLabel}`}</strong>
             </Details>
           </div>
           <div>
             <Details>
-              <span>Получить на кошелек:</span>
+              <span>
+                <FormattedMessage
+                  id="details.walletForRecive"
+                  defaultMessage="Получить на кошелек:"
+                />
+              </span>
               <strong>{toWallet}</strong>
             </Details>
             <Details>
-              <span>Сумму получения:</span>
+              <span>
+                <FormattedMessage
+                  id="details.amountForRecieve"
+                  defaultMessage="Сумму получения:"
+                />
+              </span>
               <strong>{`${currencyFormat(outputValue)} ${currencyOutputLabel}`}</strong>
             </Details>
           </div>
@@ -108,12 +130,19 @@ class DetailsComponent extends Component {
             <strong>{email}</strong>
           </p>
           <p>
-            <span>ФИО:</span>
+            <span>
+              <FormattedMessage id="details.username" defaultMessage="ФИО:" />
+            </span>
             <strong>{username}</strong>
           </p>
           <p>
-            <span>Статус:</span>
-            <strong>{StatusTitles[paymentStatus]}</strong>
+            <FormattedMessage id="home.lastOperations.status" defaultMessage="Статус:" />
+            <strong>
+              <FormattedMessage
+                id={`home.lastOperations.status${StatusTitles[paymentStatus]}`}
+                defaultMessage={StatusTitles[paymentStatus]}
+              />
+            </strong>
           </p>
         </UserInfo>
       </Wrap>

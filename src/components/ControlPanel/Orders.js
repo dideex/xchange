@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
-import 'react-virtualized/styles.css'
+import {FormattedMessage} from 'react-intl'
 
 import {Loading, Colors, Virtualized, parseOrders} from '../common'
 
@@ -97,11 +97,23 @@ class Orders extends Component {
     const parsedOrders = parseOrders(orders)
     return (
       <StyledTable>
-        {parsedOrders.length ? <h3>Таблица послдених операций</h3> : null}
+        {parsedOrders.length ? (
+          <h3>
+            <FormattedMessage
+              id="cp.orders.tableHeader"
+              defaultMessage="Таблица послдених операций"
+            />
+          </h3>
+        ) : null}
         {parsedOrders.length ? (
           <Virtualized parsedOrders={parsedOrders} endpoint="lichnii-kabinet" />
         ) : (
-          <h3>Вы еще не сделали перевода</h3>
+          <h3>
+            <FormattedMessage
+              id="cp.noOrders"
+              defaultMessage="Вы еще не сделали перевода"
+            />
+          </h3>
         )}
       </StyledTable>
     )

@@ -3,28 +3,30 @@ import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 import {Table, Column, AutoSizer} from 'react-virtualized'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
+import {injectIntl} from 'react-intl'
 import PropTypes from 'prop-types'
+import 'react-virtualized/styles.css'
 
 import {StatusIconColors, StatusTitles} from './Styles'
 import Icons from './Icons'
 import Colors from './Colors'
 
 const TableWrap = styled('div')`
- &{
-  padding: 10px 15px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  @media (max-width: 767px) {
-    padding: 10px 0px;
-    .ReactVirtualized__Table__rowColumn{
-      font-size: 1rem;
-      margin-right: 0;
+  & {
+    padding: 10px 15px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    @media (max-width: 767px) {
+      padding: 10px 0px;
+      .ReactVirtualized__Table__rowColumn {
+        font-size: 1rem;
+        margin-right: 0;
+      }
     }
-  } 
-  .ReactVirtualized__Table__row.active {
-    background: ${Colors.accent};
+    .ReactVirtualized__Table__row.active {
+      background: ${Colors.accent};
+    }
   }
-}
 `
 
 export const Status = styled('span')`
@@ -36,11 +38,12 @@ export const Status = styled('span')`
   @media (max-width: 767px) {
     width: 16px;
     height: 16px;
-  } 
+  }
 `
 
 // Virtualized component;
 @withRouter
+@injectIntl
 export class Virtualized extends Component {
   static propTypes = {
     parsedOrders: PropTypes.array.isRequired,
@@ -50,6 +53,7 @@ export class Virtualized extends Component {
 
   render() {
     const {parsedOrders, endpoint} = this.props
+    const {formatMessage} = this.props.intl
     return (
       <TableWrap>
         <AutoSizer disableHeight>
@@ -88,22 +92,43 @@ export class Virtualized extends Component {
                   </CopyToClipboard>
                 )}
               />
-              <Column label="Дата" dataKey="created" width={100} />
               <Column
-                label="Сумма перевода"
+                label={formatMessage({id: 'cp.orders.date', defaultMessage: 'Дата'})}
+                dataKey="created"
+                width={100}
+              />
+              <Column
+                label={formatMessage({
+                  id: 'cp.orders.transferAmount',
+                  defaultMessage: 'Сумма перевода',
+                })}
                 dataKey="inputValue"
                 width={300}
                 flexGrow={1}
               />
               <Column
-                label="Сумма получения"
+                label={formatMessage({
+                  id: 'cp.orders.recieveAmount',
+                  defaultMessage: 'Сумма получения',
+                })}
                 dataKey="outputValue"
                 width={300}
                 flexGrow={1}
               />
-              <Column label="На номер" dataKey="toWallet" width={300} flexGrow={1} />
               <Column
-                label="Статус"
+                label={formatMessage({
+                  id: 'cp.orders.toWallet',
+                  defaultMessage: 'На номер',
+                })}
+                dataKey="toWallet"
+                width={300}
+                flexGrow={1}
+              />
+              <Column
+                label={formatMessage({
+                  id: 'home.lastOperations.status',
+                  defaultMessage: 'Статус',
+                })}
                 dataKey="paymentStatus"
                 width={100}
                 cellRenderer={({cellData}) => (
