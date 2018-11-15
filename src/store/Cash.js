@@ -39,12 +39,20 @@ class Cash {
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
 
   _calcOutput = value =>
-    (value * this.currency[this.currencyInput].price_usd * this.userRate) /
+    (value * this.currency[this.currencyInput].price_usd) /
     this.currency[this.currencyOutput].price_usd
 
   _calcInput = value =>
-    (value * this.currency[this.currencyOutput].price_usd * this.userRate) /
+    (value * this.currency[this.currencyOutput].price_usd) /
     this.currency[this.currencyInput].price_usd
+
+  _calcOutputWithoutRates = value =>
+    (value * this.currency[this.currencyInput].price_usd) /
+    (this.currency[this.currencyOutput].price_usd)
+
+  _calcInputWithoutRates = value =>
+    (value * this.currency[this.currencyOutput].price_usd) /
+    (this.currency[this.currencyInput].price_usd)
 
   _calcOutputInUsd = () =>
     (this.outputValueInUsd =
@@ -120,7 +128,7 @@ class Cash {
       this.currencyOutput = +id
     } else {
       this.currencyOutput = +id
-      this.outputValue = this._calcOutput(this.inputValue)
+      this.outputValue = this._calcOutputWithoutRates(this.inputValue)
     }
   }
   @action('set currency input')
@@ -135,7 +143,8 @@ class Cash {
       this.currencyInput = +id
     } else {
       this.currencyInput = +id
-      this.inputValue = this._calcInput(this.outputValue)
+      this.inputValue = this._calcInputWithoutRates(this.outputValue)
+      console.log(' LOG ___ this.inputValue ', this.inputValue)
     }
   }
 
