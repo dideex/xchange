@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import PropTypes from 'prop-types'
 
-import {locales} from '../../locale/CustomIntlProvider'
+import {locales} from '../../locale'
 
 // LangMenu component;
 @inject('userStore')

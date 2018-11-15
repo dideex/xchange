@@ -5,8 +5,8 @@ import * as serviceWorker from './serviceWorker'
 import {Provider as MobxProvider} from 'mobx-react'
 import {BrowserRouter} from 'react-router-dom'
 
-import IntlProvider from './locale/CustomIntlProvider'
-import Locale from './locale'
+import IntlProvider from './locale'
+// import Locale from './locale'
 
 import 'noty/lib/noty.css'
 import 'noty/lib/themes/metroui.css'
@@ -19,7 +19,7 @@ if (module.hot) {
   module.hot.accept()
 }
 
-Locale.addLocaleData()
+// Locale.addLocaleData()
 
 const app = (
   <MobxProvider lastOperationsStore={lastOperations} cashStore={cash} userStore={user}>

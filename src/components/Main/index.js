@@ -61,7 +61,6 @@ const AfterMainWrap = styled('section')`
 // Main component;
 class Main extends Component {
   render() {
-    console.log(" LOG ___ 'Main' ", 'render' )
     return (
       <Fragment>
         <MainBG>

@@ -1,63 +1,60 @@
-import Cookie from 'js-cookie'
+import React, {Component} from 'react'
+import {observer, inject} from 'mobx-react'
+import {IntlProvider, addLocaleData} from 'react-intl'
+
+import fr from 'react-intl/locale-data/fr'
 import ru from 'react-intl/locale-data/ru'
 import en from 'react-intl/locale-data/en'
+import cn from 'react-intl/locale-data/zh'
+import cnMessages from './cn.json'
+import frMessages from './fr.json'
 import ruMessages from './ru.json'
 import enMessages from './en.json'
 
-import {addLocaleData} from 'react-intl'
+export const locales = {
+  'ru-RU': {
+    locale: 'ru-RU',
+    title: 'Русский',
+    short: 'Рус',
+    data: ru,
+    messages: ruMessages,
+  },
+  'en-US': {
+    locale: 'en-US',
+    title: 'English',
+    short: 'Eng',
+    data: en,
+    messages: enMessages,
+  },
+  'fr-FR': {
+    locale: 'fr-FR',
+    title: 'French',
+    short: 'Fr',
+    data: fr,
+    messages: frMessages,
+  },
+  'zh-ZH': {
+    locale: 'zh-ZH',
+    title: 'China',
+    short: 'Cn',
+    data: cn,
+    messages: cnMessages,
+  },
+}
+// CustomIntlProvider component;
+@inject('userStore')
+@observer
+class CustomIntlProvider extends Component {
 
-class Locale {
-  setIntl(intl) {
-    this.intl = intl
-  }
-
-
-  locales() {
-    return {
-      'en-US': {
-        locale: 'en-US',
-        title: 'English',
-        short: 'Eng',
-        data: en,
-        messages: enMessages,
-      },
-      'ru-RU': {
-        locale: 'ru-RU',
-        title: 'Русский',
-        short: 'Рус',
-        data: ru,
-        messages: ruMessages,
-      },
-    }
-  }
-
-  getLocale() {
-    return this.locales()[this.get()]
-  }
-
-  get() {
-    const locale = Cookie.get('locale')
-    const locales = this.locales()
-    return locale in locales ? locale : locales['en-US'].locale
-  }
-
-  set(locale) {
-    Cookie.set('locale', locale)
-  }
-
-  addLocaleData() {
-    let l = this.getLocale()
-    addLocaleData(l.data)
-  }
-
-  getAntdLocale() {
-    return this.getLocale().antd
-  }
-
-  getMessages(local) {
-    console.log(" LOG ___ local ", local )
-    return local? this.locales()[local].messages: this.locales()['ru-RU'].messages
+  render() {
+    const {locale} = this.props.userStore
+    addLocaleData(locales[locale].data)
+    return (
+      <IntlProvider locale={locale} messages={locales[locale].messages}>
+        {this.props.children}
+      </IntlProvider>
+    )
   }
 }
 
-export default new Locale()
+export default CustomIntlProvider

@@ -52,7 +52,7 @@ export default class User {
   }
 
   constructor() {
-    this.locale = 'ru-RU'
+    this.locale = Cookie.get('locale') || 'ru-RU'
     this.token = getToken()
     this._setInitalData()
     this._checkToken()
@@ -83,6 +83,7 @@ export default class User {
   @action('change locale')
   changeLocale = locale => {
     this.locale = locale
+    Cookie.set('locale', locale)
   }
   @action('change login')
   changeLogin = login => {
