@@ -214,7 +214,7 @@ class UserData extends Component {
           /* pattern="^\d+$" */
           placeholder={formatMessage(
             {
-              id: 'home.userDataPlaceholder.username',
+              id: 'home.userDataPlaceholder.fromWallet',
               defaultMessage: 'Ваш {wallet} кошелек',
             },
             {
@@ -238,7 +238,7 @@ class UserData extends Component {
           /* pattern="^\d+$" */
           placeholder={formatMessage(
             {
-              id: 'home.userDataPlaceholder.username',
+              id: 'home.userDataPlaceholder.toWallet',
               defaultMessage: 'Ваш номер для {wallet}',
             },
             {

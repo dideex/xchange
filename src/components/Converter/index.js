@@ -3,7 +3,7 @@ import {inject, observer} from 'mobx-react'
 import styled from 'react-emotion'
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage, injectIntl} from 'react-intl'
 
 import ExchangeRate from './ExchangeRate'
 import CustomerDragLayer from './CustomerDragLayer'
@@ -20,8 +20,6 @@ const CurrencyFieldsWrap = styled('div')`
     margin: 0 -5px;
     padding-bottom: 50px;
     flex-wrap: wrap;
-    @media (max-width: 767px) {
-    }
   }
 `
 const CurrencyFieldWrap = styled('div')`
@@ -58,9 +56,9 @@ export const CurrencyTitle = styled('h2')`
   text-align: center;
 `
 
-// TODO: add diffirences between currencies
 @DragDropContext(HTML5Backend)
 @inject('cashStore')
+@injectIntl
 @observer
 export default class Index extends Component {
   componentDidMount() {

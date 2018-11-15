@@ -99,7 +99,7 @@ class DesktopMenu extends Component {
       <MenuWrap onMouseLeave={closeBothMenu}>
         <CommonLinks handleClick={handleClick} />
         <span onClick={toggleLangMenu}>
-          <FormattedMessage id="nav.lang" defaultMessage="Language"/>
+          <FormattedMessage id="home.nav.lang" defaultMessage="Language"/>
           <Icons
             id="chevron"
             style={{width: '20px', marginBottom: '-2px', paddingLeft: '5px'}}

@@ -1,10 +1,10 @@
-import React, {PureComponent, Fragment} from 'react'
+import React, {Component, Fragment} from 'react'
 import {Link} from 'react-router-dom'
 import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
 // CommonItems component;
-class CommonItems extends PureComponent {
+class CommonItems extends Component {
   static propTypes = {
     handleClick: PropTypes.func.isRequired,
   }

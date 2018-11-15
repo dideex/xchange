@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import styled from 'react-emotion'
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage, injectIntl} from 'react-intl'
 import {isMobile, isTablet} from 'react-device-detect'
 
 import {H2, container, Loading} from '../common'
@@ -45,6 +45,7 @@ const AdaptiveSettings = [
 
 // LastOperations component;
 @inject('lastOperationsStore')
+@injectIntl
 @observer
 class LastOperations extends Component {
   render() {
