@@ -45,12 +45,10 @@ class ExchangeRate extends Component {
   }
 
   render() {
-    let {inputCurrency = 1, outputCurrency = 1, loading, rate} = this.props
+    let {inputCurrency = 1, outputCurrency = 1, loading} = this.props
     if (+inputCurrency === 0) inputCurrency = 1
     if (+outputCurrency === 0) outputCurrency = 1
     const maxValue = Math.max(inputCurrency, outputCurrency)
-    // const inputRate = inputCurrency * (inputCurrency > outputCurrency ? rate : 1)
-    // const outputRate = outputCurrency * (inputCurrency > outputCurrency ? 1 : rate)
     return (
       <Wrap>
         <CurrencyTitle>

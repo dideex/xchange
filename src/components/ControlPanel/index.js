@@ -21,6 +21,7 @@ const SummaryWrap = styled('p')`
 // ContorlPanel component;
 @withRouter
 @inject('userStore')
+@inject('cashStore')
 @observer
 class ContorlPanel extends Component {
   constructor(props) {
@@ -40,11 +41,19 @@ class ContorlPanel extends Component {
   }
 
   render() {
+    const {currency} = this.props.cashStore
     const {token} = this.props.userStore
     const {id} = this.props.match.params
     const {email, username, orders} = this.props.userStore
     const order = id ? orders.find(({_id}) => id === _id) : []
-    const data = {email, username, ...order, id}
+    const sourceWallet = currency.find(({name}) => name === order.currencyInput)
+    const data = {
+      email,
+      username,
+      ...order,
+      id,
+      sourceWallet: sourceWallet && sourceWallet.source,
+    }
     if (!token) return <Signin />
     return (
       <div ref={this.wrap}>

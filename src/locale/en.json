@@ -31,7 +31,7 @@
   "home.lastOperations.statusПереведено": "Translated",
   "home.lastOperations.statusОжидает подтверждения": "Awaiting confirmation",
   "home.lastOperations.statusОжидает перевода": "Waiting for transfer",
-  "home.lastOperations.status": "Status",
+  "home.lastOperations.status": "Status:",
   "home.chart.header": "Bitcoin rate for the last month",
   "home.comments.header": "Feedback from our customers",
   "home.staff.header": "Our team",

@@ -31,7 +31,7 @@
   "home.lastOperations.statusПереведено": "Переведено",
   "home.lastOperations.statusОжидает подтверждения": "Ожидает подтверждения",
   "home.lastOperations.statusОжидает перевода": "Ожидает перевода",
-  "home.lastOperations.status": "Статус",
+  "home.lastOperations.status": "Статус:",
   "home.chart.header": "Курс Bitcoin за последний месяц",
   "home.comments.header": "Отзывы наших клиентов",
   "home.staff.header": "Наша команда",

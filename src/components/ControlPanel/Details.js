@@ -77,6 +77,7 @@ class DetailsComponent extends Component {
       email,
       username,
       paymentStatus,
+      sourceWallet,
     } = this.props
     return (
       <Wrap>
@@ -91,7 +92,7 @@ class DetailsComponent extends Component {
                 />
               </span>
               {/* //FIXME: add data from the store */}
-              <strong>1234 4321 1234 5643</strong>
+              <strong>{sourceWallet}</strong>
             </Details>
             <Details>
               <span>
