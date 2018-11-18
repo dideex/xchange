@@ -4,8 +4,8 @@ export class Api {
   constructor() {
     const url =
       process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3040'
-        : 'http://176.119.158.145:3040'
+        ? 'http://localhost:3030'
+        : 'http://176.119.158.145:3030'
     this.backend = url
     this.isNetworkError = false
   }

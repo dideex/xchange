@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
-import WAValidator from 'wallet-address-validator'
+import WAValidator from 'coin-address-validator'
 import {CSSTransition} from 'react-transition-group'
 import PropTypes from 'prop-types'
 
 import Colors from './Colors'
+// const WAValidator = require('wallet-address-validator')
 
 const StyledInput = styled('input')`
   & {
@@ -74,6 +75,7 @@ export class Input extends Component {
     style: {},
     type: 'text',
     mask: '',
+    handleEnterPress: () => {},
   }
   static propTypes = {
     handleChange: PropTypes.func.isRequired,
@@ -142,7 +144,7 @@ export class Input extends Component {
       <InputWrap>
         <StyledInput
           ref={input => (this.input = input)}
-          onKeyPress={({which}) => which === 13? this.props.handleEnterPress(): true}
+          onKeyPress={({which}) => (which === 13 ? this.props.handleEnterPress() : true)}
           borderColor={isInvalid ? Colors.error : 'rgba(255,255,255,.4)'}
           borderColorHover={isInvalid ? Colors.errorHover : 'rgba(255,255,255,.7)'}
           borderColorActive={isInvalid ? Colors.errorHover : '#fff'}
