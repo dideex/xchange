@@ -17,6 +17,10 @@ class Cash {
   @observable.ref currency
 
   constructor() {
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3040'
+        : 'http://176.119.158.145:3040'
     this.inputValue = 0
     this.outputValue = 0
     this.outputValueInUsd = 0
@@ -31,7 +35,8 @@ class Cash {
     this.currency = []
     this.isNetworkError = false
     this.userRate = 1.1
-    this.socket = openSocket('http://localhost:3040')
+    // this.socket = openSocket('http://localhost:3040')
+    this.socket = openSocket(url)
     this.errorEmitter = Api.errorEmitter.bind(this)
     this.fetchCurrency()
   }
@@ -48,11 +53,11 @@ class Cash {
 
   _calcOutputWithoutRates = value =>
     (value * this.currency[this.currencyInput].price_usd) /
-    (this.currency[this.currencyOutput].price_usd)
+    this.currency[this.currencyOutput].price_usd
 
   _calcInputWithoutRates = value =>
     (value * this.currency[this.currencyOutput].price_usd) /
-    (this.currency[this.currencyInput].price_usd)
+    this.currency[this.currencyInput].price_usd
 
   _calcOutputInUsd = () =>
     (this.outputValueInUsd =

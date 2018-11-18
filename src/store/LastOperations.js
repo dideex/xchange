@@ -7,9 +7,14 @@ class LastOperations {
   @observable loading
   
   constructor() {
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3040'
+        : 'http://176.119.158.145:3040'
     this.loading = true
     this.data = []
-    this.socket = openSocket('http://localhost:3040')
+    // this.socket = openSocket('http://localhost:3040')
+    this.socket = openSocket(url)
     this.socket.on('message', this._socketResolver)
   }
 

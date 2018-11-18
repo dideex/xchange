@@ -2,7 +2,11 @@ import {noty} from '../common'
 
 export class Api {
   constructor() {
-    this.backend = 'http://localhost:3030'
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3040'
+        : 'http://176.119.158.145:3040'
+    this.backend = url
     this.isNetworkError = false
   }
 
@@ -28,7 +32,7 @@ export class Api {
       },
     }).then(response => response.json())
   }
-  
+
   errorEmitter = fn => ({err, errCode, ...data}) => {
     if (err) {
       this.isNetworkError = true
