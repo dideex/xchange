@@ -75,6 +75,7 @@ export class Input extends Component {
     style: {},
     type: 'text',
     mask: '',
+    onBlur: () => {},
     handleEnterPress: () => {},
   }
   static propTypes = {
@@ -139,7 +140,7 @@ export class Input extends Component {
     })
 
   render() {
-    const {isInvalid = false, errorMsg} = this.props
+    const {isInvalid = false, errorMsg, onBlur} = this.props
     return (
       <InputWrap>
         <StyledInput
@@ -149,6 +150,7 @@ export class Input extends Component {
           borderColorHover={isInvalid ? Colors.errorHover : 'rgba(255,255,255,.7)'}
           borderColorActive={isInvalid ? Colors.errorHover : '#fff'}
           onChange={this.handleChange}
+          onBlur={onBlur}
           {...this.props}
         />
         <CSSTransition in={isInvalid} timeout={300} classNames="error-" unmountOnExit>

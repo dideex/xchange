@@ -66,7 +66,7 @@ class InputField extends Component {
 
   render() {
     const {inputValue, changeInput, onSelectChange, currencyId} = this.props
-    const {currency} = this.props.cashStore
+    const {currency, correctValuesLimits} = this.props.cashStore
 
     const {canDrop, isOver, connectDropTarget} = this.props
     const isActive = canDrop && isOver
@@ -88,7 +88,7 @@ class InputField extends Component {
                 id={currency.length && currency[currencyId].icon}
               />
             </BadgeIcon>
-            <Input value={currencyFormat(inputValue)} handleChange={changeInput} />
+            <Input onBlur={correctValuesLimits} value={currencyFormat(inputValue)} handleChange={changeInput} />
             <Select
               isOpen={this.state.open}
               toggleField={e => this.setState({open: e})}

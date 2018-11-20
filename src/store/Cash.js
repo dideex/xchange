@@ -34,8 +34,7 @@ class Cash {
     this.loading = false
     this.currency = []
     this.isNetworkError = false
-    this.userRate = 1.1
-    // this.socket = openSocket('http://localhost:3040')
+    this.userRate = 0.9
     this.socket = openSocket(url)
     this.errorEmitter = Api.errorEmitter.bind(this)
     this.fetchCurrency()
@@ -44,20 +43,20 @@ class Cash {
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
 
   _calcOutput = value =>
-    (value * this.currency[this.currencyInput].price_usd) /
+    (value * this.currency[this.currencyInput].price_usd * this.userRate) /
     this.currency[this.currencyOutput].price_usd
 
   _calcInput = value =>
-    (value * this.currency[this.currencyOutput].price_usd) /
-    this.currency[this.currencyInput].price_usd
+    (value * this.currency[this.currencyOutput].price_usd ) /
+    (this.currency[this.currencyInput].price_usd )
 
   _calcOutputWithoutRates = value =>
-    (value * this.currency[this.currencyInput].price_usd) /
-    this.currency[this.currencyOutput].price_usd
+    (value * this.currency[this.currencyInput].price_usd * this.userRate) /
+    (this.currency[this.currencyOutput].price_usd)
 
   _calcInputWithoutRates = value =>
     (value * this.currency[this.currencyOutput].price_usd) /
-    this.currency[this.currencyInput].price_usd
+    (this.currency[this.currencyInput].price_usd)
 
   _calcOutputInUsd = () =>
     (this.outputValueInUsd =
@@ -69,7 +68,7 @@ class Cash {
     this.currency[id1].label === this.currency[id2].label
 
   _parseNumber = num => {
-    if (num === '') num = 0
+    if (num === '') return 0
     else {
       num = num.replace(/\s/g, '')
       num = num.replace(',', '.')
@@ -77,22 +76,17 @@ class Cash {
     return num
   }
 
-  _correctValuesLimits = () => {
+  @action('Verify values posible limit')
+  correctValuesLimits = () => {
     const {minimal} = this.currency[this.currencyInput]
     const {reserve} = this.currency[this.currencyOutput]
-    if (this.inputValue < minimal) {
-      this.lessThenMinimal = true
+    if (this.inputValue < +minimal) {
       this.inputValue = minimal
       this.outputValue = this._calcOutput(minimal)
     }
-    if (this.outputValue > reserve) {
-      this.moreThenReseved = true
+    if (this.outputValue * this.userRate > +reserve) {
       this.outputValue = reserve
       this.inputValue = this._calcInput(reserve)
-    }
-    if (this.inputValue >= minimal && this.outputValue <= reserve) {
-      this.lessThenMinimal = false
-      this.moreThenReseved = false
     }
   }
 
@@ -107,9 +101,10 @@ class Cash {
       this.inputValue = parsedNumber
       this.outputValue = this._calcOutput(parsedNumber)
     }
-    this._correctValuesLimits()
+    // this.correctValuesLimits()
     this._calcOutputInUsd()
   }
+
   @action('change output')
   changeOutput = (number = 0) => {
     this.clearErr()
@@ -118,38 +113,39 @@ class Cash {
       this.outputValue = parsedNumber
       this.inputValue = this._calcInput(parsedNumber)
     }
-    this._correctValuesLimits()
+    // this.correctValuesLimits()
     this._calcOutputInUsd()
   }
+
   @action('set currency output')
   setCurrencyOutput = (id = 0) => {
     this.clearErr()
     if (this.currencyOutput === +id) return null
     if (this._isSameCurrencyLabel(id, this.currencyInput)) {
       this.currencyInput = this.currencyOutput
-      let temp = this.inputValue
-      this.inputValue = this.outputValue
-      this.outputValue = temp
       this.currencyOutput = +id
+      let temp = this.inputValue
+      this.inputValue = this.outputValue / this.userRate //** 2
+      this.outputValue = +temp
     } else {
       this.currencyOutput = +id
       this.outputValue = this._calcOutputWithoutRates(this.inputValue)
     }
   }
+
   @action('set currency input')
   setCurrencyInput = (id = 0) => {
     this.clearErr()
     if (this.currencyInput === +id) return null
     if (this._isSameCurrencyLabel(id, this.currencyOutput)) {
       this.currencyOutput = this.currencyInput
+      this.currencyInput = +id
       let temp = this.inputValue
       this.inputValue = this.outputValue
-      this.outputValue = temp
-      this.currencyInput = +id
+      this.outputValue = +temp * this.userRate //** 2
     } else {
       this.currencyInput = +id
       this.inputValue = this._calcInputWithoutRates(this.outputValue)
-      console.log(' LOG ___ this.inputValue ', this.inputValue)
     }
   }
 
@@ -157,7 +153,7 @@ class Cash {
   createPayment = ({token, fromWallet, toWallet, email}) => {
     this.clearErr()
     this.loading = true
-    this._correctValuesLimits()
+    this.correctValuesLimits()
     this._calcOutputInUsd()
     return this.fetchCurrency().then(async () => {
       this.paymentStatus = 1
