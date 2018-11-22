@@ -47,16 +47,16 @@ class Cash {
     this.currency[this.currencyOutput].price_usd
 
   _calcInput = value =>
-    (value * this.currency[this.currencyOutput].price_usd ) /
-    (this.currency[this.currencyInput].price_usd )
+    (value * this.currency[this.currencyOutput].price_usd) /
+    this.currency[this.currencyInput].price_usd
 
   _calcOutputWithoutRates = value =>
     (value * this.currency[this.currencyInput].price_usd * this.userRate) /
-    (this.currency[this.currencyOutput].price_usd)
+    this.currency[this.currencyOutput].price_usd
 
   _calcInputWithoutRates = value =>
     (value * this.currency[this.currencyOutput].price_usd) /
-    (this.currency[this.currencyInput].price_usd)
+    this.currency[this.currencyInput].price_usd
 
   _calcOutputInUsd = () =>
     (this.outputValueInUsd =
@@ -152,6 +152,7 @@ class Cash {
   @action('create payment and push to server')
   createPayment = ({token, fromWallet, toWallet, email}) => {
     this.clearErr()
+    this.isNetworkError = false
     this.loading = true
     this.correctValuesLimits()
     this._calcOutputInUsd()
@@ -181,6 +182,7 @@ class Cash {
           )
           .catch(err => {
             console.error(err)
+            this.isNetworkError = true
             noty('Ошибка создания', 'error')
           })
       else
@@ -193,6 +195,7 @@ class Cash {
           )
           .catch(err => {
             console.error(err)
+            this.isNetworkError = true
             noty('Ошибка создания', 'error')
           })
       this.loading = false
@@ -205,7 +208,8 @@ class Cash {
       this.loading = true
       return Api.get('currency')
         .then(
-          this.errorEmitter(data => {
+          this.errorEmitter(({data, userRate}) => {
+            this.userRate = userRate
             this.currency = Object.values(data)
               .sort((a, b) => a.order - b.order)
               .map((row, i) => ({...row, id: i}))

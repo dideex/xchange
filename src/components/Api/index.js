@@ -36,9 +36,9 @@ export class Api {
   errorEmitter = fn => ({err, errCode, ...data}) => {
     if (err) {
       this.isNetworkError = true
-      console.error('errorEmitter ___ ', errCode)
       noty(err, 'error')
-    } else return fn(data)
+      throw new Error()
+    } else return fn(data, err)
   }
 }
 
