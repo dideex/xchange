@@ -42,31 +42,44 @@ class Cash {
 
   _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
 
+  // finds an equal value for input value
+  // for 1BTC (with rate 0.9) should be 0.9BTC
   _calcOutput = value =>
     (value * this.currency[this.currencyInput].price_usd * this.userRate) /
     this.currency[this.currencyOutput].price_usd
 
+  // finds an equal value for output value
+  // for 1BTC (with rate 0.9) should be 0.9BTC
+  // FIXME: fix rates
   _calcInput = value =>
     (value * this.currency[this.currencyOutput].price_usd) /
     this.currency[this.currencyInput].price_usd
 
+  // finds an equal value for output value
+  // for 1BTC (wtih rate 0.9) should be 0.9BTC
   _calcOutputWithoutRates = value =>
     (value * this.currency[this.currencyInput].price_usd * this.userRate) /
     this.currency[this.currencyOutput].price_usd
 
+  // finds an equal value for input value
+  // for 1BTC (wtih rate 0.9) should be 0.9BTC
   _calcInputWithoutRates = value =>
     (value * this.currency[this.currencyOutput].price_usd) /
     this.currency[this.currencyInput].price_usd
 
+  // It holds total amount in common unit for userprofile
   _calcOutputInUsd = () =>
     (this.outputValueInUsd =
       this.outputValue * this.currency[this.currencyOutput].price_usd)
 
+  // check for a correct number
   _isNumber = num => /^\d+[.]?\d{0,3}$/.test(num)
 
+  // It returns true when input's currencies are equals
   _isSameCurrencyLabel = (id1, id2) =>
     this.currency[id1].label === this.currency[id2].label
 
+  // Parses nubmer for "0,2" to "0.2", and " 0,2  " to "0.2"
   _parseNumber = num => {
     if (num === '') return 0
     else {
@@ -76,6 +89,7 @@ class Cash {
     return num
   }
 
+  // It recalculates both input to correct range
   @action('Verify values posible limit')
   correctValuesLimits = () => {
     const {minimal} = this.currency[this.currencyInput]
@@ -93,6 +107,7 @@ class Cash {
   @action('clear message error field')
   clearErr = () => (this.errorMessage = null)
 
+  // Change and validate input, and recalculate output value
   @action('change input')
   changeInput = (number = 0) => {
     this.clearErr()
@@ -101,10 +116,10 @@ class Cash {
       this.inputValue = parsedNumber
       this.outputValue = this._calcOutput(parsedNumber)
     }
-    // this.correctValuesLimits()
     this._calcOutputInUsd()
   }
 
+  // Change and validate output, and recalculate input value
   @action('change output')
   changeOutput = (number = 0) => {
     this.clearErr()
@@ -113,10 +128,10 @@ class Cash {
       this.outputValue = parsedNumber
       this.inputValue = this._calcInput(parsedNumber)
     }
-    // this.correctValuesLimits()
     this._calcOutputInUsd()
   }
 
+  // Change output value, or switch it with input currency when are the same
   @action('set currency output')
   setCurrencyOutput = (id = 0) => {
     this.clearErr()
@@ -133,6 +148,7 @@ class Cash {
     }
   }
 
+  // Change output value, or switch it with input currency when are the same
   @action('set currency input')
   setCurrencyInput = (id = 0) => {
     this.clearErr()
@@ -149,6 +165,14 @@ class Cash {
     }
   }
 
+  /**
+   * Creates payment
+   * Refetch currency rate exchanges
+   * When token is not undefiended, creates protected order, otherwise creates public
+   * @param {token: {String}, fromWallet: {String}, toWallet: {String}, email: {String}}{Object}
+   * @return <Promise>
+   * @public
+   */
   @action('create payment and push to server')
   createPayment = ({token, fromWallet, toWallet, email}) => {
     this.clearErr()
