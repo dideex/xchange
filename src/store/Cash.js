@@ -3,7 +3,9 @@ import openSocket from 'socket.io-client'
 import Api from '../components/Api'
 import {noty} from '../components/common'
 
-// menu state
+// Mobx Cash store 
+// Keeps the current transittion payment data
+// And currency rate exchange
 class Cash {
   @observable inputValue
   @observable outputValue
@@ -226,6 +228,13 @@ class Cash {
     })
   }
 
+  /**
+   * Fetch currency data and currency rate exchange from the server
+   * Sorting result currencies
+   * Replace id to number instead a name
+   * @return <Promise>
+   * @public
+   */
   @action('get currency from the server')
   fetchCurrency = () =>
     new Promise((resolve, reject) => {
@@ -249,9 +258,19 @@ class Cash {
         })
     })
 
+  /**
+   * Creates boadcast query to socketio
+   * @param {emailinputValue{String} outputValue{Sting|Number} inputLabel{String|Number} outputLabel{String} currency{String} paymentStatus{Number}}<data>
+   * @public
+   */
   @action('emit socket')
   emitSocket = data => this.socket.emit('newOrder', data)
 
+  /**
+   * Creates POST query to the server which means change a payment status for orderd to 2(order transmitted)
+   * @param email{Sting}
+   * @public
+   */
   @action('cofirm payment')
   cofirmPayment = email => {
     this.paymentStatus = 2
@@ -281,20 +300,24 @@ class Cash {
         noty('Ошибка перевода', 'error')
       })
   }
+
+  // helper for react-dnd, memoize the id which was dragged
   @action('drag badge')
   handleDragBadge = id => (this.draggedBadgeCurrency = id)
 
-  // returns true when menu is opened
+  // return formatted string with input value and their currency label is
   @computed
   get getInput() {
     return `${this.inputValue}, ${this.currency[this.currencyInput].label.toUpperCase()}`
   }
+  // return formatted string with output value and their currency label is
   @computed
   get getOutput() {
     return `${this.outputValue}, ${this.currency[
       this.currencyOutput
     ].label.toUpperCase()}`
   }
+  //returns formatted minimal amount for input value is
   @computed
   get getMinimalAmount() {
     const formatter = new Intl.NumberFormat('ru', 'currency')
@@ -303,6 +326,7 @@ class Cash {
       this.currency[this.currencyInput].label
     }`
   }
+  //returns formatted reserved amount for output value is
   @computed
   get getCurrencyReserve() {
     const formatter = new Intl.NumberFormat('ru', 'currency')

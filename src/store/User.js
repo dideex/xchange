@@ -18,7 +18,9 @@ const logout = () => {
 const getToken = () => Cookie.get('token') || null
 const getAdminStatus = () => Cookie.get('isAdmin') || null
 
-// menu state
+// Mobx UserData store
+// Keeps all data about user
+// Includes their wallets, orders and language
 export default class User {
   @observable username
   @observable email
@@ -60,6 +62,7 @@ export default class User {
     this.fetchData()
   }
 
+  // Checks valid token is
   _checkToken = () => {
     const token = getToken()
     if (!token) return null
@@ -80,11 +83,13 @@ export default class User {
   @action('clear message error field')
   clearErr = () => (this.errorMessage = null)
 
+  // Change langauge
   @action('change locale')
   changeLocale = locale => {
     this.locale = locale
     Cookie.set('locale', locale)
   }
+  // Change login
   @action('change login')
   changeLogin = login => {
     this.clearErr()
