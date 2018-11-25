@@ -51,11 +51,13 @@ class Cash {
     this.currency[this.currencyOutput].price_usd
 
   // finds an equal value for output value
-  // for 1BTC (with rate 0.9) should be 0.9BTC
+  // for 1BTC (with rate 0.9) should be 1BTC
   // FIXME: fix rates
+  // cur bitc 5448.77817486
+  // should be to 0.9 (usd 6054.198)
   _calcInput = value =>
     (value * this.currency[this.currencyOutput].price_usd) /
-    this.currency[this.currencyInput].price_usd
+    (this.currency[this.currencyInput].price_usd * this.userRate)
 
   // finds an equal value for output value
   // for 1BTC (wtih rate 0.9) should be 0.9BTC
@@ -67,7 +69,7 @@ class Cash {
   // for 1BTC (wtih rate 0.9) should be 0.9BTC
   _calcInputWithoutRates = value =>
     (value * this.currency[this.currencyOutput].price_usd) /
-    this.currency[this.currencyInput].price_usd
+    (this.currency[this.currencyInput].price_usd * this.userRate)
 
   // It holds total amount in common unit for userprofile
   _calcOutputInUsd = () =>

@@ -49,7 +49,7 @@ class ExchangeRate extends Component {
     if (+inputCurrency === 0) inputCurrency = 1
     if (+outputCurrency === 0) outputCurrency = 1
     const maxValue = Math.max(inputCurrency, outputCurrency) * rate
-    const inputRate = inputCurrency * (inputCurrency > outputCurrency ? rate : rate)
+    const inputRate = inputCurrency * (inputCurrency > outputCurrency ? rate : rate * rate)
     const outputRate = outputCurrency * (inputCurrency > outputCurrency ? 1 : rate)
     return (
       <Wrap>
