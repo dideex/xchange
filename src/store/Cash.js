@@ -52,12 +52,17 @@ class Cash {
 
   // finds an equal value for output value
   // for 1BTC (with rate 0.9) should be 1BTC
-  // FIXME: fix rates
   // cur bitc 5448.77817486
   // should be to 0.9 (usd 6054.198)
   _calcInput = value =>
     (value * this.currency[this.currencyOutput].price_usd) /
     (this.currency[this.currencyInput].price_usd * this.userRate)
+
+  _reverseInputs = () => {
+    const temp = this.outputValue / this.userRate
+    this.outputValue = this.inputValue * this.userRate
+    this.inputValue = temp
+  }
 
   // finds an equal value for output value
   // for 1BTC (wtih rate 0.9) should be 0.9BTC
@@ -143,9 +148,10 @@ class Cash {
     if (this._isSameCurrencyLabel(id, this.currencyInput)) {
       this.currencyInput = this.currencyOutput
       this.currencyOutput = +id
-      let temp = this.inputValue
-      this.inputValue = this.outputValue / this.userRate //** 2
-      this.outputValue = +temp
+      this._reverseInputs()
+      // let temp = this.inputValue
+      // this.inputValue = this.outputValue / this.userRate //** 2
+      // this.outputValue = +temp
     } else {
       this.currencyOutput = +id
       this.outputValue = this._calcOutputWithoutRates(this.inputValue)
@@ -160,9 +166,10 @@ class Cash {
     if (this._isSameCurrencyLabel(id, this.currencyOutput)) {
       this.currencyOutput = this.currencyInput
       this.currencyInput = +id
-      let temp = this.inputValue
-      this.inputValue = this.outputValue
-      this.outputValue = +temp * this.userRate //** 2
+      this._reverseInputs()
+      // let temp = this.inputValue
+      // this.inputValue = this.outputValue
+      // this.outputValue = +temp * this.userRate //** 2
     } else {
       this.currencyInput = +id
       this.inputValue = this._calcInputWithoutRates(this.outputValue)
