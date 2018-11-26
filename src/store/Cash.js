@@ -58,6 +58,7 @@ class Cash {
     (value * this.currency[this.currencyOutput].price_usd) /
     (this.currency[this.currencyInput].price_usd * this.userRate)
 
+  // Swaps currencies values when changed currency is already set
   _reverseInputs = () => {
     const temp = this.outputValue / this.userRate
     this.outputValue = this.inputValue * this.userRate

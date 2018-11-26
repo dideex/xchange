@@ -95,45 +95,53 @@ export default class User {
     this.clearErr()
     this.login = login
   }
+  // change username
   @action('change username')
   changeUsername = username => {
     this.clearErr()
     this.username = username
   }
+  // change password
   @action('change password')
   changePassword = password => {
     this.clearErr()
     this.password = password
   }
+  //change email
   @action('change email')
   changeEmail = email => {
     this.clearErr()
     this.email = email
   }
+  // change phone
   @action('change phone')
   changePhone = phone => {
     this.clearErr()
     this.phone = phone
   }
+  // set wallet with currency id
   @action('change wallet')
   changeWallet = currencyLabel => value => {
     this.wallets[currencyLabel] = value
   }
-
+  // Clean store and remove token
   @action('sign out')
   signout = () => {
     this._setInitalData()
     noty('Вы вышли из аккаунта')
     logout()
   }
-
+  /**
+   * Get user data by token from the server
+   * @public
+   */
   @action('fetch user data from the server')
-  fetchData = async () => {
+  fetchData = () => {
     const token = getToken()
     if (!token) return null
     this.token = token
 
-    await Api.get('userData', '', token)
+    Api.get('userData', '', token)
       .then(({wallets, lastOperations, username, email, login, convertedAmount}) => {
         this.login = login
         this.username = username
@@ -147,7 +155,12 @@ export default class User {
         noty('Ошибка сети', 'error')
       })
   }
-
+  /**
+   * Post new user data to the server
+   * @param token{Stirng}
+   * @return {Promise}
+   * @public
+   */
   @action('udpate user data')
   updateInfo = () => {
     const token = getToken()
@@ -160,7 +173,11 @@ export default class User {
       noty('Ошибка сети', 'error')
     })
   }
-
+  /**
+   * Auth user
+   * @param Username{String}, passowrd{String}
+   * @public
+   */
   @action('Get token with username and passoword')
   getToken = () => {
     this.loading = true
