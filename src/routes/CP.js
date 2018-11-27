@@ -2,7 +2,8 @@ import React, {Component, Fragment} from 'react'
 
 import ReservedContent from '../components/ControlPanel'
 import Main from '../components/Main'
-// CP component;
+
+// CP component; Control Panel route, contains all protected information for the user and admin
 export class CP extends Component {
   render() {
     return (

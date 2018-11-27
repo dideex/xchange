@@ -9,7 +9,7 @@ import Graphic from '../components/Graphic'
 import Comments from '../components/Comments'
 import Staff from '../components/Staff'
 
-// Home component;
+// Home component; Landing page route
 export class Home extends Component {
   render() {
     return (

@@ -19,7 +19,7 @@ import {
   Settings,
 } from './routes'
 
-// Layout component;
+// Layout component; includes navigation routing, and base layout markup
 class Layout extends Component {
   componentDidMount() {
     document.body.classList.add('loaded')

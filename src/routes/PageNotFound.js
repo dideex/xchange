@@ -3,6 +3,7 @@ import React from 'react'
 import {H2} from '../components/common'
 import Main from '../components/Main'
 
+// Simple 404 route
 export const PageNotFound = () => {
   return (
     <Main>
