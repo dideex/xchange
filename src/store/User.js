@@ -205,6 +205,12 @@ export default class User {
       })
   }
 
+  /**
+  * Send data to the server to create a new user
+  * @param login{String} email{String} username{String} password{String}
+  * @returns token{String}
+  * @public
+  */
   @action('Signup new user')
   signupUser = () => {
     const {login, email, username, password} = this
@@ -223,6 +229,12 @@ export default class User {
       })
   }
 
+  /**
+  * Fetch all orders for user authed by the token
+  * @param token{String}
+  * @return [Orders]
+  * @public
+  */
   @action('fetch orders by token')
   fetchOrdersByToken = async () => {
     if (!this.token) return null
@@ -240,6 +252,12 @@ export default class User {
     this.loading = false
   }
 
+  /**
+  * Fetch order by id, when we havn't got the token
+  * @param id{String}
+  * @return Order{Object}
+  * @public
+  */
   @action('fetch order without token')
   fetchGuestOrder = async id => {
     this.loading = true
