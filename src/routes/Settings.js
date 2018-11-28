@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react'
 
 import Content from '../components/Admin/Settings'
 import Main from '../components/Main'
-// Settings component;
+// Settings component; Admin route, for change settings
 export class Settings extends Component {
   render() {
     return (

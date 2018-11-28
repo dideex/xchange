@@ -41,7 +41,7 @@ export const locales = {
     messages: cnMessages,
   },
 }
-// CustomIntlProvider component;
+// CustomIntlProvider component; Returns custome intl provider 
 @inject('userStore')
 @observer
 class CustomIntlProvider extends Component {

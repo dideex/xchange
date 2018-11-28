@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react'
 
 import Content from '../components/ThankYou'
 import Main from '../components/Main'
-// ThankYou component;
+// ThankYou component; Page will be apear after creating payment
 export class ThankYou extends Component {
   render() {
     return (
