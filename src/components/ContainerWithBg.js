@@ -32,7 +32,7 @@ const afterContactBg = {
   right: 0,
 }
 
-// Container stateless component;
+// Contains two blue shapes
 const Container = props => (
   <Section>
     <Icons id="beforeContactBg" style={beforeContactBg} />

@@ -52,6 +52,7 @@ class PaymentProof extends Component {
       0,
       this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
     )
+    // Protect route
     if (this.props.cashStore.paymentStatus === 0) this.props.history.push('/')
     if (this.props.cashStore.paymentStatus === 2) this.props.history.push('/spasibo')
   }

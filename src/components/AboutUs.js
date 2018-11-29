@@ -8,8 +8,8 @@ const P = styled('p')`
   margin-bottom: 50px;
 `
 
-// FAQ component;
-class FAQ extends Component {
+// AboutUs component; Contains information about company
+class AboutUs extends Component {
   render() {
     return (
       <MainSectionWrap>
@@ -32,4 +32,4 @@ class FAQ extends Component {
   }
 }
 
-export default FAQ
+export default AboutUs
