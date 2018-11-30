@@ -11,7 +11,7 @@ const Wrap = styled('div')`
   }
 `
 
-// CurrencyBadge component;
+// CurrencyBadge component; Inputs for settings page, contains writable data for currency
 class CurrencyBadge extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
@@ -28,11 +28,7 @@ class CurrencyBadge extends Component {
     }
   }
 
-  state = {
-    show: false,
-    loading: false,
-  }
-
+  // Push data to the server
   _pushSettings = async () => {
     this.setState({loading: true})
     const {reserve, source, minimal} = this.state
@@ -42,7 +38,7 @@ class CurrencyBadge extends Component {
       source,
       minimal,
     }
-    Api.post('setCurrencyOptions', data, this.props.token)
+    await Api.post('setCurrencyOptions', data, this.props.token)
       .then(Api.errorEmitter(() => noty('Сохранено')))
       .catch(err => {
         console.error(err)

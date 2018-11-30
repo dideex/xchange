@@ -70,11 +70,26 @@ const PaymentController = styled('div')`
     }
   }
 `
-//TODO: config propTypes
-// DetailsComponent component;
+
+// DetailsComponent component; Order's data
 @inject('cashStore')
 @observer
 class DetailsComponent extends Component {
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    inputValue: PropTypes.string.isRequired,
+    toWallet: PropTypes.string.isRequired,
+    fromWallet: PropTypes.string.isRequired,
+    outputValue: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    paymentStatus: PropTypes.number.isRequired,
+    loading: PropTypes.bool.isRequired,
+    wallets: PropTypes.object.isRequired,
+    login: PropTypes.string.isRequired,
+    updatePaymentStatus: PropTypes.func.isRequired,
+  }
+
   state = {
     showWallets: false,
   }

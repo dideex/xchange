@@ -37,6 +37,7 @@ const SubTitle = styled('p')`
 // ThankYou stateless component;
 const ThankYou = ({userStore, cashStore, intl}) => {
   const {formatMessage} = intl
+  // different endpoins for user and guest
   const url = userStore.token ? '/lichnii-kabinet' : `/perevod/${cashStore.orderId}`
   const caption = formatMessage({
     id: userStore.token ? 'ty.register.caption' : 'ty.guest.caption',

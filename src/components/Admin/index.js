@@ -19,7 +19,7 @@ const PaymentSelector = styled('div')`
   }
 `
 
-// Admin component;
+// Admin component; Root component
 @withRouter
 @inject('cashStore')
 @inject('userStore')
@@ -35,21 +35,26 @@ class Admin extends Component {
   }
   //prettier-ignore
   componentWillReceiveProps({ match: { params: {id}}}) {
-    if (id !== this.props.match.params.id) this._fetchOrdersDetail(id)
+    if (id !== this.props.match.params.id) this._fetchOrderDetail(id)
   }
 
   componentDidMount = async () => {
     if (!this.props.userStore.isAdmin) this.props.history.push('/')
+    // set default payment order to 'all'
     await this._fetchOrdersByPaymentStatus('all')
-    if (this.props.match.params.id) this._fetchOrdersDetail(this.props.match.params.id)
+    if (this.props.match.params.id) this._fetchOrderDetail(this.props.match.params.id)
   }
 
+  // Sort orders by payment status
+  // 'All' includes all except 'removed'
   _fetchOrdersByPaymentStatus = status => {
     this.setState({loading: true, route: status})
+    // getting data
     return new Promise((res, rej) =>
       Api.get('summaryOrders', `/${status}`, this.props.userStore.token)
         .then(
           Api.errorEmitter(orders =>
+            // save orders to state
             this.setState({loading: false, orders: Object.values(orders)}, res),
           ),
         )
@@ -61,11 +66,14 @@ class Admin extends Component {
     )
   }
 
-  _fetchOrdersDetail = async id => {
+  // Getting additional data on the order
+  _fetchOrderDetail = async id => {
     if (!id) return null
+    // find the order by id
     const orderDetails = this.state.orders.find(({_id}) => id === _id)
     this.setState({loadingUserData: true})
     if (orderDetails.user !== 'Guest') {
+      // getting user's data
       const userDetails = await Api.get(
         'summaryOrderUserInfo',
         `/${orderDetails.user}`,
@@ -76,11 +84,13 @@ class Admin extends Component {
           console.error(err)
           noty(err, 'error')
         })
+      // set user's order
       this.setState({
         orderDetails: {...userDetails, ...orderDetails, id},
         loadingUserData: false,
       })
     } else {
+      // set guest's order
       this.setState({
         orderDetails: {username: 'Guest', ...orderDetails, id},
         loadingUserData: false,
@@ -88,7 +98,9 @@ class Admin extends Component {
     }
   }
 
+  // Change payment status
   updatePaymentStatus = async (_id, paymentStatus) => {
+    // getting data
     await Api.post(
       'summaryOrderChangeStatus',
       {_id, paymentStatus},
@@ -108,6 +120,7 @@ class Admin extends Component {
           ).icon
           noty(`Статус изменен на ${StatusTitles[paymentStatus]}`)
           if (paymentStatus === 3)
+            // send data to broadcast into socket
             this.props.cashStore.emitSocket({
               email,
               inputValue,

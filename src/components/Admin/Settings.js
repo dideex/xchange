@@ -17,7 +17,7 @@ const CurrencyContainer = styled('div')`
   }
 `
 
-// Settings component;
+// Settings component; Admin route for settings
 @inject('userStore')
 @inject('cashStore')
 @observer
