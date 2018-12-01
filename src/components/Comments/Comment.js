@@ -59,7 +59,7 @@ const ContentWrap = styled('div')`
   }
 `
 
-// Comment stateless component;
+// Feedback section, comment component
 const Comment = ({photo, name, role, message}) => (
   <CommentWrap>
     <ContentWrap>

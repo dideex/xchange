@@ -28,7 +28,7 @@ const InputWrap = styled('div')`
   width: 100%;
 `
 
-// AccentBlock stateless component;
+// Block with accent wrapper
 export const AccentBlock = ({value}) => (
   <StyledInput>
     <InputWrap>

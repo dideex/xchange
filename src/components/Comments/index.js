@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 import Slider from 'react-slick'
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl'
 
 import {container, Icons, Colors, H2} from '../common'
 import Comment from './Comment'
@@ -55,7 +55,7 @@ const SliderContainer = styled('div')`
   position: relative;
   padding: 0 50px;
 `
-
+// Data
 const mockComments = [
   {
     photo: './img/comment1.jpg',
@@ -109,35 +109,41 @@ function SampleNextArrow(props) {
   )
 }
 
-// Comments component;
+// Feedback section slider
 class Comments extends Component {
   static propTypes = {}
 
-  render() {
-    const settings = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 2,
-      slidesToScroll: 1,
-      lazyLoad: false,
-      arrows: true,
-      prevArrow: <SamplePrevArrow />,
-      nextArrow: <SampleNextArrow />,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 1,
-          },
+  _getSliderSettings = () => ({
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    lazyLoad: false,
+    arrows: true,
+    prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
         },
-      ],
-    }
+      },
+    ],
+  })
+
+  render() {
     return (
       <Section>
-        <H2> <FormattedMessage id="home.comments.header" defaultMessage="Отзывы наших клиентов" /></H2>
+        <H2>
+          <FormattedMessage
+            id="home.comments.header"
+            defaultMessage="Отзывы наших клиентов"
+          />
+        </H2>
         <SliderContainer>
-          <Slider {...settings}>
+          <Slider {...this._getSliderSettings()}>
             {mockComments.map((props, i) => (
               <Comment key={i} {...props} />
             ))}

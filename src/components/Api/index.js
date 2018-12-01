@@ -10,6 +10,12 @@ export class Api {
     this.isNetworkError = false
   }
 
+  /**
+  * Returns response from the server
+  * @param endpoint{String}, data{Object}, token?{String}
+  * @return Promise<Resolve>
+  * @public
+  */
   post(endpoint, data = {}, token = null) {
     return fetch(`${this.backend}/api/${endpoint}`, {
       method: 'POST',
@@ -22,6 +28,12 @@ export class Api {
     }).then(response => response.json())
   }
 
+  /**
+  * Fetch data from the server
+  * @param endpoint{String}, params?{String}, token?{String}
+  * @return Promise<Resolve>
+  * @public
+  */
   get(endpoint, params = '', token = null) {
     return fetch(`${this.backend}/api/${endpoint}${params}`, {
       method: 'GET',
@@ -33,6 +45,7 @@ export class Api {
     }).then(response => response.json())
   }
 
+  // Notyfication an error
   errorEmitter = fn => ({err, errCode, ...data}) => {
     if (err) {
       this.isNetworkError = true

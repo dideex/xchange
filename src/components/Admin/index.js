@@ -3,7 +3,14 @@ import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router-dom'
 import styled from 'react-emotion'
 
-import {Loading, Virtualized, parseOrders, noty, StatusTitles, MainSectionWrap} from '../common'
+import {
+  Loading,
+  Virtualized,
+  parseOrders,
+  noty,
+  StatusTitles,
+  MainSectionWrap,
+} from '../common'
 import Api from '../Api'
 import Details from './Details'
 
@@ -120,7 +127,7 @@ class Admin extends Component {
           ).icon
           noty(`Статус изменен на ${StatusTitles[paymentStatus]}`)
           if (paymentStatus === 3)
-            // send data to broadcast into socket
+            // send data to broadcast throw web-socket
             this.props.cashStore.emitSocket({
               email,
               inputValue,
@@ -170,7 +177,10 @@ class Admin extends Component {
         <Virtualized parsedOrders={parsedOrders} endpoint={'summary'} />
         <p>
           Поиск по номеру
-          <input type="text" onChange={e => this.setState({filter: e.target.value})} />
+          <input
+            type="text"
+            onChange={({target: {value}}) => this.setState({filter: value})}
+          />
         </p>
       </MainSectionWrap>
     )

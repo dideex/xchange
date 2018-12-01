@@ -25,7 +25,7 @@ const StyledButton = styled('button')`
   border-color: ${Colors.accent};
 }
 `
-// AccentButton component;
+// Button with accent color
 export class AccentButton extends Component {
   static propTypes = {
     toggle: PropTypes.func.isRequired,

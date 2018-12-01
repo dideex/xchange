@@ -5,7 +5,6 @@ import {CSSTransition} from 'react-transition-group'
 import PropTypes from 'prop-types'
 
 import Colors from './Colors'
-// const WAValidator = require('wallet-address-validator')
 
 const StyledInput = styled('input')`
   & {
@@ -84,11 +83,12 @@ export class Input extends Component {
 
   constructor(props) {
     super(props)
-    this.pattern = new RegExp(props.pattern ? props.pattern : '\\s|\\S', 'i')
+    this.pattern = new RegExp(props.pattern || '\\s|\\S', 'i')
     this.handleErrorChange = this.props.handleErrorChange || (() => {})
     this.mask = props.mask === 'phone' ? '+_(___)-___-__-__' : '____ ____ ____ ____'
   }
 
+  // format string from 123456789 to 1234 5678 9
   _format = raw => {
     const {mask} = this
     const replsCount = (mask.match(/_/g) || []).length
@@ -104,6 +104,7 @@ export class Input extends Component {
     return formatted
   }
 
+  // normalize stirng 
   _clean = value => {
     const {mask} = this
     const maskChars = mask.replace('_', '').split('')
@@ -114,6 +115,17 @@ export class Input extends Component {
     return raw
   }
 
+  /**
+  * Validate value
+  *   get formatted value
+  *   stop validate for unsupported currency (currently LSK)
+  *   validate for
+  *     Bank card (Ruble, usd) or Phone
+  *     Crypto wallet
+  * @param value{Stirng}, Promise<Resolve>
+  * @return formattedValue{String}|null
+  * @private
+  */
   _validateWithMask = (value, res) => {
     const raw = this._clean(value)
     const formatted = this._format(raw)
@@ -130,6 +142,12 @@ export class Input extends Component {
     return null
   }
 
+  /**
+  * Handling react onChange event. Adds '+' before the number and formates it,
+  * @param ReactEvent{Object}
+  * @return ReactDOM Object{JSX}
+  * @private
+  */
   handleChange = e =>
     new Promise(res => {
       let {value} = (e && e.target) || this.input.props
