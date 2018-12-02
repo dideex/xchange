@@ -143,10 +143,13 @@ export class Input extends Component {
   }
 
   /**
-  * Handling react onChange event. Adds '+' before the number and formates it,
-  * @param ReactEvent{Object}
-  * @return ReactDOM Object{JSX}
-  * @private
+  * Try to get target from the event otherwise from input ref
+  * If mask is set, then validate with it
+  *   else check is set the pattern, then validate with it
+  *     else invoke dependency injection with value
+  * @param e{Event}
+  * @return <Promise>
+  * @public
   */
   handleChange = e =>
     new Promise(res => {

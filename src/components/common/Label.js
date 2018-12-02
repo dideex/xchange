@@ -57,7 +57,7 @@ L443,160.7z"
   </svg>
 )
 
-// Label component;
+// Label component; Return coin icon and span with currency label
 export class Label extends Component {
   static propTypes = {
     caption: PropTypes.string.isRequired,

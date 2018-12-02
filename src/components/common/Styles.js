@@ -2,11 +2,13 @@ import styled from 'react-emotion'
 
 export const Styles = {}
 
+// Coin svg icon styles
 export const SvgCurrency = {
   width: '32px',
   height: '32px',
 }
 
+// Coin icon colors
 export const coinColors = {
   label: {
     fill: '#edda48',
@@ -16,6 +18,7 @@ export const coinColors = {
   },
 }
 
+// Styles for container block
 export const container = `
   max-width: 1180px;
   width: 100%;
@@ -28,6 +31,7 @@ export const container = `
   } 
 `
 
+// Base font settings
 export const robotoSlab = `'Roboto Slab', 'PT Serif', 'Monospaced Number', 'Chinese Quote', -apple-system,
 BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB',
 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif`
@@ -43,6 +47,7 @@ export const H2 = styled('h2')`
   }
 `
 
+// Color for payment status icons table data
 export const StatusIconColors = [
   'transparent',
   '#FFE712',
@@ -51,6 +56,7 @@ export const StatusIconColors = [
   '#FC0000',
 ]
 
+// Title for payment status icons table data
 export const StatusTitles = [
   'Не создан',
   'Ожидает перевода',
@@ -59,6 +65,7 @@ export const StatusTitles = [
   'Отменено',
 ]
 
+// Styles for main section wrapper
 export const MainSectionWrap = styled('div')`
   & {
     padding: 0 60px;

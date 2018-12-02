@@ -1,5 +1,6 @@
 import Noty from 'noty'
 
+// notification settings
 export const noty = (text, type = 'success') => {
   new Noty({
     text,

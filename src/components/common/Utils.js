@@ -1,5 +1,11 @@
 import React from 'react'
 
+/**
+* clean value from the mask, like from 1234 1234 1234 to 123412341234
+* @param value{String}, mask{String}
+* @return ReactDOM Object{JSX}
+* @private
+*/
 const _clean = (value = '', mask = '') => {
   const maskChars = mask.replace('_', '').split('')
   let raw = value
@@ -10,7 +16,7 @@ const _clean = (value = '', mask = '') => {
 }
 
 /**
- * Fromats from "123456" with mask "__ __ __" to "12 34 56"
+ * Format value from "123456" with mask "__ __ __" to "12 34 56"
  * @param value{String}, mask{string}
  * @return {String}
  * @public
@@ -31,19 +37,38 @@ export const format = (value, mask) => {
   return formatted
 }
 
+/**
+* Check has string a comma or dot in the end. And return a dot
+* @param value{String}
+* @return '.'|''{String}
+* @private
+*/
 const _allowLastCharDot = value => {
   const lastChar = value[value.length - 1]
   return lastChar === '.' ? '.' : lastChar === ',' ? '.' : ''
 }
 
+/**
+* Foramt nubmer to currencie format, from 1123.123123 to '1 123,123'
+* @param value{Number}
+* @return formattedString{String}
+* @public
+*/
 export const currencyFormat = value => {
   const formatter = new Intl.NumberFormat('ru', 'currency')
   return `${formatter.format(value)}${_allowLastCharDot(`${value}`)}`
 }
 
+/**
+* Check all object's fields for not been a 'false'
+* @param object{Object}
+* @return Bool
+* @public
+*/
 export const isAllPropsFalse = object =>
   Object.values(object).filter(argument => argument === false).length ===
   Object.values(object).length
+
 
 export const ScrollTo = top => {
   const V = 0.3
