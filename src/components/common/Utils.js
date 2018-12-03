@@ -1,11 +1,11 @@
 import React from 'react'
 
 /**
-* clean value from the mask, like from 1234 1234 1234 to 123412341234
-* @param value{String}, mask{String}
-* @return ReactDOM Object{JSX}
-* @private
-*/
+ * clean value from the mask, like from 1234 1234 1234 to 123412341234
+ * @param value{String}, mask{String}
+ * @return ReactDOM Object{JSX}
+ * @private
+ */
 const _clean = (value = '', mask = '') => {
   const maskChars = mask.replace('_', '').split('')
   let raw = value
@@ -38,38 +38,42 @@ export const format = (value, mask) => {
 }
 
 /**
-* Check has string a comma or dot in the end. And return a dot
-* @param value{String}
-* @return '.'|''{String}
-* @private
-*/
+ * Check has string a comma or dot in the end. And return a dot
+ * @param value{String}
+ * @return '.'|''{String}
+ * @private
+ */
 const _allowLastCharDot = value => {
   const lastChar = value[value.length - 1]
   return lastChar === '.' ? '.' : lastChar === ',' ? '.' : ''
 }
 
 /**
-* Foramt nubmer to currencie format, from 1123.123123 to '1 123,123'
-* @param value{Number}
-* @return formattedString{String}
-* @public
-*/
+ * Foramt nubmer to currencie format, from 1123.123123 to '1 123,123'
+ * @param value{Number}
+ * @return formattedString{String}
+ * @public
+ */
 export const currencyFormat = value => {
   const formatter = new Intl.NumberFormat('ru', 'currency')
   return `${formatter.format(value)}${_allowLastCharDot(`${value}`)}`
 }
 
 /**
-* Check all object's fields for not been a 'false'
-* @param object{Object}
-* @return Bool
-* @public
-*/
+ * Check all object's fields for not been a 'false'
+ * @param object{Object}
+ * @return Bool
+ * @public
+ */
 export const isAllPropsFalse = object =>
   Object.values(object).filter(argument => argument === false).length ===
   Object.values(object).length
 
-
+/**
+ * Scroll to fixed nubmer
+ * @param top{number}
+ * @public
+ */
 export const ScrollTo = top => {
   const V = 0.3
   const w = window.pageYOffset
@@ -87,6 +91,12 @@ export const ScrollTo = top => {
   }
 }
 
+/**
+ * Parse array to format
+ * @param orders{Array}
+ * @return parsed orders{Array}
+ * @public
+ */
 export const parseOrders = orders =>
   orders &&
   orders.map(
@@ -112,7 +122,13 @@ export const parseOrders = orders =>
     },
   )
 
-// replace \n to line break in FormattedMessage text
+/**
+ * Helper to <FormatteMessage />
+ * Replace '\n' to <br />, and wrap within <span>
+ * @param ReactEvent{Object}
+ * @return ReactDOM Object{JSX}
+ * @public
+ */
 export const linesToParagraphs = (...nodes) =>
   nodes
     .map(node =>

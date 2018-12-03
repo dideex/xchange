@@ -50,11 +50,11 @@ const UserInfo = styled('div')`
     justify-content: space-between;
   }
 `
-// DetailsComponent component;
+// Guest order
 @withRouter
 @inject('userStore')
 @observer
-class DetailsComponent extends Component {
+class Order extends Component {
   constructor(props) {
     super(props)
     this.id = props.match.params.id
@@ -74,6 +74,7 @@ class DetailsComponent extends Component {
       outputValue,
       currencyOutputLabel,
       paymentStatus,
+      sourceWallet,
     } = this.state
     return (
       <Wrap>
@@ -90,7 +91,7 @@ class DetailsComponent extends Component {
                 />
               </span>
               {/* //FIXME: add data from the store */}
-              <strong>1234 4321 1234 5643</strong>
+              <strong>{sourceWallet}</strong>
             </Details>
             <Details>
               <span>
@@ -137,4 +138,4 @@ class DetailsComponent extends Component {
   }
 }
 
-export default DetailsComponent
+export default Order

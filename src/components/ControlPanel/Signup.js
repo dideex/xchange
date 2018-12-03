@@ -27,8 +27,12 @@ class Signup extends Component {
     this.props.userStore.token && this.props.history.push('/lichnii-kabinet')
   }
 
-  componentWillUpdate({userStore, history}) {
+  componentDidUpdate({userStore, history}) {
     if (userStore.token) history.push('/lichnii-kabinet')
+  }
+
+  componentWillUnmount() {
+    this.props.userStore.changePassword('')
   }
 
   state = {

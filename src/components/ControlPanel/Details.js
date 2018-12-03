@@ -64,7 +64,7 @@ const UserInfo = styled('div')`
     justify-content: space-between;
   }
 `
-// DetailsComponent component;
+// Order's detail
 class DetailsComponent extends Component {
   render() {
     const {
@@ -91,7 +91,6 @@ class DetailsComponent extends Component {
                   defaultMessage="Кошелек для перевода:"
                 />
               </span>
-              {/* //FIXME: add data from the store */}
               <strong>{sourceWallet}</strong>
             </Details>
             <Details>

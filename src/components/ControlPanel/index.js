@@ -18,7 +18,7 @@ const SummaryWrap = styled('p')`
   }
 `
 
-// ContorlPanel component;
+// Control panel index, contains details about orders, order's table and user's total amoutn
 @withRouter
 @inject('userStore')
 @inject('cashStore')
@@ -54,6 +54,7 @@ class ContorlPanel extends Component {
       id,
       sourceWallet: sourceWallet && sourceWallet.source,
     }
+    // redirect if not log in
     if (!token) return <Signin />
     return (
       <div ref={this.wrap}>

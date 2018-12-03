@@ -78,7 +78,7 @@ const StyledTable = styled('div')`
   }
 `
 
-// Orders component;
+// Oreder's table
 @withRouter
 @inject('userStore')
 @observer

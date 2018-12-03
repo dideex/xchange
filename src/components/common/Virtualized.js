@@ -41,7 +41,7 @@ export const Status = styled('span')`
   }
 `
 
-// Virtualized component;
+// Order's table
 @withRouter
 @injectIntl
 export class Virtualized extends Component {

@@ -26,12 +26,11 @@ export const Wrap = styled.div`
   }
 `
 
-// FIXME: remove password from mobx after login
-// ContorlPanel component;
-@injectIntl
+// Signin component
 @inject('userStore')
+@injectIntl
 @observer
-class ContorlPanel extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props)
     this.inputs = []
@@ -49,6 +48,10 @@ class ContorlPanel extends Component {
       0,
       this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
     )
+  }
+
+  componentWillUnmount() {
+    this.props.userStore.changePassword('')
   }
 
   handleSubmit = async () => {
@@ -123,4 +126,4 @@ class ContorlPanel extends Component {
   }
 }
 
-export default ContorlPanel
+export default SignIn
