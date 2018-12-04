@@ -1,3 +1,4 @@
+// FIXME: translate this part
 export const questions = [
   {
     question: 'Question #1',

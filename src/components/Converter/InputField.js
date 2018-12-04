@@ -49,6 +49,7 @@ const spec = {
   },
 }
 
+// Field for currencies input
 @DropTarget('cash', spec, collect)
 @inject('cashStore')
 @observer
@@ -60,6 +61,7 @@ class InputField extends Component {
     onSelectChange: PropTypes.func.isRequired,
   }
 
+  // Is open dropdown with currencies
   state = {
     open: false,
   }
@@ -72,6 +74,7 @@ class InputField extends Component {
     const isActive = canDrop && isOver
 
     let backgroundColor = Colors.accent
+    // Hightlight background when currency-badge is dragging and under this component
     if (isActive) {
       backgroundColor = Colors.subAccent
     } else if (canDrop) {

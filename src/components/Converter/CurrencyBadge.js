@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {DragSource} from 'react-dnd'
-// import styled from 'react-emotion'
 import {getEmptyImage} from 'react-dnd-html5-backend'
 import PropTypes from 'prop-types'
 
@@ -19,7 +18,7 @@ const spec = {
   },
 }
 
-// Index component;
+// Currency label from Drag'n'drop area
 @DragSource('cash', spec, collect)
 export default class CurrencyBadge extends Component {
   static propTypes = {
@@ -29,6 +28,7 @@ export default class CurrencyBadge extends Component {
   }
 
   componentDidMount() {
+    // Hide default draggeing preview layer
     this.props.connectPreview && this.props.connectPreview(getEmptyImage())
   }
 

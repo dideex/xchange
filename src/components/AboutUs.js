@@ -8,6 +8,7 @@ const P = styled('p')`
   margin-bottom: 50px;
 `
 
+// FIXME: Translate this area
 // AboutUs component; Contains information about company
 class AboutUs extends Component {
   render() {

@@ -98,7 +98,7 @@ const CheckboxWrap = styled('div')`
   }
 `
 
-// UserData component;
+// User input includes: email, fullname, and two wallet's number
 @injectIntl
 @withRouter
 @inject('userStore')
@@ -128,6 +128,13 @@ class UserData extends Component {
 
   _handleCheckboxChange = () => this.setState(({agree}) => ({agree: !agree}))
 
+  /**
+  * Check inputs for errors. Inputs are getting by ref 
+  * Wating for resolve array of promises
+  *   Everythings is ok create an oreder
+  *   Else do nothing
+  * @public
+  */
   handleSubmit = async () => {
     this.setState({loading: true})
     // fix double click for premade input's values

@@ -35,7 +35,7 @@ const ExchangeRateContent = styled('div')`
   }
 `
 
-// ExchangeRate component;
+// Components shows rate exchange for selected currencies
 class ExchangeRate extends Component {
   static propTypes = {
     inputCurrency: PropTypes.string.isRequired,

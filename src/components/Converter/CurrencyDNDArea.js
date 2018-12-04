@@ -103,24 +103,28 @@ const SearchWrap = styled('div')`
   }
 `
 
-// CurrencyDNDArea component;
+// Currency drag'n'drop area, contains all currencies and his labels
+// Can be dragged to the input
 @injectIntl
 class CurrencyDNDArea extends Component {
   static propTypes = {
     currency: PropTypes.array.isRequired,
   }
 
+  // save clicked coordiantes at the lable
   state = {
     search: '',
     dragX: 0,
     dragY: 0,
   }
 
+  // Filter currencies
   _handleFilter = ({name, label, icon}) => {
     const regex = new RegExp(this.state.search, 'i')
     return regex.test(name) || regex.test(label) || regex.test(icon)
   }
 
+  // Save coordiantes to the state
   _handleMouseDown = e => {
     const {x, y} = e.currentTarget.getBoundingClientRect()
     this.setState({dragX: e.clientX - x, dragY: e.clientY - y})

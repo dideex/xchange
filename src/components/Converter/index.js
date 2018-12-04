@@ -6,7 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import {FormattedMessage, injectIntl} from 'react-intl'
 
 import ExchangeRate from './ExchangeRate'
-import CustomerDragLayer from './CustomerDragLayer'
+import CustomDragLayer from './CustomDragLayer'
 import Field from './InputField'
 import UserData from './UserData'
 import CurrencyDNDArea from './CurrencyDNDArea'
