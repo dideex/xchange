@@ -53,7 +53,7 @@ const InputWrap = styled('div')`
   }
 `
 
-// Reserved component;
+// Component has information about the company reserves
 @inject('cashStore')
 @observer
 class Reserved extends Component {

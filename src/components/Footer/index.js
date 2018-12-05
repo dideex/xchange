@@ -123,6 +123,13 @@ class Footer extends Component {
     this.inputs = []
   }
 
+  /**
+   * Check inputs for errors. Inputs are getting by ref
+   * Wating for resolve array of promises
+   *   Everythings is ok create an oreder
+   *   Otherwise nothing
+   * @public
+   */
   handleSubmit = async () => {
     const {emailError, phoneError, email, phone, message} = this.state
     this.setState({loading: true})
@@ -216,8 +223,8 @@ class Footer extends Component {
           <Icons id="afterFooterBg" style={{width: '100%'}} />
           <Copy>
             <strong>XChange &copy; 2009 - 2018</strong>
-            <a href="vk.com" target="_blank">
-              Created by vk.com
+            <a href="https://vk.com/didex" target="_blank">
+              Created by DiDex
             </a>
           </Copy>
         </WithBackground>

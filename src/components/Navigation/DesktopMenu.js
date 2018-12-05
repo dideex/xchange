@@ -75,7 +75,7 @@ const Popover = styled('span')`
   }
 `
 
-// DesktopMenu component;
+// Component has menu for desktop
 class DesktopMenu extends Component {
   static propTypes = {
     handleClick: PropTypes.func.isRequired,

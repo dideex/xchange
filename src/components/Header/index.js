@@ -138,7 +138,7 @@ const headerBgBottomStyle = {
   zIndex: -1,
 }
 
-// Header component;
+// Component contains header, includes the navigation, main titles and svg-icons
 class Header extends Component {
   render() {
     return (

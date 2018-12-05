@@ -58,7 +58,7 @@ const AfterMainWrap = styled('section')`
   }
 `
 
-// Main component;
+// Main wrapper component, includes icons after
 class Main extends Component {
   render() {
     return (

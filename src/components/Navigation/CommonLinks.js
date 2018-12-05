@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
-// CommonItems component;
+// Component has link items
 class CommonItems extends Component {
   static propTypes = {
     handleClick: PropTypes.func.isRequired,

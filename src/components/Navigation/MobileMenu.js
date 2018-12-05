@@ -33,7 +33,7 @@ const MobMenu = styled('div')`
   }
 `
 
-// MobileMenu component;
+// Component has mobile menu links
 class MobileMenu extends PureComponent {
   static propTypes = {
     handleClick: PropTypes.func.isRequired,

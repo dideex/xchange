@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Stop1 stateless component;
+// Step 1, man is sitting on a chair and looking for the currency exchangeing service
 export const Step1 = ({style}) => (
   <svg
     style={style}

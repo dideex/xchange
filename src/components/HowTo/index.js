@@ -99,7 +99,7 @@ const P = styled('p')`
   padding-top: 20px;
 `
 
-// HowTo component;
+// Component contains 'HowTo' section, in the home route
 class HowTo extends Component {
   render() {
     return (

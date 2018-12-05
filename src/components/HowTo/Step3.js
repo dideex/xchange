@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Step3 stateless component;
+// Step3 man is trying to put a coin to his computer
 export const Step3 = ({style}) => (
   <svg
     style={style}

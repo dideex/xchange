@@ -113,7 +113,7 @@ const CoinStyles = {
   top: 15,
 }
 
-// Operations stateless component;
+// Comonent has layout for operation
 export const Operations = ({
   currency,
   email,

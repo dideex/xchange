@@ -77,7 +77,7 @@ const Answer = styled('div')`
   }
 `
 
-// FAQ component;
+// Component contians frequently asked questions
 class FAQ extends Component {
   state = {
     active: false,

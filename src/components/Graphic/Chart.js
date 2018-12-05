@@ -35,6 +35,7 @@ const monthArray = [
   'Дек',
 ]
 
+// Endpoint for graphic's data
 const api =
   'https://api.blockchain.info/charts/market-price?cors=true&timespan=30days&format=json&lang=ru'
 

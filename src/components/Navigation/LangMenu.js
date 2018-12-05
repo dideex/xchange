@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import {locales} from '../../locale'
 
-// LangMenu component;
+// Component has language toggler
 @inject('userStore')
 @observer
 class LangMenu extends Component {

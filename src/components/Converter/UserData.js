@@ -132,7 +132,7 @@ class UserData extends Component {
   * Check inputs for errors. Inputs are getting by ref 
   * Wating for resolve array of promises
   *   Everythings is ok create an oreder
-  *   Else do nothing
+  *   Otherwise nothing
   * @public
   */
   handleSubmit = async () => {
@@ -218,7 +218,6 @@ class UserData extends Component {
           value={wallets[this.props.walletIncome]}
           handleChange={val => changeWallet(this.props.walletIncome)(val)}
           mask={currency.length && currency[currencyInput].label}
-          /* pattern="^\d+$" */
           placeholder={formatMessage(
             {
               id: 'home.userDataPlaceholder.fromWallet',
@@ -242,7 +241,6 @@ class UserData extends Component {
           value={wallets[this.props.walletOutgo]}
           handleChange={val => changeWallet(this.props.walletOutgo)(val)}
           mask={currency.length && currency[currencyOutput].label}
-          /* pattern="^\d+$" */
           placeholder={formatMessage(
             {
               id: 'home.userDataPlaceholder.toWallet',

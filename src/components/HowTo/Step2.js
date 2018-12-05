@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Step2 stateless component;
+// Step2, layout of the site
 export const Step2 = ({style}) => (
   <svg
     style={style}

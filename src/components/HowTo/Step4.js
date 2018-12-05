@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Step4 stateless component;
+// Step4 our oprator is checking for right payment data, and ready to feedback
 export const Step4 = ({style}) => (
   <svg
     style={style}

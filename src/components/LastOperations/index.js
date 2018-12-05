@@ -43,7 +43,8 @@ const AdaptiveSettings = [
   },
 ]
 
-// LastOperations component;
+// Component contains data with last operations
+// Runtime refreshing for new and confirmed orders
 @inject('lastOperationsStore')
 @injectIntl
 @observer

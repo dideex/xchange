@@ -29,7 +29,7 @@ const NavWrap = styled('nav')`
 `
 
 
-// Nav component;
+// Component has navigation 
 @inject('userStore')
 @observer
 class Nav extends Component {

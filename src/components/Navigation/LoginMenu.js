@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react'
 import {FormattedMessage} from 'react-intl'
 import PropTypes from 'prop-types'
 
-// LoginMenu component;
+// Component has auth links
 @inject('userStore')
 @observer
 class LoginMenu extends Component {

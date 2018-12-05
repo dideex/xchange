@@ -25,7 +25,7 @@ const Section = styled('section')`
   }
 `
 
-// Graphic component;
+// Component contains bitcoing graphic;
 class Graphic extends Component {
   render() {
     return (
