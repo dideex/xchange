@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
@@ -37,28 +37,23 @@ const Content = styled('div')`
 `
 
 // Button component;
-export class Button extends Component {
-  static propTypes = {
-    toggle: PropTypes.func.isRequired,
-    caption: PropTypes.string.isRequired,
-    disabled: PropTypes.bool,
-    loading: PropTypes.bool,
-  }
+export const Button = ({caption, toggle, disabled = false, loading = false}) => (
+  <StyledButton
+    cursor={disabled ? 'not-allowed' : 'pointer'}
+    onClick={disabled ? () => {} : toggle}
+  >
+    <Content>
+      {loading && <Loading size="inline" />}
+      {caption}
+    </Content>
+  </StyledButton>
+)
 
-  render() {
-    const {caption, toggle, disabled = false, loading = false} = this.props
-    return (
-      <StyledButton
-        cursor={disabled ? 'not-allowed' : 'pointer'}
-        onClick={disabled ? () => {} : toggle}
-      >
-        <Content>
-          {loading && <Loading size="inline" />}
-          {caption}
-        </Content>
-      </StyledButton>
-    )
-  }
+Button.propTypes = {
+  toggle: PropTypes.func.isRequired,
+  caption: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool,
 }
 
 export default Button

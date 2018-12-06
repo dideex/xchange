@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import styled from 'react-emotion'
 import Slider from 'react-slick'
 import {FormattedMessage} from 'react-intl'
@@ -109,49 +109,41 @@ function SampleNextArrow(props) {
   )
 }
 
-// Feedback section slider
-class Comments extends Component {
-  static propTypes = {}
-
-  _getSliderSettings = () => ({
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    lazyLoad: false,
-    arrows: true,
-    prevArrow: <SamplePrevArrow />,
-    nextArrow: <SampleNextArrow />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1,
-        },
+const _getSliderSettings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 2,
+  slidesToScroll: 1,
+  lazyLoad: false,
+  arrows: true,
+  prevArrow: <SamplePrevArrow />,
+  nextArrow: <SampleNextArrow />,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 1,
       },
-    ],
-  })
-
-  render() {
-    return (
-      <Section>
-        <H2>
-          <FormattedMessage
-            id="home.comments.header"
-            defaultMessage="Отзывы наших клиентов"
-          />
-        </H2>
-        <SliderContainer>
-          <Slider {...this._getSliderSettings()}>
-            {mockComments.map((props, i) => (
-              <Comment key={i} {...props} />
-            ))}
-          </Slider>
-        </SliderContainer>
-      </Section>
-    )
-  }
+    },
+  ],
 }
 
-export default Comments
+// Feedback section slider
+export default () => (
+  <Section>
+    <H2>
+      <FormattedMessage
+        id="home.comments.header"
+        defaultMessage="Отзывы наших клиентов"
+      />
+    </H2>
+    <SliderContainer>
+      <Slider {..._getSliderSettings}>
+        {mockComments.map((props, i) => (
+          <Comment key={i} {...props} />
+        ))}
+      </Slider>
+    </SliderContainer>
+  </Section>
+)
