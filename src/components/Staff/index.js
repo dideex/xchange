@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl'
 import Slider from 'react-slick'
 
 import {container, Icons, Colors, H2} from '../common'
@@ -107,7 +107,7 @@ function SampleNextArrow(props) {
   )
 }
 
-// Comments component;
+// Component contains slider with personal
 class Comments extends Component {
   static propTypes = {}
 
@@ -133,7 +133,9 @@ class Comments extends Component {
     }
     return (
       <Section>
-        <H2><FormattedMessage id="home.staff.header" defaultMessage="Наша команда"/></H2>
+        <H2>
+          <FormattedMessage id="home.staff.header" defaultMessage="Наша команда" />
+        </H2>
         <SliderContainer>
           <Slider {...settings}>
             {mockComments.map((props, i) => (
