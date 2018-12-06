@@ -127,7 +127,7 @@ export default class Index extends Component {
             </TipBlock>
           </CurrencyFieldWrap>
         </CurrencyFieldsWrap>
-        <CustomerDragLayer />
+        <CustomDragLayer />
         <CurrencyDNDArea currency={currency} loading={loading} />
         <UserData walletIncome={currencyInput} walletOutgo={currencyOutput} />
       </MainSectionWrap>

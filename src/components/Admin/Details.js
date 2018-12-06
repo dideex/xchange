@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {inject, observer} from 'mobx-react'
 import styled from 'react-emotion'
+import PropTypes from 'prop-types'
 
 import {
   currencyFormat,

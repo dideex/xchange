@@ -223,7 +223,7 @@ class Footer extends Component {
           <Icons id="afterFooterBg" style={{width: '100%'}} />
           <Copy>
             <strong>XChange &copy; 2009 - 2018</strong>
-            <a href="https://vk.com/didex" target="_blank">
+            <a href="https://vk.com/didex" rel="noopener noreferrer" target="_blank">
               Created by DiDex
             </a>
           </Copy>

@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Fragment} from 'react'
 
 import Converter from '../components/Converter'
 import Main from '../components/Main'
@@ -10,23 +10,17 @@ import Comments from '../components/Comments'
 import Staff from '../components/Staff'
 
 // Home component; Landing page route
-export class Home extends Component {
-  render() {
-    return (
-      <Fragment>
-        <Main>
-          <Converter />
-        </Main>
-        <HowTo />
-         <Bg>
-          <LastOperations />
-          <Graphic />
-          <Comments />
-        </Bg> 
-        <Staff />
-      </Fragment>
-    )
-  }
-}
-
-export default Home
+export default () => (
+  <Fragment>
+    <Main>
+      <Converter />
+    </Main>
+    <HowTo />
+    <Bg>
+      <LastOperations />
+      <Graphic />
+      <Comments />
+    </Bg>
+    <Staff />
+  </Fragment>
+)
