@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Fragment} from 'react'
 import styled from 'react-emotion'
 
 import {Colors, container, Icons, CurrencyIcons} from '../common'
@@ -59,35 +59,25 @@ const AfterMainWrap = styled('section')`
 `
 
 // Main wrapper component, includes icons after
-class Main extends Component {
-  render() {
-    return (
-      <Fragment>
-        <MainBG>
-          <MainStyled>{this.props.children}</MainStyled>
-        </MainBG>
-        <AfterMainWrap>
-          <Icons
-            className="main__bottom-background"
-            id="afterMainBg"
-            style={{width: '60%'}}
-          />
-          <CurrencyIcons
-            className="main__bottom-bigcoin"
-            id="Bitcoin"
-            style={{width: 166}}
-          />
-          <CurrencyIcons
-            className="main__bottom-smallcoin"
-            id="Bitcoin"
-            style={{width: 84}}
-          />
-          <Icons className="main__bottom-dollar" id="dollar" style={{width: 204}} />
-          <Icons className="main__bottom-card" id="creditCard" style={{width: 186}} />
-        </AfterMainWrap>
-      </Fragment>
-    )
-  }
-}
-
-export default Main
+export default ({children}) => (
+  <Fragment>
+    <MainBG>
+      <MainStyled>{children}</MainStyled>
+    </MainBG>
+    <AfterMainWrap>
+      <Icons
+        className="main__bottom-background"
+        id="afterMainBg"
+        style={{width: '60%'}}
+      />
+      <CurrencyIcons className="main__bottom-bigcoin" id="Bitcoin" style={{width: 166}} />
+      <CurrencyIcons
+        className="main__bottom-smallcoin"
+        id="Bitcoin"
+        style={{width: 84}}
+      />
+      <Icons className="main__bottom-dollar" id="dollar" style={{width: 204}} />
+      <Icons className="main__bottom-card" id="creditCard" style={{width: 186}} />
+    </AfterMainWrap>
+  </Fragment>
+)

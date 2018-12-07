@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Step4 our oprator is checking for right payment data, and ready to feedback
+// Step4 our oprator is going to transfer a payment
 export const Step4 = ({style}) => (
   <svg
     style={style}

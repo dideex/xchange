@@ -76,61 +76,45 @@ const Popover = styled('span')`
 `
 
 // Component has menu for desktop
-class DesktopMenu extends Component {
-  static propTypes = {
-    handleClick: PropTypes.func.isRequired,
-    showLangMenu: PropTypes.bool.isRequired,
-    showAuthMenu: PropTypes.bool.isRequired,
-    closeBothMenu: PropTypes.func.isRequired,
-    toggleLangMenu: PropTypes.func.isRequired,
-    toggleAuthMenu: PropTypes.func.isRequired,
-  }
+const DesktopMenu = ({
+  handleClick,
+  showLangMenu,
+  showAuthMenu,
+  closeBothMenu,
+  toggleLangMenu,
+  toggleAuthMenu,
+}) => (
+  <MenuWrap onMouseLeave={closeBothMenu}>
+    <CommonLinks handleClick={handleClick} />
+    <span onClick={toggleLangMenu}>
+      <FormattedMessage id="home.nav.lang" defaultMessage="Language" />
+      <Icons
+        id="chevron"
+        style={{width: '20px', marginBottom: '-2px', paddingLeft: '5px'}}
+      />
+      <CSSTransition in={showLangMenu} timeout={300} classNames="content-" unmountOnExit>
+        <Popover>
+          <LangMenu handleClick={handleClick} />
+        </Popover>
+      </CSSTransition>
+    </span>
+    <span className="auth-menu-item" onClick={toggleAuthMenu}>
+      <Icons style={{width: '33px'}} id="user" />
+      <CSSTransition in={showAuthMenu} timeout={300} classNames="content-" unmountOnExit>
+        <Popover>
+          <LoginMenu handleClick={handleClick} />
+        </Popover>
+      </CSSTransition>
+    </span>
+  </MenuWrap>
+)
 
-  render() {
-    const {
-      handleClick,
-      showLangMenu,
-      showAuthMenu,
-      closeBothMenu,
-      toggleLangMenu,
-      toggleAuthMenu,
-    } = this.props
-    return (
-      <MenuWrap onMouseLeave={closeBothMenu}>
-        <CommonLinks handleClick={handleClick} />
-        <span onClick={toggleLangMenu}>
-          <FormattedMessage id="home.nav.lang" defaultMessage="Language"/>
-          <Icons
-            id="chevron"
-            style={{width: '20px', marginBottom: '-2px', paddingLeft: '5px'}}
-          />
-          <CSSTransition
-            in={showLangMenu}
-            timeout={300}
-            classNames="content-"
-            unmountOnExit
-          >
-            <Popover>
-              <LangMenu handleClick={handleClick} />
-            </Popover>
-          </CSSTransition>
-        </span>
-        <span className="auth-menu-item" onClick={toggleAuthMenu}>
-          <Icons style={{width: '33px'}} id="user" />
-          <CSSTransition
-            in={showAuthMenu}
-            timeout={300}
-            classNames="content-"
-            unmountOnExit
-          >
-            <Popover>
-              <LoginMenu handleClick={handleClick} />
-            </Popover>
-          </CSSTransition>
-        </span>
-      </MenuWrap>
-    )
-  }
+DesktopMenu.propTypes = {
+  handleClick: PropTypes.func.isRequired,
+  showLangMenu: PropTypes.bool.isRequired,
+  showAuthMenu: PropTypes.bool.isRequired,
+  closeBothMenu: PropTypes.func.isRequired,
+  toggleLangMenu: PropTypes.func.isRequired,
+  toggleAuthMenu: PropTypes.func.isRequired,
 }
-
 export default DesktopMenu

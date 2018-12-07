@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Step 1, man is sitting on a chair and looking for the currency exchangeing service
+// Step 1, man is sitting on a chair and looking for the currency exchanging service
 export const Step1 = ({style}) => (
   <svg
     style={style}

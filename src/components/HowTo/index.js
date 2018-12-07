@@ -100,91 +100,85 @@ const P = styled('p')`
 `
 
 // Component contains 'HowTo' section, in the home route
-class HowTo extends Component {
-  render() {
-    return (
-      <Section>
-        <H2>
+export default () => (
+  <Section>
+    <H2>
+      <FormattedMessage
+        id="home.howTo.mainHeader"
+        defaultMessage="Как происходит обмен?"
+      />
+    </H2>
+    <Grid>
+      <LeftContent>
+        <Icons id="howTo1" style={{width: 121}} />
+        <H3>
           <FormattedMessage
-            id="home.howTo.mainHeader"
-            defaultMessage="Как происходит обмен?"
+            id="home.howTo.subHeader1"
+            defaultMessage="Заполняете данные"
           />
-        </H2>
-        <Grid>
-          <LeftContent>
-            <Icons id="howTo1" style={{width: 121}} />
-            <H3>
-              <FormattedMessage
-                id="home.howTo.subHeader1"
-                defaultMessage="Заполняете данные"
-              />
-            </H3>
-            <P>
-              <FormattedMessage
-                id="home.howTo.step1"
-                defaultMessage="Выбираете валюту для обмена и для оплаты. Заполняете остальную форму данными и нажимаете “Отправить”"
-              />
-            </P>
-          </LeftContent>
-          <Step1 style={{height: 500}} />
-        </Grid>
-        <Grid>
-          <Step2 style={{height: 400}} />
-          <RightContent>
-            <Icons id="howTo2" style={{width: 121}} />
-            <H3>
-              <FormattedMessage
-                id="home.howTo.subHeader2"
-                defaultMessage="Переводите деньги"
-              />
-            </H3>
-            <P>
-              <FormattedMessage
-                id="home.howTo.step2"
-                defaultMessage="На следующем шаге Вам будет предаставлен номер нашего кошелька для перевода на него денег для обмена(данные также будут доступны у Вас на почте). На который нужно будет перевести указанную сумму"
-              />
-            </P>
-          </RightContent>
-        </Grid>
-        <Grid>
-          <LeftContent>
-            <Icons id="howTo3" style={{width: 121}} />
-            <H3>
-              <FormattedMessage
-                id="home.howTo.subHeader3"
-                defaultMessage="Подтверждаете перевод"
-              />
-            </H3>
-            <P>
-              <FormattedMessage
-                id="home.howTo.step3"
-                defaultMessage="После того как Вы совершили перевод, нужно его подтвердить на сайте в личном кабинете, или по ссылке из письма на электронной почте"
-              />
-            </P>
-          </LeftContent>
-          <Step3 style={{height: 500, marginLeft: 80}} />
-        </Grid>
-        <Grid>
-          <Step4 style={{height: 400}} />
-          <RightContent>
-            <Icons id="howTo4" style={{width: 121}} />
-            <H3>
-              <FormattedMessage
-                id="home.howTo.subHeader4"
-                defaultMessage="Получаете деньги"
-              />
-            </H3>
-            <P>
-              <FormattedMessage
-                id="home.howTo.step4"
-                defaultMessage="Наш оператор убедиться в поступлении Ваши средств в систему и завершит транзакцию переводом"
-              />
-            </P>
-          </RightContent>
-        </Grid>
-      </Section>
-    )
-  }
-}
-
-export default HowTo
+        </H3>
+        <P>
+          <FormattedMessage
+            id="home.howTo.step1"
+            defaultMessage="Выбираете валюту для обмена и для оплаты. Заполняете остальную форму данными и нажимаете “Отправить”"
+          />
+        </P>
+      </LeftContent>
+      <Step1 style={{height: 500}} />
+    </Grid>
+    <Grid>
+      <Step2 style={{height: 400}} />
+      <RightContent>
+        <Icons id="howTo2" style={{width: 121}} />
+        <H3>
+          <FormattedMessage
+            id="home.howTo.subHeader2"
+            defaultMessage="Переводите деньги"
+          />
+        </H3>
+        <P>
+          <FormattedMessage
+            id="home.howTo.step2"
+            defaultMessage="На следующем шаге Вам будет предаставлен номер нашего кошелька для перевода на него денег для обмена(данные также будут доступны у Вас на почте). На который нужно будет перевести указанную сумму"
+          />
+        </P>
+      </RightContent>
+    </Grid>
+    <Grid>
+      <LeftContent>
+        <Icons id="howTo3" style={{width: 121}} />
+        <H3>
+          <FormattedMessage
+            id="home.howTo.subHeader3"
+            defaultMessage="Подтверждаете перевод"
+          />
+        </H3>
+        <P>
+          <FormattedMessage
+            id="home.howTo.step3"
+            defaultMessage="После того как Вы совершили перевод, нужно его подтвердить на сайте в личном кабинете, или по ссылке из письма на электронной почте"
+          />
+        </P>
+      </LeftContent>
+      <Step3 style={{height: 500, marginLeft: 80}} />
+    </Grid>
+    <Grid>
+      <Step4 style={{height: 400}} />
+      <RightContent>
+        <Icons id="howTo4" style={{width: 121}} />
+        <H3>
+          <FormattedMessage
+            id="home.howTo.subHeader4"
+            defaultMessage="Получаете деньги"
+          />
+        </H3>
+        <P>
+          <FormattedMessage
+            id="home.howTo.step4"
+            defaultMessage="Наш оператор убедиться в поступлении Ваши средств в систему и завершит транзакцию переводом"
+          />
+        </P>
+      </RightContent>
+    </Grid>
+  </Section>
+)

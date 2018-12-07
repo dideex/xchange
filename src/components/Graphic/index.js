@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import styled from 'react-emotion'
 import {FormattedMessage} from 'react-intl'
 
@@ -26,21 +26,15 @@ const Section = styled('section')`
 `
 
 // Component contains bitcoing graphic;
-class Graphic extends Component {
-  render() {
-    return (
-      <Section>
-        <H2>
-          <FormattedMessage
-            id="home.chart.header"
-            defaultMessage="Курс Bitcoin за последний месяц"
-          />
-        </H2>
-        <Chart />
-        <Icons id="manByGraphic" className="chart__svg" />
-      </Section>
-    )
-  }
-}
-
-export default Graphic
+export default () => (
+  <Section>
+    <H2>
+      <FormattedMessage
+        id="home.chart.header"
+        defaultMessage="Курс Bitcoin за последний месяц"
+      />
+    </H2>
+    <Chart />
+    <Icons id="manByGraphic" className="chart__svg" />
+  </Section>
+)

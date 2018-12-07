@@ -122,40 +122,38 @@ export const Operations = ({
   paymentStatus,
   inputLabel,
   outputLabel,
-}) => {
-  return (
-    <OperationWrap>
-      <CurrencyIcons id={currency} style={CoinStyles} />
-      <Title>{email}</Title>
-      <Values>
-        <Value>
-          <span>
-            {currencyFormat(inputValue)}
-            <span className="currency__label">{inputLabel}</span>
-          </span>
-        </Value>
-        <SvgWrap>
-          <Icons id="chevron" style={{fill: Colors.black}} className="separator" />
-        </SvgWrap>
-        <Value>
-          <span>
-            {currencyFormat(outputValue)}
-            <span className="currency__label">{outputLabel}</span>
-          </span>
-        </Value>
-      </Values>
-      <BacksideBlock>
-        <p>
-          <FormattedMessage id="home.lastOperations.status" defaultMessage="Статус:" />
-          <FormattedMessage
-            id={`home.lastOperations.status${StatusTitles[paymentStatus]}`}
-            defaultMessage={StatusTitles[paymentStatus]}
-          />
-        </p>
-      </BacksideBlock>
-    </OperationWrap>
-  )
-}
+}) => (
+  <OperationWrap>
+    <CurrencyIcons id={currency} style={CoinStyles} />
+    <Title>{email}</Title>
+    <Values>
+      <Value>
+        <span>
+          {currencyFormat(inputValue)}
+          <span className="currency__label">{inputLabel}</span>
+        </span>
+      </Value>
+      <SvgWrap>
+        <Icons id="chevron" style={{fill: Colors.black}} className="separator" />
+      </SvgWrap>
+      <Value>
+        <span>
+          {currencyFormat(outputValue)}
+          <span className="currency__label">{outputLabel}</span>
+        </span>
+      </Value>
+    </Values>
+    <BacksideBlock>
+      <p>
+        <FormattedMessage id="home.lastOperations.status" defaultMessage="Статус:" />
+        <FormattedMessage
+          id={`home.lastOperations.status${StatusTitles[paymentStatus]}`}
+          defaultMessage={StatusTitles[paymentStatus]}
+        />
+      </p>
+    </BacksideBlock>
+  </OperationWrap>
+)
 
 Operations.propTypes = {
   currency: PropTypes.string.isRequired,

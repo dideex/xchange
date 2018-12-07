@@ -1,6 +1,7 @@
-import React, {Component} from 'react'
+import React from 'react'
 import styled from 'react-emotion'
 import {FormattedMessage} from 'react-intl'
+import PropTypes from 'prop-types'
 
 import {currencyFormat, StatusTitles} from '../common'
 
@@ -65,89 +66,96 @@ const UserInfo = styled('div')`
   }
 `
 // Order's detail
-class DetailsComponent extends Component {
-  render() {
-    const {
-      id,
-      inputValue,
-      currencyInputLabel,
-      toWallet,
-      outputValue,
-      currencyOutputLabel,
-      email,
-      username,
-      paymentStatus,
-      sourceWallet,
-    } = this.props
-    return (
-      <Wrap>
-        <h3>Перевод № {id}</h3>
+const DetailsInfo = ({
+  id,
+  inputValue,
+  currencyInputLabel,
+  toWallet,
+  outputValue,
+  currencyOutputLabel,
+  email,
+  username,
+  paymentStatus,
+  sourceWallet,
+}) => (
+  <Wrap>
+    <h3>Перевод № {id}</h3>
+    <Details>
+      <div>
         <Details>
-          <div>
-            <Details>
-              <span>
-                <FormattedMessage
-                  id="details.walletForPayment"
-                  defaultMessage="Кошелек для перевода:"
-                />
-              </span>
-              <strong>{sourceWallet}</strong>
-            </Details>
-            <Details>
-              <span>
-                <FormattedMessage
-                  id="details.inputAmount"
-                  defaultMessage="Сумму для перевода:"
-                />
-              </span>
-              <strong>{`${currencyFormat(inputValue)} ${currencyInputLabel}`}</strong>
-            </Details>
-          </div>
-          <div>
-            <Details>
-              <span>
-                <FormattedMessage
-                  id="details.walletForRecive"
-                  defaultMessage="Получить на кошелек:"
-                />
-              </span>
-              <strong>{toWallet}</strong>
-            </Details>
-            <Details>
-              <span>
-                <FormattedMessage
-                  id="details.amountForRecieve"
-                  defaultMessage="Сумму получения:"
-                />
-              </span>
-              <strong>{`${currencyFormat(outputValue)} ${currencyOutputLabel}`}</strong>
-            </Details>
-          </div>
+          <span>
+            <FormattedMessage
+              id="details.walletForPayment"
+              defaultMessage="Кошелек для перевода:"
+            />
+          </span>
+          <strong>{sourceWallet}</strong>
         </Details>
-        <UserInfo>
-          <p>
-            <span>Email:</span>
-            <strong>{email}</strong>
-          </p>
-          <p>
-            <span>
-              <FormattedMessage id="details.username" defaultMessage="ФИО:" />
-            </span>
-            <strong>{username}</strong>
-          </p>
-          <p>
-            <FormattedMessage id="home.lastOperations.status" defaultMessage="Статус:" />
-            <strong>
-              <FormattedMessage
-                id={`home.lastOperations.status${StatusTitles[paymentStatus]}`}
-                defaultMessage={StatusTitles[paymentStatus]}
-              />
-            </strong>
-          </p>
-        </UserInfo>
-      </Wrap>
-    )
-  }
-}
+        <Details>
+          <span>
+            <FormattedMessage
+              id="details.inputAmount"
+              defaultMessage="Сумму для перевода:"
+            />
+          </span>
+          <strong>{`${currencyFormat(inputValue)} ${currencyInputLabel}`}</strong>
+        </Details>
+      </div>
+      <div>
+        <Details>
+          <span>
+            <FormattedMessage
+              id="details.walletForRecive"
+              defaultMessage="Получить на кошелек:"
+            />
+          </span>
+          <strong>{toWallet}</strong>
+        </Details>
+        <Details>
+          <span>
+            <FormattedMessage
+              id="details.amountForRecieve"
+              defaultMessage="Сумму получения:"
+            />
+          </span>
+          <strong>{`${currencyFormat(outputValue)} ${currencyOutputLabel}`}</strong>
+        </Details>
+      </div>
+    </Details>
+    <UserInfo>
+      <p>
+        <span>Email:</span>
+        <strong>{email}</strong>
+      </p>
+      <p>
+        <span>
+          <FormattedMessage id="details.username" defaultMessage="ФИО:" />
+        </span>
+        <strong>{username}</strong>
+      </p>
+      <p>
+        <FormattedMessage id="home.lastOperations.status" defaultMessage="Статус:" />
+        <strong>
+          <FormattedMessage
+            id={`home.lastOperations.status${StatusTitles[paymentStatus]}`}
+            defaultMessage={StatusTitles[paymentStatus]}
+          />
+        </strong>
+      </p>
+    </UserInfo>
+  </Wrap>
+)
 
-export default DetailsComponent
+Details.propTypes = {
+  id: PropTypes.string.isRequired,
+  inputValue: PropTypes.string.isRequired,
+  currencyInputLabel: PropTypes.string.isRequired,
+  toWallet: PropTypes.string.isRequired,
+  outputValue: PropTypes.string.isRequired,
+  currencyOutputLabel: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  paymentStatus: PropTypes.number.isRequired,
+  sourceWallet: PropTypes.string.isRequired,
+}
+export default DetailsInfo

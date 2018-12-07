@@ -10,10 +10,10 @@ export {
   MainSectionWrap,
 } from './Styles'
 export {Button} from './Button'
-export {Label} from './Label'
+export {default as Label} from './Label'
 export {Icons} from './Icons'
 export {CurrencyIcons} from './CurrencyIcons'
-export {AccentButton} from './AccentButton'
+export {default as AccentButton} from './AccentButton'
 export {Input} from './Input'
 export {Loading} from './Loading'
 export {

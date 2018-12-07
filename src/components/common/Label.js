@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
@@ -58,30 +58,25 @@ L443,160.7z"
 )
 
 // Label component; Return coin icon and span with currency label
-export class Label extends Component {
-  static propTypes = {
-    caption: PropTypes.string.isRequired,
-    icon: PropTypes.string,
-  }
-
-  render() {
-    const {caption, style, onClick, big = false, isDragging = false, icon} = this.props
-
-    const background = isDragging ? Colors.accent : 'transparent'
-    const color = isDragging ? '#fff' : Colors.black
-    const opacity = isDragging ? 0 : 1
-    return (
-      <StyledLabel style={{...style, color, background}} onClick={onClick}>
-        {big && <IconWrap style={{opacity}} />}
-        <Svg
-          className="currency_coin"
-          style={{...SvgCurrency, zIndex: 1, opacity}}
-          id={icon}
-        />
-        <span style={{paddingLeft: isDragging ? 0 : 45}}>{caption}</span>
-      </StyledLabel>
-    )
-  }
+const Label = ({caption, style, onClick, icon, big = false, isDragging = false}) => {
+  const background = isDragging ? Colors.accent : 'transparent'
+  const color = isDragging ? '#fff' : Colors.black
+  const opacity = isDragging ? 0 : 1
+  return (
+    <StyledLabel style={{...style, color, background}} onClick={onClick}>
+      {big && <IconWrap style={{opacity}} />}
+      <Svg
+        className="currency_coin"
+        style={{...SvgCurrency, zIndex: 1, opacity}}
+        id={icon}
+      />
+      <span style={{paddingLeft: isDragging ? 0 : 45}}>{caption}</span>
+    </StyledLabel>
+  )
 }
 
+Label.propTypes = {
+  caption: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+}
 export default Label

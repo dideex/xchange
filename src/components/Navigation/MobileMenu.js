@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React from 'react'
 import styled from 'react-emotion'
 import PropTypes from 'prop-types'
 
@@ -34,33 +34,27 @@ const MobMenu = styled('div')`
 `
 
 // Component has mobile menu links
-class MobileMenu extends PureComponent {
-  static propTypes = {
-    handleClick: PropTypes.func.isRequired,
-    showLangMenu: PropTypes.bool.isRequired,
-    showMobMenu: PropTypes.bool.isRequired,
-    closeBothMenu: PropTypes.func.isRequired,
-  }
+const MobileMenu = ({handleClick, showLangMenu, showMobMenu, closeBothMenu}) => (
+  <MobMenu x={showMobMenu ? '0%' : '100%'}>
+    <div onClick={closeBothMenu} className="close">
+      <Icons style={{width: 30}} id="close" />
+    </div>
+    <CommonLinks handleClick={handleClick} />
+    <span onClick={handleClick}>Язык</span>
+    {showLangMenu && (
+      <p>
+        <LangMenu handleClick={handleClick} />
+      </p>
+    )}
 
-  render() {
-    const {handleClick, showLangMenu, showMobMenu, closeBothMenu} = this.props
-    return (
-      <MobMenu x={showMobMenu ? '0%' : '100%'}>
-        <div onClick={closeBothMenu} className="close">
-          <Icons style={{width: 30}} id="close" />
-        </div>
-        <CommonLinks handleClick={handleClick} />
-        <span onClick={handleClick}>Язык</span>
-        {showLangMenu && (
-          <p>
-            <LangMenu handleClick={handleClick} />
-          </p>
-        )}
+    <LoginMenu handleClick={handleClick} />
+  </MobMenu>
+)
 
-        <LoginMenu handleClick={handleClick} />
-      </MobMenu>
-    )
-  }
+MobileMenu.propTypes = {
+  handleClick: PropTypes.func.isRequired,
+  showLangMenu: PropTypes.bool.isRequired,
+  showMobMenu: PropTypes.bool.isRequired,
+  closeBothMenu: PropTypes.func.isRequired,
 }
-
 export default MobileMenu

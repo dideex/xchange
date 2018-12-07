@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Step2, layout of the site
+// Step2, layout of the site with filled data
 export const Step2 = ({style}) => (
   <svg
     style={style}
