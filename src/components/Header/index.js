@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'react-emotion'
 import {FormattedMessage} from 'react-intl'
+import {withRouter} from 'react-router-dom'
 
 import {Icons, container, AccentButton, ScrollTo, linesToParagraphs} from '../common'
 
@@ -139,6 +140,7 @@ const headerBgBottomStyle = {
 }
 
 // Component contains header, includes the navigation, main titles and svg-icons
+@withRouter
 class Header extends Component {
   render() {
     return (
@@ -150,14 +152,18 @@ class Header extends Component {
             <FormattedMessage id="home.header" defaultMessage="Currency exchange" />
           </h1>
           <p>
-            <FormattedMessage id="home.subHeader" defaultMessage="Здесь вы можете конвертировать Ваши деньги">
+            <FormattedMessage
+              id="home.subHeader"
+              defaultMessage="Здесь вы можете конвертировать Ваши деньги"
+            >
               {linesToParagraphs}
             </FormattedMessage>
           </p>
           <AccentButton
-            toggle={() =>
+            toggle={() => {
               ScrollTo(document.querySelector('main').getBoundingClientRect().top + 100)
-            }
+              this.props.history.push('/')
+            }}
           >
             <FormattedMessage id="home.acctionButton" defaultMessage="Начать" />
           </AccentButton>
