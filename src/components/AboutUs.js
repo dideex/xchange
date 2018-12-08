@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'react-emotion'
+import {FormattedMessage} from 'react-intl'
 
 import {H2, MainSectionWrap} from './common'
 
@@ -12,12 +13,20 @@ const P = styled('p')`
 // AboutUs component; Contains information about company
 export default () => (
   <MainSectionWrap>
-    <H2>О нас</H2>
-    <P>Наш сервис помогает производить обмен Биткоин безопасно и быстро.</P>
+    <H2>
+      <FormattedMessage id="home.nav.about" defaultMessage="О нас" />
+    </H2>
     <P>
-      Все операции по конвертации валют занимают не более 15 минут. Компетентная
-      онлайн-поддержка с удовольствием проконсультирует Вас на всех этапах работы с нашим
-      сервисом. Выгодные курсы и качественное обслуживание - залог работы с клиентами.
+      <FormattedMessage
+        id="home.about.subTitle"
+        defaultMessage="Наш сервис помогает производить обмен Биткоин безопасно и быстро."
+      />
+    </P>
+    <P>
+      <FormattedMessage
+        id="home.about.content"
+        defaultMessage="Все операции по конвертации валют занимают не более 15 минут. Компетентная онлайн-поддержка с удовольствием проконсультирует Вас на всех этапах работы с нашим сервисом. Выгодные курсы и качественное обслуживание - залог работы с клиентами."
+      />
     </P>
   </MainSectionWrap>
 )

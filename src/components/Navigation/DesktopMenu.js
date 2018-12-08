@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import styled from 'react-emotion'
 import {CSSTransition} from 'react-transition-group'
 import {FormattedMessage} from 'react-intl'
