@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import styled from 'react-emotion'
 import {FormattedMessage} from 'react-intl'
 import Slider from 'react-slick'
@@ -107,45 +107,38 @@ function SampleNextArrow(props) {
   )
 }
 
-// Component contains slider with personal
-class Comments extends Component {
-  static propTypes = {}
-
-  render() {
-    const settings = {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 2,
-      slidesToScroll: 1,
-      lazyLoad: false,
-      arrows: true,
-      nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 1,
-          },
-        },
-      ],
-    }
-    return (
-      <Section>
-        <H2>
-          <FormattedMessage id="home.staff.header" defaultMessage="Наша команда" />
-        </H2>
-        <SliderContainer>
-          <Slider {...settings}>
-            {mockComments.map((props, i) => (
-              <Card key={i} {...props} />
-            ))}
-          </Slider>
-        </SliderContainer>
-      </Section>
-    )
-  }
+const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 2,
+  slidesToScroll: 1,
+  lazyLoad: false,
+  arrows: true,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
 }
 
-export default Comments
+// Component contains slider with personal
+export default () => (
+  <Section>
+    <H2>
+      <FormattedMessage id="home.staff.header" defaultMessage="Наша команда" />
+    </H2>
+    <SliderContainer>
+      <Slider {...settings}>
+        {mockComments.map((props, i) => (
+          <Card key={i} {...props} />
+        ))}
+      </Slider>
+    </SliderContainer>
+  </Section>
+)

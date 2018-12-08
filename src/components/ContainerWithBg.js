@@ -11,7 +11,7 @@ const Section = styled('section')`
     background-color: ${Colors.subAccent};
     @media (max-width: 767px) {
       margin-bottom: 50px;
-    } 
+    }
   }
 `
 
@@ -33,12 +33,10 @@ const afterContactBg = {
 }
 
 // Contains two blue shapes
-const Container = props => (
+export default props => (
   <Section>
     <Icons id="beforeContactBg" style={beforeContactBg} />
     {props.children}
     <Icons id="afterContactBg" style={afterContactBg} />
   </Section>
 )
-
-export default Container
