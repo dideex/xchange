@@ -1,14 +1,28 @@
 import User from '../User'
 
+jest.mock('../../components/Api')
+const Api = require('../../components/Api')
+// Api.mockImplementation(() => new Promise(r => r(['test', 'data'])))
+Api.post = jest.fn()
+
 describe('Menu store tests', () => {
-  let userStore
+  let store
   beforeEach(() => {
-    userStore = new User()
+    store = new User()
+  })
+
+  it('jest', () => {
+    expect(1 + 1).toBe(2)
   })
 
   it('init menu', () => {
-    expect(userStore.state).toBe('close')
-    expect(userStore.isMobile).toBe(false)
+    expect(store.orders.length).toBe(0)
+    expect(store.login).toBe('')
+  })
+
+  it('Getting token', () => {
+    store.getToken()
+    expect(store.loading).toBe(true)
   })
 
   // it('toggle menu', () => {
