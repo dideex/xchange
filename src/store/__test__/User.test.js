@@ -1,9 +1,19 @@
 import User from '../User'
 
-jest.mock('../../components/Api')
-const Api = require('../../components/Api')
+jest.mock('../../components/Api', () => {
+  return {
+    post: function() {
+      return new Promise(r => r({a: 1}))
+    },
+    get: function() {
+      return new Promise(r => r({a: 1}))
+    },
+    errorEmitter: jest.fn()
+  }
+})
+// const Api = require('../../components/Api')
 // Api.mockImplementation(() => new Promise(r => r(['test', 'data'])))
-Api.post = jest.fn()
+// Api.post = () => 123
 
 describe('Menu store tests', () => {
   let store
