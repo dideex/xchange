@@ -2,23 +2,21 @@ import User from '../User'
 
 jest.mock('../../components/Api', () => {
   return {
-    post: function() {
-      return new Promise(r => r({a: 1}))
-    },
-    get: function() {
-      return new Promise(r => r({a: 1}))
-    },
-    errorEmitter: jest.fn()
+    post: jest.fn(() => Promise.resolve(() => ({token: 'data'}))),
+    get: jest.fn(() => Promise.resolve(data => data)),
+    errorEmitter: jest.fn(data => data),
   }
 })
-// const Api = require('../../components/Api')
-// Api.mockImplementation(() => new Promise(r => r(['test', 'data'])))
-// Api.post = () => 123
+const Api = require('../../components/Api')
+const fakeUser = {username: 'Batman', password: 'Nopassword'}
 
 describe('Menu store tests', () => {
   let store
   beforeEach(() => {
     store = new User()
+    const {username, password} = fakeUser
+    store.changeLogin(username)
+    store.changePassword(password)
   })
 
   it('jest', () => {
@@ -27,12 +25,19 @@ describe('Menu store tests', () => {
 
   it('init menu', () => {
     expect(store.orders.length).toBe(0)
-    expect(store.login).toBe('')
+    expect(store.username).toBe('')
   })
 
   it('Getting token', () => {
     store.getToken()
     expect(store.loading).toBe(true)
+    expect(store.isNetworkError).toBe(false)
+    expect(Api.post).toHaveBeenCalledTimes(1)
+    expect(Api.post).toBeCalledWith('signinUser', fakeUser)
+    expect(Api.errorEmitter).toHaveBeenCalledTimes(1)
+    // expect(Api.errorEmitter).toBeCalledWith({})
+    expect(Api.get).toHaveBeenCalledTimes(0)
+    console.log(" LOG ___ store.token ", store.token )
   })
 
   // it('toggle menu', () => {
