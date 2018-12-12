@@ -185,7 +185,9 @@ export default class User {
     const {login: username, password} = this
     Api.post('signinUser', {username, password})
       .then(
-        this.errorEmitter(({token, isAdmin}) => {
+        this.errorEmitter(props => {
+          console.log(" LOG ___ props ", props )
+          const {token, isAdmin} = props
           this.loading = false
           this.token = token
           setToken(token, isAdmin)

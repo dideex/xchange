@@ -2,9 +2,14 @@ import User from '../User'
 
 jest.mock('../../components/Api', () => {
   return {
-    post: jest.fn(() => Promise.resolve(() => ({token: 'data'}))),
+    // post: jest.fn(() => Promise.resolve({data: {token: 'data'}})),
+    post: jest.fn(() => ({
+      then() {
+        return () => {return {token: 'newToken'}}
+      },
+    })),
     get: jest.fn(() => Promise.resolve(data => data)),
-    errorEmitter: jest.fn(data => data),
+    errorEmitter: jest.fn(data => data()),
   }
 })
 const Api = require('../../components/Api')
@@ -35,9 +40,9 @@ describe('Menu store tests', () => {
     expect(Api.post).toHaveBeenCalledTimes(1)
     expect(Api.post).toBeCalledWith('signinUser', fakeUser)
     expect(Api.errorEmitter).toHaveBeenCalledTimes(1)
-    // expect(Api.errorEmitter).toBeCalledWith({})
+    expect(Api.errorEmitter).toBeCalledWith({})
     expect(Api.get).toHaveBeenCalledTimes(0)
-    console.log(" LOG ___ store.token ", store.token )
+    console.log(' LOG ___ store.loading ', store.loading)
   })
 
   // it('toggle menu', () => {
