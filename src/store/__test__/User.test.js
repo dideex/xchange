@@ -1,17 +1,10 @@
 import User from '../User'
 
-jest.mock('../../components/Api', () => {
-  return {
-    // post: jest.fn(() => Promise.resolve({data: {token: 'data'}})),
-    post: jest.fn(() => ({
-      then() {
-        return () => {return {token: 'newToken'}}
-      },
-    })),
-    get: jest.fn(() => Promise.resolve(data => data)),
-    errorEmitter: jest.fn(data => data()),
-  }
-})
+jest.mock('../../components/Api', () => ({
+  post: jest.fn(() => Promise.resolve({token: 'fakeToken'})),
+  get: jest.fn(() => Promise.resolve(data => data)),
+  errorEmitter: jest.fn(data => fn => data(fn)),
+}))
 const Api = require('../../components/Api')
 const fakeUser = {username: 'Batman', password: 'Nopassword'}
 
@@ -33,16 +26,17 @@ describe('Menu store tests', () => {
     expect(store.username).toBe('')
   })
 
-  it('Getting token', () => {
-    store.getToken()
-    expect(store.loading).toBe(true)
+  it('Getting token', async () => {
+    store.fetchData = jest.fn()
+    expect(store.loading).toBe(false)
     expect(store.isNetworkError).toBe(false)
+    await store.getToken()
     expect(Api.post).toHaveBeenCalledTimes(1)
     expect(Api.post).toBeCalledWith('signinUser', fakeUser)
     expect(Api.errorEmitter).toHaveBeenCalledTimes(1)
-    expect(Api.errorEmitter).toBeCalledWith({})
-    expect(Api.get).toHaveBeenCalledTimes(0)
-    console.log(' LOG ___ store.loading ', store.loading)
+    expect(store.token).toBe('fakeToken')
+    expect(store.loading).toBe(false)
+    expect(store.fetchData).toHaveBeenCalledTimes(1)
   })
 
   // it('toggle menu', () => {
