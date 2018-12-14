@@ -1,12 +1,22 @@
 import User from '../User'
 
+const fakeToken = 'fakeToken'
+jest.mock('../utils', () => ({
+  setToken: () => {},
+  logout: () => {},
+  getToken: () => {},
+  getAdminStatus: () => {},
+}))
+
 jest.mock('../../components/Api', () => ({
   post: jest.fn(() => Promise.resolve({token: 'fakeToken'})),
   get: jest.fn(() => Promise.resolve(data => data)),
   errorEmitter: jest.fn(data => fn => data(fn)),
 }))
-const Api = require('../../components/Api')
+
 const fakeUser = {username: 'Batman', password: 'Nopassword'}
+const Utils = require('../utils')
+const Api = require('../../components/Api')
 
 describe('Menu store tests', () => {
   let store
@@ -24,6 +34,14 @@ describe('Menu store tests', () => {
   it('init menu', () => {
     expect(store.orders.length).toBe(0)
     expect(store.username).toBe('')
+  })
+
+  it('Check token', async () => {
+    // getToken = jest.fn(() => fakeToken)
+    Utils.getToken = () => fakeToken
+    await store._checkToken()
+    // expect(Utils.getToken).toHaveBeenCalledTimes(1)
+    expect(Api.get).toHaveBeenCalledTimes(1)
   })
 
   it('Getting token', async () => {

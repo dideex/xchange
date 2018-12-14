@@ -2,21 +2,7 @@ import {observable, action} from 'mobx'
 import Cookie from 'js-cookie'
 import Api from '../components/Api'
 import {noty} from '../components/common'
-
-const setToken = (token, isAdmin) => {
-  if (isAdmin) {
-    Cookie.set('token', token)
-    Cookie.set('isAdmin', true)
-  } else Cookie.set('token', token)
-}
-
-const logout = () => {
-  Cookie.remove('token')
-  Cookie.remove('isAdmin')
-}
-
-const getToken = () => Cookie.get('token') || null
-const getAdminStatus = () => Cookie.get('isAdmin') || null
+import {setToken, logout, getToken, getAdminStatus} from './utils'
 
 // Mobx UserData store
 // Keeps all data about user
@@ -65,6 +51,7 @@ export default class User {
   // Checks valid token is
   _checkToken = () => {
     const token = getToken()
+    console.log(" LOG ___ token ", token )
     if (!token) return null
     Api.get('token', '', token)
       .then(({success}) => {
@@ -207,11 +194,11 @@ export default class User {
   }
 
   /**
-  * Send data to the server to create a new user
-  * @param login{String} email{String} username{String} password{String}
-  * @returns token{String}
-  * @public
-  */
+   * Send data to the server to create a new user
+   * @param login{String} email{String} username{String} password{String}
+   * @returns token{String}
+   * @public
+   */
   @action('Signup new user')
   signupUser = () => {
     const {login, email, username, password} = this
@@ -231,11 +218,11 @@ export default class User {
   }
 
   /**
-  * Fetch all orders for user authed by the token
-  * @param token{String}
-  * @return [Orders]
-  * @public
-  */
+   * Fetch all orders for user authed by the token
+   * @param token{String}
+   * @return [Orders]
+   * @public
+   */
   @action('fetch orders by token')
   fetchOrdersByToken = async () => {
     if (!this.token) return null
@@ -254,11 +241,11 @@ export default class User {
   }
 
   /**
-  * Fetch order by id, when we havn't got the token
-  * @param id{String}
-  * @return Order{Object}
-  * @public
-  */
+   * Fetch order by id, when we havn't got the token
+   * @param id{String}
+   * @return Order{Object}
+   * @public
+   */
   @action('fetch order without token')
   fetchGuestOrder = async id => {
     this.loading = true
