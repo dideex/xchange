@@ -1,4 +1,5 @@
 import User from '../User'
+import Api from '../../components/Api'
 
 const fakeToken = 'fakeToken'
 jest.mock('../utils', () => ({
@@ -8,6 +9,7 @@ jest.mock('../utils', () => ({
   getAdminStatus: () => {},
 }))
 
+// jest.mock('../../components/Api')
 jest.mock('../../components/Api', () => ({
   post: jest.fn(() => Promise.resolve({token: 'fakeToken'})),
   get: jest.fn(() => Promise.resolve(data => data)),
@@ -16,15 +18,13 @@ jest.mock('../../components/Api', () => ({
 
 const fakeUser = {username: 'Batman', password: 'Nopassword'}
 const Utils = require('../utils')
-const Api = require('../../components/Api')
+// const Api = require('../../components/Api')
 
 describe('Menu store tests', () => {
   let store
   beforeEach(() => {
     store = new User()
-    const {username, password} = fakeUser
-    store.changeLogin(username)
-    store.changePassword(password)
+    store._setInitalData()
   })
 
   it('jest', () => {
@@ -37,14 +37,18 @@ describe('Menu store tests', () => {
   })
 
   it('Check token', async () => {
-    // getToken = jest.fn(() => fakeToken)
-    Utils.getToken = () => fakeToken
+    Utils.getToken = jest.fn(() => fakeToken)
     await store._checkToken()
-    // expect(Utils.getToken).toHaveBeenCalledTimes(1)
+    expect(Utils.getToken).toHaveBeenCalledTimes(1)
     expect(Api.get).toHaveBeenCalledTimes(1)
+    expect(Api.get).toHaveBeenCalledWith('token', '', fakeToken)
   })
 
   it('Getting token', async () => {
+    const {username, password} = fakeUser
+    // Api.mockImplementation(({get: fn}));
+    store.changeLogin(username)
+    store.changePassword(password)
     store.fetchData = jest.fn()
     expect(store.loading).toBe(false)
     expect(store.isNetworkError).toBe(false)

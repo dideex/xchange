@@ -51,7 +51,6 @@ export default class User {
   // Checks valid token is
   _checkToken = () => {
     const token = getToken()
-    console.log(" LOG ___ token ", token )
     if (!token) return null
     Api.get('token', '', token)
       .then(({success}) => {
