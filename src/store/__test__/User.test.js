@@ -1,7 +1,6 @@
 import User from '../User'
 import Api from '../../components/Api'
 
-const fakeToken = 'fakeToken'
 jest.mock('../utils', () => ({
   setToken: () => {},
   logout: () => {},
@@ -9,16 +8,23 @@ jest.mock('../utils', () => ({
   getAdminStatus: () => {},
 }))
 
-// jest.mock('../../components/Api')
 jest.mock('../../components/Api', () => ({
-  post: jest.fn(() => Promise.resolve({token: 'fakeToken'})),
-  get: jest.fn(() => Promise.resolve(data => data)),
+  post: () => {},
+  get: () => {},
   errorEmitter: jest.fn(data => fn => data(fn)),
 }))
 
+const fakeToken = 'fakeToken'
 const fakeUser = {username: 'Batman', password: 'Nopassword'}
+const fakeUserData = {
+  wallets: [{bitcoin: 1234}],
+  lastOperations: [],
+  username: fakeUser.username,
+  email: fakeUser.username,
+  login: fakeUser.username,
+  convertedAmount: 1000,
+}
 const Utils = require('../utils')
-// const Api = require('../../components/Api')
 
 describe('Menu store tests', () => {
   let store
@@ -34,9 +40,12 @@ describe('Menu store tests', () => {
   it('init menu', () => {
     expect(store.orders.length).toBe(0)
     expect(store.username).toBe('')
+    Api.get = () => {}
+    Api.post = () => {}
   })
 
   it('Check token', async () => {
+    Api.get = jest.fn(() => Promise.resolve(data => data))
     Utils.getToken = jest.fn(() => fakeToken)
     await store._checkToken()
     expect(Utils.getToken).toHaveBeenCalledTimes(1)
@@ -45,8 +54,9 @@ describe('Menu store tests', () => {
   })
 
   it('Getting token', async () => {
+    Api.post = jest.fn(() => Promise.resolve({token: fakeToken}))
+
     const {username, password} = fakeUser
-    // Api.mockImplementation(({get: fn}));
     store.changeLogin(username)
     store.changePassword(password)
     store.fetchData = jest.fn()
@@ -59,6 +69,21 @@ describe('Menu store tests', () => {
     expect(store.token).toBe('fakeToken')
     expect(store.loading).toBe(false)
     expect(store.fetchData).toHaveBeenCalledTimes(1)
+  })
+
+  it('fetch data', async () => {
+    Utils.getToken = jest.fn(() => fakeToken)
+    Api.get = jest.fn(() => Promise.resolve(fakeUserData))
+
+    await store.fetchData()
+    expect(Api.get).toHaveBeenCalledTimes(1)
+    expect(Api.get).toHaveBeenCalledWith('userData', '', fakeToken)
+    expect(store.username).toBe(fakeUserData.username)
+    expect(store.login).toBe(fakeUserData.login)
+    expect(store.email).toBe(fakeUserData.email)
+    expect(store.wallets[0]).toMatchObject(fakeUserData.wallets[0])
+    expect(store.lastOperations.length).toBe(fakeUserData.lastOperations.length)
+    expect(store.convertedAmount).toBe(fakeUserData.convertedAmount)
   })
 
   // it('toggle menu', () => {
