@@ -76,7 +76,7 @@ describe('Menu store tests', () => {
   it('fetch data without token', async () => {
     Utils.getToken = jest.fn(() => {})
     Api.get = jest.fn(() => Promise.resolve(fakeUserData))
-    
+
     await store.fetchData()
     expect(Api.get).toHaveBeenCalledTimes(0)
     expect(store.token).toBe('')
@@ -99,16 +99,41 @@ describe('Menu store tests', () => {
 
   it('Get locale from the cookie', () => {
     Cookie.get = jest.fn(() => fakeLocale)
-    
+
     const newStore = new User()
     expect(newStore.locale).toBe(fakeLocale)
   })
 
   it('Get default locale from the cookie', () => {
     Cookie.get = jest.fn(() => '')
-    
+
     const newStore = new User()
     expect(newStore.locale).toBe('ru-RU')
+  })
+
+  it('update info', async () => {
+    Utils.getToken = jest.fn(() => fakeToken)
+    Api.post = jest.fn(() => Promise.resolve())
+    store.username = fakeUserData.username
+    store.wallets = fakeUserData.wallets
+    store.email = fakeUserData.email
+
+    const {username, wallets, email} = store
+
+    await store.updateInfo()
+    expect(Api.post).toHaveBeenCalledTimes(1)
+    expect(Api.post).toHaveBeenCalledWith(
+      'userData',
+      {username, wallets, email},
+      fakeToken,
+    )
+  })
+  
+  it('update info without token', async () => {
+    Utils.getToken = jest.fn(() => {})
+    Api.post = jest.fn(() => Promise.resolve())
+
+    expect(Api.post).toHaveBeenCalledTimes(0)
   })
 
   // it('toggle menu', () => {
