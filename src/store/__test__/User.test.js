@@ -1,5 +1,6 @@
 import User from '../User'
 import Api from '../../components/Api'
+import Cookie from 'js-cookie'
 
 jest.mock('../utils', () => ({
   setToken: () => {},
@@ -14,6 +15,7 @@ jest.mock('../../components/Api', () => ({
   errorEmitter: jest.fn(data => fn => data(fn)),
 }))
 
+const fakeLocale = 'fake-FK'
 const fakeToken = 'fakeToken'
 const fakeUser = {username: 'Batman', password: 'Nopassword'}
 const fakeUserData = {
@@ -71,6 +73,15 @@ describe('Menu store tests', () => {
     expect(store.fetchData).toHaveBeenCalledTimes(1)
   })
 
+  it('fetch data without token', async () => {
+    Utils.getToken = jest.fn(() => {})
+    Api.get = jest.fn(() => Promise.resolve(fakeUserData))
+    
+    await store.fetchData()
+    expect(Api.get).toHaveBeenCalledTimes(0)
+    expect(store.token).toBe('')
+  })
+
   it('fetch data', async () => {
     Utils.getToken = jest.fn(() => fakeToken)
     Api.get = jest.fn(() => Promise.resolve(fakeUserData))
@@ -84,6 +95,20 @@ describe('Menu store tests', () => {
     expect(store.wallets[0]).toMatchObject(fakeUserData.wallets[0])
     expect(store.lastOperations.length).toBe(fakeUserData.lastOperations.length)
     expect(store.convertedAmount).toBe(fakeUserData.convertedAmount)
+  })
+
+  it('Get locale from the cookie', () => {
+    Cookie.get = jest.fn(() => fakeLocale)
+    
+    const newStore = new User()
+    expect(newStore.locale).toBe(fakeLocale)
+  })
+
+  it('Get default locale from the cookie', () => {
+    Cookie.get = jest.fn(() => '')
+    
+    const newStore = new User()
+    expect(newStore.locale).toBe('ru-RU')
   })
 
   // it('toggle menu', () => {
