@@ -19,6 +19,7 @@ const fakeLocale = 'fake-FK'
 const fakeToken = 'fakeToken'
 const fakeUser = {username: 'Batman', password: 'Nopassword'}
 const fakeUserData = {
+  password: fakeUser.password,
   wallets: [{bitcoin: 1234}],
   lastOperations: [],
   username: fakeUser.username,
@@ -97,6 +98,24 @@ describe('Menu store tests', () => {
     expect(store.convertedAmount).toBe(fakeUserData.convertedAmount)
   })
 
+  it('Sign up new user', async () => {
+    Utils.setToken = jest.fn()
+    Api.post = jest.fn(() => Promise.resolve({token: fakeToken}))
+    store.username = fakeUserData.username
+    store.email = fakeUserData.email
+    store.login = fakeUserData.login
+    store.password = fakeUserData.password
+    store.fetchData = jest.fn()
+
+    await store.signupUser()
+    const {username, email, login, password} = store
+    expect(Api.post).toHaveBeenCalledTimes(1)
+    expect(Api.post).toHaveBeenCalledWith('signupUser', {username, email, login, password})
+    expect(store.fetchData).toHaveBeenCalledTimes(1)
+    expect(Utils.setToken).toHaveBeenCalledTimes(1)
+    expect(store.token).toBe(fakeToken)
+  })
+
   it('Get locale from the cookie', () => {
     Cookie.get = jest.fn(() => fakeLocale)
 
@@ -128,7 +147,7 @@ describe('Menu store tests', () => {
       fakeToken,
     )
   })
-  
+
   it('update info without token', async () => {
     Utils.getToken = jest.fn(() => {})
     Api.post = jest.fn(() => Promise.resolve())
@@ -136,36 +155,4 @@ describe('Menu store tests', () => {
     expect(Api.post).toHaveBeenCalledTimes(0)
   })
 
-  // it('toggle menu', () => {
-  //   menuStore.toggleMenu()
-  //   expect(menuStore.state).toBe('main')
-  //   menuStore.toggleMenu()
-  //   expect(menuStore.state).toBe('close')
-  // })
-
-  // it('is open state', () => {
-  //   menuStore.toggleMenu()
-  //   expect(menuStore.isOpen).toBe(true)
-  //   menuStore.toggleMenu()
-  //   expect(menuStore.isOpen).toBe(false)
-  // })
-
-  // it('State behavior', () => {
-  //   menuStore.openConstructor()
-  //   expect(menuStore.state).toBe('constructor')
-  //   menuStore.closeMenu()
-  //   expect(menuStore.state).toBe('close')
-  //   menuStore.openMain()
-  //   expect(menuStore.state).toBe('main')
-  //   menuStore.openTY()
-  //   expect(menuStore.state).toBe('thank-you')
-  //   menuStore.openCallback()
-  //   expect(menuStore.state).toBe('callback')
-  //   menuStore.openCallback()
-  //   expect(menuStore.state).toBe('main')
-  //   menuStore.openCallback()
-  //   expect(menuStore.state).toBe('callback')
-  //   menuStore.openOrder()
-  //   expect(menuStore.state).toBe('order')
-  // })
 })
