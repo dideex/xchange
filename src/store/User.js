@@ -237,6 +237,7 @@ export default class User {
         console.error(err)
       })
     this.loading = false
+    return Promise.resolve()
   }
 
   /**
