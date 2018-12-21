@@ -19,10 +19,6 @@ class Cash {
   @observable.ref currency
 
   constructor() {
-    const url =
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3040'
-        : 'http://176.119.158.145:3040'
     this.inputValue = 0
     this.outputValue = 0
     this.outputValueInUsd = 0
@@ -37,6 +33,14 @@ class Cash {
     this.currency = []
     this.isNetworkError = false
     this.userRate = 0.9
+    this._setInitalData()
+  }
+
+  _setInitalData = () => {
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3040'
+        : 'http://176.119.158.145:3040'
     this.socket = openSocket(url)
     this.errorEmitter = Api.errorEmitter.bind(this)
     this.fetchCurrency()
@@ -150,9 +154,6 @@ class Cash {
       this.currencyInput = this.currencyOutput
       this.currencyOutput = +id
       this._reverseInputs()
-      // let temp = this.inputValue
-      // this.inputValue = this.outputValue / this.userRate //** 2
-      // this.outputValue = +temp
     } else {
       this.currencyOutput = +id
       this.outputValue = this._calcOutputWithoutRates(this.inputValue)
@@ -168,9 +169,6 @@ class Cash {
       this.currencyOutput = this.currencyInput
       this.currencyInput = +id
       this._reverseInputs()
-      // let temp = this.inputValue
-      // this.inputValue = this.outputValue
-      // this.outputValue = +temp * this.userRate //** 2
     } else {
       this.currencyInput = +id
       this.inputValue = this._calcInputWithoutRates(this.outputValue)
@@ -246,10 +244,11 @@ class Cash {
    * @public
    */
   @action('get currency from the server')
-  fetchCurrency = () =>
-    new Promise((resolve, reject) => {
-      this.loading = true
-      return Api.get('currency')
+  fetchCurrency = () => 
+    // new Promise((resolve, reject) => {
+    //   this.loading = true
+    //   return Api.get('currency')
+      Api.get('currency')
         .then(
           this.errorEmitter(({data, userRate}) => {
             this.userRate = userRate
@@ -257,16 +256,16 @@ class Cash {
               .sort((a, b) => a.order - b.order)
               .map((row, i) => ({...row, id: i}))
             this.loading = false
-            resolve()
+            // resolve()
           }),
         )
         .catch(err => {
           noty('Ошибка сервера', 'error')
           console.error(err)
           this.loading = false
-          reject()
+          // reject()
         })
-    })
+    // })
 
   /**
    * Creates boadcast query to socketio

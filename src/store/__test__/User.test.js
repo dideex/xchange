@@ -1,6 +1,7 @@
 import User from '../User'
 import Api from '../../components/Api'
 import Cookie from 'js-cookie'
+import Utils from '../utils'
 
 jest.mock('../utils', () => ({
   setToken: () => {},
@@ -28,7 +29,7 @@ const fakeUserData = {
   convertedAmount: 1000,
 }
 const fakeOrders = [1,2,3,4,5]
-const Utils = require('../utils')
+// const Utils = require('../utils')
 
 describe('Menu store tests', () => {
   let store
