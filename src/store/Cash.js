@@ -3,7 +3,7 @@ import openSocket from 'socket.io-client'
 import Api from '../components/Api'
 import {noty} from '../components/common'
 
-// Mobx Cash store 
+// Mobx Cash store
 // Keeps the current transittion payment data
 // And currency rate exchange
 class Cash {
@@ -244,11 +244,10 @@ class Cash {
    * @public
    */
   @action('get currency from the server')
-  fetchCurrency = () => 
-    // new Promise((resolve, reject) => {
-    //   this.loading = true
-    //   return Api.get('currency')
-      Api.get('currency')
+  fetchCurrency = () =>
+    new Promise((resolve, reject) => {
+      this.loading = true
+      return Api.get('currency')
         .then(
           this.errorEmitter(({data, userRate}) => {
             this.userRate = userRate
@@ -256,16 +255,16 @@ class Cash {
               .sort((a, b) => a.order - b.order)
               .map((row, i) => ({...row, id: i}))
             this.loading = false
-            // resolve()
+            resolve()
           }),
         )
         .catch(err => {
           noty('Ошибка сервера', 'error')
           console.error(err)
           this.loading = false
-          // reject()
+          reject()
         })
-    // })
+    })
 
   /**
    * Creates boadcast query to socketio
