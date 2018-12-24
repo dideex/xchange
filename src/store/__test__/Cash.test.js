@@ -1,6 +1,8 @@
 import Cash from '../Cash'
 import Api from '../../components/Api'
 import openSocket from 'socket.io-client'
+import currencies from './currencies.json'
+import currency from './currencies'
 
 // jest.mock('socket.io-client', jest.fn)
 
@@ -15,26 +17,11 @@ const sortedData = [
   {order: 2, id: 1, name: 'bitcoin'},
   {order: 3, id: 2, name: 'rur'},
 ]
-/* 
-_id: "5bdc3a492fb62979e3105534"
-base: ""
-change: "-4.98"
-icon: "Bitcoin"
-id: 0
-label: "BTC"
-minimal: "0.01"
-name: "Bitcoin"
-order: 1
-price_usd: "3881.81814302"
-reserve: "10000"
-source: "zzzZzzzzz"
-type: "crypto" 
-*/
 
 const unsortedData = [
-  {order: 2, id: 'bitcoin', name: 'bitcoin'},
-  {order: 1, id: 'eth', name: 'eth'},
-  {order: 3, id: 'rur', name: 'rur'},
+  {order: 2, id: 'bitcoin', name: 'lisk'},
+  {order: 1, id: 'eth', name: 'tether'},
+  {order: 3, id: 'rur', name: 'litecoin'},
 ]
 
 const fakeData = {
@@ -75,5 +62,19 @@ describe('Cash store tests', () => {
       .sort((a, b) => a.order - b.order)
       .map((row, i) => ({...row, id: i}))
     expect(store.currency).toEqual(expect.arrayContaining(sortedData))
+  })
+})
+
+describe('Cash store currencies', () => {
+  let store
+  beforeEach(() => {
+    Api.get = jest.fn(() => Promise.resolve(currencies))
+    store = new Cash()
+  })
+
+  it('Init currency', () => {
+    console.log(" LOG ___ currencies.data ", currencies.data )
+    console.log(" LOG ___ currencies.data ", store.currency )
+    expect(store.currency).toBe(expect.arrayContaining(currencies.data))
   })
 })
