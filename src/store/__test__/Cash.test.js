@@ -67,14 +67,56 @@ describe('Cash store tests', () => {
 
 describe('Cash store currencies', () => {
   let store
+  const btcRate = currencies.data[0].price_usd * currencies.userRate
+  const ethRate = currencies.data[1].price_usd * currencies.userRate
+  const rurRate = currencies.data[2].price_usd * currencies.userRate
+
   beforeEach(() => {
     Api.get = jest.fn(() => Promise.resolve(currencies))
     store = new Cash()
   })
 
   it('Init currency', () => {
-    console.log(" LOG ___ currencies.data ", currencies.data )
-    console.log(" LOG ___ currencies.data ", store.currency )
-    expect(store.currency).toBe(expect.arrayContaining(currencies.data))
+    expect(store.userRate).toBe(currencies.userRate)
+    expect(store.currencyInput).toBe(0)
+    expect(store.currencyOutput).toBe(2)
+    store.currency.forEach((currency, i) => {
+      expect(currency).toMatchObject(currencies.data[i])
+    })
+  })
+
+  it('Change input value', () => {
+    store.changeInput('100')
+    expect(store.inputValue).toBe('100')
+    expect(store.outputValue).toBe(store.inputValue * btcRate)
+  })
+
+  it('Change output currency', () => {
+    store.changeInput('100')
+    store.setCurrencyOutput(1)
+    expect(store.inputValue).toBe('100')
+    expect(store.outputValue).toBe(store.inputValue * ethRate)
+    store.setCurrencyOutput(2)
+    expect(store.outputValue).toBe(store.inputValue * btcRate)
+  })
+
+  it('Change input currency', () => {
+    store.changeOutput('100')
+    expect(store.inputValue).toBe(store.inputValue / rurRate)
+  })
+
+  it('Swap currencies', () => {
+    store.setCurrencyOutput(0)
+    expect(store.currencyInput).toBe(2)
+    expect(store.currencyOutput).toBe(0)
+    store.setCurrencyOutput(2)
+    expect(store.currencyInput).toBe(0)
+    expect(store.currencyOutput).toBe(2)
+    store.setCurrencyOutput(1)
+    expect(store.currencyInput).toBe(0)
+    expect(store.currencyOutput).toBe(1)
+    store.setCurrencyOutput(0)
+    expect(store.currencyInput).toBe(1)
+    expect(store.currencyOutput).toBe(0)
   })
 })

@@ -10,7 +10,7 @@
       "minimal": "0.1",
       "name": "Bitcoin",
       "order": 1,
-      "price_usd": "1000",
+      "price_usd": "4",
       "reserve": "10000",
       "source": "zzzZzzzzz",
       "type": "crypto"
@@ -25,7 +25,7 @@
       "minimal": "1",
       "name": "Ethereum",
       "order": 2,
-      "price_usd": "500",
+      "price_usd": "2",
       "reserve": "10000",
       "source": "1234 4321 1234 4321",
       "type": "crypto"
@@ -41,7 +41,7 @@
       "minimal": "1000",
       "name": "Сбербанк руб",
       "order": 3,
-      "price_usd": "0.014",
+      "price_usd": "1",
       "reserve": "1000000",
       "source": "1234 4321 1234 4321"
     }
