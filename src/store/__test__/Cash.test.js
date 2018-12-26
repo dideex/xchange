@@ -65,11 +65,8 @@ describe('Cash store tests', () => {
   })
 })
 
-describe('Cash store currencies', () => {
+describe('Cash store currencies behaviour', () => {
   let store
-  const btcRate = currencies.data[0].price_usd * currencies.userRate
-  const ethRate = currencies.data[1].price_usd * currencies.userRate
-  const rurRate = currencies.data[2].price_usd * currencies.userRate
 
   beforeEach(() => {
     Api.get = jest.fn(() => Promise.resolve(currencies))
@@ -85,26 +82,6 @@ describe('Cash store currencies', () => {
     })
   })
 
-  it('Change input value', () => {
-    store.changeInput('100')
-    expect(store.inputValue).toBe('100')
-    expect(store.outputValue).toBe(store.inputValue * btcRate)
-  })
-
-  it('Change output currency', () => {
-    store.changeInput('100')
-    store.setCurrencyOutput(1)
-    expect(store.inputValue).toBe('100')
-    expect(store.outputValue).toBe(store.inputValue * ethRate)
-    store.setCurrencyOutput(2)
-    expect(store.outputValue).toBe(store.inputValue * btcRate)
-  })
-
-  it('Change input currency', () => {
-    store.changeOutput('100')
-    expect(store.inputValue).toBe(store.inputValue / rurRate)
-  })
-
   it('Swap currencies', () => {
     store.setCurrencyOutput(0)
     expect(store.currencyInput).toBe(2)
@@ -118,5 +95,68 @@ describe('Cash store currencies', () => {
     store.setCurrencyOutput(0)
     expect(store.currencyInput).toBe(1)
     expect(store.currencyOutput).toBe(0)
+  })
+})
+
+describe('Behaviour currnecy calculate', () => {
+  let store
+  const btcRate = currencies.data[0].price_usd * currencies.userRate
+  const ethRate = currencies.data[1].price_usd * currencies.userRate
+  const rurRate = currencies.data[2].price_usd * currencies.userRate
+
+  beforeEach(() => {
+    Api.get = jest.fn(() => Promise.resolve(currencies))
+    store = new Cash()
+  })
+
+  it('Change input value', () => {
+    store.changeInput('100')
+    expect(store.inputValue).toBe('100')
+    expect(store.outputValue).toBe(store.inputValue * btcRate)
+    store.changeInput('200')
+    expect(store.inputValue).toBe('200')
+    expect(store.outputValue).toBe(store.inputValue * btcRate)
+    store.changeInput('800')
+    expect(store.inputValue).toBe('800')
+    expect(store.outputValue).toBe(store.inputValue * btcRate)
+  })
+
+  it('Change output value', () => {
+    store.changeOutput('100')
+    expect(store.outputValue).toBe('100')
+    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+    store.changeOutput('400')
+    expect(store.outputValue).toBe('400')
+    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+    store.changeOutput('500')
+    expect(store.outputValue).toBe('500')
+    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+  })
+
+  it('Change input currency', () => {
+    store.changeOutput('100')
+    expect(store.outputValue).toBe('100')
+    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+    store.setCurrencyInput(1)
+    expect(store.inputValue).toBe(store.outputValue / (2 * currencies.userRate))
+    store.changeOutput('200')
+    expect(store.inputValue).toBe(store.outputValue / (2 * currencies.userRate))
+    store.setCurrencyInput(0)
+    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+  })
+
+  it('Change output currency', () => {
+    store.changeInput('100')
+    store.setCurrencyOutput(1)
+    expect(store.inputValue).toBe('100')
+    expect(store.outputValue).toBe(store.inputValue * ethRate)
+    store.setCurrencyOutput(2)
+    expect(store.outputValue).toBe(store.inputValue * btcRate)
+    store.changeInput('400')
+    store.setCurrencyOutput(1)
+    expect(store.inputValue).toBe('400')
+    expect(store.outputValue).toBe(store.inputValue * ethRate)
+    store.setCurrencyOutput(2)
+    expect(store.outputValue).toBe(store.inputValue * btcRate)
   })
 })
