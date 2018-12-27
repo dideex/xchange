@@ -98,11 +98,15 @@ describe('Cash store currencies behaviour', () => {
   })
 })
 
-describe('Behaviour currnecy calculate', () => {
+describe('Currnecy calculate behaviour', () => {
   let store
   const btcRate = currencies.data[0].price_usd * currencies.userRate
   const ethRate = currencies.data[1].price_usd * currencies.userRate
   const rurRate = currencies.data[2].price_usd * currencies.userRate
+
+  const btcPrice = currencies.data[0].price_usd
+  const ethPrice = currencies.data[1].price_usd
+  const rurPrice = currencies.data[2].price_usd
 
   beforeEach(() => {
     Api.get = jest.fn(() => Promise.resolve(currencies))
@@ -124,25 +128,25 @@ describe('Behaviour currnecy calculate', () => {
   it('Change output value', () => {
     store.changeOutput('100')
     expect(store.outputValue).toBe('100')
-    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+    expect(store.inputValue).toBe(store.outputValue / (btcPrice * currencies.userRate))
     store.changeOutput('400')
     expect(store.outputValue).toBe('400')
-    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+    expect(store.inputValue).toBe(store.outputValue / (btcPrice * currencies.userRate))
     store.changeOutput('500')
     expect(store.outputValue).toBe('500')
-    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+    expect(store.inputValue).toBe(store.outputValue / (btcPrice * currencies.userRate))
   })
 
   it('Change input currency', () => {
     store.changeOutput('100')
     expect(store.outputValue).toBe('100')
-    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+    expect(store.inputValue).toBe(store.outputValue / (btcPrice * currencies.userRate))
     store.setCurrencyInput(1)
-    expect(store.inputValue).toBe(store.outputValue / (2 * currencies.userRate))
+    expect(store.inputValue).toBe(store.outputValue / (ethPrice * currencies.userRate))
     store.changeOutput('200')
-    expect(store.inputValue).toBe(store.outputValue / (2 * currencies.userRate))
+    expect(store.inputValue).toBe(store.outputValue / (ethPrice * currencies.userRate))
     store.setCurrencyInput(0)
-    expect(store.inputValue).toBe(store.outputValue / (4 * currencies.userRate))
+    expect(store.inputValue).toBe(store.outputValue / (btcPrice * currencies.userRate))
   })
 
   it('Change output currency', () => {
@@ -158,5 +162,45 @@ describe('Behaviour currnecy calculate', () => {
     expect(store.outputValue).toBe(store.inputValue * ethRate)
     store.setCurrencyOutput(2)
     expect(store.outputValue).toBe(store.inputValue * btcRate)
+  })
+
+  it('Swap input to output', () => {
+    store.changeInput('100')
+    store.setCurrencyInput(2)
+    expect(store.inputValue).toBe(100 * btcPrice)
+    expect(store.outputValue).toBe(100 * store.userRate)
+    store.changeInput('100')
+    store.setCurrencyInput(0)
+    expect(store.inputValue).toBe(100 / btcPrice)
+    expect(store.outputValue).toBe(100 * store.userRate)
+    store.setCurrencyOutput(1)
+    store.changeInput('100')
+    store.setCurrencyInput(1)
+    expect(store.inputValue).toBe(100 * ethPrice)
+    expect(store.outputValue).toBe(100 * store.userRate)
+    store.changeInput('100')
+    store.setCurrencyInput(0)
+    expect(store.inputValue).toBe(100 / ethPrice)
+    expect(store.outputValue).toBe(100 * store.userRate)
+  })
+
+  it('swap output to input', () => {
+    store.changeInput('100')
+    store.setCurrencyOutput(0)
+    expect(store.inputValue).toBe(100 * btcPrice)
+    expect(store.outputValue).toBe(100 * store.userRate)
+    store.changeInput('100')
+    store.setCurrencyOutput(2)
+    expect(store.inputValue).toBe(100 / btcPrice)
+    expect(store.outputValue).toBe(100 * store.userRate)
+    store.setCurrencyInput(1)
+    store.changeInput('100')
+    store.setCurrencyOutput(1)
+    expect(store.inputValue).toBe(100 * ethPrice)
+    expect(store.outputValue).toBe(100 * store.userRate)
+    store.changeInput('100')
+    store.setCurrencyOutput(2)
+    expect(store.inputValue).toBe(100 / ethPrice)
+    expect(store.outputValue).toBe(100 * store.userRate)
   })
 })
