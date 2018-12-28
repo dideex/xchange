@@ -2,7 +2,6 @@ import Cash from '../Cash'
 import Api from '../../components/Api'
 import openSocket from 'socket.io-client'
 import currencies from './currencies.json'
-import currency from './currencies'
 
 // jest.mock('socket.io-client', jest.fn)
 
@@ -98,6 +97,31 @@ describe('Cash store currencies behaviour', () => {
   })
 })
 
+describe('UI elements behaviour', () => {
+  let store
+  beforeEach(() => {
+    Api.get = jest.fn(() => Promise.resolve(currencies))
+    store = new Cash()
+  })
+
+  it('Mutation float numbers', () => {
+    const base = '100'
+    store.changeInput(base)
+    store.changeInput('100q')
+    expect(store.inputValue).toBe(base)
+    store.changeInput(base + '.')
+    expect(store.inputValue).toBe(base + '.')
+    store.changeInput(base + '..')
+    expect(store.inputValue).toBe(base + '.')
+    store.changeInput(base + ',')
+    expect(store.inputValue).toBe(base + '.')
+    store.changeInput(base + ',0')
+    expect(store.inputValue).toBe(base + '.0')
+    store.changeInput(base + ',,0')
+    expect(store.inputValue).toBe(base + '.0')
+  })
+})
+
 describe('Currnecy calculate behaviour', () => {
   let store
   const btcRate = currencies.data[0].price_usd * currencies.userRate
@@ -184,7 +208,7 @@ describe('Currnecy calculate behaviour', () => {
     expect(store.outputValue).toBe(100 * store.userRate)
   })
 
-  it('swap output to input', () => {
+  it('Swap output to input', () => {
     store.changeInput('100')
     store.setCurrencyOutput(0)
     expect(store.inputValue).toBe(100 * btcPrice)
@@ -202,5 +226,26 @@ describe('Currnecy calculate behaviour', () => {
     store.setCurrencyOutput(2)
     expect(store.inputValue).toBe(100 / ethPrice)
     expect(store.outputValue).toBe(100 * store.userRate)
+  })
+
+  it('Set value less then minimal payment', () => {
+    store.setCurrencyInput(2)
+    store.changeInput('100')
+    store.correctValuesLimits()
+    expect(store.inputValue).toBe('1000')
+    store.setCurrencyInput(1)
+    store.changeInput('0.5')
+    store.correctValuesLimits()
+    expect(store.inputValue).toBe('1')
+  })
+
+  it('Set value bigger then reserved payment', () => {
+    store.changeOutput('9999999')
+    store.correctValuesLimits()
+    expect(store.outputValue).toBe('1000000')
+    store.setCurrencyOutput(1)
+    store.changeOutput('9999999')
+    store.correctValuesLimits()
+    expect(store.outputValue).toBe('10000')
   })
 })
