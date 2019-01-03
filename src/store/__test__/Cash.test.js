@@ -1,7 +1,9 @@
 import Cash from '../Cash'
 import Api from '../../components/Api'
 import openSocket from 'socket.io-client'
-import currencies from './currencies.json'
+import currencies from '../__mocks__/currencies.json'
+
+import {fakeToken, fakeUser} from './User.test'
 
 // jest.mock('socket.io-client', jest.fn)
 
@@ -62,6 +64,29 @@ describe('Cash store tests', () => {
       .map((row, i) => ({...row, id: i}))
     expect(store.currency).toEqual(expect.arrayContaining(sortedData))
   })
+
+  // it('Fetch new payment', async () => {
+  //   Api.get = jest.fn(() => Promise.resolve(fakeUnsortData))
+  //   // Api.errorEmitter = jest.fn(data => fn => {}),
+  //   // store.correctValuesLimits = jest.fn()
+  //   // store._calcOutputInUsd = jest.fn()
+  //   // store.clearErr = jest.fn()
+
+  //   try {
+  //     await store.createPayment({
+  //       token: fakeToken,
+  //       fromWallet: '1234',
+  //       toWallet: '4321',
+  //       email: fakeUser.username,
+  //     })
+  //   } catch (error) {
+  //     console.log(" LOG ___ error ", error )
+  //   }
+  //   expect(1).toBe(1)
+  //   // expect(store.correctValuesLimits).toHaveBeenCalledTimes(1)
+  //   // expect(store._calcOutputInUsd).toHaveBeenCalledTimes(1)
+  //   // expect(store.clearErr).toHaveBeenCalledTimes(1)
+  // })
 })
 
 describe('Cash store currencies behaviour', () => {
@@ -95,6 +120,15 @@ describe('Cash store currencies behaviour', () => {
     expect(store.currencyInput).toBe(1)
     expect(store.currencyOutput).toBe(0)
   })
+
+  it('Sets correct wallets for currency', () => {
+    store.setCurrencyInput(0)
+    expect(store.currency[store.currencyInput].source).toBe(currencies.data[0].source)
+    store.setCurrencyInput(1)
+    expect(store.currency[store.currencyInput].source).toBe(currencies.data[1].source)
+    store.setCurrencyInput(2)
+    expect(store.currency[store.currencyInput].source).toBe(currencies.data[2].source)
+  })
 })
 
 describe('UI elements behaviour', () => {
@@ -102,6 +136,17 @@ describe('UI elements behaviour', () => {
   beforeEach(() => {
     Api.get = jest.fn(() => Promise.resolve(currencies))
     store = new Cash()
+  })
+
+  it('Change inputs', () => {
+    store.changeInput('100')
+    expect(store.inputValue).toBe('100')
+    store.changeInput('200')
+    expect(store.inputValue).toBe('200')
+    store.changeOutput('100')
+    expect(store.outputValue).toBe('100')
+    store.changeOutput('200')
+    expect(store.outputValue).toBe('200')
   })
 
   it('Mutation float numbers', () => {

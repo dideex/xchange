@@ -16,10 +16,10 @@ jest.mock('../../components/Api', () => ({
   errorEmitter: jest.fn(data => fn => data(fn)),
 }))
 
-const fakeLocale = 'fake-FK'
-const fakeToken = 'fakeToken'
-const fakeUser = {username: 'Batman', password: 'Nopassword'}
-const fakeUserData = {
+export const fakeLocale = 'fake-FK'
+export const fakeToken = 'fakeToken'
+export const fakeUser = {username: 'Batman', password: 'Nopassword'}
+export const fakeUserData = {
   password: fakeUser.password,
   wallets: [{bitcoin: 1234}],
   lastOperations: [],

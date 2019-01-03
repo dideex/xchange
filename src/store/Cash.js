@@ -185,55 +185,55 @@ class Cash {
    */
   @action('create payment and push to server')
   createPayment = ({token, fromWallet, toWallet, email}) => {
-    this.clearErr()
+    // this.clearErr()
     this.isNetworkError = false
     this.loading = true
-    this.correctValuesLimits()
-    this._calcOutputInUsd()
-    return this.fetchCurrency().then(async () => {
-      this.paymentStatus = 1
-      const data = {
-        inputValue: this.inputValue,
-        outputValue: this.outputValue,
-        outputValueInUsd: this.outputValueInUsd,
-        currencyInput: this.currency[this.currencyInput].name,
-        currencyOutput: this.currency[this.currencyOutput].name,
-        currencyInputLabel: this.currency[this.currencyInput].label,
-        currencyOutputLabel: this.currency[this.currencyOutput].label,
-        paymentStatus: 1,
-        email,
-        fromWallet,
-        toWallet,
-        token,
-      }
-      if (token)
-        await Api.post('orders', data, token)
-          .then(
-            this.errorEmitter(({result}) => {
-              this.orderId = result._id
-              noty('Ваш перевод успешно создан')
-            }),
-          )
-          .catch(err => {
-            console.error(err)
-            this.isNetworkError = true
-            noty('Ошибка создания', 'error')
-          })
-      else
-        await Api.post('guestOrders', data)
-          .then(
-            this.errorEmitter(({result}) => {
-              this.orderId = result._id
-              noty('Ваш перевод успешно создан')
-            }),
-          )
-          .catch(err => {
-            console.error(err)
-            this.isNetworkError = true
-            noty('Ошибка создания', 'error')
-          })
-      this.loading = false
-    })
+    // this.correctValuesLimits()
+    // this._calcOutputInUsd()
+    // return this.fetchCurrency().then(async () => {
+    //   this.paymentStatus = 1
+    //   const data = {
+    //     inputValue: this.inputValue,
+    //     outputValue: this.outputValue,
+    //     outputValueInUsd: this.outputValueInUsd,
+    //     currencyInput: this.currency[this.currencyInput].name,
+    //     currencyOutput: this.currency[this.currencyOutput].name,
+    //     currencyInputLabel: this.currency[this.currencyInput].label,
+    //     currencyOutputLabel: this.currency[this.currencyOutput].label,
+    //     paymentStatus: 1,
+    //     email,
+    //     fromWallet,
+    //     toWallet,
+    //     token,
+    //   }
+    //   if (token)
+    //     await Api.post('orders', data, token)
+    //       .then(
+    //         this.errorEmitter(({result}) => {
+    //           this.orderId = result._id
+    //           noty('Ваш перевод успешно создан')
+    //         }),
+    //       )
+    //       .catch(err => {
+    //         console.error(err)
+    //         this.isNetworkError = true
+    //         noty('Ошибка создания', 'error')
+    //       })
+    //   else
+    //     await Api.post('guestOrders', data)
+    //       .then(
+    //         this.errorEmitter(({result}) => {
+    //           this.orderId = result._id
+    //           noty('Ваш перевод успешно создан')
+    //         }),
+    //       )
+    //       .catch(err => {
+    //         console.error(err)
+    //         this.isNetworkError = true
+    //         noty('Ошибка создания', 'error')
+    //       })
+    //   this.loading = false
+    // })
   }
 
   /**
