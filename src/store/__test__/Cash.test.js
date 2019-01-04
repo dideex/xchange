@@ -2,9 +2,7 @@ import Cash from '../Cash'
 import Api from '../../components/Api'
 import openSocket from 'socket.io-client'
 import currencies from '../__mocks__/currencies.json'
-
-import {fakeToken, fakeUser} from './User.test'
-
+import {fakeToken, fakeUser} from '../__mocks__/data'
 // jest.mock('socket.io-client', jest.fn)
 
 jest.mock('../../components/Api', () => ({
@@ -65,28 +63,27 @@ describe('Cash store tests', () => {
     expect(store.currency).toEqual(expect.arrayContaining(sortedData))
   })
 
-  // it('Fetch new payment', async () => {
-  //   Api.get = jest.fn(() => Promise.resolve(fakeUnsortData))
-  //   // Api.errorEmitter = jest.fn(data => fn => {}),
-  //   // store.correctValuesLimits = jest.fn()
-  //   // store._calcOutputInUsd = jest.fn()
-  //   // store.clearErr = jest.fn()
+  it('Fetch new payment with token', async () => {
+    Api.post = jest.fn(() => Promise.resolve(fakeUnsortData))
+    store.correctValuesLimits = jest.fn()
+    store._calcOutputInUsd = jest.fn()
+    store.clearErr = jest.fn()
+    store.fetchCurrency = jest.fn(() => Promise.resolve({data: {}}))
+    store.token = fakeToken
 
-  //   try {
-  //     await store.createPayment({
-  //       token: fakeToken,
-  //       fromWallet: '1234',
-  //       toWallet: '4321',
-  //       email: fakeUser.username,
-  //     })
-  //   } catch (error) {
-  //     console.log(" LOG ___ error ", error )
-  //   }
-  //   expect(1).toBe(1)
-  //   // expect(store.correctValuesLimits).toHaveBeenCalledTimes(1)
-  //   // expect(store._calcOutputInUsd).toHaveBeenCalledTimes(1)
-  //   // expect(store.clearErr).toHaveBeenCalledTimes(1)
-  // })
+    await store.createPayment({
+      token: fakeToken,
+      fromWallet: '1234',
+      toWallet: '4321',
+      email: fakeUser.username,
+    })
+    expect(1).toBe(1)
+    expect(store.fetchCurrency).toHaveBeenCalledTimes(1)
+    expect(store.correctValuesLimits).toHaveBeenCalledTimes(1)
+    expect(store._calcOutputInUsd).toHaveBeenCalledTimes(1)
+    expect(store.clearErr).toHaveBeenCalledTimes(1)
+    expect(Api.post).toHaveBeenCalledTimes(1)
+  })
 })
 
 describe('Cash store currencies behaviour', () => {
