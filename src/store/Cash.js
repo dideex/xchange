@@ -279,7 +279,7 @@ class Cash {
    * @param email{Sting}
    * @public
    */
-  @action('cofirm payment')
+  @action('confirm payment')
   cofirmPayment = email => {
     this.paymentStatus = 2
     const data = {

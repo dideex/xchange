@@ -133,6 +133,18 @@ describe('Cash store tests', () => {
     expect(Api.post).toHaveBeenCalledWith('guestOrders', fakeData)
     expect(store.orderId).toBe(unsortedData[0]._id)
   })
+
+  it('Confirm payment', async() => {
+    Api.post = jest.fn(() => Promise.resolve())
+    store.emitSocket = jest.fn()
+
+    store.orderId = unsortedData[0]._id
+    const fakeData = {
+      _id: unsortedData[0]._id,
+    }
+
+    await store.cofirmPayment(fakeUser.username)
+  })
 })
 
 describe('Cash store currencies behaviour', () => {
