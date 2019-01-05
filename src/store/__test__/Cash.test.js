@@ -18,9 +18,9 @@ const sortedData = [
 ]
 
 const unsortedData = [
-  {order: 2, id: 'bitcoin', name: 'lisk'},
-  {order: 1, id: 'eth', name: 'tether'},
-  {order: 3, id: 'rur', name: 'litecoin'},
+  {order: 2, _id: 2, id: 'bitcoin', name: 'lisk'},
+  {order: 1, _id: 1, id: 'eth', name: 'tether'},
+  {order: 3, _id: 3, id: 'rur', name: 'litecoin'},
 ]
 
 const fakeData = {
@@ -63,13 +63,27 @@ describe('Cash store tests', () => {
     expect(store.currency).toEqual(expect.arrayContaining(sortedData))
   })
 
-  it('Fetch new payment with token', async () => {
-    Api.post = jest.fn(() => Promise.resolve(fakeUnsortData))
+  it('Post new payment with token', async () => {
+    Api.post = jest.fn(() => Promise.resolve({result: unsortedData[0]}))
+    store.fetchCurrency = jest.fn(() => Promise.resolve({data: {}}))
     store.correctValuesLimits = jest.fn()
     store._calcOutputInUsd = jest.fn()
     store.clearErr = jest.fn()
-    store.fetchCurrency = jest.fn(() => Promise.resolve({data: {}}))
-    store.token = fakeToken
+
+    const fakeData = {
+      inputValue: store.inputValue,
+      outputValue: store.outputValue,
+      outputValueInUsd: store.outputValueInUsd,
+      currencyInput: store.currency[store.currencyInput].name,
+      currencyOutput: store.currency[store.currencyOutput].name,
+      currencyInputLabel: store.currency[store.currencyInput].label,
+      currencyOutputLabel: store.currency[store.currencyOutput].label,
+      paymentStatus: 1,
+      email: fakeUser.username,
+      fromWallet: '1234',
+      toWallet: '4321',
+      token: fakeToken,
+    }
 
     await store.createPayment({
       token: fakeToken,
@@ -77,12 +91,47 @@ describe('Cash store tests', () => {
       toWallet: '4321',
       email: fakeUser.username,
     })
-    expect(1).toBe(1)
     expect(store.fetchCurrency).toHaveBeenCalledTimes(1)
     expect(store.correctValuesLimits).toHaveBeenCalledTimes(1)
     expect(store._calcOutputInUsd).toHaveBeenCalledTimes(1)
     expect(store.clearErr).toHaveBeenCalledTimes(1)
     expect(Api.post).toHaveBeenCalledTimes(1)
+    expect(Api.post).toHaveBeenCalledWith('orders', fakeData, fakeToken)
+    expect(store.orderId).toBe(unsortedData[0]._id)
+    expect(store.paymentStatus).toBe(1)
+  })
+
+  it('Post new payment without token', async () => {
+    Api.post = jest.fn(() => Promise.resolve({result: unsortedData[0]}))
+    store.fetchCurrency = jest.fn(() => Promise.resolve({data: {}}))
+    store.correctValuesLimits = jest.fn()
+    store._calcOutputInUsd = jest.fn()
+    store.clearErr = jest.fn()
+
+    const fakeData = {
+      inputValue: store.inputValue,
+      outputValue: store.outputValue,
+      outputValueInUsd: store.outputValueInUsd,
+      currencyInput: store.currency[store.currencyInput].name,
+      currencyOutput: store.currency[store.currencyOutput].name,
+      currencyInputLabel: store.currency[store.currencyInput].label,
+      currencyOutputLabel: store.currency[store.currencyOutput].label,
+      paymentStatus: 1,
+      email: fakeUser.username,
+      fromWallet: '1234',
+      toWallet: '4321',
+      token: null,
+    }
+
+    await store.createPayment({
+      token: null,
+      fromWallet: '1234',
+      toWallet: '4321',
+      email: fakeUser.username,
+    })
+    expect(Api.post).toHaveBeenCalledTimes(1)
+    expect(Api.post).toHaveBeenCalledWith('guestOrders', fakeData)
+    expect(store.orderId).toBe(unsortedData[0]._id)
   })
 })
 
