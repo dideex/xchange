@@ -226,6 +226,7 @@ describe('UI elements behaviour', () => {
     store.changeInput("100")
     expect(store.getInput).toBe('100, RUR')
   })
+
   it('Format output value', () => {
     store.setCurrencyOutput(0)
     store.changeOutput("300")
@@ -237,6 +238,22 @@ describe('UI elements behaviour', () => {
     expect(store.getOutput).toBe('500, RUR')
     store.changeOutput("100")
     expect(store.getOutput).toBe('100, RUR')
+  })
+
+  it('Format minimal amount', () => {
+    expect(store.getMinimalAmount).toMatchSnapshot()
+    store.setCurrencyInput(1)
+    expect(store.getMinimalAmount).toMatchSnapshot()
+    store.setCurrencyInput(2)
+    expect(store.getMinimalAmount).toMatchSnapshot()
+  })
+
+  it('Format reserved amount', () => {
+    expect(store.getCurrencyReserve).toMatchSnapshot()
+    store.setCurrencyOutput(0)
+    expect(store.getCurrencyReserve).toMatchSnapshot()
+    store.setCurrencyOutput(1)
+    expect(store.getCurrencyReserve).toMatchSnapshot()
   })
 
   it('Change inputs', () => {

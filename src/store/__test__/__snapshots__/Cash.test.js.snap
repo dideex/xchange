@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UI elements behaviour Format minimal amount 1`] = `"0.1 BTC"`;
+
+exports[`UI elements behaviour Format minimal amount 2`] = `"1 ETH"`;
+
+exports[`UI elements behaviour Format minimal amount 3`] = `"1,000 RUR"`;
+
+exports[`UI elements behaviour Format reserved amount 1`] = `"1,000,000 RUR"`;
+
+exports[`UI elements behaviour Format reserved amount 2`] = `"10,000 BTC"`;
+
+exports[`UI elements behaviour Format reserved amount 3`] = `"10,000 ETH"`;
