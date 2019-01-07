@@ -18,9 +18,9 @@ const sortedData = [
 ]
 
 const unsortedData = [
-  {order: 2, _id: 2, id: 'bitcoin', name: 'lisk'},
-  {order: 1, _id: 1, id: 'eth', name: 'tether'},
-  {order: 3, _id: 3, id: 'rur', name: 'litecoin'},
+  {order: 2, _id: 2, icon: 'bitcoin', id: 'bitcoin', name: 'lisk'},
+  {order: 1, _id: 1, icon: 'eth', id: 'eth', name: 'tether'},
+  {order: 3, _id: 3, icon: 'rur', id: 'rur', name: 'litecoin'},
 ]
 
 const fakeData = {
@@ -134,16 +134,35 @@ describe('Cash store tests', () => {
     expect(store.orderId).toBe(unsortedData[0]._id)
   })
 
-  it('Confirm payment', async() => {
+  it('Confirm payment', async () => {
     Api.post = jest.fn(() => Promise.resolve())
     store.emitSocket = jest.fn()
 
     store.orderId = unsortedData[0]._id
+    const currency = store.currency[store.currencyOutput].icon
+    const {_id} = unsortedData[0]
     const fakeData = {
-      _id: unsortedData[0]._id,
+      _id,
+      currency,
+      value: store.outputValue,
+      email: fakeUser.username,
+    }
+    const fakeSocketData = {
+      currency,
+      email: fakeUser.username,
+      inputValue: store.inputValue,
+      outputValue: store.outputValue,
+      inputLabel: store.currency[store.currencyInput].lable,
+      outputLabel: store.currency[store.currencyOutput].lable,
+      paymentStatus: 2
     }
 
     await store.cofirmPayment(fakeUser.username)
+    expect(Api.post).toHaveBeenCalledTimes(1)
+    expect(Api.post).toHaveBeenCalledWith('confirmOrder', fakeData)
+    expect(store.emitSocket).toHaveBeenCalledTimes(1)
+    expect(store.emitSocket).toHaveBeenCalledWith(fakeSocketData)
+    expect(store.paymentStatus).toBe(2)
   })
 })
 
