@@ -215,6 +215,30 @@ describe('UI elements behaviour', () => {
     store = new Cash()
   })
 
+  it('Format input value', () => {
+    store.changeInput("300")
+    expect(store.getInput).toBe('300, BTC')
+    store.changeInput("500")
+    expect(store.getInput).toBe('500, BTC')
+    store.setCurrencyInput(2)
+    store.changeInput("500")
+    expect(store.getInput).toBe('500, RUR')
+    store.changeInput("100")
+    expect(store.getInput).toBe('100, RUR')
+  })
+  it('Format output value', () => {
+    store.setCurrencyOutput(0)
+    store.changeOutput("300")
+    expect(store.getOutput).toBe('300, BTC')
+    store.changeOutput("500")
+    expect(store.getOutput).toBe('500, BTC')
+    store.setCurrencyOutput(2)
+    store.changeOutput("500")
+    expect(store.getOutput).toBe('500, RUR')
+    store.changeOutput("100")
+    expect(store.getOutput).toBe('100, RUR')
+  })
+
   it('Change inputs', () => {
     store.changeInput('100')
     expect(store.inputValue).toBe('100')
