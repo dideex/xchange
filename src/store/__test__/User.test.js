@@ -2,6 +2,7 @@ import User from '../User'
 import Api from '../../components/Api'
 import Cookie from 'js-cookie'
 import Utils from '../utils'
+import {fakeLocale, fakeToken, fakeUser, fakeUserData} from '../__mocks__/data'
 
 jest.mock('../utils', () => ({
   setToken: () => {},
@@ -16,20 +17,7 @@ jest.mock('../../components/Api', () => ({
   errorEmitter: jest.fn(data => fn => data(fn)),
 }))
 
-export const fakeLocale = 'fake-FK'
-export const fakeToken = 'fakeToken'
-export const fakeUser = {username: 'Batman', password: 'Nopassword'}
-export const fakeUserData = {
-  password: fakeUser.password,
-  wallets: [{bitcoin: 1234}],
-  lastOperations: [],
-  username: fakeUser.username,
-  email: fakeUser.username,
-  login: fakeUser.username,
-  convertedAmount: 1000,
-}
-const fakeOrders = [1,2,3,4,5]
-// const Utils = require('../utils')
+const fakeOrders = [1, 2, 3, 4, 5]
 
 describe('Menu store tests', () => {
   let store
@@ -85,7 +73,9 @@ describe('Menu store tests', () => {
     expect(store.login).toBe(fakeUserData.login)
     expect(store.email).toBe(fakeUserData.email)
     expect(store.wallets[0]).toMatchObject(fakeUserData.wallets[0])
-    expect(store.lastOperations).toEqual(expect.arrayContaining(fakeUserData.lastOperations))
+    expect(store.lastOperations).toEqual(
+      expect.arrayContaining(fakeUserData.lastOperations),
+    )
     expect(store.convertedAmount).toBe(fakeUserData.convertedAmount)
   })
 
@@ -110,7 +100,12 @@ describe('Menu store tests', () => {
     await store.signupUser()
     const {username, email, login, password} = store
     expect(Api.post).toHaveBeenCalledTimes(1)
-    expect(Api.post).toHaveBeenCalledWith('signupUser', {username, email, login, password})
+    expect(Api.post).toHaveBeenCalledWith('signupUser', {
+      username,
+      email,
+      login,
+      password,
+    })
     expect(store.fetchData).toHaveBeenCalledTimes(1)
     expect(Utils.setToken).toHaveBeenCalledTimes(1)
     expect(store.token).toBe(fakeToken)
@@ -166,15 +161,14 @@ describe('Menu store tests', () => {
     expect(store.orders).toEqual(expect.arrayContaining(fakeOrders))
   })
 
-  it('fetching orders without token', async() => {
+  it('fetching orders without token', async () => {
     Api.get = jest.fn(() => Promise.resolve(fakeToken))
     const fakeId = 'fakeId'
 
     const res = await store.fetchGuestOrder(fakeId)
     expect(store.loading).toBe(false)
     expect(Api.get).toHaveBeenCalledTimes(1)
-    expect(Api.get).toHaveBeenCalledWith('order',`?_id=${fakeId}`)
+    expect(Api.get).toHaveBeenCalledWith('order', `?_id=${fakeId}`)
     expect(res).toBe(fakeToken)
   })
-
 })

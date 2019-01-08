@@ -1,9 +1,7 @@
 import Cash from '../Cash'
 import Api from '../../components/Api'
-import openSocket from 'socket.io-client'
 import currencies from '../__mocks__/currencies.json'
 import {fakeToken, fakeUser} from '../__mocks__/data'
-// jest.mock('socket.io-client', jest.fn)
 
 jest.mock('../../components/Api', () => ({
   post: () => {},
@@ -154,7 +152,7 @@ describe('Cash store tests', () => {
       outputValue: store.outputValue,
       inputLabel: store.currency[store.currencyInput].lable,
       outputLabel: store.currency[store.currencyOutput].lable,
-      paymentStatus: 2
+      paymentStatus: 2,
     }
 
     await store.cofirmPayment(fakeUser.username)
@@ -216,27 +214,27 @@ describe('UI elements behaviour', () => {
   })
 
   it('Format input value', () => {
-    store.changeInput("300")
+    store.changeInput('300')
     expect(store.getInput).toBe('300, BTC')
-    store.changeInput("500")
+    store.changeInput('500')
     expect(store.getInput).toBe('500, BTC')
     store.setCurrencyInput(2)
-    store.changeInput("500")
+    store.changeInput('500')
     expect(store.getInput).toBe('500, RUR')
-    store.changeInput("100")
+    store.changeInput('100')
     expect(store.getInput).toBe('100, RUR')
   })
 
   it('Format output value', () => {
     store.setCurrencyOutput(0)
-    store.changeOutput("300")
+    store.changeOutput('300')
     expect(store.getOutput).toBe('300, BTC')
-    store.changeOutput("500")
+    store.changeOutput('500')
     expect(store.getOutput).toBe('500, BTC')
     store.setCurrencyOutput(2)
-    store.changeOutput("500")
+    store.changeOutput('500')
     expect(store.getOutput).toBe('500, RUR')
-    store.changeOutput("100")
+    store.changeOutput('100')
     expect(store.getOutput).toBe('100, RUR')
   })
 
@@ -289,18 +287,16 @@ describe('Currnecy calculate behaviour', () => {
   let store
   const btcRate = currencies.data[0].price_usd * currencies.userRate
   const ethRate = currencies.data[1].price_usd * currencies.userRate
-  const rurRate = currencies.data[2].price_usd * currencies.userRate
 
   const btcPrice = currencies.data[0].price_usd
   const ethPrice = currencies.data[1].price_usd
-  const rurPrice = currencies.data[2].price_usd
 
   beforeEach(() => {
     Api.get = jest.fn(() => Promise.resolve(currencies))
     store = new Cash()
   })
 
-  it('Output value in usd behaviour', async() => {
+  it('Output value in usd behaviour', async () => {
     store.changeInput('200')
     expect(store.outputValueInUsd).toMatchSnapshot()
     store.changeInput('400')
