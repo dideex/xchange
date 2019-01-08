@@ -300,6 +300,17 @@ describe('Currnecy calculate behaviour', () => {
     store = new Cash()
   })
 
+  it('Output value in usd behaviour', async() => {
+    store.changeInput('200')
+    expect(store.outputValueInUsd).toMatchSnapshot()
+    store.changeInput('400')
+    expect(store.outputValueInUsd).toMatchSnapshot()
+    store.changeOutput('200')
+    expect(store.outputValueInUsd).toMatchSnapshot()
+    store.changeOutput('400')
+    expect(store.outputValueInUsd).toMatchSnapshot()
+  })
+
   it('Change input value', () => {
     store.changeInput('100')
     expect(store.inputValue).toBe('100')

@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Currnecy calculate behaviour Output value in usd behaviour 1`] = `720`;
+
+exports[`Currnecy calculate behaviour Output value in usd behaviour 2`] = `1440`;
+
+exports[`Currnecy calculate behaviour Output value in usd behaviour 3`] = `200`;
+
+exports[`Currnecy calculate behaviour Output value in usd behaviour 4`] = `400`;
+
 exports[`UI elements behaviour Format minimal amount 1`] = `"0.1 BTC"`;
 
 exports[`UI elements behaviour Format minimal amount 2`] = `"1 ETH"`;
