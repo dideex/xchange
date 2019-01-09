@@ -1,25 +1,13 @@
 import LO from '../LastOperations'
-import openSocket from 'socket.io-client'
+import mockio, {serverSocket, cleanUp} from 'socket.io-client'
 import Api from '../../components/Api'
 
-jest.mock('socket.io-client', url => ({
-  on: data => data,
-  default: () => {}
-}))
-
-jest.mock('../utils', () => ({
-  setToken: () => {},
-  logout: () => {},
-  getToken: () => {},
-  getAdminStatus: () => {},
-}))
-
-jest.mock('../../components/Api', () => ({
-  post: () => {},
-  get: () => {},
-  errorEmitter: jest.fn(data => fn => data(fn)),
-}))
-
+// jest.mock('socket.io-client', url => {
+//   return {
+//     on: data => data,
+//     default: () => {},
+//   }
+// })
 
 describe('Last operations tests', () => {
   let store
@@ -29,7 +17,5 @@ describe('Last operations tests', () => {
 
   it('init store', () => {
     expect(store.loading).toBeTruthy()
-    console.log(" LOG ___ store ", store.loading )
   })
-
 })
