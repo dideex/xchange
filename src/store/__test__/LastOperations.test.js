@@ -1,13 +1,5 @@
 import LO from '../LastOperations'
 import mockio, {serverSocket, cleanUp} from 'socket.io-client'
-import Api from '../../components/Api'
-
-// jest.mock('socket.io-client', url => {
-//   return {
-//     on: data => data,
-//     default: () => {},
-//   }
-// })
 
 describe('Last operations tests', () => {
   let store
@@ -17,5 +9,16 @@ describe('Last operations tests', () => {
 
   it('init store', () => {
     expect(store.loading).toBeTruthy()
+    expect(store.data.length).toBe(0)
+  })
+
+  it('Initial socket data', () => {
+    expect(store.loading).toBeTruthy()
+    serverSocket.emit('message', {type: 'init', data: [1,2,3,4]})
+    expect(store.data).toMatchSnapshot()
+    expect(store.loading).toBeFalsy()
+    serverSocket.emit('message', {type: 'init', data: [4,3,2,1]})
+    expect(store.data).toMatchSnapshot()
+    expect(store.loading).toBeFalsy()
   })
 })

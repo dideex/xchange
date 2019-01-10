@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Last operations tests Initial socket data 1`] = `
+Array [
+  1,
+  2,
+  3,
+  4,
+]
+`;
+
+exports[`Last operations tests Initial socket data 2`] = `
+Array [
+  4,
+  3,
+  2,
+  1,
+]
+`;
