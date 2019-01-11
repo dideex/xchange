@@ -1,5 +1,5 @@
 import LO from '../LastOperations'
-import mockio, {serverSocket, cleanUp} from 'socket.io-client'
+import {serverSocket} from 'socket.io-client'
 
 describe('Last operations tests', () => {
   let store

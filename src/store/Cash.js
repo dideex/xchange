@@ -41,7 +41,7 @@ class Cash {
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:3040'
         : 'http://176.119.158.145:3040'
-    this.socket = openSocket(url)
+    this.socket = openSocket.connect(url)
     this.errorEmitter = Api.errorEmitter.bind(this)
     this.fetchCurrency()
   }
