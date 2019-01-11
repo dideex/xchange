@@ -1,5 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Last operations tests Braodcast new oparation 1`] = `
+Array [
+  Object {
+    "data": "new operation 1",
+  },
+]
+`;
+
+exports[`Last operations tests Braodcast new oparation 2`] = `
+Array [
+  Object {
+    "data": "new operation 1",
+  },
+  Object {
+    "data": "new operation 2",
+  },
+]
+`;
+
+exports[`Last operations tests Braodcast new oparation 3`] = `
+Array [
+  Object {
+    "data": "new operation 1",
+  },
+  Object {
+    "data": "new operation 2",
+  },
+  Object {
+    "data": "new operation 3",
+  },
+]
+`;
+
 exports[`Last operations tests Initial socket data 1`] = `
 Array [
   1,

@@ -14,10 +14,20 @@ describe('Last operations tests', () => {
 
   it('Initial socket data', () => {
     expect(store.loading).toBeTruthy()
-    serverSocket.emit('message', {type: 'init', data: [1,2,3,4]})
+    serverSocket.emit('message', {type: 'init', data: [1, 2, 3, 4]})
     expect(store.data).toMatchSnapshot()
     expect(store.loading).toBeFalsy()
-    serverSocket.emit('message', {type: 'init', data: [4,3,2,1]})
+    serverSocket.emit('message', {type: 'init', data: [4, 3, 2, 1]})
+    expect(store.data).toMatchSnapshot()
+    expect(store.loading).toBeFalsy()
+  })
+
+  it('Braodcast new oparation', () => {
+    serverSocket.emit('message', {type: 'broadcast', order: {data: 'new operation 1'}})
+    expect(store.data).toMatchSnapshot()
+    serverSocket.emit('message', {type: 'broadcast', order: {data: 'new operation 2'}})
+    expect(store.data).toMatchSnapshot()
+    serverSocket.emit('message', {type: 'broadcast', order: {data: 'new operation 3'}})
     expect(store.data).toMatchSnapshot()
     expect(store.loading).toBeFalsy()
   })
