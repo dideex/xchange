@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Accent button behaviour Markup 1`] = `"<button class=\\"css-19o48nz\\"><div>Snapshot</div></button>"`;

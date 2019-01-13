@@ -1,14 +1,20 @@
 import React from 'react'
 import Component from '../AccentBlock'
-import {shallow, mount, render} from 'enzyme'
+import {shallow} from 'enzyme'
 
-describe('Comments component', () => {
-  const wrapper = shallow(<Component value="testValue" />)
-  it('jest', () => {
-    expect(1 + 1).toBe(2)
+describe('AccentBlock behaviour', () => {
+  it('Markup', () => {
+    const wrapper = shallow(<Component value="snapshot" />)
+    expect(wrapper.html()).toMatchSnapshot()
   })
-  it('value should be', () => {
-    console.log(' LOG ___ wrapper ', JSON.stringify(wrapper.html(), null, 2))
+
+  it('Value should be', () => {
+    const wrapper = shallow(<Component value="testValue" />)
     expect(wrapper.html()).toContain('testValue')
+  })
+  
+  it('Value should be', () => {
+    const wrapper = shallow(<Component value="testValue 2" />)
+    expect(wrapper.html()).toContain('testValue 2')
   })
 })
