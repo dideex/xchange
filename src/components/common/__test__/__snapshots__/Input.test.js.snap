@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input behaviour markup 1`] = `"<label class=\\"css-gudk1o\\"><input type=\\"text\\" value=\\"\\" placeholder=\\"\\" mask=\\"\\" class=\\"css-18b8ap6\\"/></label>"`;

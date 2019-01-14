@@ -122,7 +122,8 @@ export class Input extends Component {
   *   validate for
   *     Bank card (Ruble, usd) or Phone
   *     Crypto wallet
-  * @param value{Stirng}, Promise<Resolve>
+  * @param value{Stirng}
+  * @param Promise<Resolve>
   * @return formattedValue{String}|null
   * @private
   */
