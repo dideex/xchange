@@ -27,6 +27,7 @@ const StyledInput = styled('input')`
     border-color: ${({borderColorActive}) => borderColorActive};
   }
 `
+StyledInput.displayName = "StyledInput"
 const InputWrap = styled('label')`
   position: relative;
   display: block;
@@ -66,6 +67,7 @@ const currencyWithoutValidation = ['LSK']
 
 // Input component;
 export class Input extends Component {
+  static displayName = 'InputComponent'
   static defaultProps = {
     value: '',
     isInvalid: false,
@@ -154,6 +156,7 @@ export class Input extends Component {
   */
   handleChange = e =>
     new Promise(res => {
+      console.log(' LOG ___ "handleChange" ', "handleChange")
       let {value} = (e && e.target) || this.input.props
       if (this.props.mask) value = this._validateWithMask(value, res)
       else if (this.pattern.test(value)) this.handleErrorChange(false, res)
