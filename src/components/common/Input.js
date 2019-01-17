@@ -161,6 +161,7 @@ export class Input extends Component {
       else if (this.pattern.test(value)) this.handleErrorChange(false, res)
       else this.handleErrorChange(true, res)
       if (value !== null) this.props.handleChange(value)
+      console.log(' LOG ___ e.target.value ', e.target.value)
     })
 
   render() {

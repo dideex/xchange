@@ -26,11 +26,15 @@ describe('Input behaviour', () => {
 
     it('Get value from input first', async () => {
       const toggle = jest.fn()
-      const wrapper = mount(<Component handleChange={toggle} value="" />)
-      const input = wrapper.find('input')
-      input.simulate('change', {target: {value: 'Changed'}})
-      // console.log(wrapper.debug())
-      console.log(input.get(0).value)
+      const wrapper = mount(<Component handleChange={toggle} value="Not used value" />)
+      const instance = wrapper.instance()
+      instance.handleChange({target: {value: testValue}})
+      expect(toggle).toHaveBeenCalledTimes(1)
+      expect(toggle).toHaveBeenCalledWith(testValue)
+    })
+
+    it('Validate by mask', () => {
+      
     })
   })
 })
