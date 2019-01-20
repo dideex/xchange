@@ -1,3 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Input behaviour Values behaviour Input validation Validate phone with pattern 1`] = `"+8(914)-890-60-30"`;
+
+exports[`Input behaviour Values behaviour Input validation Validate phone with pattern 2`] = `"+_(___)-___-__-__"`;
+
+exports[`Input behaviour Values behaviour Input validation Validate with mask phone 1`] = `"+T(est)- va-lu-e"`;
+
+exports[`Input behaviour Values behaviour Input validation Validate with mask phone 2`] = `"+_(___)-___-__-__"`;
+
+exports[`Input behaviour Values behaviour Input validation Validate with mask success 1`] = `"____ ____ ____ ____"`;
+
+exports[`Input behaviour Values behaviour Input validation Validate with mask unvalidation currencies 1`] = `"____ ____ ____ ____"`;
+
 exports[`Input behaviour markup 1`] = `"<label class=\\"css-gudk1o\\"><input type=\\"text\\" value=\\"\\" placeholder=\\"\\" mask=\\"\\" class=\\"css-18b8ap6\\"/></label>"`;
