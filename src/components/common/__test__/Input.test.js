@@ -11,6 +11,7 @@ describe('Input behaviour', () => {
   const testValue = 'Test value'
   const fakeMask = 'Btc'
   const testPhone = '89148906030'
+  const testCardNumber = '1234123443214321'
 
   it('markup', () => {
     const wrapper = shallow(<Component handleChange={() => {}} />)
@@ -70,7 +71,7 @@ describe('Input behaviour', () => {
         const wrapper = mount(
           <Component
             handleErrorChange={hanldeErrorChange}
-            mask='LSK'
+            mask="LSK"
             handleChange={toggle}
             value="Not used value"
           />,
@@ -90,7 +91,7 @@ describe('Input behaviour', () => {
         const wrapper = mount(
           <Component
             handleErrorChange={hanldeErrorChange}
-            mask='phone'
+            mask="phone"
             handleChange={toggle}
             value="Not used value"
           />,
@@ -104,6 +105,46 @@ describe('Input behaviour', () => {
         expect(instance.mask).toMatchSnapshot()
       })
 
+      it('Validate card with pattern', () => {
+        const toggle = jest.fn()
+        const hanldeErrorChange = jest.fn()
+        WAValidator.validate = jest.fn(() => true)
+        const wrapper = mount(
+          <Component
+            handleErrorChange={hanldeErrorChange}
+            mask="RUR"
+            handleChange={toggle}
+            value="Not used value"
+            pattern="\d+"
+          />,
+        )
+        const instance = wrapper.instance()
+        instance.handleChange({target: {value: testCardNumber}})
+        expect(WAValidator.validate).toHaveBeenCalledTimes(0)
+        expect(hanldeErrorChange).toHaveBeenCalledTimes(1)
+        expect(hanldeErrorChange).toHaveBeenCalledWith(false, expect.anything())
+        expect(instance._validateWithMask(testCardNumber, () => {})).toMatchSnapshot()
+        expect(instance.mask).toMatchSnapshot()
+      })
+
+      it('Validate card with pattern crash test', () => {
+        const toggle = jest.fn()
+        const hanldeErrorChange = jest.fn()
+        const wrapper = mount(
+          <Component
+            handleErrorChange={hanldeErrorChange}
+            mask="RUR"
+            handleChange={toggle}
+            value="Not used value"
+            pattern="\d+"
+          />,
+        )
+        const instance = wrapper.instance()
+        expect(instance._validateWithMask('1234123412341234', () => {})).toMatchSnapshot()
+        expect(instance._validateWithMask('12344321', () => {})).toMatchSnapshot()
+        expect(instance._validateWithMask('12345678912345678123456', () => {})).toMatchSnapshot()
+      })
+
       it('Validate phone with pattern', () => {
         const toggle = jest.fn()
         const hanldeErrorChange = jest.fn()
@@ -111,7 +152,7 @@ describe('Input behaviour', () => {
         const wrapper = mount(
           <Component
             handleErrorChange={hanldeErrorChange}
-            mask='phone'
+            mask="phone"
             handleChange={toggle}
             value="Not used value"
             pattern="\d+"
@@ -124,6 +165,24 @@ describe('Input behaviour', () => {
         expect(hanldeErrorChange).toHaveBeenCalledWith(false, expect.anything())
         expect(instance._validateWithMask(testPhone, () => {})).toMatchSnapshot()
         expect(instance.mask).toMatchSnapshot()
+      })
+
+      it('Validate phone with pattern crash test', () => {
+        const toggle = jest.fn()
+        const hanldeErrorChange = jest.fn()
+        const wrapper = mount(
+          <Component
+            handleErrorChange={hanldeErrorChange}
+            mask="phone"
+            handleChange={toggle}
+            value="Not used value"
+            pattern="\d+"
+          />,
+        )
+        const instance = wrapper.instance()
+        expect(instance._validateWithMask('8914890300000', () => {})).toMatchSnapshot()
+        expect(instance._validateWithMask('891489442', () => {})).toMatchSnapshot()
+        expect(instance._validateWithMask('891489', () => {})).toMatchSnapshot()
       })
     })
   })
