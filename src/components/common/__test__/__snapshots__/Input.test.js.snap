@@ -1,5 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Input behaviour Markups markup 1`] = `"<label class=\\"css-gudk1o\\"><input type=\\"text\\" value=\\"\\" placeholder=\\"\\" mask=\\"\\" class=\\"css-18b8ap6\\"/></label>"`;
+
+exports[`Input behaviour Markups markup is invalid 1`] = `"<label class=\\"css-gudk1o\\"><input type=\\"text\\" value=\\"\\" placeholder=\\"\\" mask=\\"\\" class=\\"css-ykrnj4\\"/><span class=\\"css-1j8ju8e\\"></span></label>"`;
+
+exports[`Input behaviour Markups markup value 1`] = `"<label class=\\"css-gudk1o\\"><input type=\\"text\\" value=\\"My value\\" placeholder=\\"\\" mask=\\"\\" class=\\"css-18b8ap6\\"/></label>"`;
+
+exports[`Input behaviour Markups markup with custom styles 1`] = `"<label class=\\"css-gudk1o\\"><input type=\\"text\\" style=\\"testprop:testKey\\" value=\\"\\" placeholder=\\"\\" mask=\\"\\" class=\\"css-18b8ap6\\"/></label>"`;
+
+exports[`Input behaviour Markups markup with error message 1`] = `"<label class=\\"css-gudk1o\\"><input type=\\"text\\" value=\\"\\" placeholder=\\"\\" mask=\\"\\" class=\\"css-ykrnj4\\"/><span class=\\"css-1j8ju8e\\">Test message</span></label>"`;
+
+exports[`Input behaviour Markups markup with placeholder 1`] = `"<label class=\\"css-gudk1o\\"><input type=\\"text\\" placeholder=\\"Test placeholder\\" value=\\"\\" mask=\\"\\" class=\\"css-18b8ap6\\"/></label>"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card clean 1`] = `"1234 4321 6431 ____"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card clean 2`] = `"1234 4321 6431 ____"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card clean 3`] = `"1234 4321"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card clean 4`] = `"1234 4321 qwe"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card clean 5`] = `"12 3 4 43  164 ____"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card format 1`] = `"1234 4321 6431 6423"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card format 2`] = `"1234 4321 6431 6423"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card format 3`] = `"1234 4321"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card format 4`] = `"1234 4321 qwe"`;
+
+exports[`Input behaviour Values behaviour Input formatt Card format 5`] = `"12 3 4 43 2 16 4 31"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone clean 1`] = `"89148906034"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone clean 2`] = `"8914890603489148906034"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone clean 3`] = `"89148"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone clean 4`] = `"89148qwer"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone clean 5`] = `"89 1 48 906 0 34"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone format 1`] = `"+8(914)-890-60-34"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone format 2`] = `"+8(914)-890-60-34"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone format 3`] = `"+8(914)-8"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone format 4`] = `"+8(914)-8qw-er"`;
+
+exports[`Input behaviour Values behaviour Input formatt Phone format 5`] = `"+8(9 1)- 48- 9-06"`;
+
 exports[`Input behaviour Values behaviour Input validation Validate card with pattern 1`] = `"1234 1234 4321 4321"`;
 
 exports[`Input behaviour Values behaviour Input validation Validate card with pattern 2`] = `"____ ____ ____ ____"`;
@@ -27,5 +79,3 @@ exports[`Input behaviour Values behaviour Input validation Validate with mask ph
 exports[`Input behaviour Values behaviour Input validation Validate with mask success 1`] = `"____ ____ ____ ____"`;
 
 exports[`Input behaviour Values behaviour Input validation Validate with mask unvalidation currencies 1`] = `"____ ____ ____ ____"`;
-
-exports[`Input behaviour markup 1`] = `"<label class=\\"css-gudk1o\\"><input type=\\"text\\" value=\\"\\" placeholder=\\"\\" mask=\\"\\" class=\\"css-18b8ap6\\"/></label>"`;
