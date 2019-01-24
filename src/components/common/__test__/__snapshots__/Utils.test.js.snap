@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Utils test Currency format tests 1`] = `"100"`;
+
+exports[`Utils test Currency format tests 2`] = `"1,000"`;
+
+exports[`Utils test Currency format tests 3`] = `"1,000,000"`;
+
+exports[`Utils test Currency format tests 4`] = `"1,000,000,000,000,000"`;
+
+exports[`Utils test Currency format tests 5`] = `"0.005"`;
+
+exports[`Utils test Currency format tests 6`] = `"0.1"`;
+
+exports[`Utils test Currency format tests 7`] = `"0"`;
+
+exports[`Utils test Currency format tests 8`] = `"100.1"`;
+
+exports[`Utils test Currency format tests 9`] = `"100.1"`;
+
+exports[`Utils test Currency format tests 10`] = `"-100"`;
+
+exports[`Utils test Currency format tests 11`] = `"100"`;
+
+exports[`Utils test Currency format tests 12`] = `"100.1"`;
+
+exports[`Utils test Format test 1`] = `"12 34"`;
+
+exports[`Utils test Format test 2`] = `"12 34"`;
+
+exports[`Utils test Format test 3`] = `"qw e"`;
+
+exports[`Utils test Format test 4`] = `"1 2 3 4"`;
+
+exports[`Utils test Format test 5`] = `"1 2 3 4"`;
+
+exports[`Utils test Format test 6`] = `"q w e"`;
+
+exports[`Utils test Format test 7`] = `"1234"`;
+
+exports[`Utils test Format test 8`] = `"1 23 45 67 8"`;
+
+exports[`Utils test Format test 9`] = `"12345678"`;
+
+exports[`Utils test Format test 10`] = `"123"`;
