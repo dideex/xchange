@@ -43,3 +43,68 @@ exports[`Utils test Format test 8`] = `"1 23 45 67 8"`;
 exports[`Utils test Format test 9`] = `"12345678"`;
 
 exports[`Utils test Format test 10`] = `"123"`;
+
+exports[`Utils test Lines to parahgraphs tests 1`] = `
+Array [
+  <span>
+    Some string
+    <br />
+</span>,
+]
+`;
+
+exports[`Utils test Lines to parahgraphs tests 2`] = `
+Array [
+  <span>
+    Some string
+    <br />
+</span>,
+  <span>
+     with new line
+    <br />
+</span>,
+]
+`;
+
+exports[`Utils test Lines to parahgraphs tests 3`] = `
+Array [
+  <span>
+    Some string
+    <br />
+</span>,
+  <span>
+     with new line
+    <br />
+</span>,
+  <span>
+     and another line
+    <br />
+</span>,
+]
+`;
+
+exports[`Utils test parseOrders tests 1`] = `
+Array [
+  Object {
+    "created": "25.1.2019",
+    "id": "_id",
+    "inputValue": "1, Btc",
+    "outputValue": "10,000, Rur",
+    "paymentStatus": 2,
+    "toWallet": "1234 4321 1234 4321",
+  },
+]
+`;
+
+exports[`Utils test parseOrders tests 2`] = `
+Array [
+  Object {
+    "created": "25.7.2015",
+    "id": "New id",
+    "inputValue": "1,000, Rur",
+    "outputValue": "1, Eth",
+    "paymentStatus": 1,
+    "toWallet": "9999999999999",
+  },
+]
+`;
