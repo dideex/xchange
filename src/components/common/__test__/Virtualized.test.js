@@ -1,9 +1,9 @@
 import React from 'react'
 import {Virtualized} from '../Virtualized'
-import {mount, shallow} from 'enzyme'
 import {StaticRouter} from 'react-router-dom'
-import {mountWithIntl, shallowWithIntl} from '../../../helpers/intl'
+import {mountWithIntl} from '../../../helpers/intl'
 
+// TODO: Write more tests
 describe('Virtualized tests', () => {
   const intl = {formatMessage: ({id}) => id}
   it('Base markup', () => {
@@ -67,22 +67,9 @@ describe('Virtualized tests', () => {
           <Virtualized intl={intl} parsedOrders={orders} endpoint="endpoint" />
         </StaticRouter>,
       )
-      const grid = wrapper.find('Grid')
 
-      // console.log(
-      //   table.propTypes.children(
-      //     {children: [<Column dataKey="foo" width={100} />]},
-      //     'children',
-      //     'Table',
-      //   ),
-      // )
-
-      wrapper.update()
       expect(wrapper.html()).toMatchSnapshot()
       expect(wrapper.debug()).toMatchSnapshot()
-      // console.log(wrapper.text())
-      // wrapper.find('Grid').instance().rowCount
-			console.log('TCL:', wrapper.find('Grid').instance().rowGetter())
     })
   })
 })
