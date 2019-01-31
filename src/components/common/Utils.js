@@ -80,6 +80,7 @@ export const ScrollTo = top => {
   let start = null
   requestAnimationFrame(step)
   function step(time) {
+    console.log('TCL: step -> time', time)
     if (start === null) start = time
     let progress = time - start
     let r =

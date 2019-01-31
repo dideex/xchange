@@ -4,6 +4,7 @@ import {
   isAllPropsFalse,
   parseOrders,
   linesToParagraphs,
+  ScrollTo
 } from '../Utils'
 
 describe('Utils test', () => {
@@ -77,5 +78,12 @@ describe('Utils test', () => {
     expect(linesToParagraphs('Some string')).toMatchSnapshot()
     expect(linesToParagraphs('Some string\n with new line')).toMatchSnapshot()
     expect(linesToParagraphs('Some string\n with new line\n and another line')).toMatchSnapshot()
+  })
+
+  it('ScrollTo behavioure', () => {
+    window.pageYOffset = 200
+    window.requestAnimationFrame = jest.fn(fn => fn(10))
+    ScrollTo(100)
+    expect(window.requestAnimationFrame).toHaveBeenCalledTimes(1)
   })
 })
