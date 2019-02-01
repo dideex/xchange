@@ -81,9 +81,12 @@ describe('Utils test', () => {
   })
 
   it('ScrollTo behavioure', () => {
-    window.pageYOffset = 200
+    window.pageYOffset = 100
     window.requestAnimationFrame = jest.fn(fn => fn(10))
-    ScrollTo(100)
+    window.scrollTo = jest.fn()
+    ScrollTo(0)
     expect(window.requestAnimationFrame).toHaveBeenCalledTimes(1)
+    expect(window.scrollTo).toHaveBeenCalledTimes(1)
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 100)
   })
 })
