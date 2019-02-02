@@ -35,6 +35,12 @@ describe('Menu store tests', () => {
     expect(store.username).toBe('')
   })
 
+  it('Init store with admin status', async () => {
+    Utils.getAdminStatus = () => true
+    let adminStore = new User()
+    expect(adminStore.isAdmin).toBeTruthy()
+  })
+
   it('Check token', async () => {
     Api.get = jest.fn(() => Promise.resolve(data => data))
     Utils.getToken = jest.fn(() => fakeToken)
@@ -170,5 +176,45 @@ describe('Menu store tests', () => {
     expect(Api.get).toHaveBeenCalledTimes(1)
     expect(Api.get).toHaveBeenCalledWith('order', `?_id=${fakeId}`)
     expect(res).toBe(fakeToken)
+  })
+  describe('Test actions', () => {
+    beforeEach(() => {
+      store.clearErr = jest.fn()
+    })
+
+    it('Change locale', () => {
+      Cookie.set = jest.fn()
+      const testLocale = 'test locale'
+      store.changeLocale(testLocale)
+      expect(store.locale).toBe(testLocale)
+      expect(Cookie.set).toHaveBeenCalledTimes(1)
+      expect(Cookie.set).toHaveBeenCalledWith('locale', testLocale)
+    })
+
+    it('Change username', () => {
+      store.changeUsername(fakeUser.username)
+      expect(store.username).toBe(fakeUser.username)
+      expect(store.clearErr).toHaveBeenCalledTimes(1)
+    })
+
+    it('Change email', () => {
+      store.changeEmail(fakeUser.username)
+      expect(store.email).toBe(fakeUser.username)
+      expect(store.clearErr).toHaveBeenCalledTimes(1)
+    })
+
+    it('Change phone', () => {
+      store.changePhone(fakeUser.username)
+      expect(store.phone).toBe(fakeUser.username)
+      expect(store.clearErr).toHaveBeenCalledTimes(1)
+    })
+
+    it('Change wallet', () => {
+      store.changeWallet('BTC')('1234')
+      expect(store.wallets.BTC).toBe('1234')
+      store.changeWallet('RUR')('4321')
+      expect(store.wallets.RUR).toBe('4321')
+      expect(store.wallets.BTC).toBe('1234')
+    })
   })
 })
