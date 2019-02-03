@@ -46,8 +46,6 @@ class Cash {
     this.fetchCurrency()
   }
 
-  _allowNumberWithDot = num => (num[num.length - 1] !== '.' ? +num : num)
-
   // finds an equal value for input value
   // for 1BTC (with rate 0.9) should be 0.9BTC
   _calcOutput = value =>

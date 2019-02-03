@@ -2,6 +2,7 @@ import User from '../User'
 import Api from '../../components/Api'
 import Cookie from 'js-cookie'
 import Utils from '../utils'
+import Common from '../../components/common'
 import {fakeLocale, fakeToken, fakeUser, fakeUserData} from '../__mocks__/data'
 
 jest.mock('../utils', () => ({
@@ -15,6 +16,10 @@ jest.mock('../../components/Api', () => ({
   post: () => {},
   get: () => {},
   errorEmitter: jest.fn(data => fn => data(fn)),
+}))
+
+jest.mock('../../components/common', () => ({
+  noty: () => {},
 }))
 
 const fakeOrders = [1, 2, 3, 4, 5]
@@ -66,6 +71,26 @@ describe('Menu store tests', () => {
     expect(store.token).toBe('fakeToken')
     expect(store.loading).toBe(false)
     expect(store.fetchData).toHaveBeenCalledTimes(1)
+  })
+
+  it('Getting admin token', async () => {
+    Api.post = jest.fn(() => Promise.resolve({token: fakeToken, isAdmin: true}))
+    Common.noty = jest.fn()
+
+    const {username, password} = fakeUser
+    store.changeLogin(username)
+    store.changePassword(password)
+    store.fetchData = jest.fn()
+    expect(store.loading).toBe(false)
+    expect(store.isNetworkError).toBe(false)
+    await store.getToken()
+    expect(Api.post).toHaveBeenCalledTimes(1)
+    expect(Api.post).toBeCalledWith('signinUser', fakeUser)
+    expect(store.token).toBe('fakeToken')
+    expect(store.loading).toBe(false)
+    expect(store.fetchData).toHaveBeenCalledTimes(1)
+    expect(Common.noty).toHaveBeenCalledTimes(1)
+    expect(Common.noty).toHaveBeenCalledWith('Hello admin!')
   })
 
   it('fetch data', async () => {
@@ -153,6 +178,7 @@ describe('Menu store tests', () => {
     Utils.getToken = jest.fn(() => {})
     Api.post = jest.fn(() => Promise.resolve())
 
+    await store.updateInfo()
     expect(Api.post).toHaveBeenCalledTimes(0)
   })
 
@@ -215,6 +241,17 @@ describe('Menu store tests', () => {
       store.changeWallet('RUR')('4321')
       expect(store.wallets.RUR).toBe('4321')
       expect(store.wallets.BTC).toBe('1234')
+    })
+
+    it('Signout', () => {
+      Common.noty = jest.fn()
+      Utils.logout = jest.fn()
+      store._setInitalData = jest.fn()
+      store.signout()
+      expect(Common.noty).toHaveBeenCalledTimes(1)
+      expect(Common.noty).toHaveBeenCalledWith('Вы вышли из аккаунта')
+      expect(store._setInitalData).toHaveBeenCalledTimes(1)
+      expect(Utils.logout).toHaveBeenCalledTimes(1)
     })
   })
 })

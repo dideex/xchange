@@ -10,3 +10,4 @@ export const noty = (text, type = 'success') => {
     layout: 'bottomRight'
   }).show()
 }
+export default noty
