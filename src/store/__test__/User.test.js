@@ -254,4 +254,98 @@ describe('Menu store tests', () => {
       expect(Utils.logout).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe('Handle error catch', () => {
+    beforeEach(() => {
+      Api.get = jest.fn(() => Promise.reject('Error'))
+      Api.post = jest.fn(() => Promise.reject('Error'))
+      Utils.getToken = () => fakeToken
+      Common.noty = jest.fn()
+      console = {
+        log: console.log,
+        error: jest.fn(console.log),
+      }
+    })
+
+    it.only('check token', async () => {
+      store.logout = jest.fn()
+      // try {
+      await store._checkToken()
+      await new Promise(res => setTimeout(res, 10000))
+      // expect(Common.noty).toHaveBeenCalledTimes(1)
+      // expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
+      expect(console.error).toHaveBeenCalledTimes(1)
+      expect(console.error).toHaveBeenCalledWith('Error')
+      expect(store.logout).toHaveBeenCalledTimes(1)
+      // } catch (err) {
+        // console.log('TCL: }catch -> err', err)
+      // }
+    })
+
+    it('fetch data', () => {
+      try {
+        store.fetchData()
+        expect(Common.noty).toHaveBeenCalledTimes(1)
+        expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
+        expect(console.error).toHaveBeenCalledTimes(1)
+        expect(console.error).toHaveBeenCalledWith('Error')
+      } catch (err) {}
+    })
+
+    it('Update user info ', () => {
+      try {
+        store.updateInfo()
+        expect(Common.noty).toHaveBeenCalledTimes(1)
+        expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
+        expect(console.error).toHaveBeenCalledTimes(1)
+        expect(console.error).toHaveBeenCalledWith('Error')
+      } catch (err) {}
+    })
+
+    it('Get token', () => {
+      store.loading = true
+      try {
+        store.getToken()
+        expect(store.loading).toBeFalsy()
+        expect(Common.noty).toHaveBeenCalledTimes(1)
+        expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
+        expect(console.error).toHaveBeenCalledTimes(1)
+        expect(console.error).toHaveBeenCalledWith('Error')
+      } catch (err) {}
+    })
+
+    it('Signup user', () => {
+      try {
+        store.signupUser()
+        expect(Common.noty).toHaveBeenCalledTimes(1)
+        expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
+        expect(console.error).toHaveBeenCalledTimes(1)
+        expect(console.error).toHaveBeenCalledWith('Error')
+      } catch (err) {}
+    })
+
+    it('Fetch orders by token', () => {
+      store.loading = true
+      try {
+        store.fetchOrdersByToken()
+        expect(store.loading).toBeFalsy()
+        expect(Common.noty).toHaveBeenCalledTimes(1)
+        expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
+        expect(console.error).toHaveBeenCalledTimes(1)
+        expect(console.error).toHaveBeenCalledWith('Error')
+      } catch (err) {}
+    })
+
+    it('Fetch guest order', () => {
+      store.loading = true
+      try {
+        store.fetchGuestOrder()
+        expect(store.loading).toBeFalsy()
+        expect(Common.noty).toHaveBeenCalledTimes(1)
+        expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
+        expect(console.error).toHaveBeenCalledTimes(10)
+        expect(console.error).toHaveBeenCalledWith('Error')
+      } catch (err) {}
+    })
+  })
 })
