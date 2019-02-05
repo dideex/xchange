@@ -257,28 +257,31 @@ describe('Menu store tests', () => {
 
   describe('Handle error catch', () => {
     beforeEach(() => {
-      Api.get = jest.fn(() => Promise.reject('Error'))
+      Api.get = () => Promise.reject('Error')
       Api.post = jest.fn(() => Promise.reject('Error'))
       Utils.getToken = () => fakeToken
       Common.noty = jest.fn()
       console = {
         log: console.log,
-        error: jest.fn(console.log),
+        error: jest.fn(),
       }
     })
 
     it.only('check token', async () => {
+      Common.noty = jest.fn()
       store.logout = jest.fn()
       // try {
       await store._checkToken()
-      await new Promise(res => setTimeout(res, 10000))
-      // expect(Common.noty).toHaveBeenCalledTimes(1)
-      // expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
-      expect(console.error).toHaveBeenCalledTimes(1)
-      expect(console.error).toHaveBeenCalledWith('Error')
-      expect(store.logout).toHaveBeenCalledTimes(1)
       // } catch (err) {
-        // console.log('TCL: }catch -> err', err)
+      process.nextTick(() => {
+        console.log('next tick')
+        expect(Common.noty).toHaveBeenCalledTimes(1)
+        expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
+        // expect(store.logout).toHaveBeenCalledTimes(1)
+        expect(console.error).toHaveBeenCalledTimes(1)
+        expect(console.error).toHaveBeenCalledWith('Error')
+      })
+
       // }
     })
 
