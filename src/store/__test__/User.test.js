@@ -24,6 +24,14 @@ jest.mock('../../components/common', () => ({
 
 const fakeOrders = [1, 2, 3, 4, 5]
 
+const delay = fn =>
+  new Promise(res =>
+    setTimeout(() => {
+      fn()
+      res()
+    }, 0),
+  )
+
 describe('Menu store tests', () => {
   let store
   beforeEach(() => {
@@ -261,94 +269,95 @@ describe('Menu store tests', () => {
       Api.post = jest.fn(() => Promise.reject('Error'))
       Utils.getToken = () => fakeToken
       Common.noty = jest.fn()
+      store.logout = jest.fn()
       console = {
         log: console.log,
         error: jest.fn(),
       }
     })
 
-    it.only('check token', async () => {
-      Common.noty = jest.fn()
-      store.logout = jest.fn()
-      // try {
+    it('check token', async () => {
       await store._checkToken()
-      // } catch (err) {
-      process.nextTick(() => {
-        console.log('next tick')
+
+      await delay(() => {
         expect(Common.noty).toHaveBeenCalledTimes(1)
         expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
-        // expect(store.logout).toHaveBeenCalledTimes(1)
         expect(console.error).toHaveBeenCalledTimes(1)
         expect(console.error).toHaveBeenCalledWith('Error')
       })
-
-      // }
     })
 
-    it('fetch data', () => {
-      try {
-        store.fetchData()
+    it('fetch data', async () => {
+      await store.fetchData()
+
+      await delay(() => {
         expect(Common.noty).toHaveBeenCalledTimes(1)
         expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
         expect(console.error).toHaveBeenCalledTimes(1)
         expect(console.error).toHaveBeenCalledWith('Error')
-      } catch (err) {}
+      })
     })
 
-    it('Update user info ', () => {
-      try {
-        store.updateInfo()
+    it('Update user info ', async () => {
+      await store.updateInfo()
+
+      await delay(() => {
         expect(Common.noty).toHaveBeenCalledTimes(1)
         expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
         expect(console.error).toHaveBeenCalledTimes(1)
         expect(console.error).toHaveBeenCalledWith('Error')
-      } catch (err) {}
+      })
     })
 
-    it('Get token', () => {
+    it('Get token', async () => {
       store.loading = true
-      try {
-        store.getToken()
+      await store.getToken()
+
+      await delay(() => {
         expect(store.loading).toBeFalsy()
         expect(Common.noty).toHaveBeenCalledTimes(1)
         expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
         expect(console.error).toHaveBeenCalledTimes(1)
         expect(console.error).toHaveBeenCalledWith('Error')
-      } catch (err) {}
+      })
     })
 
-    it('Signup user', () => {
-      try {
-        store.signupUser()
+    it('Signup user', async () => {
+      store.signupUser()
+
+      await delay(() => {
         expect(Common.noty).toHaveBeenCalledTimes(1)
         expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
         expect(console.error).toHaveBeenCalledTimes(1)
         expect(console.error).toHaveBeenCalledWith('Error')
-      } catch (err) {}
+      })
     })
 
-    it('Fetch orders by token', () => {
+    it('Fetch orders by token', async () => {
       store.loading = true
-      try {
-        store.fetchOrdersByToken()
-        expect(store.loading).toBeFalsy()
+      store.token = fakeToken
+      await store.fetchOrdersByToken()
+
+      await delay(() => {
         expect(Common.noty).toHaveBeenCalledTimes(1)
         expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
         expect(console.error).toHaveBeenCalledTimes(1)
         expect(console.error).toHaveBeenCalledWith('Error')
-      } catch (err) {}
+      })
+      expect(store.loading).toBeFalsy()
     })
 
-    it('Fetch guest order', () => {
+    it('Fetch guest order', async () => {
       store.loading = true
-      try {
-        store.fetchGuestOrder()
-        expect(store.loading).toBeFalsy()
+      await store.fetchGuestOrder()
+
+      await delay(() => {
         expect(Common.noty).toHaveBeenCalledTimes(1)
         expect(Common.noty).toHaveBeenCalledWith('Ошибка сети', 'error')
-        expect(console.error).toHaveBeenCalledTimes(10)
+        expect(console.error).toHaveBeenCalledTimes(1)
         expect(console.error).toHaveBeenCalledWith('Error')
-      } catch (err) {}
+      })
+      expect(store.loading).toBeFalsy()
     })
   })
 })
