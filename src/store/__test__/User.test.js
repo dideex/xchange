@@ -201,6 +201,16 @@ describe('Menu store tests', () => {
     expect(store.orders).toEqual(expect.arrayContaining(fakeOrders))
   })
 
+  it('fetching orders with null token', async () => {
+    store.token = null
+    Api.get = jest.fn(() => Promise.resolve(fakeOrders))
+
+    await store.fetchOrdersByToken()
+    expect(store.loading).toBe(false)
+    expect(Api.get).toHaveBeenCalledTimes(0)
+    expect(store.orders).toEqual(expect.arrayContaining([]))
+  })
+
   it('fetching orders without token', async () => {
     Api.get = jest.fn(() => Promise.resolve(fakeToken))
     const fakeId = 'fakeId'

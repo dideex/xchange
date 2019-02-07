@@ -10,13 +10,6 @@ function nodeWithIntlProp(node) {
   return React.cloneElement(node, {intl})
 }
 
-export function shallowWithIntl(node, {context, ...additionalOptions} = {}) {
-  return shallow(nodeWithIntlProp(node), {
-    context: Object.assign({}, context, {intl}),
-    ...additionalOptions,
-  })
-}
-
 export function mountWithIntl(
   node,
   {context, childContextTypes, ...additionalOptions} = {},

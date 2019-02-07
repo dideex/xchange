@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Comments component Clean markup 1`] = `"<article class=\\"css-1104qn0\\"><div class=\\"css-1p5u6wl\\"><img src=\\"\\" alt=\\"Avatr\\" class=\\"css-v9h0cw\\"><hgroup><h3></h3><p></p></hgroup></div><div class=\\"css-1lexkey\\"><p><span></span></p></div></article>"`;
+
+exports[`Comments component Markup with data 1`] = `"<article class=\\"css-1104qn0\\"><div class=\\"css-1p5u6wl\\"><img src=\\"Some test photo\\" alt=\\"Avatr\\" class=\\"css-v9h0cw\\"><hgroup><h3>Some test name</h3><p>Some test Role</p></hgroup></div><div class=\\"css-1lexkey\\"><p><span>Some test message</span></p></div></article>"`;

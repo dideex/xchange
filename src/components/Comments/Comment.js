@@ -31,7 +31,7 @@ const BacksideBlock = styled('div')`
     transform: translateY(160px);
     @media (max-width: 767px) {
       font-size: 1rem;
-    } 
+    }
   }
 `
 
@@ -39,7 +39,7 @@ const Image = styled('img')`
   border-radius: 10px;
   @media (max-width: 767px) {
     width: 80px;
-  } 
+  }
 `
 
 const ContentWrap = styled('div')`
@@ -52,7 +52,7 @@ const ContentWrap = styled('div')`
     font-size: 2.8rem;
     @media (max-width: 767px) {
       font-size: 1.8rem;
-    } 
+    }
   }
   & hgroup {
     padding-left: 30px;
