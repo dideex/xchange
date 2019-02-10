@@ -60,6 +60,7 @@ class CurrencyBadge extends Component {
             <li>
               <p>Резервы:</p>
               <input
+                name="reserved"
                 type="text"
                 value={reserve}
                 onChange={e => this.setState({reserve: e.target.value})}
@@ -68,6 +69,7 @@ class CurrencyBadge extends Component {
             <li>
               <p>Кошелек для перевода:</p>
               <input
+                name="source"
                 type="text"
                 value={source}
                 onChange={e => this.setState({source: e.target.value})}
@@ -76,6 +78,7 @@ class CurrencyBadge extends Component {
             <li>
               <p>Минимальная сумма для перевода:</p>
               <input
+                name="minimal"
                 type="text"
                 value={minimal}
                 onChange={e => this.setState({minimal: e.target.value})}
