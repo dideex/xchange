@@ -30,7 +30,7 @@ class CurrencyBadge extends Component {
 
   // Push data to the server
   _pushSettings = async () => {
-    this.setState({loading: true})
+    this.setState({loading: false})
     const {reserve, source, minimal} = this.state
     const data = {
       _id: this.props.data._id,
@@ -44,6 +44,7 @@ class CurrencyBadge extends Component {
         console.error(err)
         noty(err, 'error')
       })
+      .finally(() => this.setState({loading: false}))
     this.setState({loading: false})
   }
 

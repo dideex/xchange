@@ -2,6 +2,7 @@ import React from 'react'
 import Component from '../CurrencyBadge'
 import {shallow, mount} from 'enzyme'
 import Api from '../../../components/Api'
+import {delay} from '../../../helpers'
 // import Common from '../../common'
 
 jest.mock('../../../components/Api', () => ({
@@ -15,6 +16,8 @@ jest.mock('../../../components/common', () => ({
 }))
 
 const fakeData = {name: 'Test name', price_usd: 'Test usd price', token: 'fakeToken'}
+const fakeToken = 'Fake token'
+const fakeValue = 'Test value'
 
 describe('Tests', () => {
   describe('Markup', () => {
@@ -48,7 +51,6 @@ describe('Tests', () => {
     })
 
     it('Reserved should change', () => {
-      const fakeValue = 'Test value'
       const data = fakeData
       const wrapper = mount(<Component data={data} />)
       wrapper.simulate('click')
@@ -60,7 +62,6 @@ describe('Tests', () => {
     })
 
     it('Source should change', () => {
-      const fakeValue = 'Test value'
       const data = fakeData
       const wrapper = mount(<Component data={data} />)
       wrapper.simulate('click')
@@ -72,7 +73,6 @@ describe('Tests', () => {
     })
 
     it('Minimal should change', () => {
-      const fakeValue = 'Test value'
       const data = fakeData
       const wrapper = mount(<Component data={data} />)
       wrapper.simulate('click')
@@ -94,14 +94,63 @@ describe('Tests', () => {
       expect(wrapper.instance()._pushSettings).toHaveBeenCalledTimes(1)
     })
 
-    it.only('Post hanlder should be invoked by button click', async () => {
+    it('Post hanlder should be invoked by button click', async () => {
       Api.post = jest.fn(() => Promise.resolve())
-      const wrapper = mount(<Component data={fakeData} />)
+      const wrapper = mount(<Component data={fakeData} token={fakeToken} />)
       wrapper.simulate('click')
-      // await wrapper.find('button').simulate('click')
-      await wrapper.instance()._pushSettings()
+      wrapper.find('button').simulate('click')
+      await delay()
+
+      const {reserve, minimal, source} = wrapper.state()
+      const predictedData = {
+        _id: fakeData.id,
+        reserve,
+        minimal,
+        source,
+      }
 
       expect(Api.post).toHaveBeenCalledTimes(1)
+      expect(Api.post).toHaveBeenCalledWith(
+        'setCurrencyOptions',
+        predictedData,
+        fakeToken,
+      )
+    })
+
+    it('Post hanlder should be get value from the inputs', async () => {
+      Api.post = jest.fn(() => Promise.resolve())
+
+      const wrapper = mount(<Component data={fakeData} token={fakeToken} />)
+      wrapper.simulate('click')
+
+      wrapper
+        .find('input[name="reserved"]')
+        .simulate('change', {target: {value: fakeValue, name: 'reserved'}})
+
+      wrapper
+        .find('input[name="source"]')
+        .simulate('change', {target: {value: fakeValue, name: 'source'}})
+
+      wrapper
+        .find('input[name="minimal"]')
+        .simulate('change', {target: {value: fakeValue, name: 'minimal'}})
+      wrapper.find('button').simulate('click')
+      await delay()
+
+      const {reserve, minimal, source} = wrapper.state()
+      const predictedData = {
+        _id: fakeData.id,
+        reserve,
+        minimal,
+        source,
+      }
+
+      expect(Api.post).toHaveBeenCalledTimes(1)
+      expect(Api.post).toHaveBeenCalledWith(
+        'setCurrencyOptions',
+        predictedData,
+        fakeToken,
+      )
     })
   })
 })
