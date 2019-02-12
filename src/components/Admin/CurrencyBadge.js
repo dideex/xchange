@@ -44,7 +44,6 @@ class CurrencyBadge extends Component {
         console.error(err)
         noty(err, 'error')
       })
-      .finally(() => this.setState({loading: false}))
     this.setState({loading: false})
   }
 

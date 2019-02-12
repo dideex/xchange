@@ -1,9 +1,9 @@
 import React from 'react'
 import Component from '../CurrencyBadge'
-import {shallow, mount} from 'enzyme'
+import {mount, shallow} from 'enzyme'
 import Api from '../../../components/Api'
 import {delay} from '../../../helpers'
-// import Common from '../../common'
+import Common from '../../common'
 
 jest.mock('../../../components/Api', () => ({
   post: () => {},
@@ -23,19 +23,19 @@ describe('Tests', () => {
   describe('Markup', () => {
     it('Base markup', () => {
       const data = {}
-      const wrapper = mount(<Component data={data} />)
+      const wrapper = shallow(<Component data={data} />)
       expect(wrapper.html()).toMatchSnapshot()
     })
 
     it('Data markup', () => {
       const data = fakeData
-      const wrapper = mount(<Component data={data} />)
+      const wrapper = shallow(<Component data={data} />)
       expect(wrapper.html()).toMatchSnapshot()
     })
 
     it('Data markup opened', () => {
       const data = fakeData
-      const wrapper = mount(<Component data={data} />)
+      const wrapper = shallow(<Component data={data} />)
       wrapper.simulate('click')
 
       expect(wrapper.html()).toMatchSnapshot()
@@ -44,7 +44,7 @@ describe('Tests', () => {
   describe('State behavriour', () => {
     it('Should open after click', () => {
       const data = fakeData
-      const wrapper = mount(<Component data={data} />)
+      const wrapper = shallow(<Component data={data} />)
       wrapper.simulate('click')
 
       expect(wrapper.state().show).toBeTruthy()
@@ -52,7 +52,7 @@ describe('Tests', () => {
 
     it('Reserved should change', () => {
       const data = fakeData
-      const wrapper = mount(<Component data={data} />)
+      const wrapper = shallow(<Component data={data} />)
       wrapper.simulate('click')
 
       wrapper
@@ -63,7 +63,7 @@ describe('Tests', () => {
 
     it('Source should change', () => {
       const data = fakeData
-      const wrapper = mount(<Component data={data} />)
+      const wrapper = shallow(<Component data={data} />)
       wrapper.simulate('click')
 
       wrapper
@@ -74,7 +74,7 @@ describe('Tests', () => {
 
     it('Minimal should change', () => {
       const data = fakeData
-      const wrapper = mount(<Component data={data} />)
+      const wrapper = shallow(<Component data={data} />)
       wrapper.simulate('click')
 
       wrapper
@@ -85,8 +85,8 @@ describe('Tests', () => {
   })
 
   describe('Post behaviour', () => {
-    it('Post hanlder should be invoked by button click', () => {
-      const wrapper = mount(<Component data={fakeData} />)
+    it('Post handler should be invoked by button click', () => {
+      const wrapper = shallow(<Component data={fakeData} />)
       wrapper.instance()._pushSettings = jest.fn()
       wrapper.simulate('click')
       wrapper.find('button').simulate('click')
@@ -94,9 +94,9 @@ describe('Tests', () => {
       expect(wrapper.instance()._pushSettings).toHaveBeenCalledTimes(1)
     })
 
-    it('Post hanlder should be invoked by button click', async () => {
+    it('Post handler should be invoked by button click', async () => {
       Api.post = jest.fn(() => Promise.resolve())
-      const wrapper = mount(<Component data={fakeData} token={fakeToken} />)
+      const wrapper = shallow(<Component data={fakeData} token={fakeToken} />)
       wrapper.simulate('click')
       wrapper.find('button').simulate('click')
       await delay()
@@ -117,10 +117,10 @@ describe('Tests', () => {
       )
     })
 
-    it('Post hanlder should be get value from the inputs', async () => {
+    it('Post handler should be get value from the inputs', async () => {
       Api.post = jest.fn(() => Promise.resolve())
 
-      const wrapper = mount(<Component data={fakeData} token={fakeToken} />)
+      const wrapper = shallow(<Component data={fakeData} token={fakeToken} />)
       wrapper.simulate('click')
 
       wrapper
@@ -151,6 +151,29 @@ describe('Tests', () => {
         predictedData,
         fakeToken,
       )
+    })
+
+    it('Noty should be invoked when data has sent', async () => {
+      Common.noty = jest.fn()
+      Api.post = jest.fn(() => Promise.resolve())
+      const wrapper = shallow(<Component data={fakeData} />)
+      wrapper.simulate('click')
+      wrapper.find('button').simulate('click')
+
+      await delay()
+      expect(Common.noty).toHaveBeenCalledTimes(1)
+      expect(Common.noty).toHaveBeenCalledWith('Сохранено')
+    })
+
+    it('Event emitter should be invoked when data has sent', async () => {
+      Api.post = jest.fn(() => Promise.resolve())
+      Api.errorEmitter = jest.fn()
+      const wrapper = shallow(<Component data={fakeData} />)
+      wrapper.simulate('click')
+      wrapper.find('button').simulate('click')
+
+      await delay()
+      expect(Api.errorEmitter).toHaveBeenCalledTimes(1)
     })
   })
 })
