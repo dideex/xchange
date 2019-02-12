@@ -13,6 +13,7 @@ jest.mock('../../../components/Api', () => ({
 
 jest.mock('../../../components/common', () => ({
   noty: () => {},
+  Loading: () => <div>Loading</div>,
 }))
 
 const fakeData = {name: 'Test name', price_usd: 'Test usd price', token: 'fakeToken'}
@@ -41,6 +42,7 @@ describe('Tests', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
   })
+
   describe('State behavriour', () => {
     it('Should open after click', () => {
       const data = fakeData
@@ -81,6 +83,14 @@ describe('Tests', () => {
         .find('input[name="minimal"]')
         .simulate('change', {target: {value: fakeValue, name: 'minimal'}})
       expect(wrapper.state().minimal).toBe(fakeValue)
+    })
+
+    it('Loading behaviour', async () => {
+      const wrapper = shallow(<Component data={fakeData} />)
+      wrapper.simulate('click')
+      wrapper.setState({loading: true})
+
+      expect(wrapper.html()).toMatchSnapshot()
     })
   })
 

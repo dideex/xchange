@@ -5,3 +5,5 @@ exports[`Tests Markup Base markup 1`] = `"<div class=\\"css-72ota7\\"></div>"`;
 exports[`Tests Markup Data markup 1`] = `"<div class=\\"css-72ota7\\">Test name</div>"`;
 
 exports[`Tests Markup Data markup opened 1`] = `"<div class=\\"css-72ota7\\">Test name<ul><li>Цена в usd Test usd price</li><li><p>Резервы:</p><input type=\\"text\\" name=\\"reserved\\"/></li><li><p>Кошелек для перевода:</p><input type=\\"text\\" name=\\"source\\"/></li><li><p>Минимальная сумма для перевода:</p><input type=\\"text\\" name=\\"minimal\\"/></li><button>Сохранить</button></ul></div>"`;
+
+exports[`Tests State behavriour Loading behaviour 1`] = `"<div>Loading</div>"`;
