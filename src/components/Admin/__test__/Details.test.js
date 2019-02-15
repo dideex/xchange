@@ -1,15 +1,8 @@
 import React from 'react'
 import Component from '../Details'
 import {shallow} from 'enzyme'
-// import {MobxProvider} from '../../../helpers/mobx'
-// import {Provider} from 'mobx-react'
-
-import Cash from '../../../store/Cash'
-
-jest.mock('../../../components/common', () => ({
-  noty: () => {},
-  Loading: () => <div>Loading</div>,
-}))
+import {MobxProvider} from '../../../helpers/mobx'
+import CashStore from '../../../store/Cash'
 
 const fakeData = {
   id: 'Test id',
@@ -27,20 +20,19 @@ const fakeData = {
 }
 
 describe('Admin details', () => {
-  // let cashStore = ''
-  // beforeAll(() => {
-  //   cashStore = cash.create()
-  // })
+  let cashStore
+  beforeEach(() => {
+    cashStore = new CashStore()
+  })
 
   describe('Markup', () => {
     it('Base markup', () => {
       const wrapper = shallow(
-        // <Provider cashStore={cash}>
-          <Component date={{}} />
-        // </Provider>,
+        <MobxProvider cashStore={cashStore}>
+          <Component {...fakeData} />
+        </MobxProvider>,
       )
-      console.log(wrapper)
-      // expect(wrapper.html()).toMatchSnapshot()
+      expect(wrapper.html()).toMatchSnapshot()
     })
   })
 })

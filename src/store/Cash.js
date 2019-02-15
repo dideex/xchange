@@ -6,6 +6,7 @@ import {noty} from '../components/common'
 // Mobx Cash store
 // Keeps the current transittion payment data
 // And currency rate exchange
+
 class Cash {
   @observable inputValue
   @observable outputValue
