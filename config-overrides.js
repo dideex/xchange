@@ -1,6 +1,5 @@
 const {injectBabelPlugin} = require('react-app-rewired')
 const rewireMobx = require('react-app-rewire-mobx')
-const rewireLess = require('react-app-rewire-less')
 const webpackBundleAnalyzer = require('react-app-rewire-webpack-bundle-analyzer')
 
 module.exports = function override(config, env) {

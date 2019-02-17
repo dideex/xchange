@@ -1,6 +1,6 @@
 {
   "name": "xchange",
-  "version": "0.1.0",
+  "version": "0.1.1a",
   "private": true,
   "dependencies": {
     "autobind-decorator": "2.1.0",
