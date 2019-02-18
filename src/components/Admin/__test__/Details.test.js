@@ -49,15 +49,16 @@ describe('Admin details', () => {
 
     it('Show wallets markup', () => {
       cashStore.currency = fakeCurrnecy
-      const wrapper = shallow(
-        <MobxProvider cashStore={cashStore}>
-          <Component {...fakeData} cashStore={cashStore} />
-        </MobxProvider>,
-      ).dive().dive()
-      console.log(wrapper.debug())
-      wrapper.setState({showWallets: true})
-      console.log(cashStore.currency)
-      console.log(wrapper.instance().state)
+      const wrapper = mount(<Component {...fakeData} cashStore={cashStore} />)
+      wrapper.find('ul').simulate('click')
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it('Orders data should have been get from the store', () => {
+      cashStore.paymentStatus = 2
+      cashStore.inputValue = 500
+      cashStore.outputValue = 1000
+      const wrapper = mount(<Component {...fakeData} cashStore={cashStore} />)
       expect(wrapper.html()).toMatchSnapshot()
     })
   })

@@ -110,6 +110,8 @@ class DetailsComponent extends Component {
       login,
       updatePaymentStatus,
     } = this.props
+    console.log(' LOG ___  ', `${currencyFormat(inputValue)} `)
+		console.log('TCL: DetailsComponent -> render -> inputValue', inputValue)
     return (
       <Wrap>
         <h3>Перевод № {id}</h3>
@@ -174,7 +176,7 @@ class DetailsComponent extends Component {
         >
           {wallets && Object.values(wallets).length && <h3>Все кошельки пользователя</h3>}
           {wallets && this.state.showWallets
-            ? Object.values(wallets).map((wallet, i) => (
+            ? Object.values(wallets).map((_, i) => (
                 <li onClick={e => e.stopPropagation()} key={i}>{`${
                   this.props.cashStore.currency[i].name
                 } : `}</li>
