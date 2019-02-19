@@ -110,8 +110,6 @@ class DetailsComponent extends Component {
       login,
       updatePaymentStatus,
     } = this.props
-    console.log(' LOG ___  ', `${currencyFormat(inputValue)} `)
-		console.log('TCL: DetailsComponent -> render -> inputValue', inputValue)
     return (
       <Wrap>
         <h3>Перевод № {id}</h3>

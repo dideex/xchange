@@ -7,13 +7,13 @@ import Api from '../../Api'
 
 const fakeData = {
   id: 'Test id',
-  inputValue: 'Test input',
+  inputValue: '1000',
   toWallet: 'Test wallet',
   fromWallet: 'Tests fromWallet',
-  outputValue: 'Tests outputValue',
+  outputValue: '2000',
   email: 'Tests email',
   username: 'Tests username',
-  paymentStatus: 0,
+  paymentStatus: 1,
   loading: false,
   wallets: {
     eth: 'eth wallet',
@@ -54,12 +54,51 @@ describe('Admin details', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it('Orders data should have been get from the store', () => {
-      cashStore.paymentStatus = 2
-      cashStore.inputValue = 500
-      cashStore.outputValue = 1000
+    describe('Payment status', () => {
+      it('Payment status should be not created', () => {
+        const wrapper = shallow(
+          <Component {...fakeData} cashStore={cashStore} paymentStatus={0} />,
+        )
+        expect(wrapper.html()).toMatchSnapshot()
+      })
+
+      it('Payment status should be wait for transactions', () => {
+        const wrapper = shallow(
+          <Component {...fakeData} cashStore={cashStore} paymentStatus={1} />,
+        )
+        expect(wrapper.html()).toMatchSnapshot()
+      })
+
+      it('Payment status should be wait for accept', () => {
+        const wrapper = shallow(
+          <Component {...fakeData} cashStore={cashStore} paymentStatus={2} />,
+        )
+        expect(wrapper.html()).toMatchSnapshot()
+      })
+
+      it('Payment status should be closed', () => {
+        const wrapper = shallow(
+          <Component {...fakeData} cashStore={cashStore} paymentStatus={3} />,
+        )
+        expect(wrapper.html()).toMatchSnapshot()
+      })
+
+      it('Payment status should be canceled', () => {
+        const wrapper = shallow(
+          <Component {...fakeData} cashStore={cashStore} paymentStatus={4} />,
+        )
+        expect(wrapper.html()).toMatchSnapshot()
+      })
+    })
+  })
+
+  describe('Component behavriour', () => {
+    it('Stop propagation after click on <li />', () => {
+      cashStore.currency = fakeCurrnecy
       const wrapper = mount(<Component {...fakeData} cashStore={cashStore} />)
-      expect(wrapper.html()).toMatchSnapshot()
+      wrapper.find('ul').simulate('click')
+      wrapper.find('li').first().simulate('click')
+      expect(wrapper.find('DetailsComponent').state().showWallets).toBeTruthy()
     })
   })
 })
