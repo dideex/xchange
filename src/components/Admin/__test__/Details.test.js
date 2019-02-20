@@ -37,7 +37,7 @@ describe('Admin details', () => {
   })
 
   describe('Markup', () => {
-    it('Base markup', () => {
+    it('Basic markup', () => {
       cashStore.currency = fakeCurrnecy
       const wrapper = shallow(
         <MobxProvider cashStore={cashStore}>
@@ -47,10 +47,15 @@ describe('Admin details', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it('Show wallets markup', () => {
+    it('Wallets markup', () => {
       cashStore.currency = fakeCurrnecy
       const wrapper = mount(<Component {...fakeData} cashStore={cashStore} />)
       wrapper.find('ul').simulate('click')
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it('Loading markup', () => {
+      const wrapper = mount(<Component {...fakeData} cashStore={cashStore} loading />)
       expect(wrapper.html()).toMatchSnapshot()
     })
 
@@ -97,8 +102,90 @@ describe('Admin details', () => {
       cashStore.currency = fakeCurrnecy
       const wrapper = mount(<Component {...fakeData} cashStore={cashStore} />)
       wrapper.find('ul').simulate('click')
-      wrapper.find('li').first().simulate('click')
+      wrapper
+        .find('li')
+        .first()
+        .simulate('click')
       expect(wrapper.find('DetailsComponent').state().showWallets).toBeTruthy()
+    })
+
+    describe('Payment icons click behavriour', () => {
+      it('Update payment status to create', () => {
+        cashStore.currency = fakeCurrnecy
+        const updatePaymentStatus = jest.fn()
+        const wrapper = mount(
+          <Component
+            {...fakeData}
+            cashStore={cashStore}
+            updatePaymentStatus={updatePaymentStatus}
+          />,
+        )
+        wrapper.find('ul').simulate('click')
+        wrapper
+          .find('span[title]')
+          .at(0)
+          .simulate('click')
+        expect(updatePaymentStatus).toHaveBeenCalledTimes(1)
+        expect(updatePaymentStatus).toHaveBeenCalledWith(fakeData.id, 1)
+      })
+
+      it('Update payment status to await for accepted', () => {
+        cashStore.currency = fakeCurrnecy
+        const updatePaymentStatus = jest.fn()
+        const wrapper = mount(
+          <Component
+            {...fakeData}
+            cashStore={cashStore}
+            updatePaymentStatus={updatePaymentStatus}
+          />,
+        )
+        wrapper.find('ul').simulate('click')
+        wrapper
+          .find('span[title]')
+          .at(1)
+          .simulate('click')
+        expect(updatePaymentStatus).toHaveBeenCalledTimes(1)
+        expect(updatePaymentStatus).toHaveBeenCalledWith(fakeData.id, 2)
+      })
+
+      it('Update payment status to await for transmited', () => {
+        cashStore.currency = fakeCurrnecy
+        const updatePaymentStatus = jest.fn()
+        const wrapper = mount(
+          <Component
+            {...fakeData}
+            cashStore={cashStore}
+            updatePaymentStatus={updatePaymentStatus}
+          />,
+        )
+        wrapper.find('ul').simulate('click')
+        wrapper
+          .find('span[title]')
+          .at(2)
+          .simulate('click')
+        expect(updatePaymentStatus).toHaveBeenCalledTimes(1)
+        expect(updatePaymentStatus).toHaveBeenCalledWith(fakeData.id, 3)
+      })
+
+      it('Update payment status to await for canceled', () => {
+        cashStore.currency = fakeCurrnecy
+        const updatePaymentStatus = jest.fn()
+        const wrapper = mount(
+          <Component
+            {...fakeData}
+            cashStore={cashStore}
+            updatePaymentStatus={updatePaymentStatus}
+          />,
+        )
+        wrapper.find('ul').simulate('click')
+        wrapper
+          .find('span[title]')
+          .at(3)
+          .simulate('click')
+        expect(updatePaymentStatus).toHaveBeenCalledTimes(1)
+        expect(updatePaymentStatus).toHaveBeenCalledWith(fakeData.id, 4)
+      })
+
     })
   })
 })
