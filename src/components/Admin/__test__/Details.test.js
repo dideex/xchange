@@ -3,7 +3,6 @@ import Component from '../Details'
 import {shallow, mount} from 'enzyme'
 import {MobxProvider} from '../../../helpers/mobx'
 import CashStore from '../../../store/Cash'
-import Api from '../../Api'
 
 const fakeData = {
   id: 'Test id',
