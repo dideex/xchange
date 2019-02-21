@@ -2,6 +2,7 @@ import React from 'react'
 import Component from '../Settings'
 import {shallow, mount} from 'enzyme'
 import {MobxProvider} from '../../../helpers/mobx'
+import {fakeCurrnecy} from '../../../helpers'
 import CashStore from '../../../store/Cash'
 import UserStore from '../../../store/User'
 
@@ -20,6 +21,12 @@ describe('Settings behaviour', () => {
           <Component />
         </MobxProvider>,
       )
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+    
+    it('Currency markup', () => {
+      cashStore.currency = fakeCurrnecy
+      const wrapper = shallow(<Component cashStore={cashStore} userStore={userStore} />)
       expect(wrapper.html()).toMatchSnapshot()
     })
   })

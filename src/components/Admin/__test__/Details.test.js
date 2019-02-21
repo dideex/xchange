@@ -2,6 +2,7 @@ import React from 'react'
 import Component from '../Details'
 import {shallow, mount} from 'enzyme'
 import {MobxProvider} from '../../../helpers/mobx'
+import {fakeCurrnecy} from '../../../helpers'
 import CashStore from '../../../store/Cash'
 
 const fakeData = {
@@ -22,12 +23,6 @@ const fakeData = {
   login: 'Test login',
   updatePaymentStatus() {},
 }
-
-const fakeCurrnecy = [
-  {order: 2, _id: 2, icon: 'bitcoin', id: 'bitcoin', name: 'lisk'},
-  {order: 1, _id: 1, icon: 'eth', id: 'eth', name: 'tether'},
-  {order: 3, _id: 3, icon: 'rur', id: 'rur', name: 'litecoin'},
-]
 
 describe('Admin details', () => {
   let cashStore
