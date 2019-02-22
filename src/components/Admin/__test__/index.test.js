@@ -1,7 +1,9 @@
 import React from 'react'
 import Component from '../index'
 import {shallow} from 'enzyme'
-import {MemoryRouter} from 'react-router-dom'
+import {Router as MemoryRouter} from 'react-router-dom'
+import {createMemoryHistory} from 'history'
+
 import {MobxProvider} from '../../../helpers/mobx'
 import {fakeCurrnecy} from '../../../helpers'
 import CashStore from '../../../store/Cash'
@@ -28,8 +30,9 @@ describe('Settings behaviour', () => {
     })
 
     it.only('With order id', () => {
+      const history = createMemoryHistory({initialEntries: [route]})
       const wrapper = shallow(
-        <MemoryRouter initialEntries={['/id/12345']}>
+        <MemoryRouter history={history}>
           <MobxProvider>
             <Component />
           </MobxProvider>

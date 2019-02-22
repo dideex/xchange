@@ -150,6 +150,7 @@ class Admin extends Component {
   render() {
     const {orders} = this.state
     const {id} = this.props.match.params
+		console.log('TCL: render -> this.props', this.props.match)
 		console.log('TCL: render -> id', id)
     const parsedOrders = parseOrders(
       orders
