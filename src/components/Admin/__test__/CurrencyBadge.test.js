@@ -1,6 +1,6 @@
 import React from 'react'
 import Component from '../CurrencyBadge'
-import {mount, shallow} from 'enzyme'
+import {shallow} from 'enzyme'
 import Api from '../../../components/Api'
 import {delay} from '../../../helpers'
 import Common from '../../common'

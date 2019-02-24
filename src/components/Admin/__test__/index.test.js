@@ -12,6 +12,23 @@ import UserStore from '../../../store/User'
 import {BrowserRouter} from 'react-router-dom'
 import {shape} from 'prop-types'
 
+import Common from '../../common'
+
+jest.mock('../../../components/Api', () => ({
+  post: () => Promise.resolve(),
+  get: () => Promise.resolve(),
+  errorEmitter: jest.fn(data => fn => data(fn)),
+}))
+
+jest.mock('../../../components/common/Noty.js', () => ({
+  noty: () => {},
+  // Loading: () => <div>Loading</div>,
+  // Virtualized: () => {},
+  // parseOrders: () => {},
+  // StatusTitles:  {},
+  // MainSectionWrap: () => {},
+}))
+
 // Instantiate router context
 const router = {
   history: new BrowserRouter().history,
@@ -62,10 +79,13 @@ describe('Settings behaviour', () => {
     })
 
     it.only('With order id', () => {
-      const wrapper = shallowWrap(
-        <Component cashStore={cashStore} userStore={userStore} />,
+      const wrapper = mountWrap(
+        <div initialEntries={['/', '/page/10', '/next']}>
+          <Component cashStore={cashStore} userStore={userStore} />
+        </div>,
       )
-      expect(wrapper.html()).toMatchSnapshot()
+      console.log(wrapper.debug())
+      // expect(wrapper.html()).toMatchSnapshot()
     })
   })
 })
