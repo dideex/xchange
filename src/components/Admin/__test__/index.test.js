@@ -15,18 +15,13 @@ import {shape} from 'prop-types'
 import Common from '../../common'
 
 jest.mock('../../../components/Api', () => ({
-  post: () => Promise.resolve(),
-  get: () => Promise.resolve(),
+  post: () => Promise.resolve({data: {}}),
+  get: () => Promise.resolve({data: {key: 'value'}}),
   errorEmitter: jest.fn(data => fn => data(fn)),
 }))
 
 jest.mock('../../../components/common/Noty.js', () => ({
   noty: () => {},
-  // Loading: () => <div>Loading</div>,
-  // Virtualized: () => {},
-  // parseOrders: () => {},
-  // StatusTitles:  {},
-  // MainSectionWrap: () => {},
 }))
 
 // Instantiate router context
@@ -64,6 +59,7 @@ describe('Settings behaviour', () => {
   beforeEach(() => {
     cashStore = new CashStore()
     userStore = new UserStore()
+    userStore.isAdmin = true
   })
 
   describe('Markup', () => {
@@ -80,9 +76,9 @@ describe('Settings behaviour', () => {
 
     it.only('With order id', () => {
       const wrapper = mountWrap(
-        <div initialEntries={['/', '/page/10', '/next']}>
+        <MemoryRouter>
           <Component cashStore={cashStore} userStore={userStore} />
-        </div>,
+        </MemoryRouter>,
       )
       console.log(wrapper.debug())
       // expect(wrapper.html()).toMatchSnapshot()

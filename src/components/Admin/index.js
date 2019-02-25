@@ -127,7 +127,7 @@ class Admin extends Component {
           ).icon
           noty(`Статус изменен на ${StatusTitles[paymentStatus]}`)
           if (paymentStatus === 3)
-            // send data to broadcast throw web-socket
+            // send data to broadcast through web-socket
             this.props.cashStore.emitSocket({
               email,
               inputValue,
