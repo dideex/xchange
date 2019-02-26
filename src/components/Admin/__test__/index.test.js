@@ -12,12 +12,14 @@ import UserStore from '../../../store/User'
 import {BrowserRouter} from 'react-router-dom'
 import {shape} from 'prop-types'
 
+import Api from '../../../components/Api'
+
 import Common from '../../common'
 
 jest.mock('../../../components/Api', () => ({
   post: () => Promise.resolve({data: {}}),
-  get: () => Promise.resolve({data: {key: 'value'}}),
-  errorEmitter: jest.fn(data => fn => data(fn)),
+  get: () => Promise.resolve({data: 'Btc', currency: 'Eth'}),
+  errorEmitter: data => fn => data(fn),
 }))
 
 jest.mock('../../../components/common/Noty.js', () => ({
@@ -34,7 +36,7 @@ const router = {
     match: {
       path: '/location',
       params: {
-        id: 123,
+        id: 'Teste order id',
       },
     },
   },
@@ -63,7 +65,7 @@ describe('Settings behaviour', () => {
   })
 
   describe('Markup', () => {
-    it('Basic markup', () => {
+    it.only('Basic markup', () => {
       const wrapper = shallow(
         <MobxProvider>
           <MemoryRouter>
@@ -75,13 +77,10 @@ describe('Settings behaviour', () => {
     })
 
     it.only('With order id', () => {
-      const wrapper = mountWrap(
-        <MemoryRouter>
-          <Component cashStore={cashStore} userStore={userStore} />
-        </MemoryRouter>,
-      )
-      console.log(wrapper.debug())
-      // expect(wrapper.html()).toMatchSnapshot()
+      Api.errorEmitter = fn => data => fn(data)
+      const wrapper = mountWrap(<Component cashStore={cashStore} userStore={userStore} />)
+      // console.log(wrapper.html())
+      expect(wrapper.html()).toMatchSnapshot()
     })
   })
 })
