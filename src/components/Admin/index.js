@@ -60,9 +60,9 @@ class Admin extends Component {
     return new Promise((res, rej) =>
       Api.get('summaryOrders', `/${status}`, this.props.userStore.token)
         .then(
-          Api.errorEmitter(orders => //console.log((orders))
+          Api.errorEmitter(orders => //console.log(orders)
             // save orders to state
-            this.setState({loading: false}),
+            this.setState({loading: false, orders: Object.values(orders)}, res),
           ),
         )
         .catch(err => {
@@ -79,7 +79,7 @@ class Admin extends Component {
     // find the order by id
     const orderDetails = this.state.orders.find(({_id}) => id === _id)
     this.setState({loadingUserData: true})
-    if (orderDetails.user !== 'Guest') {
+    if (orderDetails && orderDetails.user !== 'Guest') {
       // getting user's data
       const userDetails = await Api.get(
         'summaryOrderUserInfo',
@@ -150,7 +150,6 @@ class Admin extends Component {
   render() {
     const {orders} = this.state
     const {id} = this.props.match.params
-		console.log('TCL: render -> id', id)
     const parsedOrders = parseOrders(
       orders
         .map(order => ({...order, toWallet: order.fromWallet}))
@@ -159,13 +158,13 @@ class Admin extends Component {
     if (this.state.loading) return <Loading size="big" />
     return (
       <MainSectionWrap>
-        {id && (
+        {/* id && (
           <Details
             updatePaymentStatus={this.updatePaymentStatus}
             loading={this.state.loadingUserData}
             {...this.state.orderDetails}
           />
-        )}
+        ) */}
         <PaymentSelector>
           <div onClick={() => this._fetchOrdersByPaymentStatus('all')}>Все</div>
           <div onClick={() => this._fetchOrdersByPaymentStatus('created')}>Созданные</div>

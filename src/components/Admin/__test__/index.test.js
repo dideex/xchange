@@ -16,9 +16,30 @@ import Api from '../../../components/Api'
 
 import Common from '../../common'
 
+const btc = {
+  _id: 'test id',
+  paymentStatus: 1,
+  toWallet: 'Test to wallet',
+  created: '1/1/1970',
+  inputValue: 100,
+  outputValue: 1000,
+  currencyInputLabel: 'Btc',
+  currencyOutputLabel: 'Eth',
+}
+const eth = {
+  _id: 'test id eth',
+  paymentStatus: 2,
+  toWallet: 'Test to wallet eth',
+  created: '1/1/2070',
+  inputValue: 1000,
+  outputValue: 100,
+  currencyInputLabel: 'Eth',
+  currencyOutputLabel: 'Btc',
+}
+
 jest.mock('../../../components/Api', () => ({
   post: () => Promise.resolve({data: {}}),
-  get: () => Promise.resolve({data: 'Btc', currency: 'Eth'}),
+  get: () => Promise.resolve({data: {}, eth: {}}),
   errorEmitter: data => fn => data(fn),
 }))
 
@@ -36,7 +57,7 @@ const router = {
     match: {
       path: '/location',
       params: {
-        id: 'Teste order id',
+        id: 'test id',
       },
     },
   },
@@ -65,7 +86,8 @@ describe('Settings behaviour', () => {
   })
 
   describe('Markup', () => {
-    it.only('Basic markup', () => {
+    Api.get = () => Promise.resolve({data: btc, eth})
+    it('Basic markup', () => {
       const wrapper = shallow(
         <MobxProvider>
           <MemoryRouter>
