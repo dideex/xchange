@@ -60,7 +60,7 @@ class Admin extends Component {
     return new Promise((res, rej) =>
       Api.get('summaryOrders', `/${status}`, this.props.userStore.token)
         .then(
-          Api.errorEmitter(orders => //console.log(orders)
+          Api.errorEmitter(orders =>
             // save orders to state
             this.setState({loading: false, orders: Object.values(orders)}, res),
           ),
@@ -158,13 +158,13 @@ class Admin extends Component {
     if (this.state.loading) return <Loading size="big" />
     return (
       <MainSectionWrap>
-        {/* id && (
+        {id && (
           <Details
             updatePaymentStatus={this.updatePaymentStatus}
             loading={this.state.loadingUserData}
             {...this.state.orderDetails}
           />
-        ) */}
+        )}
         <PaymentSelector>
           <div onClick={() => this._fetchOrdersByPaymentStatus('all')}>Все</div>
           <div onClick={() => this._fetchOrdersByPaymentStatus('created')}>Созданные</div>
@@ -174,7 +174,7 @@ class Admin extends Component {
           <div onClick={() => this._fetchOrdersByPaymentStatus('closed')}>Закрытые</div>
           <div onClick={() => this._fetchOrdersByPaymentStatus('denied')}>Удаленные</div>
         </PaymentSelector>
-        <Virtualized parsedOrders={parsedOrders} endpoint={'summary'} />
+        {/* <Virtualized parsedOrders={parsedOrders} endpoint={'summary'} /> */}
         <p>
           Поиск по номеру
           <input

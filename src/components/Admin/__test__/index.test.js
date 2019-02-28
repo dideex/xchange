@@ -16,10 +16,13 @@ import Api from '../../../components/Api'
 
 import Common from '../../common'
 
+import {delay} from '../../../helpers'
+
 const btc = {
   _id: 'test id',
   paymentStatus: 1,
   toWallet: 'Test to wallet',
+  fromWallet: 'Test from wallet',
   created: '1/1/1970',
   inputValue: 100,
   outputValue: 1000,
@@ -30,6 +33,7 @@ const eth = {
   _id: 'test id eth',
   paymentStatus: 2,
   toWallet: 'Test to wallet eth',
+  fromWallet: 'Test from wallet eth',
   created: '1/1/2070',
   inputValue: 1000,
   outputValue: 100,
@@ -40,7 +44,7 @@ const eth = {
 jest.mock('../../../components/Api', () => ({
   post: () => Promise.resolve({data: {}}),
   get: () => Promise.resolve({data: {}, eth: {}}),
-  errorEmitter: data => fn => data(fn),
+  errorEmitter: fn => data => fn(data),
 }))
 
 jest.mock('../../../components/common/Noty.js', () => ({
@@ -98,11 +102,12 @@ describe('Settings behaviour', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it.only('With order id', () => {
-      Api.errorEmitter = fn => data => fn(data)
+    it.only('With order id', async () => {
+      userStore.isAdmin = true
       const wrapper = mountWrap(<Component cashStore={cashStore} userStore={userStore} />)
-      // console.log(wrapper.html())
-      expect(wrapper.html()).toMatchSnapshot()
+      await delay()
+      console.log(wrapper.html())
+      // expect(wrapper.html()).toMatchSnapshot()
     })
   })
 })
