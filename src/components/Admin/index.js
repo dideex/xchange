@@ -148,7 +148,7 @@ class Admin extends Component {
   }
 
   render() {
-    const {orders} = this.state
+    const {orders, loadingUserData, orderDetails} = this.state
     const {id} = this.props.match.params
     const parsedOrders = parseOrders(
       orders
@@ -161,8 +161,8 @@ class Admin extends Component {
         {id && (
           <Details
             updatePaymentStatus={this.updatePaymentStatus}
-            loading={this.state.loadingUserData}
-            {...this.state.orderDetails}
+            loading={loadingUserData}
+            {...orderDetails}
           />
         )}
         <PaymentSelector>

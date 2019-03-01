@@ -24,10 +24,13 @@ const btc = {
   toWallet: 'Test to wallet',
   fromWallet: 'Test from wallet',
   created: '1/1/1970',
-  inputValue: 100,
-  outputValue: 1000,
+  inputValue: '100',
+  outputValue: '1000',
   currencyInputLabel: 'Btc',
   currencyOutputLabel: 'Eth',
+  wallets: {Btc: 'tset wallet'},
+  login: 'Test login',
+  user: 'Test user',
 }
 const eth = {
   _id: 'test id eth',
@@ -35,10 +38,13 @@ const eth = {
   toWallet: 'Test to wallet eth',
   fromWallet: 'Test from wallet eth',
   created: '1/1/2070',
-  inputValue: 1000,
-  outputValue: 100,
+  inputValue: '1000',
+  outputValue: '100',
   currencyInputLabel: 'Eth',
   currencyOutputLabel: 'Btc',
+  wallets: {Eth: 'tset wallet'},
+  login: 'Test login',
+  user: 'Test user',
 }
 
 jest.mock('../../../components/Api', () => ({
@@ -50,6 +56,11 @@ jest.mock('../../../components/Api', () => ({
 jest.mock('../../../components/common/Noty.js', () => ({
   noty: () => {},
 }))
+
+// FIXME: Find a snicky error
+jest.mock('../../../components/common/Virtualized.js', () => (
+  <div>Virtualized component</div>
+))
 
 // Instantiate router context
 const router = {
@@ -90,7 +101,7 @@ describe('Settings behaviour', () => {
   })
 
   describe('Markup', () => {
-    Api.get = () => Promise.resolve({data: btc, eth})
+    Api.get = () => Promise.resolve({data: btc})
     it('Basic markup', () => {
       const wrapper = shallow(
         <MobxProvider>
@@ -104,7 +115,11 @@ describe('Settings behaviour', () => {
 
     it.only('With order id', async () => {
       userStore.isAdmin = true
-      const wrapper = mountWrap(<Component cashStore={cashStore} userStore={userStore} />)
+      const wrapper = mountWrap(
+        <MobxProvider cashStore={cashStore} userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
       await delay()
       console.log(wrapper.html())
       // expect(wrapper.html()).toMatchSnapshot()
