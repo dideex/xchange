@@ -42,8 +42,8 @@ export const Status = styled('span')`
 `
 
 // Order's table
-@withRouter
-@injectIntl
+// @withRouter
+// @injectIntl
 export class Virtualized extends Component {
   static propTypes = {
     parsedOrders: PropTypes.array.isRequired,
@@ -54,10 +54,11 @@ export class Virtualized extends Component {
   render() {
     const {parsedOrders, endpoint} = this.props
     const {formatMessage} = this.props.intl
+    return null
     return (
       <TableWrap>
         <AutoSizer disableHeight>
-          {({width}) => (
+          {/* ({width}) => (
             <Table
               width={width}
               height={330}
@@ -139,7 +140,7 @@ export class Virtualized extends Component {
                 )}
               />
             </Table>
-          )}
+          ) */}
         </AutoSizer>
       </TableWrap>
     )

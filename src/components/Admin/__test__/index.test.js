@@ -18,6 +18,10 @@ import Common from '../../common'
 
 import {delay} from '../../../helpers'
 
+import {IntlProvider, intlShape} from 'react-intl'
+
+import messages from '../../../locale/en.json'
+
 const btc = {
   _id: 'test id',
   paymentStatus: 1,
@@ -57,10 +61,10 @@ jest.mock('../../../components/common/Noty.js', () => ({
   noty: () => {},
 }))
 
-// FIXME: Find a snicky error
-jest.mock('../../../components/common/Virtualized.js', () => (
-  <div>Virtualized component</div>
-))
+// // FIXME: Find a snicky error
+// jest.mock('../../../components/common/Virtualized.js', () => (
+//   <div>Virtualized component</div>
+// ))
 
 // Instantiate router context
 const router = {
@@ -83,8 +87,17 @@ const createContext = () => ({
   childContextTypes: {router: shape({})},
 })
 
+const intlProvider = new IntlProvider({locale: 'en', messages}, {})
+const {intl} = intlProvider.getChildContext()
+
+const createmMixedContext = ({router, context, childContextTypes, ...additionalOptions} = {}) => ({
+  context: Object.assign({}, {router}, context, {intl}),
+  childContextTypes: Object.assign({}, {router: shape({})}, {intl: intlShape}, childContextTypes),
+  ...additionalOptions,
+})
+
 export function mountWrap(node) {
-  return mount(node, createContext())
+  return mount(node, createmMixedContext({router}))
 }
 
 export function shallowWrap(node) {
@@ -115,6 +128,7 @@ describe('Settings behaviour', () => {
 
     it.only('With order id', async () => {
       userStore.isAdmin = true
+      // Common.Virtualized = () => <div>Virtualized</div>
       const wrapper = mountWrap(
         <MobxProvider cashStore={cashStore} userStore={userStore}>
           <Component />
