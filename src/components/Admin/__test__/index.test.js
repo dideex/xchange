@@ -2,10 +2,8 @@ import React from 'react'
 import Component from '../index'
 import {shallow, mount} from 'enzyme'
 import {MemoryRouter} from 'react-router-dom'
-import {createMemoryHistory} from 'history'
 
 import {MobxProvider} from '../../../helpers/mobx'
-import {fakeCurrnecy} from '../../../helpers'
 import CashStore from '../../../store/Cash'
 import UserStore from '../../../store/User'
 
@@ -13,8 +11,6 @@ import {BrowserRouter} from 'react-router-dom'
 import {shape} from 'prop-types'
 
 import Api from '../../../components/Api'
-
-import Common from '../../common'
 
 import {delay} from '../../../helpers'
 
@@ -36,20 +32,6 @@ const btc = {
   login: 'Test login',
   user: 'Test user',
 }
-const eth = {
-  _id: 'test id eth',
-  paymentStatus: 2,
-  toWallet: 'Test to wallet eth',
-  fromWallet: 'Test from wallet eth',
-  created: '1/1/2070',
-  inputValue: '1000',
-  outputValue: '100',
-  currencyInputLabel: 'Eth',
-  currencyOutputLabel: 'Btc',
-  wallets: {Eth: 'tset wallet'},
-  login: 'Test login',
-  user: 'Test user',
-}
 
 jest.mock('../../../components/Api', () => ({
   post: () => Promise.resolve({data: {}}),
@@ -60,11 +42,6 @@ jest.mock('../../../components/Api', () => ({
 jest.mock('../../../components/common/Noty.js', () => ({
   noty: () => {},
 }))
-
-// // FIXME: Find a snicky error
-// jest.mock('../../../components/common/Virtualized.js', () => (
-//   <div>Virtualized component</div>
-// ))
 
 // Instantiate router context
 const router = {
@@ -90,14 +67,24 @@ const createContext = () => ({
 const intlProvider = new IntlProvider({locale: 'en', messages}, {})
 const {intl} = intlProvider.getChildContext()
 
-const createmMixedContext = ({router, context, childContextTypes, ...additionalOptions} = {}) => ({
+const createMixedContext = ({
+  router,
+  context,
+  childContextTypes,
+  ...additionalOptions
+} = {}) => ({
   context: Object.assign({}, {router}, context, {intl}),
-  childContextTypes: Object.assign({}, {router: shape({})}, {intl: intlShape}, childContextTypes),
+  childContextTypes: Object.assign(
+    {},
+    {router: shape({})},
+    {intl: intlShape},
+    childContextTypes,
+  ),
   ...additionalOptions,
 })
 
 export function mountWrap(node) {
-  return mount(node, createmMixedContext({router}))
+  return mount(node, createMixedContext({router}))
 }
 
 export function shallowWrap(node) {
@@ -126,17 +113,27 @@ describe('Settings behaviour', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it.only('With order id', async () => {
+    it('With order id user', async () => {
       userStore.isAdmin = true
-      // Common.Virtualized = () => <div>Virtualized</div>
       const wrapper = mountWrap(
         <MobxProvider cashStore={cashStore} userStore={userStore}>
           <Component />
         </MobxProvider>,
       )
       await delay()
-      console.log(wrapper.html())
-      // expect(wrapper.html()).toMatchSnapshot()
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it('With order id guest', async () => {
+      userStore.isAdmin = true
+      Api.get = () => Promise.resolve({data: btc, user: 'Guest'})
+      const wrapper = mountWrap(
+        <MobxProvider cashStore={cashStore} userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      await delay()
+      expect(wrapper.html()).toMatchSnapshot()
     })
   })
 })

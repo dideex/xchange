@@ -79,6 +79,7 @@ class Admin extends Component {
     // find the order by id
     const orderDetails = this.state.orders.find(({_id}) => id === _id)
     this.setState({loadingUserData: true})
+    console.log('TCL: orderDetails.user', orderDetails.user)
     if (orderDetails && orderDetails.user !== 'Guest') {
       // getting user's data
       const userDetails = await Api.get(
@@ -174,7 +175,7 @@ class Admin extends Component {
           <div onClick={() => this._fetchOrdersByPaymentStatus('closed')}>Закрытые</div>
           <div onClick={() => this._fetchOrdersByPaymentStatus('denied')}>Удаленные</div>
         </PaymentSelector>
-        {/* <Virtualized parsedOrders={parsedOrders} endpoint={'summary'} /> */}
+        <Virtualized parsedOrders={parsedOrders} endpoint="summary" />
         <p>
           Поиск по номеру
           <input
