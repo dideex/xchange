@@ -79,7 +79,6 @@ class Admin extends Component {
     // find the order by id
     const orderDetails = this.state.orders.find(({_id}) => id === _id)
     this.setState({loadingUserData: true})
-    console.log('TCL: orderDetails.user', orderDetails.user)
     if (orderDetails && orderDetails.user !== 'Guest') {
       // getting user's data
       const userDetails = await Api.get(
@@ -154,7 +153,7 @@ class Admin extends Component {
     const parsedOrders = parseOrders(
       orders
         .map(order => ({...order, toWallet: order.fromWallet}))
-        .filter(({toWallet}) => ~toWallet.indexOf(this.state.filter)),
+        .filter(({toWallet = ''}) => ~toWallet.indexOf(this.state.filter)),
     )
     if (this.state.loading) return <Loading size="big" />
     return (

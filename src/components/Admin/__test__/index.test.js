@@ -136,4 +136,24 @@ describe('Settings behaviour', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
   })
+  describe.only('Methods behavriour', () => {
+    it('Fetch orders by payment status', () => {
+      userStore.isAdmin = true
+      userStore.token = 'fake token'
+      Api.get = () => Promise.resolve({data: btc})
+      const wrapper = mountWrap(
+        <MobxProvider cashStore={cashStore} userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      Api.get = jest.fn(() => Promise.resolve({data: btc}))
+      const instance = wrapper.find('Admin').instance()
+      instance._fetchOrdersByPaymentStatus('all')
+      expect(Api.get).toHaveBeenCalledTimes(1)
+      expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/all', userStore.token)
+      // console.log(instance._fetchOrdersByPaymentStatus)
+      // console.log(wrapper.debug())
+    })
+  })
 })
