@@ -166,13 +166,36 @@ class Admin extends Component {
           />
         )}
         <PaymentSelector>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('all')}>Все</div>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('created')}>Созданные</div>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('expectation')}>
+          <div
+            data-testid="payment_selector_all"
+            onClick={() => this._fetchOrdersByPaymentStatus('all')}
+          >
+            Все
+          </div>
+          <div
+            data-testid="payment_selector_created"
+            onClick={() => this._fetchOrdersByPaymentStatus('created')}
+          >
+            Созданные
+          </div>
+          <div
+            data-testid="payment_selector_expectation"
+            onClick={() => this._fetchOrdersByPaymentStatus('expectation')}
+          >
             Подтвержденные
           </div>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('closed')}>Закрытые</div>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('denied')}>Удаленные</div>
+          <div
+            data-testid="payment_selector_closed"
+            onClick={() => this._fetchOrdersByPaymentStatus('closed')}
+          >
+            Закрытые
+          </div>
+          <div
+            data-testid="payment_selector_denied"
+            onClick={() => this._fetchOrdersByPaymentStatus('denied')}
+          >
+            Удаленные
+          </div>
         </PaymentSelector>
         <Virtualized parsedOrders={parsedOrders} endpoint="summary" />
         <p>

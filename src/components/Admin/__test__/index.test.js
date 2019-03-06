@@ -113,7 +113,7 @@ describe('Settings behaviour', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it('With order id user', async () => {
+    it.only('With order id user', async () => {
       userStore.isAdmin = true
       const wrapper = mountWrap(
         <MobxProvider cashStore={cashStore} userStore={userStore}>
@@ -136,24 +136,66 @@ describe('Settings behaviour', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
   })
-  describe.only('Methods behavriour', () => {
-    it('Fetch orders by payment status', () => {
-      userStore.isAdmin = true
-      userStore.token = 'fake token'
-      Api.get = () => Promise.resolve({data: btc})
-      const wrapper = mountWrap(
-        <MobxProvider cashStore={cashStore} userStore={userStore}>
-          <Component />
-        </MobxProvider>,
-      )
+  describe('Methods behavriour', () => {
+    describe('Payment status', () => {
+      it('Fetch orders when payment status all', () => {
+        userStore.isAdmin = true
+        userStore.token = 'fake token'
+        Api.get = () => Promise.resolve({data: btc})
+        const wrapper = mountWrap(
+          <MobxProvider cashStore={cashStore} userStore={userStore}>
+            <Component />
+          </MobxProvider>,
+        )
 
-      Api.get = jest.fn(() => Promise.resolve({data: btc}))
-      const instance = wrapper.find('Admin').instance()
-      instance._fetchOrdersByPaymentStatus('all')
-      expect(Api.get).toHaveBeenCalledTimes(1)
-      expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/all', userStore.token)
-      // console.log(instance._fetchOrdersByPaymentStatus)
-      // console.log(wrapper.debug())
+        Api.get = jest.fn(() => Promise.resolve({data: btc}))
+        const instance = wrapper.find('Admin').instance()
+        instance._fetchOrdersByPaymentStatus('all')
+        expect(Api.get).toHaveBeenCalledTimes(1)
+        expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/all', userStore.token)
+      })
+
+      it('Fetch orders when payment status created', () => {
+        userStore.isAdmin = true
+        userStore.token = 'fake token'
+        Api.get = () => Promise.resolve({data: btc})
+        const wrapper = mountWrap(
+          <MobxProvider cashStore={cashStore} userStore={userStore}>
+            <Component />
+          </MobxProvider>,
+        )
+
+        Api.get = jest.fn(() => Promise.resolve({data: btc}))
+        const instance = wrapper.find('Admin').instance()
+        instance._fetchOrdersByPaymentStatus('created')
+        expect(Api.get).toHaveBeenCalledTimes(1)
+        expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/created', userStore.token)
+      })
+
+      it.only('Should invoke fetch callback after status-button clicking', async () => {
+        userStore.isAdmin = true
+        userStore.token = 'fake token'
+        Api.get = () => Promise.resolve({data: btc})
+        const wrapper = mountWrap(
+          <MobxProvider cashStore={cashStore} userStore={userStore}>
+            <Component />
+          </MobxProvider>,
+        )
+
+        await delay()
+        Api.get = jest.fn(() => Promise.resolve({data: btc}))
+        const instance = wrapper.find('Admin').instance()
+        // instance._fetchOrdersByPaymentStatus('created')
+        // console.log(wrapper.html())
+        // console.log(wrapper.debug())
+        // console.log(wrapper.find('div[data-testid="payment_selector_all"]').simulate('click'))
+        console.log(wrapper.html())
+        console.log(wrapper.find('[aria-label="grid"]').html())
+        // console.log(wrapper.html())
+        // console.log(wrapper.debug())
+        // expect(Api.get).toHaveBeenCalledTimes(1)
+        // expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/created', userStore.token)
+      })
     })
   })
 })
