@@ -113,7 +113,7 @@ describe('Settings behaviour', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it.only('With order id user', async () => {
+    it('With order id user', async () => {
       userStore.isAdmin = true
       const wrapper = mountWrap(
         <MobxProvider cashStore={cashStore} userStore={userStore}>
@@ -181,12 +181,16 @@ describe('Settings behaviour', () => {
             <Component />
           </MobxProvider>,
         )
-        
+
         wrapper.update()
         Api.get = jest.fn(() => Promise.resolve({data: btc}))
         wrapper.find('div[data-testid="payment_selector_expectation"]').simulate('click')
         expect(Api.get).toHaveBeenCalledTimes(1)
-        expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/expectation', userStore.token)
+        expect(Api.get).toHaveBeenCalledWith(
+          'summaryOrders',
+          '/expectation',
+          userStore.token,
+        )
       })
 
       it('Should invoke fetch callback after status-button clicking at button "Closed"', async () => {
@@ -198,7 +202,7 @@ describe('Settings behaviour', () => {
             <Component />
           </MobxProvider>,
         )
-        
+
         wrapper.update()
         Api.get = jest.fn(() => Promise.resolve({data: btc}))
         wrapper.find('div[data-testid="payment_selector_closed"]').simulate('click')
