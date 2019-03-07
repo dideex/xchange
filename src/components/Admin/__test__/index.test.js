@@ -172,29 +172,38 @@ describe('Settings behaviour', () => {
         expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/created', userStore.token)
       })
 
-      it.only('Should invoke fetch callback after status-button clicking', async () => {
+      it('Should invoke fetch callback after status-button clicking at button "Expectation"', async () => {
         userStore.isAdmin = true
         userStore.token = 'fake token'
         Api.get = () => Promise.resolve({data: btc})
-        const wrapper = mountWrap(
+        const wrapper = await mountWrap(
           <MobxProvider cashStore={cashStore} userStore={userStore}>
             <Component />
           </MobxProvider>,
         )
-
-        await delay()
+        
+        wrapper.update()
         Api.get = jest.fn(() => Promise.resolve({data: btc}))
-        const instance = wrapper.find('Admin').instance()
-        // instance._fetchOrdersByPaymentStatus('created')
-        // console.log(wrapper.html())
-        // console.log(wrapper.debug())
-        // console.log(wrapper.find('div[data-testid="payment_selector_all"]').simulate('click'))
-        console.log(wrapper.html())
-        console.log(wrapper.find('[aria-label="grid"]').html())
-        // console.log(wrapper.html())
-        // console.log(wrapper.debug())
-        // expect(Api.get).toHaveBeenCalledTimes(1)
-        // expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/created', userStore.token)
+        wrapper.find('div[data-testid="payment_selector_expectation"]').simulate('click')
+        expect(Api.get).toHaveBeenCalledTimes(1)
+        expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/expectation', userStore.token)
+      })
+
+      it('Should invoke fetch callback after status-button clicking at button "Closed"', async () => {
+        userStore.isAdmin = true
+        userStore.token = 'fake token'
+        Api.get = () => Promise.resolve({data: btc})
+        const wrapper = await mountWrap(
+          <MobxProvider cashStore={cashStore} userStore={userStore}>
+            <Component />
+          </MobxProvider>,
+        )
+        
+        wrapper.update()
+        Api.get = jest.fn(() => Promise.resolve({data: btc}))
+        wrapper.find('div[data-testid="payment_selector_closed"]').simulate('click')
+        expect(Api.get).toHaveBeenCalledTimes(1)
+        expect(Api.get).toHaveBeenCalledWith('summaryOrders', '/closed', userStore.token)
       })
     })
   })
