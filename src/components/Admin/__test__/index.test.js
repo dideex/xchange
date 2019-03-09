@@ -49,6 +49,7 @@ const router = {
   route: {
     location: {
       path: '/location',
+      href: '/location',
     },
     match: {
       path: '/location',
@@ -113,19 +114,16 @@ describe('Settings behaviour', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it.only('Should not allow unauthorisation user', async () => {
-      userStore.isAdmin = false
+    it('Should not allow unauthorisation user', async () => {
+      userStore.isAdmin = null
       Api.get = () => Promise.resolve({data: btc})
-      const push = jest.fn()
       const wrapper = await mountWrap(
         <MobxProvider cashStore={cashStore} userStore={userStore}>
-          <Component history={{push}} />
+          <Component />
         </MobxProvider>,
       )
       wrapper.update()
-      console.log(wrapper.html())
-      expect(push).toHaveBeenCalledTimes(1)
-      // expect(wrapper.html()).toMatchSnapshot()
+      expect(window.location.href).toMatchSnapshot()
     })
 
     it('With order id user', async () => {
@@ -174,10 +172,27 @@ describe('Settings behaviour', () => {
         expect.anything(),
         'fake token',
       )
-      // wrapper.find('div[data-testid="payment_selector_closed"]').simulate('click')
     })
 
     describe('Payment status', () => {
+      it.skip('Fetch orders should invoke socket emitter', () => {
+        userStore.isAdmin = true
+        userStore.token = 'fake token'
+        Api.get = () => Promise.resolve({data: btc})
+        const emitSocket = jest.fn()
+        const wrapper = mountWrap(
+          <MobxProvider cashStore={{...cashStore, emitSocket }} userStore={userStore}>
+            <Component />
+          </MobxProvider>,
+        )
+
+        Api.get = jest.fn(() => Promise.resolve({data: btc}))
+        const instance = wrapper.find('Admin').instance()
+        instance._fetchOrdersByPaymentStatus('all')
+        expect(emitSocket).toHaveBeenCalledTimes(1)
+        expect(emitSocket).toHaveBeenCalledWith(expect.addSnapshotSerializer())
+      })
+
       it('Fetch orders when payment status all', () => {
         userStore.isAdmin = true
         userStore.token = 'fake token'

@@ -148,7 +148,6 @@ class Admin extends Component {
   }
 
   render() {
-    console.log(' LOG ___ this.props ', this.props.history)
     const {orders, loadingUserData, orderDetails} = this.state
     const {id} = this.props.match.params
     const parsedOrders = parseOrders(
