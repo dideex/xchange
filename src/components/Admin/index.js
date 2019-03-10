@@ -108,7 +108,6 @@ class Admin extends Component {
   // Change payment status
   updatePaymentStatus = async (_id, paymentStatus) => {
     // getting data
-    console.log('update')
     await Api.post(
       'summaryOrderChangeStatus',
       {_id, paymentStatus},
@@ -127,7 +126,6 @@ class Admin extends Component {
             ({name}) => name === currencyOutput,
           ).icon
           noty(`Статус изменен на ${StatusTitles[paymentStatus]}`)
-          console.log('TCL: updatePaymentStatus -> paymentStatus', paymentStatus)
           if (paymentStatus === 3) {
             // send data to broadcast through web-socket
             this.props.cashStore.emitSocket({
