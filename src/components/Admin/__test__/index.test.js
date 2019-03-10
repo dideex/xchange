@@ -120,25 +120,29 @@ describe('Settings behaviour', () => {
       )
     })
 
+    it('Fetch orders should invoke socket emitter', async () => {
+      userStore.isAdmin = true
+      userStore.token = 'fake token'
+      userStore.paymentStatus = 3
+      const emitSocket = jest.fn()
+      Api.get = () => Promise.resolve({data: btc})
+      const wrapper = await mountWrap(
+        <MobxProvider cashStore={{...cashStore, emitSocket}} userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      wrapper.update()
+      Api.post = jest.fn(() => Promise.resolve({data: btc}))
+      wrapper
+        .find('[title="Перевести в статус Переведено"]')
+        .first()
+        .simulate('click')
+      await delay()
+      expect(emitSocket).toHaveBeenCalledTimes(1)
+    })
+
     describe('Payment status', () => {
-      it.skip('Fetch orders should invoke socket emitter', () => {
-        userStore.isAdmin = true
-        userStore.token = 'fake token'
-        Api.get = () => Promise.resolve({data: btc})
-        const emitSocket = jest.fn()
-        const wrapper = mountWrap(
-          <MobxProvider cashStore={{...cashStore, emitSocket}} userStore={userStore}>
-            <Component />
-          </MobxProvider>,
-        )
-
-        Api.get = jest.fn(() => Promise.resolve({data: btc}))
-        const instance = wrapper.find('Admin').instance()
-        instance._fetchOrdersByPaymentStatus('all')
-        expect(emitSocket).toHaveBeenCalledTimes(1)
-        expect(emitSocket).toHaveBeenCalledWith(expect.addSnapshotSerializer())
-      })
-
       it('Fetch orders when payment status all', () => {
         userStore.isAdmin = true
         userStore.token = 'fake token'
