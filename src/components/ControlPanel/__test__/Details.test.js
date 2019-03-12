@@ -4,7 +4,7 @@ import {shallow} from 'enzyme'
 import {fakeData} from '../../../helpers/fixtures'
 import {mountWithIntl} from '../../../helpers/intl'
 
-describe('Details tests', () => {
+describe('Control panel: details tests', () => {
   describe('Component markup', () => {
     it('Basic marup', () => {
       const wrapper = mountWithIntl(<Component {...fakeData} />)
