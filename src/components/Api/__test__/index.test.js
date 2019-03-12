@@ -1,6 +1,4 @@
 import Api from '../index'
-import {shallow} from 'enzyme'
-
 import Noty from '../../common/Noty'
 
 jest.mock('../../../components/common/Noty.js', () => ({
@@ -105,7 +103,7 @@ describe('Api tests', () => {
       expect(fn).toHaveBeenCalledWith({fakeData}, null)
     })
 
-    it('Shouldn\' invoke the function with error', () => {
+    it('Should\'n invoke the function with error', () => {
       const fn = jest.fn()
       Noty.noty = jest.fn()
       const errorEmitter = () => Api.errorEmitter(fn)({fakeData, err})
