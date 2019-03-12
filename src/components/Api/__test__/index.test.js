@@ -1,6 +1,8 @@
 import Api from '../index'
 import {shallow} from 'enzyme'
 
+import Noty from '../../common/Noty'
+
 jest.mock('../../../components/common/Noty.js', () => ({
   noty: () => {},
 }))
@@ -23,6 +25,7 @@ const getApiHeader = (token = null) => ({
   },
 })
 
+const err = 'Test error'
 const fakeEndpoint = 'Test_endpoint'
 const fakeToken = 'fake token'
 const fakeParams = '?id=fake'
@@ -93,6 +96,24 @@ describe('Api tests', () => {
         getApiHeader(),
       )
     })
-    
+  })
+  describe('Error emitter', () => {
+    it('Should invoke the function correctly', () => {
+      const fn = jest.fn()
+      Api.errorEmitter(fn)({fakeData, err: null})
+      expect(fn).toHaveBeenCalledTimes(1)
+      expect(fn).toHaveBeenCalledWith({fakeData}, null)
+    })
+
+    it('Shouldn\' invoke the function with error', () => {
+      const fn = jest.fn()
+      Noty.noty = jest.fn()
+      const errorEmitter = () => Api.errorEmitter(fn)({fakeData, err})
+      expect(errorEmitter).toThrowError()
+      
+      expect(fn).toHaveBeenCalledTimes(0)
+      expect(Noty.noty).toHaveBeenCalledTimes(1)
+      expect(Noty.noty).toHaveBeenCalledWith(err, 'error')
+    })
   })
 })
