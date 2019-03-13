@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Control panel: order Component markup Basic markup 1`] = `"<div class=\\"css-iouif8\\"><h3><span>You have not yet made a transfer</span></h3></div>"`;
+
+exports[`Control panel: order Component markup Should render without existing orders 1`] = `"<div class=\\"css-iouif8\\"><h3><span>You have not yet made a transfer</span></h3></div>"`;
