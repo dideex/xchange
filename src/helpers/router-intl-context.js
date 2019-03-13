@@ -1,9 +1,11 @@
-import { mount} from 'enzyme'
+import {mount} from 'enzyme'
 import {BrowserRouter} from 'react-router-dom'
 import {IntlProvider, intlShape} from 'react-intl'
 import {shape} from 'prop-types'
 
 import messages from '../locale/en.json'
+
+export const testId = 'test id'
 
 // Instantiate router context
 const router = {
@@ -16,7 +18,7 @@ const router = {
     match: {
       path: '/location',
       params: {
-        id: 'test id',
+        id: testId,
       },
     },
   },
