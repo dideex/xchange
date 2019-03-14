@@ -1,13 +1,10 @@
 import React from 'react'
 import Component from '../Orders'
-import {shallow} from 'enzyme'
 import {Provider as MobxProvider} from 'mobx-react'
-
-import Api from '../../../components/Api'
 
 import UserStore from '../../../store/User'
 
-import {mountWrap, testId} from '../../../helpers/router-intl-context'
+import {mountWrap} from '../../../helpers/router-intl-context'
 import {fakeData} from '../../../helpers/fixtures'
 
 jest.mock('../../../components/Api', () => ({
@@ -28,6 +25,16 @@ describe('Control panel: order', () => {
   })
 
   describe('Component markup', () => {
+    it('Basic markup', () => {
+      userStore.orders = [fakeData]
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+
     it('Should render without existing orders', () => {
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -36,6 +43,15 @@ describe('Control panel: order', () => {
       )
       expect(wrapper.html()).toMatchSnapshot()
     })
+
+    it('Should render loading', () => {
+      userStore.loading = true
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      expect(wrapper.html()).toMatchSnapshot()
+    })
   })
-  
 })

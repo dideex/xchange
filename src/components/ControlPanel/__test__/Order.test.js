@@ -1,9 +1,6 @@
 import React from 'react'
 import Component from '../Order'
-import {shallow} from 'enzyme'
 import {Provider as MobxProvider} from 'mobx-react'
-
-import Api from '../../../components/Api'
 
 import UserStore from '../../../store/User'
 
