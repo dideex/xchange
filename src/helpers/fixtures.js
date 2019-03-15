@@ -24,3 +24,8 @@ export const fakeData = {
   login: 'Test login',
   updatePaymentStatus() {},
 }
+
+export const fakeUser = {
+  username: 'Fake username',
+  password: 'Fake password'
+}

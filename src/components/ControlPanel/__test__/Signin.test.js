@@ -5,7 +5,8 @@ import {Provider as MobxProvider} from 'mobx-react'
 import UserStore from '../../../store/User'
 
 import {mountWrap} from '../../../helpers/router-intl-context'
-import {fakeData} from '../../../helpers/fixtures'
+import {fakeData, fakeUser} from '../../../helpers/fixtures'
+import {delay} from '../../../helpers'
 
 jest.mock('../../../components/Api', () => ({
   post: () => Promise.resolve({data: {}}),
@@ -58,7 +59,7 @@ describe('Control panel: signin', () => {
       window.scrollTo = scrollTo
     })
 
-    it('Passwrod should be changed after cWU', () => {
+    it('Password should be cleaned after cWU', () => {
       userStore.changePassword = jest.fn()
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -68,6 +69,53 @@ describe('Control panel: signin', () => {
       wrapper.unmount()
       expect(userStore.changePassword).toHaveBeenCalledTimes(1)
       expect(userStore.changePassword).toHaveBeenCalledWith('')
+    })
+
+    it("Handle submit shouldn't work with untouched inputs", async () => {
+      userStore.getToken = jest.fn()
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      const instance = wrapper.find('SignIn').instance()
+      instance.handleSubmit()
+      await delay()
+      expect(userStore.getToken).toHaveBeenCalledTimes(0)
+    })
+
+    it.only("Handle submit should'n work with empyt inputs", async () => {
+      userStore.getToken = jest.fn()
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      wrapper.find('SignIn').setState({usernameError: true, passwordError: true})
+      const instance = wrapper.find('SignIn').instance()
+      instance.handleSubmit()
+      await delay()
+      expect(userStore.getToken).toHaveBeenCalledTimes(0)
+    })
+
+    it.only("Handle submit should work", async () => {
+      userStore.getToken = jest.fn()
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      userStore.changeUsername = fakeUser.username
+      userStore.changePassword = fakeUser.password
+      wrapper.find('SignIn').setState({usernameError: false, passwordError: false})
+      const instance = wrapper.find('SignIn').instance()
+      instance.handleSubmit()
+      await delay()
+      console.log(wrapper.find('SignIn').state())
+      expect(userStore.getToken).toHaveBeenCalledTimes(1)
     })
   })
 
