@@ -55,6 +55,7 @@ class SignIn extends Component {
   }
 
   handleSubmit = async () => {
+    console.log('fire')
     const {usernameError, passwordError} = this.state
     // fix double click for premade input's values
     // or

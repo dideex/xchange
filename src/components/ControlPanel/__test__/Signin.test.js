@@ -1,5 +1,6 @@
 import React from 'react'
 import Component from '../Signin'
+import {shallow} from 'enzyme'
 import {Provider as MobxProvider} from 'mobx-react'
 
 import UserStore from '../../../store/User'
@@ -20,6 +21,8 @@ jest.mock('../../../components/common/Noty.js', () => ({
 
 describe('Control panel: signin', () => {
   let userStore
+  const fakeLogin = 'Fake login'
+  const fakePassword = 'Fakepassword'
   beforeEach(() => {
     userStore = new UserStore()
     userStore.fetchGuestOrder = () => Promise.resolve({...fakeData, paymentStatus: 1})
@@ -85,7 +88,7 @@ describe('Control panel: signin', () => {
       expect(userStore.getToken).toHaveBeenCalledTimes(0)
     })
 
-    it.only("Handle submit should'n work with empyt inputs", async () => {
+    it("Handle submit should'n work with empty inputs", async () => {
       userStore.getToken = jest.fn()
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -100,7 +103,7 @@ describe('Control panel: signin', () => {
       expect(userStore.getToken).toHaveBeenCalledTimes(0)
     })
 
-    it.only("Handle submit should work", async () => {
+    it('Handle submit should work', async () => {
       userStore.getToken = jest.fn()
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -114,18 +117,48 @@ describe('Control panel: signin', () => {
       const instance = wrapper.find('SignIn').instance()
       instance.handleSubmit()
       await delay()
-      console.log(wrapper.find('SignIn').state())
       expect(userStore.getToken).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('Form bahavriour', () => {
-    it('Basic markup', () => {
+    it('Login field should change', () => {
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
           <Component />
         </MobxProvider>,
       )
+      wrapper
+        .find('input[placeholder="Login"]')
+        .simulate('change', {target: {value: fakeLogin}})
+      expect(userStore.login).toBe(fakeLogin)
+      expect(wrapper.find('input[placeholder="Login"]').instance().value).toBe(fakeLogin)
+    })
+
+    it('Password field should change', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      wrapper
+        .find('input[type="password"]')
+        .simulate('change', {target: {value: fakePassword}})
+      expect(userStore.password).toBe(fakePassword)
+      expect(wrapper.find('input[type="password"]').instance().value).toBe(fakePassword)
+    })
+
+    it.only('Button click should submit the form', async () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      wrapper.instance().handleSubmit = jest.fn()
+
+      wrapper.find('button').simulate('click')
+      await delay()
+      expect(wrapper.instance().handleSubmit).toHaveBeenCalledTimes(1)
     })
   })
 })
