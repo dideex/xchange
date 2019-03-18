@@ -135,6 +135,36 @@ describe('Control panel: signin', () => {
       expect(wrapper.find('input[placeholder="Login"]').instance().value).toBe(fakeLogin)
     })
 
+    it('Error fields should appear', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      wrapper.find('button').simulate('click')
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it.only('Error fields should hide when problem solves', async () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      wrapper.find('button').simulate('click')
+      wrapper
+        .find('input[placeholder="Login"]')
+        .simulate('change', {target: {value: fakeLogin}})
+      wrapper
+        .find('input[type="password"]')
+        .simulate('change', {target: {value: fakePassword}})
+
+      await delay(() => {}, 500)
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+
     it('Password field should change', () => {
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -148,17 +178,20 @@ describe('Control panel: signin', () => {
       expect(wrapper.find('input[type="password"]').instance().value).toBe(fakePassword)
     })
 
-    it.only('Button click should submit the form', async () => {
+    it('Button click should submit the form', async () => {
+      userStore.getToken = jest.fn()
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
           <Component />
         </MobxProvider>,
       )
-      wrapper.instance().handleSubmit = jest.fn()
 
+      userStore.changeUsername = fakeUser.username
+      userStore.changePassword = fakeUser.password
+      wrapper.find('SignIn').setState({usernameError: false, passwordError: false})
       wrapper.find('button').simulate('click')
       await delay()
-      expect(wrapper.instance().handleSubmit).toHaveBeenCalledTimes(1)
+      expect(userStore.getToken).toHaveBeenCalledTimes(1)
     })
   })
 })
