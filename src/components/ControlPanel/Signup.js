@@ -11,7 +11,7 @@ import {Wrap} from './Signin'
 @withRouter
 @inject('userStore')
 @observer
-class Signup extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props)
     this.inputs = []
@@ -50,6 +50,8 @@ class Signup extends Component {
     // or
     // await this.inputs.map(async input => await input.handleChange())
     await Promise.all(this.inputs.map(input => input.handleChange()))
+    console.log('pwd', this.state.passwordRepeated === this.props.userStore.password)
+    console.log('pwd2', isAllPropsFalse({usernameError, passwordError, emailError}))
     if (
       isAllPropsFalse({usernameError, passwordError, emailError}) &&
       this.state.passwordRepeated === this.props.userStore.password
@@ -183,4 +185,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup
+export default SignUp
