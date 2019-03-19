@@ -135,6 +135,19 @@ describe('Control panel: signin', () => {
       expect(wrapper.find('input[placeholder="Login"]').instance().value).toBe(fakeLogin)
     })
 
+    it('Password field should change', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      wrapper
+        .find('input[type="password"]')
+        .simulate('change', {target: {value: fakePassword}})
+      expect(userStore.password).toBe(fakePassword)
+      expect(wrapper.find('input[type="password"]').instance().value).toBe(fakePassword)
+    })
+
     it('Error fields should appear', () => {
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -146,7 +159,7 @@ describe('Control panel: signin', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it.only('Error fields should hide when problem solves', async () => {
+    it('Error fields should hide when problem solves', async () => {
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
           <Component />
@@ -165,17 +178,38 @@ describe('Control panel: signin', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it('Password field should change', () => {
+    it('Form should submit after enter press at password field', async () => {
+      userStore.getToken = jest.fn()
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
           <Component />
         </MobxProvider>,
       )
-      wrapper
-        .find('input[type="password"]')
-        .simulate('change', {target: {value: fakePassword}})
-      expect(userStore.password).toBe(fakePassword)
-      expect(wrapper.find('input[type="password"]').instance().value).toBe(fakePassword)
+
+      userStore.changeUsername = fakeUser.username
+      userStore.changePassword = fakeUser.password
+      wrapper.find('SignIn').setState({usernameError: false, passwordError: false})
+
+      wrapper.find('input[type="password"]').simulate('keypress', {which: 13})
+      await delay()
+      expect(userStore.getToken).toHaveBeenCalledTimes(1)
+    })
+
+    it('Form should submit after enter press at login field', async () => {
+      userStore.getToken = jest.fn()
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      userStore.changeUsername = fakeUser.username
+      userStore.changePassword = fakeUser.password
+      wrapper.find('SignIn').setState({usernameError: false, passwordError: false})
+
+      wrapper.find('input[placeholder="Login"]').simulate('keypress', {which: 13})
+      await delay()
+      expect(userStore.getToken).toHaveBeenCalledTimes(1)
     })
 
     it('Button click should submit the form', async () => {
