@@ -74,7 +74,7 @@ describe('Control panel: signin', () => {
       expect(userStore.changePassword).toHaveBeenCalledWith('')
     })
 
-    it("Handle submit shouldn't work with untouched inputs", async () => {
+    it("Handle submit should not work with untouched inputs", async () => {
       userStore.signupUser = jest.fn()
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -88,7 +88,7 @@ describe('Control panel: signin', () => {
       expect(userStore.signupUser).toHaveBeenCalledTimes(0)
     })
 
-    it("Handle submit should'n work with empty inputs", async () => {
+    it("Handle submit should not work with empty inputs", async () => {
       userStore.signupUser = jest.fn()
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -113,18 +113,19 @@ describe('Control panel: signin', () => {
         </MobxProvider>,
       )
 
-      userStore.changeUsername = fakeUser.username
-      userStore.changePassword = fakeUser.password
+      userStore.changeLogin(fakeUser.username)
+      userStore.changeUsername(fakeUser.username)
+      userStore.changePassword(fakeUser.password)
+      userStore.changeEmail(fakeUser.email)
       wrapper
         .find('SignUp')
         .setState({
-          usernameError: true,
-          passwordError: true,
-          emailError: true,
+          usernameError: false,
+          passwordError: false,
+          emailError: false,
           passwordRepeated: fakeUser.password,
         })
-      const instance = wrapper.find('SignUp').instance()
-      instance.handleSubmit()
+      wrapper.find('SignUp').instance().handleSubmit()
       await delay()
       expect(userStore.signupUser).toHaveBeenCalledTimes(1)
     })
