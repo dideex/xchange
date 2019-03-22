@@ -28,5 +28,6 @@ export const fakeData = {
 export const fakeUser = {
   username: 'Fake username',
   password: 'Fake password',
-  email: 'fake@email.com'
+  email: 'fake@email.com',
+  fio: 'Fake fio'
 }

@@ -102,7 +102,7 @@ class SignUp extends Component {
           handleChange={changeUsername}
           placeholder={formatMessage({
             id: 'home.cpPlaceholder.username',
-            defaultMessage: 'Логин',
+            defaultMessage: 'Фио',
           })}
           errorMsg={formatMessage({
             id: 'home.cpError.username',

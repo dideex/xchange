@@ -74,7 +74,7 @@ describe('Control panel: signin', () => {
       expect(userStore.changePassword).toHaveBeenCalledWith('')
     })
 
-    it("Handle submit should not work with untouched inputs", async () => {
+    it('Handle submit should not work with untouched inputs', async () => {
       userStore.signupUser = jest.fn()
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -88,7 +88,7 @@ describe('Control panel: signin', () => {
       expect(userStore.signupUser).toHaveBeenCalledTimes(0)
     })
 
-    it("Handle submit should not work with empty inputs", async () => {
+    it('Handle submit should not work with empty inputs', async () => {
       userStore.signupUser = jest.fn()
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -117,19 +117,97 @@ describe('Control panel: signin', () => {
       userStore.changeUsername(fakeUser.username)
       userStore.changePassword(fakeUser.password)
       userStore.changeEmail(fakeUser.email)
+      wrapper.find('SignUp').setState({
+        usernameError: false,
+        passwordError: false,
+        emailError: false,
+        passwordRepeated: fakeUser.password,
+      })
       wrapper
         .find('SignUp')
-        .setState({
-          usernameError: false,
-          passwordError: false,
-          emailError: false,
-          passwordRepeated: fakeUser.password,
-        })
-      wrapper.find('SignUp').instance().handleSubmit()
+        .instance()
+        .handleSubmit()
       await delay()
       expect(userStore.signupUser).toHaveBeenCalledTimes(1)
     })
   })
 
-  describe('Form bahavriour', () => {})
+  describe.only('Form bahavriour', () => {
+    it('Login field should change', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      wrapper
+        .find('input[placeholder="Login"]')
+        .simulate('change', {target: {value: fakeLogin}})
+      expect(userStore.login).toBe(fakeLogin)
+      expect(wrapper.find('input[placeholder="Login"]').instance().value).toBe(fakeLogin)
+    })
+
+    it('Username field should change', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      wrapper
+        .find('input[placeholder="Full name"]')
+        .simulate('change', {target: {value: fakeUser.fio}})
+      expect(userStore.username).toBe(fakeUser.fio)
+      expect(wrapper.find('input[placeholder="Full name"]').instance().value).toBe(
+        fakeUser.fio,
+      )
+    })
+
+    it('Email field should change', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      wrapper
+        .find('input[placeholder="Email"]')
+        .simulate('change', {target: {value: fakeUser.email}})
+      expect(userStore.email).toBe(fakeUser.email)
+      expect(wrapper.find('input[placeholder="Email"]').instance().value).toBe(
+        fakeUser.email,
+      )
+    })
+
+    it('Password field should change', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      wrapper
+        .find('input[placeholder="Password"]')
+        .simulate('change', {target: {value: fakeUser.password}})
+      expect(userStore.password).toBe(fakeUser.password)
+      expect(wrapper.find('input[placeholder="Password"]').instance().value).toBe(
+        fakeUser.password,
+      )
+    })
+    it('Repeat password field should change', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      wrapper
+        .find('input[placeholder="Repeat password"]')
+        .simulate('change', {target: {value: fakeUser.password}})
+      expect(
+        wrapper
+          .find('SignUp')
+          .instance()
+          .state.passwordRepeated,
+      ).toBe(fakeUser.password)
+      expect(wrapper.find('input[placeholder="Repeat password"]').instance().value).toBe(
+        fakeUser.password,
+      )
+    })
+  })
 })
