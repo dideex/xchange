@@ -40,6 +40,17 @@ describe('Control panel: signin', () => {
   })
 
   describe('Component methods bahavriour', () => {
+    it('Should redirect when token is exist', () => {
+      userStore.token = true
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      // FIXME: add history.push observer
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+
     it('Errors should be cleared after cDM', () => {
       userStore.clearErr = jest.fn()
       const wrapper = mountWrap(
@@ -132,7 +143,7 @@ describe('Control panel: signin', () => {
     })
   })
 
-  describe.only('Form bahavriour', () => {
+  describe('Form bahavriour', () => {
     it('Login field should change', () => {
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -190,6 +201,7 @@ describe('Control panel: signin', () => {
         fakeUser.password,
       )
     })
+
     it('Repeat password field should change', () => {
       const wrapper = mountWrap(
         <MobxProvider userStore={userStore}>
@@ -208,6 +220,43 @@ describe('Control panel: signin', () => {
       expect(wrapper.find('input[placeholder="Repeat password"]').instance().value).toBe(
         fakeUser.password,
       )
+    })
+
+    
+    it('Error fields should appear', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      wrapper.find('button').simulate('click')
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it('Error fields should hide when problem solves', async () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      wrapper.find('button').simulate('click')
+      wrapper
+        .find('input[placeholder="Full name"]')
+        .simulate('change', {target: {value: fakeUser.fio}})
+      wrapper
+        .find('input[placeholder="Email"]')
+        .simulate('change', {target: {value: fakeUser.email}})
+      wrapper
+        .find('input[placeholder="Password"]')
+        .simulate('change', {target: {value: fakeUser.password}})
+      wrapper
+        .find('input[placeholder="Repeat password"]')
+        .simulate('change', {target: {value: fakeUser.password}})
+
+      await delay(() => {}, 500)
+      expect(wrapper.html()).toMatchSnapshot()
     })
   })
 })
