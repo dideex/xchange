@@ -1,6 +1,5 @@
 import React from 'react'
 import Component from '../Signup'
-import {shallow} from 'enzyme'
 import {Provider as MobxProvider} from 'mobx-react'
 
 import UserStore from '../../../store/User'
@@ -22,7 +21,6 @@ jest.mock('../../../components/common/Noty.js', () => ({
 describe('Control panel: signin', () => {
   let userStore
   const fakeLogin = 'Fake login'
-  const fakePassword = 'Fakepassword'
   beforeEach(() => {
     userStore = new UserStore()
     userStore.fetchGuestOrder = () => Promise.resolve({...fakeData, paymentStatus: 1})
