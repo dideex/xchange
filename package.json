@@ -55,5 +55,8 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "react-dnd-test-backend": "^7.4.0"
   }
 }
