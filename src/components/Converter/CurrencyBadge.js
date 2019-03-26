@@ -28,7 +28,7 @@ export default class CurrencyBadge extends Component {
   }
 
   componentDidMount() {
-    // Hide default draggeing preview layer
+    // Hide default dragge preview layer
     this.props.connectPreview && this.props.connectPreview(getEmptyImage())
   }
 
@@ -37,7 +37,7 @@ export default class CurrencyBadge extends Component {
     return (
       connectDragSource &&
       connectDragSource(
-        <div style={{display: 'inline-block'}}>
+        <div data-testid="dragged-anchor" style={{display: 'inline-block'}}>
           <Label
             icon={icon}
             isDragging={isDragging}
