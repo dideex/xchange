@@ -286,6 +286,7 @@ class UserData extends Component {
             })}
             toggle={this.handleSubmit}
             loading={this.state.loading}
+            testid="send-payment-button"
           />
         </ButtonWrap>
       </StyledUserData>
