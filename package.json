@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "bcryptjs": "^2.4.3",
+    "cypress": "^3.2.0",
     "enzyme": "^3.8.0",
     "mongoose": "^5.4.4",
     "webpack-bundle-analyzer": "^3.0.2"
@@ -55,7 +56,8 @@
     "build-js": "npm-run-all build-css build-js",
     "test": "react-app-rewired test --env=jsdom --watch",
     "test:coverage": "react-app-rewired test --env=jsdom --coverage",
-    "fixtures": "node ./src/e2e/helpers/init-dump"
+    "fixtures": "node ./src/e2e/helpers/init-dump",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
