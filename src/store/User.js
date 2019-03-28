@@ -42,6 +42,7 @@ export default class User {
   constructor() {
     this.locale = Cookie.get('locale') || 'ru-RU'
     this.token = getToken()
+    console.log('TCL: User -> constructor -> this.token', this.token)
     this._setInitalData()
     this._checkToken()
     if (getAdminStatus()) this.isAdmin = true
