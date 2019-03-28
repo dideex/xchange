@@ -37,16 +37,10 @@ describe('Coverter: Currency badge tests', () => {
         .instance()
         .getManager()
         .getBackend()
-				const source = new NonDraggableSource()
-				const sourceId = registry.addSource(Types.FOO, source)
-      
-      const registry = wrapper.instance().getRegistry()
-
-      console.log(wrapper.debug())
 
       backend.simulateBeginDrag([
         wrapper
-          .find('[data-testid="dragged-anchor"]')
+          .find('DragSource(CurrencyBadge)')
           .instance()
           .getHandlerId(),
       ])
