@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Coverter: Currency badge tests Preview behavriour Basic markup 1`] = `"<div><div></div></div>"`;
+
+exports[`Coverter: Currency badge tests Shouldn't render if wasn't dragging 1`] = `null`;

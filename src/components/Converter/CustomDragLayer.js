@@ -72,6 +72,7 @@ export default class CustomDragLayer extends Component {
 
   render() {
     const {isDragging} = this.props
+    console.log('TCL: CustomDragLayer -> render -> isDragging', isDragging)
     if (!isDragging) return null
     return <div style={this.getItemStyle(this.props)}>{this.getItem()}</div>
   }

@@ -49,23 +49,3 @@ describe('Coverter: Currency badge tests', () => {
     })
   })
 })
-
-/* 
-  
-      const backend = wrapper
-        .instance()
-        .getManager()
-        .getBackend()
-
-  // Test that the opacity is 1
-  let div = TestUtils.findRenderedDOMComponentWithTag(root, 'div')
-  expect(div.props.style.opacity).toEqual(1)
-
-  // Find the drag source ID and use it to simulate the dragging operation
-  const box = TestUtils.findRenderedComponentWithType(root, Box)
-  backend.simulateBeginDrag([box.getHandlerId()])
-
-  // Verify that the div changed its opacity
-  div = TestUtils.findRenderedDOMComponentWithTag(root, 'div')
-  expect(div.style.opacity).toEqual(0.4)
-  */
