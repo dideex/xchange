@@ -6,7 +6,7 @@ import Browser from '../../../helpers/browser'
 import {wrapInTestContext} from '../../../helpers/dnd'
 import {delay} from '../../../helpers'
 
-describe('Coverter: Currency badge tests', () => {
+describe('Coverter: Currency drag layer tests', () => {
   it("Shouldn't render if wasn't dragging", () => {
     const WrappedComponent = wrapInTestContext(CustomDragLayer)
 
@@ -17,7 +17,7 @@ describe('Coverter: Currency badge tests', () => {
   describe('Preview behavriour', () => {
     let draggableNode = Browser.getDocument().createElement('div')
 
-    it.only('Should not render less then 50 times in a second', async () => {
+    it('Should not render less then 50 times in a second', async () => {
       const wrapper = mount(
         <UndecoratedCustomDragLayer
           currentOffset={{x: 1, y: 2}}

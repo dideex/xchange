@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Coverter: Currency badge tests Preview behavriour Badge should be hidden when is not dragging 1`] = `"<div style=\\"display: none;\\"><div><svg class=\\"\\" version=\\"1.1\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><title>bitcoin</title><circle style=\\"fill: #edda48;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"199.5\\"></circle><circle style=\\"fill: #e2b255;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"168.3\\"></circle><text>bitcoin</text></svg></div></div>"`;
+exports[`Coverter: Currency drag layer tests Preview behavriour Badge should be hidden when is not dragging 1`] = `"<div style=\\"display: none;\\"><div><svg class=\\"\\" version=\\"1.1\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><title>bitcoin</title><circle style=\\"fill: #edda48;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"199.5\\"></circle><circle style=\\"fill: #e2b255;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"168.3\\"></circle><text>bitcoin</text></svg></div></div>"`;
 
-exports[`Coverter: Currency badge tests Preview behavriour Badge should calculate dragged coordinates 1`] = `
+exports[`Coverter: Currency drag layer tests Preview behavriour Badge should calculate dragged coordinates 1`] = `
 Object {
   "WebkitTransform": "translate(21px, 22px)",
   "heigth": "50px",
@@ -16,7 +16,7 @@ Object {
 }
 `;
 
-exports[`Coverter: Currency badge tests Preview behavriour Badge should change position 1`] = `
+exports[`Coverter: Currency drag layer tests Preview behavriour Badge should change position 1`] = `
 Object {
   "WebkitTransform": "translate(40px, 30px)",
   "heigth": "50px",
@@ -30,8 +30,8 @@ Object {
 }
 `;
 
-exports[`Coverter: Currency badge tests Preview behavriour Bitcoin icon should render correctly 1`] = `"<div style=\\"position: fixed; pointer-events: none; left: -28px; top: -28px; width: 50px; z-index: 1000;\\"><div><svg class=\\"\\" version=\\"1.1\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><title>bitcoin</title><circle style=\\"fill: #edda48;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"199.5\\"></circle><circle style=\\"fill: #e2b255;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"168.3\\"></circle><text>bitcoin</text></svg></div></div>"`;
+exports[`Coverter: Currency drag layer tests Preview behavriour Bitcoin icon should render correctly 1`] = `"<div style=\\"position: fixed; pointer-events: none; left: -28px; top: -28px; width: 50px; z-index: 1000;\\"><div><svg class=\\"\\" version=\\"1.1\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><title>bitcoin</title><circle style=\\"fill: #edda48;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"199.5\\"></circle><circle style=\\"fill: #e2b255;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"168.3\\"></circle><text>bitcoin</text></svg></div></div>"`;
 
-exports[`Coverter: Currency badge tests Preview behavriour Ethereum icon should render correctly 1`] = `"<div style=\\"position: fixed; pointer-events: none; left: -28px; top: -28px; width: 50px; z-index: 1000;\\"><div><svg class=\\"\\" version=\\"1.1\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><title>Ethereum</title><circle style=\\"fill: #edda48;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"199.5\\"></circle><circle style=\\"fill: #e2b255;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"168.3\\"></circle><polygon style=\\"fill: #edda48;\\" points=\\"199,73.7 116.9,208.9 199,258.3 282.2,209.3 	\\"></polygon><polygon style=\\"fill: #edda48;\\" points=\\"116.9,225.6 199,341.2 282.2,225.6 198.9,273.7 	\\"></polygon></svg></div></div>"`;
+exports[`Coverter: Currency drag layer tests Preview behavriour Ethereum icon should render correctly 1`] = `"<div style=\\"position: fixed; pointer-events: none; left: -28px; top: -28px; width: 50px; z-index: 1000;\\"><div><svg class=\\"\\" version=\\"1.1\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><title>Ethereum</title><circle style=\\"fill: #edda48;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"199.5\\"></circle><circle style=\\"fill: #e2b255;\\" cx=\\"199.5\\" cy=\\"200.5\\" r=\\"168.3\\"></circle><polygon style=\\"fill: #edda48;\\" points=\\"199,73.7 116.9,208.9 199,258.3 282.2,209.3 	\\"></polygon><polygon style=\\"fill: #edda48;\\" points=\\"116.9,225.6 199,341.2 282.2,225.6 198.9,273.7 	\\"></polygon></svg></div></div>"`;
 
-exports[`Coverter: Currency badge tests Shouldn't render if wasn't dragging 1`] = `null`;
+exports[`Coverter: Currency drag layer tests Shouldn't render if wasn't dragging 1`] = `null`;
