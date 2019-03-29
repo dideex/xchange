@@ -57,6 +57,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "lodash": "^4.17.11",
     "react-dnd-test-backend": "^7.4.0"
   }
 }
