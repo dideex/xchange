@@ -56,7 +56,7 @@
     "build-js": "npm-run-all build-css build-js",
     "test": "react-app-rewired test --env=jsdom --watch",
     "test:coverage": "react-app-rewired test --env=jsdom --coverage",
-    "fixtures": "node ./src/e2e/helpers/init-dump",
+    "fixtures": "node ./cypress/helpers/init-dump",
     "cypress:open": "cypress open"
   },
   "eslintConfig": {

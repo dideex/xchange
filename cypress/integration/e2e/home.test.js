@@ -1,8 +1,13 @@
+const {saveFixtures} = require('../../helpers/init-fixtures')
+
 describe('Home page tests', () => {
-  beforeEach(() => {
+  before(async () => {
+    return await cy.task('initDB')
+  })
+  beforeEach(async () => {
     return cy.visit('/')
   })
-  it('Home page should render correctly', () => {
+  it.only('Home page should render correctly', () => {
     cy.contains('Начать').click()
   })
 

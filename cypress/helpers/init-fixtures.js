@@ -23,10 +23,9 @@ async function saveAllOrders() {
 }
 
 async function saveFixtures() {
-  const db = await require('./db')
-  await mongoose.connection.db.dropDatabase()
-
+  const db = await require('./db.js')
   try {
+    await mongoose.connection.db.dropDatabase()
     await saveAllCurrencies()
     await saveAllOperations()
     await saveAllUsers()
