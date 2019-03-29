@@ -5,11 +5,48 @@ describe('Home page tests', () => {
   it('Home page should render correctly', () => {
     cy.contains('Начать').click()
   })
-  it.only('Calc input \'from\' should work', () => {
-    cy.get('.left__input input').type('1').should('have.value', '1')
+
+  it("Calc input 'from' should work", () => {
+    cy.get('.left__input input')
+      .type('1')
+      .should('have.value', '1')
   })
-  it.only('Calc input \'to\' should work', () => {
-    cy.get('.right__input input').type('1').should('have.value', '1')
+
+  it("Calc input 'to' should work", () => {
+    cy.get('.right__input input')
+      .type('1')
+      .should('have.value', '1')
+  })
+  describe('Create payment', () => {
+    it.only('Sould create payment correctly', () => {
+      cy.get('.left__input input')
+        .type('1.5')
+        .get('[placeholder="ФИО"]')
+        .type('Fake Fio')
+        .get('main [placeholder="Почта"]')
+        .type('fake@email.com')
+        .get('[placeholder="Ваш bitcoin кошелек"]')
+        .type('1J8rcVPwRjJdi1jhk95AsjMfsLBbP7x7pS')
+        .get('[placeholder="Ваш номер для сбербанк руб"]')
+        .type('1234 4321 5678 8765')
+        .get('label[for="agree"]')
+        .click()
+        .get('button')
+        .contains('Создать')
+        .click()
+        .url()
+        .should('include', '/podtverjdenie-oplati')
+        .get('button')
+        .contains('Я перевел')
+        .click()
+        .url()
+        .should('include', '/spasibo')
+        .get('button')
+        .contains('Следить за переводом')
+        .click()
+        .url()
+        .should('include', '/perevod/')
+    })
   })
   describe('Routing should work', () => {
     it('Reserves', () => {
