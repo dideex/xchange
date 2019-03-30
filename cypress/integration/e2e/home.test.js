@@ -7,7 +7,7 @@ describe('Home page tests', () => {
   beforeEach(async () => {
     return cy.visit('/')
   })
-  it.only('Home page should render correctly', () => {
+  it('Home page should render correctly', () => {
     cy.contains('Начать').click()
   })
 
@@ -54,9 +54,82 @@ describe('Home page tests', () => {
     })
   })
   describe('Routing should work', () => {
+    it('Home', () => {
+      cy.contains('Резервы')
+        .click()
+        .url()
+        .should('include', '/reservi')
+      cy
+        .scrollTo(0, -100)
+        .get('a')
+        .contains('Главная')
+        .click()
+        .url()
+        .should('include', '/')
+    })
+
     it('Reserves', () => {
-      cy.contains('Резервы').click()
-      cy.url().should('include', '/reservi')
+      cy.contains('Резервы')
+        .click()
+        .url()
+        .should('include', '/reservi')
+        .get('button')
+        .contains('Начать')
+        .click()
+        .url()
+        .should('include', '/')
+    })
+
+    it('About', () => {
+      cy.contains('О нас')
+        .click()
+        .url()
+        .should('include', '/o-nas')
+        .get('button')
+        .contains('Начать')
+        .click()
+        .url()
+        .should('include', '/')
+    })
+
+    it('FAQ', () => {
+      cy.contains('FAQ')
+        .click()
+        .url()
+        .should('include', '/faq')
+        .get('button')
+        .contains('Начать')
+        .click()
+        .url()
+        .should('include', '/')
+    })
+
+    it('Auth', () => {
+      cy.get('nav > span.auth-menu-item')
+        .click()
+        .contains('Войти')
+        .click()
+        .url()
+        .should('include', '/lichnii-kabinet')
+        .get('button')
+        .contains('Начать')
+        .click()
+        .url()
+        .should('include', '/')
+    })
+
+    it('Registration', () => {
+      cy.get('nav > span.auth-menu-item')
+        .click()
+        .contains('Регистрация')
+        .click()
+        .url()
+        .should('include', '/registracya')
+        .get('button')
+        .contains('Начать')
+        .click()
+        .url()
+        .should('include', '/')
     })
   })
 })
