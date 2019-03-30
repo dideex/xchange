@@ -1,5 +1,3 @@
-const {saveFixtures} = require('../../helpers/init-fixtures')
-
 describe('Home page tests', () => {
   before(async () => {
     return await cy.task('initDB')
@@ -10,26 +8,15 @@ describe('Home page tests', () => {
   it('Home page should render correctly', () => {
     cy.contains('Начать').click()
   })
-
-  it("Calc input 'from' should work", () => {
-    cy.get('.left__input input')
-      .type('1')
-      .should('have.value', '1')
-  })
-
-  it("Calc input 'to' should work", () => {
-    cy.get('.right__input input')
-      .type('1')
-      .should('have.value', '1')
-  })
   describe('Create payment', () => {
-    it.only('Sould create payment correctly', () => {
+    it('Sould create payment correctly', () => {
+      const email = 'f**e@email.com'
       cy.get('.left__input input')
         .type('1.5')
         .get('[placeholder="ФИО"]')
         .type('Fake Fio')
         .get('main [placeholder="Почта"]')
-        .type('fake@email.com')
+        .type(email)
         .get('[placeholder="Ваш bitcoin кошелек"]')
         .type('1J8rcVPwRjJdi1jhk95AsjMfsLBbP7x7pS')
         .get('[placeholder="Ваш номер для сбербанк руб"]')
@@ -51,6 +38,102 @@ describe('Home page tests', () => {
         .click()
         .url()
         .should('include', '/perevod/')
+        .get('button')
+        .contains('Начать')
+        .click()
+        .get('h3')
+        .contains(email)
+    })
+
+    describe('Currency field behaviour', () => {
+      it("Calc input 'from' should work", () => {
+        cy.get('.left__input input')
+          .type('1')
+          .should('have.value', '1')
+      })
+
+      it("Calc input 'to' should work", () => {
+        cy.get('.right__input input')
+          .type('1')
+          .should('have.value', '1')
+      })
+
+      it('Right field value should recalculate', () => {
+        let predictedValue
+        cy.get('[data-testid="exchange-container"] span:last-child').should(div => {
+          predictedValue = div[0].innerText
+        })
+        cy.get('.left__input input')
+          .type('1')
+          .get('.right__input input')
+          .should(input => {
+            expect(predictedValue).to.equal(input[0].value)
+          })
+      })
+
+      it('Left field value should recalculate', () => {
+        cy.get('.right__input .dropdown')
+          .trigger('mouseover')
+          .get('.dropdown__content span span')
+          .contains('Bitcoin')
+          .click()
+          .get('.right__input .dropdown')
+          .trigger('mouseout')
+
+        let predictedValue
+        cy.get('[data-testid="exchange-container"] span:first-child').should(div => {
+          predictedValue = div[0].innerText
+        })
+        cy.get('.right__input input')
+          .type('1')
+          .get('.left__input input')
+          .should(input => {
+            expect(predictedValue).to.equal(input[0].value)
+          })
+      })
+
+      it('Left currency dropdown should work', () => {
+        cy.get('.left__input .dropdown')
+          .trigger('mouseover')
+          .get('.dropdown__content span span')
+          .contains('Ethereum')
+          .click()
+          .get('.left__input span')
+          .contains('ETH')
+      })
+
+      it('Right currency dropdown should work', () => {
+        cy.get('.right__input .dropdown')
+          .trigger('mouseover')
+          .get('.dropdown__content span span')
+          .contains('Ethereum')
+          .click()
+          .get('.right__input span')
+          .contains('ETH')
+      })
+
+      it('Currency should swap between each other correct', () => {
+        cy.get('.right__input .dropdown')
+          .trigger('mouseover')
+          .get('.dropdown__content span span')
+          .contains('Ethereum')
+          .click()
+          .get('.right__input span')
+          .contains('ETH')
+          .get('.left__input span')
+          .contains('BTC')
+          .get('.right__input .dropdown')
+          .trigger('mouseout')
+          .get('.left__input .dropdown')
+          .trigger('mouseover')
+          .get('.dropdown__content span span')
+          .contains('Ethereum')
+          .click()
+          .get('.left__input span')
+          .contains('ETH')
+          .get('.right__input span')
+          .contains('BTC')
+      })
     })
   })
   describe('Routing should work', () => {
@@ -59,11 +142,10 @@ describe('Home page tests', () => {
         .click()
         .url()
         .should('include', '/reservi')
-      cy
-        .scrollTo(0, -100)
+      cy.scrollTo(0, -100)
         .get('a')
         .contains('Главная')
-        .click()
+        .click({force: true})
         .url()
         .should('include', '/')
     })
