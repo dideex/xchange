@@ -214,7 +214,7 @@ describe('Home page tests', () => {
         .should('include', '/')
     })
   })
-  describe('Locale should change correctly',() => {
+  describe('Locale should change correctly', () => {
     it('English locale', () => {
       cy.get('nav > span')
         .contains('Язык')
@@ -245,7 +245,7 @@ describe('Home page tests', () => {
         .get('h1 span')
         .should('contain', '货币兑换')
     })
-    it.only('Russian locale', () => {
+    it('Russian locale', () => {
       cy.get('nav > span')
         .contains('Язык')
         .click()
@@ -259,4 +259,162 @@ describe('Home page tests', () => {
         .should('contain', 'Обмен валют')
     })
   })
+  describe.only('Icon should be able to drag', () => {
+    const dataTransfer = new DndSimulatorDataTransfer()
+
+    it('Dragging btc into left field', () => {
+      cy.get('[data-testid="dnd-area"] span')
+        .contains('Bitcoin')
+        .parent()
+        .parent()
+        .trigger('mousedown', {which: 1})
+        .trigger('dragstart', {dataTransfer})
+        .trigger('drag')
+
+      cy.get('.left__input')
+        .trigger('dragover', {dataTransfer})
+        .trigger('drop', {dataTransfer})
+        .trigger('dragend', {dataTransfer})
+        .trigger('mouseup', {which: 1})
+        .contains('BTC')
+        .get('.left__input svg title')
+        .contains('Bitcoin')
+    })
+
+    it('Dragging eth into left field', () => {
+      cy.get('[data-testid="dnd-area"] span')
+        .contains('Ethereum')
+        .parent()
+        .parent()
+        .trigger('mousedown', {which: 1})
+        .trigger('dragstart', {dataTransfer})
+        .trigger('drag')
+
+      cy.get('.left__input')
+        .trigger('dragover', {dataTransfer})
+        .trigger('drop', {dataTransfer})
+        .trigger('dragend', {dataTransfer})
+        .trigger('mouseup', {which: 1})
+        .contains('ETH')
+        .get('.left__input svg title')
+        .contains('Ethereum')
+    })
+
+    it('Dragging xrp into left field', () => {
+      cy.get('[data-testid="dnd-area"] span')
+        .contains('XRP')
+        .parent()
+        .parent()
+        .trigger('mousedown', {which: 1})
+        .trigger('dragstart', {dataTransfer})
+        .trigger('drag')
+
+      cy.get('.left__input')
+        .trigger('dragover', {dataTransfer})
+        .trigger('drop', {dataTransfer})
+        .trigger('dragend', {dataTransfer})
+        .trigger('mouseup', {which: 1})
+        .contains('XRP')
+        .get('.left__input svg title')
+        .contains('XRP')
+    })
+
+    it('Dragging btc into right field', () => {
+      cy.get('[data-testid="dnd-area"] span')
+        .contains('Bitcoin')
+        .parent()
+        .parent()
+        .trigger('mousedown', {which: 1})
+        .trigger('dragstart', {dataTransfer})
+        .trigger('drag')
+
+      cy.get('.right__input')
+        .trigger('dragover', {dataTransfer})
+        .trigger('drop', {dataTransfer})
+        .trigger('dragend', {dataTransfer})
+        .trigger('mouseup', {which: 1})
+        .contains('BTC')
+        .get('.right__input svg title')
+        .contains('Bitcoin')
+    })
+
+    it('Dragging eth into right field', () => {
+      cy.get('[data-testid="dnd-area"] span')
+        .contains('Ethereum')
+        .parent()
+        .parent()
+        .trigger('mousedown', {which: 1})
+        .trigger('dragstart', {dataTransfer})
+        .trigger('drag')
+
+      cy.get('.right__input')
+        .trigger('dragover', {dataTransfer})
+        .trigger('drop', {dataTransfer})
+        .trigger('dragend', {dataTransfer})
+        .trigger('mouseup', {which: 1})
+        .contains('ETH')
+        .get('.right__input svg title')
+        .contains('Ethereum')
+    })
+
+    it('Dragging xrp into right field', () => {
+      cy.get('[data-testid="dnd-area"] span')
+        .contains('XRP')
+        .parent()
+        .parent()
+        .trigger('mousedown', {which: 1})
+        .trigger('dragstart', {dataTransfer})
+        .trigger('drag')
+
+      cy.get('.right__input')
+        .trigger('dragover', {dataTransfer})
+        .trigger('drop', {dataTransfer})
+        .trigger('dragend', {dataTransfer})
+        .trigger('mouseup', {which: 1})
+        .contains('XRP')
+        .get('.right__input svg title')
+        .contains('XRP')
+    })
+  })
 })
+
+function DndSimulatorDataTransfer() {
+  this.data = {}
+}
+
+DndSimulatorDataTransfer.prototype.dropEffect = 'move'
+DndSimulatorDataTransfer.prototype.effectAllowed = 'all'
+DndSimulatorDataTransfer.prototype.files = []
+DndSimulatorDataTransfer.prototype.items = []
+DndSimulatorDataTransfer.prototype.types = []
+
+DndSimulatorDataTransfer.prototype.clearData = function(format) {
+  if (format) {
+    delete this.data[format]
+
+    const index = this.types.indexOf(format)
+    delete this.types[index]
+    delete this.data[index]
+  } else {
+    this.data = {}
+  }
+}
+
+DndSimulatorDataTransfer.prototype.setData = function(format, data) {
+  this.data[format] = data
+  this.items.push(data)
+  this.types.push(format)
+}
+
+DndSimulatorDataTransfer.prototype.getData = function(format) {
+  if (format in this.data) {
+    return this.data[format]
+  }
+
+  return ''
+}
+
+DndSimulatorDataTransfer.prototype.setDragImage = function(img, xOffset, yOffset) {
+  // since simulation doesn"t replicate the visual
+  // effects, there is no point in implementing this
+}

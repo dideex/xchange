@@ -148,7 +148,7 @@ class CurrencyDNDArea extends Component {
           <Loading size="small" />
         ) : (
           <CurrencyBadgeOverflowWrapper>
-            <CurrencyBadgeItems>
+            <CurrencyBadgeItems data-testid="dnd-area">
               {currency.filter(this._handleFilter).map(({name, id, icon}, i) => (
                 <CurrencyBadgeItem onMouseDown={this._handleMouseDown} key={i}>
                   <CurrencyBadge
