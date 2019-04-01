@@ -2,6 +2,10 @@ import React from 'react'
 import {mount, shallow} from 'enzyme'
 
 import Component from '../ExchangeRate'
+/* TODO:
+  if (+inputCurrency === 0) inputCurrency = 1
+  if (+outputCurrency === 0) outputCurrency = 1
+ */
 
 describe('Coverter: Exchange rate tests', () => {
   it('Basic markup', () => {

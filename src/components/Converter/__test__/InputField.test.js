@@ -109,27 +109,26 @@ describe('Coverter: Currency badge tests', () => {
   })
 
   describe('Drag and drop behaviour', () => {
-    it.only('Inputs should change styles when dragging', () => {
+    // TODO: add react dnd implementation
+    // https://github.com/react-dnd/react-dnd/blob/fd1bae42a9/packages/dnd-core/src/__tests__/DragDropMonitor.spec.ts
+    it.skip('Inputs should change styles when dragging', () => {
       const WrappedComponent = wrapInTestContext(Component)
       cashStore.currency = fakeCurrnecy
-      const wrapper = mount(
-        <WrappedComponent
-          {...props}
-          cashStore={cashStore}
-        />,
-      )
+      const wrapper = mount(<WrappedComponent {...props} cashStore={cashStore} />)
       const backend = wrapper
         .instance()
         .getManager()
         .getBackend()
-
-      console.log(wrapper.debug())
-      backend.simulateBeginDrag([
-        wrapper
-          .find('DragSource(CurrencyBadge)')
-          .instance()
-          .getHandlerId(),
-      ])
+      backend.simulateBeginDrag([null])
+      backend.simulateEndDrag()
+      console.log('TCL: backend', backend)
+      // console.log(wrapper.debug())
+      // backend.simulateBeginDrag([
+      //   wrapper
+      //     .find('DragSource(CurrencyBadge)')
+      //     .instance()
+      //     .getHandlerId(),
+      // ])
     })
   })
 })
