@@ -3,7 +3,6 @@
     "_id": "5bd2f9d68d666439887cdf7e",
     "hash": "$2a$10$GdeIpWb3TV2n/XCOo7exAOTtsrIMzbQohVUL0ImXlzP80sh381OCm",
     "login": "didexx",
-    "lastOperations": [],
     "__v": 0,
     "wallets": {
       "0": "0234 5678 1234 5678",
@@ -16,7 +15,6 @@
     "_id": "5bd2f9e411b08e39484c7017",
     "hash": "$2a$10$gLZPiLxndrjoUKt6yMfiGe9KxK2kBJskJfuJWygpFdBsM/oSOxKtW",
     "login": "root",
-    "lastOperations": [],
     "__v": 0,
     "wallets": {
       "0": "1KFzzGtDdnq5hrwxXGjwVnKzRbvf8WVxck",
@@ -37,7 +35,14 @@
     },
     "email": "wc34fun@mail.ru",
     "username": "New user name",
-    "fullname": "fullname",
     "isAdmin": true
+  },
+  {
+    "_id": "5ca1f0a99cfce0442d887f72",
+    "login": "fakeUser",
+    "username": "Fake user",
+    "email": "fake@email.com",
+    "hash": "$2a$10$45kEOzk5shz/n3OBY.TTe.a/BIBKfH9JdKD1PkHRoYQazWqHdYaGm",
+    "__v": 0
   }
 ]
