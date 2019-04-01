@@ -101,7 +101,7 @@ class SignIn extends Component {
           type="password"
           pattern="\S{6,}"
           placeholder={formatMessage({
-            id: 'home.cpPlaceholder.username',
+            id: 'home.cpPlaceholder.password',
             defaultMessage: 'Пароль',
           })}
           errorMsg={formatMessage({
