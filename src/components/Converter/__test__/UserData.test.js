@@ -1,6 +1,5 @@
 import React from 'react'
 import Component from '../UserData'
-import {shallow} from 'enzyme'
 import {Provider as MobxProvider} from 'mobx-react'
 
 import CashStore from '../../../store/Cash'
@@ -148,7 +147,7 @@ describe('Converter: user data tests', () => {
       wrapper.find('button').simulate('click')
       expect(handleSubmit).toHaveBeenCalledTimes(0)
     })
-    describe('handle submit behavriour', () => {
+    describe('Handle submit behavriour', () => {
       it('Should invoke correctly if everything was ok', async () => {
         const createPayment = jest.fn(() => Promise.resolve())
         const updateInfo = jest.fn(() => Promise.resolve())
@@ -182,9 +181,37 @@ describe('Converter: user data tests', () => {
           email: fakeUser.email,
           fromWallet: fakeBitcoinAddress,
           toWallet: fakeCreditAddress,
-          token: ''
+          token: '',
         })
         expect(updateInfo).toHaveBeenCalledTimes(1)
+      })
+      it('Should not invoke if anything was wrong', async () => {
+        const createPayment = jest.fn(() => Promise.resolve())
+        const updateInfo = jest.fn(() => Promise.resolve())
+        cashStore.createPayment = createPayment
+        userStore.updateInfo = updateInfo
+        cashStore.currency = fakeCurrnecy
+        const wrapper = mountWrap(
+          <MobxProvider userStore={userStore} cashStore={cashStore}>
+            <Component {...props} />
+          </MobxProvider>,
+        )
+        wrapper
+          .find('input[placeholder="Email"]')
+          .simulate('change', {target: {value: fakeUser.email}})
+        wrapper
+          .find('input[placeholder="Full name"]')
+          .simulate('change', {target: {value: fakeUser.username}})
+        wrapper
+          .find(`input[placeholder="Your ${fakeCurrnecy[0].name} wallet"]`)
+          .simulate('change', {target: {value: fakeBitcoinAddress}})
+        wrapper.find('label[htmlFor="agree"]').simulate('click')
+        wrapper.find('button').simulate('click')
+
+        await delay()
+
+        expect(createPayment).toHaveBeenCalledTimes(0)
+        expect(updateInfo).toHaveBeenCalledTimes(0)
       })
     })
   })

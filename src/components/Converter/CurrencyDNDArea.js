@@ -126,6 +126,7 @@ class CurrencyDNDArea extends Component {
 
   // Save coordiantes to the state
   _handleMouseDown = e => {
+		console.log("TCL: currentTarget", e.currentTarget.getBoundingClientRect())
     const {x, y} = e.currentTarget.getBoundingClientRect()
     this.setState({dragX: e.clientX - x, dragY: e.clientY - y})
   }
@@ -150,7 +151,7 @@ class CurrencyDNDArea extends Component {
           <CurrencyBadgeOverflowWrapper>
             <CurrencyBadgeItems>
               {currency.filter(this._handleFilter).map(({name, id, icon}, i) => (
-                <CurrencyBadgeItem onMouseDown={this._handleMouseDown} key={i}>
+                <CurrencyBadgeItem onMouseDown={this._handleMouseDown} key={i} data-testid="currency-badge-item">
                   <CurrencyBadge
                     id={id}
                     icon={icon}
