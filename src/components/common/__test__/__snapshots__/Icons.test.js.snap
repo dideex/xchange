@@ -1,14 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Icons snapshots Icon props Custom classname 1`] = `
-"<svg class=\\"Test className\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><path style=\\"fill:#aee239\\" d=\\"M184.9,344.1L8.2,167.4c-8.5-8.5-8.5-22.3,0-30.9l20.6-20.6c8.5-8.5,22.3-8.5,30.8,0l140.7,140.1l140.7-140.1
- c8.5-8.5,22.3-8.5,30.8,0l20.6,20.6c8.5,8.5,8.5,22.3,0,30.9L215.8,344.1C207.3,352.6,193.5,352.6,184.9,344.1L184.9,344.1z\\"></path></svg>"
-`;
+exports[`Icons snapshots Icon props Custom classname 1`] = `"<svg class=\\"Test className\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><path style=\\"fill:#aee239\\" d=\\"M184.9,344.1L8.2,167.4c-8.5-8.5-8.5-22.3,0-30.9l20.6-20.6c8.5-8.5,22.3-8.5,30.8,0l140.7,140.1l140.7-140.1 c8.5-8.5,22.3-8.5,30.8,0l20.6,20.6c8.5,8.5,8.5,22.3,0,30.9L215.8,344.1C207.3,352.6,193.5,352.6,184.9,344.1L184.9,344.1z\\"></path></svg>"`;
 
-exports[`Icons snapshots Icon props Custom style 1`] = `
-"<svg style=\\"test:Test prop\\" class=\\"\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><path style=\\"fill:#aee239\\" d=\\"M184.9,344.1L8.2,167.4c-8.5-8.5-8.5-22.3,0-30.9l20.6-20.6c8.5-8.5,22.3-8.5,30.8,0l140.7,140.1l140.7-140.1
- c8.5-8.5,22.3-8.5,30.8,0l20.6,20.6c8.5,8.5,8.5,22.3,0,30.9L215.8,344.1C207.3,352.6,193.5,352.6,184.9,344.1L184.9,344.1z\\"></path></svg>"
-`;
+exports[`Icons snapshots Icon props Custom style 1`] = `"<svg style=\\"test:Test prop\\" class=\\"\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><path style=\\"fill:#aee239\\" d=\\"M184.9,344.1L8.2,167.4c-8.5-8.5-8.5-22.3,0-30.9l20.6-20.6c8.5-8.5,22.3-8.5,30.8,0l140.7,140.1l140.7-140.1 c8.5-8.5,22.3-8.5,30.8,0l20.6,20.6c8.5,8.5,8.5,22.3,0,30.9L215.8,344.1C207.3,352.6,193.5,352.6,184.9,344.1L184.9,344.1z\\"></path></svg>"`;
 
 exports[`Icons snapshots Icon props Empty icon 1`] = `null`;
 
@@ -20,10 +14,7 @@ exports[`Icons snapshots Icons afterMainBg icon 1`] = `"<svg class=\\"\\" viewBo
 
 exports[`Icons snapshots Icons beforeContactBg icon 1`] = `"<svg class=\\"\\" viewBox=\\"0 0 1443 468\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path style=\\"fill:#40c0cb\\" d=\\"M1442.5 467.502C1442.5 355.002 1307 109 0.000183105 0.501465V467.502H1442.5Z\\"></path></svg>"`;
 
-exports[`Icons snapshots Icons chevron icon 1`] = `
-"<svg class=\\"\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><path style=\\"fill:#aee239\\" d=\\"M184.9,344.1L8.2,167.4c-8.5-8.5-8.5-22.3,0-30.9l20.6-20.6c8.5-8.5,22.3-8.5,30.8,0l140.7,140.1l140.7-140.1
- c8.5-8.5,22.3-8.5,30.8,0l20.6,20.6c8.5,8.5,8.5,22.3,0,30.9L215.8,344.1C207.3,352.6,193.5,352.6,184.9,344.1L184.9,344.1z\\"></path></svg>"
-`;
+exports[`Icons snapshots Icons chevron icon 1`] = `"<svg class=\\"\\" x=\\"0px\\" y=\\"0px\\" viewBox=\\"0 0 400 400\\"><path style=\\"fill:#aee239\\" d=\\"M184.9,344.1L8.2,167.4c-8.5-8.5-8.5-22.3,0-30.9l20.6-20.6c8.5-8.5,22.3-8.5,30.8,0l140.7,140.1l140.7-140.1 c8.5-8.5,22.3-8.5,30.8,0l20.6,20.6c8.5,8.5,8.5,22.3,0,30.9L215.8,344.1C207.3,352.6,193.5,352.6,184.9,344.1L184.9,344.1z\\"></path></svg>"`;
 
 exports[`Icons snapshots Icons close icon 1`] = `"<svg class=\\"\\" viewBox=\\"0 0 35 34\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\"><rect x=\\"0.882812\\" y=\\"29.3744\\" width=\\"41\\" height=\\"6\\" transform=\\"rotate(-45 0.882812 29.3744)\\" fill=\\"white\\"></rect><path d=\\"M5.12598 0.382996L34.1174 29.3744L29.8747 33.617L0.883336 4.62564L5.12598 0.382996Z\\" fill=\\"white\\"></path></svg>"`;
 
