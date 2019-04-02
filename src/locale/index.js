@@ -11,6 +11,7 @@ import frMessages from './fr.json'
 import ruMessages from './ru.json'
 import enMessages from './en.json'
 
+// FIXME: add to fr en cn locale home.userDataError.phone
 export const locales = {
   'ru-RU': {
     locale: 'ru-RU',

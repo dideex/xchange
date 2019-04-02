@@ -194,7 +194,7 @@ class Footer extends Component {
             pattern="^\d+$"
             mask="phone"
             errorMsg={formatMessage({
-              id: 'home.userDataError.email',
+              id: 'home.userDataError.phone',
               defaultMessage: 'Введите ваш телефон',
             })}
             handleChange={phone => this.setState({phone})}
