@@ -30,5 +30,8 @@ export const fakeUser = {
   password: 'Fake password',
   email: 'fake@email.com',
   fio: 'Fake fio',
-  token: 'Fake token'
+  token: 'Fake token',
 }
+
+export const fakeBitcoinAddress = '3JQSigWTCHyBLRD979JWgEtWP5YiiFwcQB '
+export const fakeCreditAddress = '1234 4321 5678 8765'
