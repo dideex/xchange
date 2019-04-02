@@ -52,7 +52,7 @@ export class Virtualized extends Component {
   state = {CopyId: null, selectedId: ''}
 
   render() {
-    const {parsedOrders, endpoint} = this.props
+    const {parsedOrders} = this.props
     const {formatMessage} = this.props.intl
     return (
       <TableWrap>

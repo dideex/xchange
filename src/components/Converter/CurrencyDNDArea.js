@@ -126,9 +126,8 @@ class CurrencyDNDArea extends Component {
 
   // Save coordiantes to the state
   _handleMouseDown = e => {
-		console.log("TCL: currentTarget", e.currentTarget.getBoundingClientRect())
-    const {x, y} = e.currentTarget.getBoundingClientRect()
-    this.setState({dragX: e.clientX - x, dragY: e.clientY - y})
+    const {x, y} = e.target.getBoundingClientRect()
+    this.setState({dragX: e.clientX - x + 15, dragY: e.clientY - y + 15})
   }
 
   render() {
