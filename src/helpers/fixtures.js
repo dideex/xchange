@@ -29,6 +29,7 @@ export const fakeUser = {
   username: 'Fake username',
   password: 'Fake password',
   email: 'fake@email.com',
+  phone: '89145678901',
   fio: 'Fake fio',
   token: 'Fake token',
 }
