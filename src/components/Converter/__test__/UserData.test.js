@@ -6,7 +6,13 @@ import {Provider as MobxProvider} from 'mobx-react'
 import CashStore from '../../../store/Cash'
 import UserStore from '../../../store/User'
 import {mountWrap} from '../../../helpers/router-intl-context'
-import {fakeCurrnecy, fakeUser, fakeBitcoinAddress, fakeCreditAddress} from '../../../helpers/fixtures'
+import {delay} from '../../../helpers'
+import {
+  fakeCurrnecy,
+  fakeUser,
+  fakeBitcoinAddress,
+  fakeCreditAddress,
+} from '../../../helpers/fixtures'
 
 jest.mock('../../../components/Api', () => ({
   post: () => Promise.resolve({data: {}}),
@@ -97,10 +103,89 @@ describe('Converter: user data tests', () => {
         wrapper.find('InputComponent[placeholder="Your wallet for "]').html(),
       ).toMatchSnapshot()
     })
-    it.only('Checkbox should work', () => {
+    it('Checkbox should work', () => {
       wrapper.find('label[htmlFor="agree"]').simulate('click')
       expect(wrapper.find('label[htmlFor="agree"]').html()).toMatchSnapshot()
       expect(wrapper.find('UserData').instance().state.agree).toBeTruthy()
+    })
+    it('Button should be disabled', () => {
+      wrapper
+        .find('UserData')
+        .instance()
+        .setState({agree: false})
+      expect(wrapper.find('button').html()).toMatchSnapshot()
+    })
+    it('Button should be available', () => {
+      wrapper
+        .find('UserData')
+        .instance()
+        .setState({agree: true})
+      expect(wrapper.find('button').html()).toMatchSnapshot()
+    })
+  })
+
+  describe('Class behaviour', () => {
+    it('Should submit when agree is checked', () => {
+      const handleSubmit = jest.fn()
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore} cashStore={cashStore}>
+          <Component {...props} />
+        </MobxProvider>,
+      )
+      wrapper.find('UserData').instance().handleSubmit = handleSubmit
+      wrapper.find('label[htmlFor="agree"]').simulate('click')
+      wrapper.find('button').simulate('click')
+      expect(handleSubmit).toHaveBeenCalledTimes(1)
+    })
+    it('Should not submit when agree is not chacked', () => {
+      const handleSubmit = jest.fn()
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore} cashStore={cashStore}>
+          <Component {...props} />
+        </MobxProvider>,
+      )
+      wrapper.find('UserData').instance().handleSubmit = handleSubmit
+      wrapper.find('button').simulate('click')
+      expect(handleSubmit).toHaveBeenCalledTimes(0)
+    })
+    describe('handle submit behavriour', () => {
+      it('Should invoke correctly if everything was ok', async () => {
+        const createPayment = jest.fn(() => Promise.resolve())
+        const updateInfo = jest.fn(() => Promise.resolve())
+        cashStore.createPayment = createPayment
+        userStore.updateInfo = updateInfo
+        cashStore.currency = fakeCurrnecy
+        const wrapper = mountWrap(
+          <MobxProvider userStore={userStore} cashStore={cashStore}>
+            <Component {...props} />
+          </MobxProvider>,
+        )
+        wrapper
+          .find('input[placeholder="Email"]')
+          .simulate('change', {target: {value: fakeUser.email}})
+        wrapper
+          .find('input[placeholder="Full name"]')
+          .simulate('change', {target: {value: fakeUser.username}})
+        wrapper
+          .find(`input[placeholder="Your ${fakeCurrnecy[0].name} wallet"]`)
+          .simulate('change', {target: {value: fakeBitcoinAddress}})
+        wrapper
+          .find(`input[placeholder="Your wallet for ${fakeCurrnecy[2].name}"]`)
+          .simulate('change', {target: {value: fakeCreditAddress}})
+        wrapper.find('label[htmlFor="agree"]').simulate('click')
+        wrapper.find('button').simulate('click')
+
+        await delay()
+
+        expect(createPayment).toHaveBeenCalledTimes(1)
+        expect(createPayment).toHaveBeenCalledWith({
+          email: fakeUser.email,
+          fromWallet: fakeBitcoinAddress,
+          toWallet: fakeCreditAddress,
+          token: ''
+        })
+        expect(updateInfo).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })
