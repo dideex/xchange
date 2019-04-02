@@ -6,8 +6,7 @@ import UserStore from '../../../store/User'
 import CashStore from '../../../store/Cash'
 
 import {mountWrap} from '../../../helpers/router-intl-context'
-import {fakeData, fakeUser, fakeCurrnecy} from '../../../helpers/fixtures'
-import {delay} from '../../../helpers'
+import {fakeData, fakeUser} from '../../../helpers/fixtures'
 
 jest.mock('../../../components/Api', () => ({
   post: () => Promise.resolve({data: {}}),
@@ -52,9 +51,7 @@ describe('Control panel: signin', () => {
     })
   })
 
-  describe('Component methods bahavriour', () => {
-  })
+  describe('Component methods bahavriour', () => {})
 
-  describe('Form bahavriour', () => {
-  })
+  describe('Form bahavriour', () => {})
 })

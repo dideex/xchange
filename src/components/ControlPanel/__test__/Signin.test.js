@@ -1,6 +1,5 @@
 import React from 'react'
 import Component from '../Signin'
-import {shallow} from 'enzyme'
 import {Provider as MobxProvider} from 'mobx-react'
 
 import UserStore from '../../../store/User'
