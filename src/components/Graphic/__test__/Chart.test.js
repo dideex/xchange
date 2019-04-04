@@ -14,7 +14,12 @@ describe('Graphic: chart tests', () => {
     Promise.resolve({
       json() {
         return {
-          values: [{x: 10, y: 10}, {x: 20, y: 20}, {x: 30, y: 30}, {x: 5, y: 5}],
+          values: [
+            {x: new Date().setDate(1), y: 10},
+            {x: new Date().setDate(2), y: 20},
+            {x: new Date().setDate(3), y: 30},
+            {x: new Date().setDate(4), y: 5},
+          ],
         }
       },
     })
@@ -48,7 +53,9 @@ describe('Graphic: chart tests', () => {
       const wrapper = shallow(<Component />)
 
       expect(mockFetch).toHaveBeenCalledTimes(1)
-      expect(mockFetch).toHaveBeenCalledWith('https://api.blockchain.info/charts/market-price?cors=true&timespan=30days&format=json&lang=ru')
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://api.blockchain.info/charts/market-price?cors=true&timespan=30days&format=json&lang=ru',
+      )
     })
   })
 })
