@@ -20,7 +20,7 @@ class LastOperations {
 
   // Event listener
   // Broadcast: send all active users an order
-  // Init: get initla orders from the server
+  // Init: get initial orders from the server
   _socketResolver = ({type, data, order}) => {
     switch (type) {
       case 'broadcast':
