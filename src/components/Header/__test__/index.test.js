@@ -9,34 +9,24 @@ jest.mock('../../common/Utils', () => ({
 }))
 
 describe('Header', () => {
-  const wrapper = mountWrap(
-    <div>
-      <Component />
-      <main />
-    </div>,
-  )
+  const wrapper = mountWrap(<Component />)
   it('Basic markup', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
-  it.only('Should scroll on button click', () => {
+  it('Should scroll on button click', () => {
     // wrapper.find()
     Utils.ScrollTo = jest.fn()
 
     const wrapperInstance = wrapper.instance()
-    const main = {
-      getBoundingClientRect() {
-        return {top: 100}
-      },
-    }
-    const node = {
-      querySelector: v => {
-        console.log(v)
-        return (v === 'main' ? main : null)},
-    }
-    wrapperInstance.node = node
+
+    const getBoundingClientRect = jest.fn(() => ({top: 100}))
+    document.querySelector = () => ({
+      getBoundingClientRect,
+    })
 
     wrapper.find('AccentButton').simulate('click')
 
     expect(Utils.ScrollTo).toHaveBeenCalledTimes(1)
+    expect(getBoundingClientRect).toHaveBeenCalledTimes(1)
   })
 })
