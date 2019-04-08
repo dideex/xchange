@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation: common links tests Markup Basic markup 1`] = `"<a href=\\"/\\"><span>Home</span></a><a href=\\"/reservi\\"><span>Reserves</span></a><a href=\\"/o-nas\\"><span>About us</span></a><a href=\\"/faq\\"><span>FAQ</span></a>"`;
