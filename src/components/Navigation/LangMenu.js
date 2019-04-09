@@ -13,7 +13,7 @@ class LangMenu extends Component {
   }
 
   _handleLocaleChange = locale => {
-    this.props.userStore.changeLocale(locale)
+    // this.props.userStore.changeLocale(locale)
   }
 
   render() {

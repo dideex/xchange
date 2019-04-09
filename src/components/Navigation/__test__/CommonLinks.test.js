@@ -1,6 +1,5 @@
 import React from 'react'
 import Component from '../CommonLinks'
-import {shallow} from 'enzyme'
 
 import {mountWrap} from '../../../helpers/router-intl-context'
 
