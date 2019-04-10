@@ -52,4 +52,43 @@ describe('Navigation: desktop menu', () => {
       expect(wrapper.html()).toMatchSnapshot()
     })
   })
+  describe('Component behavriour', () => {
+     
+    it('Auth toggler should invoke after click', () => {
+      const toggleAuthMenu = jest.fn(() => {})
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component {...props} toggleAuthMenu={toggleAuthMenu} />
+        </MobxProvider>,
+      )
+      wrapper.find('.auth-menu-item').simulate('click')
+
+      expect(toggleAuthMenu).toHaveBeenCalledTimes(1)
+    })
+
+    it('Lang toggler should invoke after click', () => {
+      const toggleLangMenu = jest.fn(() => {})
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component {...props} toggleLangMenu={toggleLangMenu} />
+        </MobxProvider>,
+      )
+      wrapper.find('[data-testid="lang-toggler"]').simulate('click')
+
+      expect(toggleLangMenu).toHaveBeenCalledTimes(1)
+    })
+
+    it('Close toggler should invoke after mouse leave', () => {
+      const closeBothMenu = jest.fn(() => {})
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component {...props} closeBothMenu={closeBothMenu} />
+        </MobxProvider>,
+      )
+      wrapper.find('DesktopMenu').simulate('mouseleave')
+
+      expect(closeBothMenu).toHaveBeenCalledTimes(1)
+    })
+
+  })
 })

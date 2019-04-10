@@ -8,12 +8,8 @@ import {locales} from '../../locale'
 @inject('userStore')
 @observer
 class LangMenu extends Component {
-  static propTypes = {
-    handleClick: PropTypes.func.isRequired,
-  }
-
   _handleLocaleChange = locale => {
-    // this.props.userStore.changeLocale(locale)
+    this.props.userStore.changeLocale(locale)
   }
 
   render() {
