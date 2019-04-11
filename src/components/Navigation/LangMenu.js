@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
-import PropTypes from 'prop-types'
 
 import {locales} from '../../locale'
 
@@ -16,7 +15,11 @@ class LangMenu extends Component {
     return (
       <Fragment>
         {Object.values(locales).map(({short, locale}) => (
-          <span key={short} onClick={() => this._handleLocaleChange(locale)}>
+          <span
+            key={short}
+            onClick={() => this._handleLocaleChange(locale)}
+            data-testid={locale}
+          >
             {short}
           </span>
         ))}

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation: lang menu Markup Basic markup 1`] = `"<span data-testid=\\"ru-RU\\">Рус</span><span data-testid=\\"en-US\\">Eng</span><span data-testid=\\"fr-FR\\">Fr</span><span data-testid=\\"zh-ZH\\">Cn</span>"`;
