@@ -31,6 +31,7 @@ class LoginMenu extends Component {
           {login}
         </Link>
         <p
+          data-testid="logout"
           onClick={e => {
             e.stopPropagation()
             signout()
