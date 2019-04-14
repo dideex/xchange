@@ -3,7 +3,6 @@ import {Provider as MobxProvider} from 'mobx-react'
 
 import Component from '../MobileMenu'
 import UserStore from '../../../store/User'
-import {fakeUser} from '../../../helpers/fixtures'
 import {mountWrap} from '../../../helpers/router-intl-context'
 
 const NO_OP = () => {}
