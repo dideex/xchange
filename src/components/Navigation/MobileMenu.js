@@ -40,7 +40,7 @@ const MobileMenu = ({handleClick, showLangMenu, showMobMenu, closeBothMenu}) => 
       <Icons style={{width: 30}} id="close" />
     </div>
     <CommonLinks handleClick={handleClick} />
-    <span onClick={handleClick}>Язык</span>
+    <span onClick={handleClick} data-testid="mobile-menu-lang">Язык</span>
     {showLangMenu && (
       <p>
         <LangMenu handleClick={handleClick} />
