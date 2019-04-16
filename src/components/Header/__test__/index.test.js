@@ -14,7 +14,6 @@ describe('Header', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
   it('Should scroll on button click', () => {
-    // wrapper.find()
     Utils.ScrollTo = jest.fn()
 
     const wrapperInstance = wrapper.instance()
