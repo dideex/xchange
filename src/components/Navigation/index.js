@@ -55,7 +55,6 @@ class Nav extends Component {
   }
 
   _handleScroll = () => {
-    console.log('scrolled')
     const minimizeNav = window.pageYOffset > 100
     const hideMenu = window.pageYOffset > this.lastOffsetTop && window.pageYOffset > 200
     this.setState({hideMenu, minimizeNav})

@@ -87,11 +87,56 @@ describe('Navigation: index', () => {
         </MobxProvider>,
       )
       const instance = wrapper.find('Nav').instance()
-      it('Scrolling should invoke _handleScroll', () => {
-        wrapper.find('Nav').simulate('scroll', {deltaY: 250})
-        wrapper.find('Nav').simulate('scroll', {deltaY: -50})
-        wrapper.update()
-        console.log(instance.state)
+      beforeEach(() => {
+        global.window.pageYOffset = 0
+        instance.lastOffsetTop = 0
+      })
+    })
+    describe('Scroll behaviour', () => {
+      const wrapper = mountWrap(
+        <MobxProvider userStore={userStore}>
+          <Component />
+        </MobxProvider>,
+      )
+      const instance = wrapper.find('Nav').instance()
+      beforeEach(() => {
+        global.window.pageYOffset = 0
+        instance.lastOffsetTop = 0
+      })
+      it('Handle scroll should show nav menu', () => {
+        global.window.pageYOffset = 101
+        instance._handleScroll()
+        expect(instance.state.minimizeNav).toBeTruthy()
+      })
+
+      it('Handle scroll should hide nav menu', () => {
+        global.window.pageYOffset = 80
+        instance._handleScroll()
+        expect(instance.state.minimizeNav).toBeFalsy()
+      })
+
+      it('Handle scroll should show menu on scroll down more than 200px from the top', () => {
+        global.window.pageYOffset = 201
+        instance._handleScroll()
+        expect(instance.state.hideMenu).toBeTruthy()
+      })
+
+      it('Handle scroll should show hide on scroll up', () => {
+        global.window.pageYOffset = 501
+        instance._handleScroll()
+        global.window.pageYOffset = 401
+        instance._handleScroll()
+        expect(instance.state.hideMenu).toBeFalsy()
+      })
+
+      it('Handle scroll should show hide on scroll down', () => {
+        global.window.pageYOffset = 501
+        instance._handleScroll()
+        global.window.pageYOffset = 401
+        instance._handleScroll()
+        global.window.pageYOffset = 402
+        instance._handleScroll()
+        expect(instance.state.hideMenu).toBeTruthy()
       })
     })
 
