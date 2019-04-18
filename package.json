@@ -59,5 +59,14 @@
   "devDependencies": {
     "lodash": "^4.17.11",
     "react-dnd-test-backend": "^7.4.0"
+  },
+  "majestic": {
+    "jestScriptPath": "./node_modules/custom-react-scripts/scripts/test.js",
+    "args": [
+      "--collectCoverage=false"
+    ],
+    "env": {
+      "NODE_PATH": "./src/"
+    }
   }
 }
