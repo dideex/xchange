@@ -80,16 +80,39 @@ describe('Navigation: index', () => {
     })
   })
   describe('Component behavriour', () => {
-    describe.only('Scroll behaviour', () => {
-      const wrapper = mountWrap(
-        <MobxProvider userStore={userStore}>
-          <Component />
-        </MobxProvider>,
-      )
-      const instance = wrapper.find('Nav').instance()
-      beforeEach(() => {
-        global.window.pageYOffset = 0
-        instance.lastOffsetTop = 0
+    describe('Scroll behaviour', () => {
+      it('cDM should add event listner', () => {
+        const wrapper = mountWrap(
+          <MobxProvider userStore={userStore}>
+            <Component />
+          </MobxProvider>,
+        )
+
+        const instance = wrapper.find('Nav').instance()
+        global.window.addEventListener = jest.fn()
+        instance.componentDidMount()
+        expect(global.window.addEventListener).toHaveBeenCalledTimes(1)
+        expect(global.window.addEventListener).toHaveBeenCalledWith(
+          'scroll',
+          instance._handleScroll,
+        )
+      })
+
+      it('cWU should remove that listner', () => {
+        const wrapper = mountWrap(
+          <MobxProvider userStore={userStore}>
+            <Component />
+          </MobxProvider>,
+        )
+
+        const instance = wrapper.find('Nav').instance()
+        global.window.removeEventListener = jest.fn()
+        instance.componentWillUnmount()
+        expect(global.window.removeEventListener).toHaveBeenCalledTimes(1)
+        expect(global.window.removeEventListener).toHaveBeenCalledWith(
+          'scroll',
+          instance._handleScroll,
+        )
       })
     })
     describe('Scroll behaviour', () => {
@@ -157,6 +180,20 @@ describe('Navigation: index', () => {
       beforeEach(() => {
         instance.setState(initialState)
       })
+
+      it.only('Mobile menu should toggle after clicking', () => {
+        RDD.isMobile = false
+
+        const wrapper = mountWrap(
+          <MobxProvider userStore={userStore}>
+            <Component />
+          </MobxProvider>,
+        )
+        console.log(wrapper.html())
+        wrapper.find('[data-testid="mob-menu-toggler"]').simulate('click')
+        expect(instance.state.showMobMenu).toBeFalsy()
+      })
+
       it('Toggle lang menu should toggle lang menu and hide auth menu', () => {
         instance.toggleLangMenu({showLangMenu: false})
         expect(instance.state.showLangMenu).toBeTruthy()

@@ -109,6 +109,7 @@ class Nav extends Component {
               onClick={() =>
                 this.setState(({showMobMenu}) => ({showMobMenu: !showMobMenu}))
               }
+              data-testid="mob-menu-toggler"
             >
               <Icons id="menu" style={{width: 30}} />
             </div>
