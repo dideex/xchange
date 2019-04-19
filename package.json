@@ -61,9 +61,10 @@
     "react-dnd-test-backend": "^7.4.0"
   },
   "majestic": {
-    "jestScriptPath": "./node_modules/custom-react-scripts/scripts/test.js",
+    "jestScriptPath": "./node_modules/react-app-rewired/bin/jest.js",
     "args": [
-      "--collectCoverage=false"
+      "--collectCoverage=false",
+      "--config=./jest.config.js"
     ],
     "env": {
       "NODE_PATH": "./src/"
