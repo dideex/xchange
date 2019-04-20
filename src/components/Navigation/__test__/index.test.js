@@ -4,7 +4,6 @@ import RDD from 'react-device-detect'
 
 import Component from '../index'
 import UserStore from '../../../store/User'
-import {fakeUser} from '../../../helpers/fixtures'
 import {mountWrap} from '../../../helpers/router-intl-context'
 import Utils from '../../common/Utils'
 
