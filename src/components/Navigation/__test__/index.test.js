@@ -181,15 +181,14 @@ describe('Navigation: index', () => {
         instance.setState(initialState)
       })
 
-      it.only('Mobile menu should toggle after clicking', () => {
-        RDD.isMobile = false
+      it('Mobile menu should toggle after clicking', () => {
+        RDD.isMobile = true
 
         const wrapper = mountWrap(
           <MobxProvider userStore={userStore}>
             <Component />
           </MobxProvider>,
         )
-        console.log(wrapper.html())
         wrapper.find('[data-testid="mob-menu-toggler"]').simulate('click')
         expect(instance.state.showMobMenu).toBeFalsy()
       })
