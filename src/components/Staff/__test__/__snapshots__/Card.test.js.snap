@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Staff card Markup Basic markup 1`] = `"<article class=\\"css-e6aqxp\\"><img src=\\"fake photo\\" alt=\\"Avatr\\" class=\\"css-1t6ic23\\"/><h3>fake name</h3><p>fake role</p></article>"`;
