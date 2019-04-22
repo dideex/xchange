@@ -7,11 +7,15 @@ describe('Staff card', () => {
     photo: 'fake photo',
     name: 'fake name',
     role: 'fake role',
-    svg: 'fake svg'
   }
   describe('Markup', () => {
-    it('Basic markup', () => {
-      const wrapper = shallow(<Component {...props} />)
+    it('Basic markup 1', () => {
+      const wrapper = shallow(<Component {...props} svg="staff1" />)
+
+      expect(wrapper.html()).toMatchSnapshot()
+    })
+    it('Basic markup 2', () => {
+      const wrapper = shallow(<Component {...props} svg="staff2" />)
 
       expect(wrapper.html()).toMatchSnapshot()
     })
