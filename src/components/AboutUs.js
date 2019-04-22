@@ -9,8 +9,8 @@ const P = styled('p')`
   margin-bottom: 50px;
 `
 
-// FIXME: Translate this area
-// AboutUs component; Contains information about company
+// FIXME: Add i18n to this compoent
+// AboutUs component; Contains information about the company
 export default () => (
   <MainSectionWrap>
     <H2>
