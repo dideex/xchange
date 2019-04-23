@@ -59,5 +59,11 @@
   "devDependencies": {
     "lodash": "^4.17.11",
     "react-dnd-test-backend": "^7.4.0"
+  },
+  "majestic": {
+    "jestScriptPath": "./node_modules/react-app-rewired/scripts/test.js",
+    "env": {
+      "NODE_PATH": "./src/"
+    }
   }
 }
