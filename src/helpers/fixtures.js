@@ -25,6 +25,7 @@ export const fakeCurrnecy = [
   },
 ]
 
+
 export const fakeData = {
   id: 'Test id',
   inputValue: '1000',
