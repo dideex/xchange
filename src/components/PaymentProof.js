@@ -63,6 +63,7 @@ class PaymentProof extends Component {
     const {id: currencyOutputId, label: currencyOutputLabel, mask} =
       cashStore.currency[cashStore.currencyOutput] || {}
     const {label: currencyInputLabel} = cashStore.currency[cashStore.currencyInput] || {}
+    console.log(' LOG ___ cashStore.currencyInput ', cashStore.currencyInput)
     return (
       <Wrap>
         <div ref={this.wrap}>
