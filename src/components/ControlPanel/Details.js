@@ -78,10 +78,6 @@ const DetailsInfo = ({
   paymentStatus,
   sourceWallet,
 }) => {
-  console.log(' LOG ___ currencyInputLabel ', currencyInputLabel)
-  console.log('toWallet', toWallet)
-  console.log('currencyOutputLabel', currencyOutputLabel)
-  console.log('sourceWallet', sourceWallet)
   return (
     <Wrap>
       <h3>Перевод № {id}</h3>

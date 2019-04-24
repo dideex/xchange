@@ -3,7 +3,7 @@ import Component from '../PaymentProof'
 import {Provider as MobxProvider} from 'mobx-react'
 
 import {mountWrap} from '../../helpers/router-intl-context'
-import {fakeCurrnecy, fakeData} from '../../helpers/fixtures'
+import {fakeCurrnecy, fakeData, fakeWallets} from '../../helpers/fixtures'
 import UserStore from '../../store/User'
 import CashStore from '../../store/Cash'
 
@@ -33,6 +33,7 @@ describe('Paymentproof', () => {
       cashStore.outputValue = fakeData.outputValue
       userStore.email = fakeData.email
       userStore.username = fakeData.username
+      userStore.wallets = fakeWallets
       const wrapper = mountWrap(
         <MobxProvider {...{userStore, cashStore}}>
           <Component />
@@ -40,6 +41,27 @@ describe('Paymentproof', () => {
       )
 
       expect(wrapper.html()).toMatchSnapshot()
+    })
+  })
+  describe('Component behavriour', () => {
+    it('cDM should scroll the window', () => {
+      cashStore.currency = fakeCurrnecy
+      cashStore.orderId = fakeData.id
+      cashStore.inputValue = fakeData.inputValue
+      cashStore.outputValue = fakeData.outputValue
+      userStore.email = fakeData.email
+      userStore.username = fakeData.username
+      userStore.wallets = fakeWallets
+
+      window.scrollTo = jest.fn()
+      const wrapper = mountWrap(
+        <MobxProvider {...{userStore, cashStore}}>
+          <Component />
+        </MobxProvider>,
+      )
+
+      expect(window.scrollTo).toHaveBeenCalledTimes(1)
+      expect(window.scrollTo).toHaveBeenCalledWith(0, -150)
     })
   })
 })

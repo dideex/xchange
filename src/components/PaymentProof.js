@@ -52,7 +52,7 @@ class PaymentProof extends Component {
       0,
       this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
     )
-    // Protect route
+    // Protect routes
     if (this.props.cashStore.paymentStatus === 0) this.props.history.push('/')
     if (this.props.cashStore.paymentStatus === 2) this.props.history.push('/spasibo')
   }
@@ -63,7 +63,6 @@ class PaymentProof extends Component {
     const {id: currencyOutputId, label: currencyOutputLabel, mask} =
       cashStore.currency[cashStore.currencyOutput] || {}
     const {label: currencyInputLabel} = cashStore.currency[cashStore.currencyInput] || {}
-    console.log(' LOG ___ cashStore.currencyInput ', cashStore.currencyInput)
     return (
       <Wrap>
         <div ref={this.wrap}>
@@ -83,7 +82,7 @@ class PaymentProof extends Component {
           username={userStore.username}
           paymentStatus={cashStore.paymentStatus}
         />
-        <p onClick={() => this.props.history.goBack()}>
+        <p onClick={() => this.props.history.goBack()} data-testid="payment-proof-back">
           <span role="img" aria-label="back">
             👈
           </span>
