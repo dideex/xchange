@@ -36,12 +36,7 @@ const Wrap = styled('div')`
 
 // TODO: add click to copy
 // PaymentProof component;
-@withRouter
-@inject('userStore')
-@inject('cashStore')
-@injectIntl
-@observer
-class PaymentProof extends Component {
+export class PaymentProof extends Component {
   constructor(props) {
     super(props)
     this.wrap = React.createRef()
@@ -94,6 +89,7 @@ class PaymentProof extends Component {
             cashStore.cofirmPayment(userStore.email)
             this.props.history.push('/spasibo')
           }}
+          data-testid="confirm-payment"
         />
         <Svg />
       </Wrap>
@@ -101,4 +97,6 @@ class PaymentProof extends Component {
   }
 }
 
-export default PaymentProof
+export default withRouter(
+  inject('userStore')(inject('cashStore')(injectIntl(observer(PaymentProof)))),
+)
