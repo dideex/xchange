@@ -1,5 +1,5 @@
 import React from 'react'
-import Component from '../CP'
+import Component from '../Reserved'
 import {Provider as MobxProvider} from 'mobx-react'
 
 import CashStore from '../../store/Cash'
