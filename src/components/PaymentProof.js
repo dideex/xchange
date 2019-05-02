@@ -36,12 +36,7 @@ const Wrap = styled('div')`
 
 // TODO: add click to copy
 // PaymentProof component;
-@withRouter
-@inject('userStore')
-@inject('cashStore')
-@injectIntl
-@observer
-class PaymentProof extends Component {
+export class PaymentProof extends Component {
   constructor(props) {
     super(props)
     this.wrap = React.createRef()
@@ -52,7 +47,7 @@ class PaymentProof extends Component {
       0,
       this.wrap.current.getBoundingClientRect().top + window.pageYOffset - 150,
     )
-    // Protect route
+    // Protect routes
     if (this.props.cashStore.paymentStatus === 0) this.props.history.push('/')
     if (this.props.cashStore.paymentStatus === 2) this.props.history.push('/spasibo')
   }
@@ -63,7 +58,6 @@ class PaymentProof extends Component {
     const {id: currencyOutputId, label: currencyOutputLabel, mask} =
       cashStore.currency[cashStore.currencyOutput] || {}
     const {label: currencyInputLabel} = cashStore.currency[cashStore.currencyInput] || {}
-    console.log(' LOG ___ cashStore.currencyInput ', cashStore.currencyInput)
     return (
       <Wrap>
         <div ref={this.wrap}>
@@ -83,7 +77,7 @@ class PaymentProof extends Component {
           username={userStore.username}
           paymentStatus={cashStore.paymentStatus}
         />
-        <p onClick={() => this.props.history.goBack()}>
+        <p onClick={() => this.props.history.goBack()} data-testid="payment-proof-back">
           <span role="img" aria-label="back">
             👈
           </span>
@@ -95,6 +89,7 @@ class PaymentProof extends Component {
             cashStore.cofirmPayment(userStore.email)
             this.props.history.push('/spasibo')
           }}
+          data-testid="confirm-payment"
         />
         <Svg />
       </Wrap>
@@ -102,4 +97,6 @@ class PaymentProof extends Component {
   }
 }
 
-export default PaymentProof
+export default withRouter(
+  inject('userStore')(inject('cashStore')(injectIntl(observer(PaymentProof)))),
+)
