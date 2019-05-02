@@ -22,8 +22,7 @@ if (module.hot) {
   module.hot.accept()
 }
 
-
-const app = (
+export const App = (
   <MobxProvider lastOperationsStore={lastOperations} cashStore={cash} userStore={user}>
     <IntlProvider>
       <BrowserRouter>
@@ -33,6 +32,6 @@ const app = (
   </MobxProvider>
 )
 
-ReactDOM.render(app, document.getElementById('root'))
+ReactDOM.render(App, document.getElementById('root'))
 
 serviceWorker.unregister()
