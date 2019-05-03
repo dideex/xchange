@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Settings behaviour Markup Basic markup 1`] = `"<div class=\\"css-1xiihgh\\"><div class=\\"css-12hlfla\\"></div></div>"`;
+
+exports[`Settings behaviour Markup Currency markup 1`] = `"<div class=\\"css-1xiihgh\\"><div class=\\"css-12hlfla\\"><div class=\\"css-72ota7\\">tether</div><div class=\\"css-72ota7\\">lisk</div><div class=\\"css-72ota7\\">litecoin</div></div></div>"`;

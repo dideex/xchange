@@ -79,7 +79,7 @@ class Admin extends Component {
     // find the order by id
     const orderDetails = this.state.orders.find(({_id}) => id === _id)
     this.setState({loadingUserData: true})
-    if (orderDetails.user !== 'Guest') {
+    if (orderDetails && orderDetails.user !== 'Guest') {
       // getting user's data
       const userDetails = await Api.get(
         'summaryOrderUserInfo',
@@ -126,8 +126,8 @@ class Admin extends Component {
             ({name}) => name === currencyOutput,
           ).icon
           noty(`Статус изменен на ${StatusTitles[paymentStatus]}`)
-          if (paymentStatus === 3)
-            // send data to broadcast throw web-socket
+          if (paymentStatus === 3) {
+            // send data to broadcast through web-socket
             this.props.cashStore.emitSocket({
               email,
               inputValue,
@@ -137,6 +137,7 @@ class Admin extends Component {
               currency,
               paymentStatus: 3,
             })
+          }
         },
       )
       .catch(err => {
@@ -148,12 +149,12 @@ class Admin extends Component {
   }
 
   render() {
-    const {orders} = this.state
+    const {orders, loadingUserData, orderDetails} = this.state
     const {id} = this.props.match.params
     const parsedOrders = parseOrders(
       orders
         .map(order => ({...order, toWallet: order.fromWallet}))
-        .filter(({toWallet}) => ~toWallet.indexOf(this.state.filter)),
+        .filter(({toWallet = ''}) => ~toWallet.indexOf(this.state.filter)),
     )
     if (this.state.loading) return <Loading size="big" />
     return (
@@ -161,20 +162,43 @@ class Admin extends Component {
         {id && (
           <Details
             updatePaymentStatus={this.updatePaymentStatus}
-            loading={this.state.loadingUserData}
-            {...this.state.orderDetails}
+            loading={loadingUserData}
+            {...orderDetails}
           />
         )}
         <PaymentSelector>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('all')}>Все</div>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('created')}>Созданные</div>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('expectation')}>
+          <div
+            data-testid="payment_selector_all"
+            onClick={() => this._fetchOrdersByPaymentStatus('all')}
+          >
+            Все
+          </div>
+          <div
+            data-testid="payment_selector_created"
+            onClick={() => this._fetchOrdersByPaymentStatus('created')}
+          >
+            Созданные
+          </div>
+          <div
+            data-testid="payment_selector_expectation"
+            onClick={() => this._fetchOrdersByPaymentStatus('expectation')}
+          >
             Подтвержденные
           </div>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('closed')}>Закрытые</div>
-          <div onClick={() => this._fetchOrdersByPaymentStatus('denied')}>Удаленные</div>
+          <div
+            data-testid="payment_selector_closed"
+            onClick={() => this._fetchOrdersByPaymentStatus('closed')}
+          >
+            Закрытые
+          </div>
+          <div
+            data-testid="payment_selector_denied"
+            onClick={() => this._fetchOrdersByPaymentStatus('denied')}
+          >
+            Удаленные
+          </div>
         </PaymentSelector>
-        <Virtualized parsedOrders={parsedOrders} endpoint={'summary'} />
+        <Virtualized parsedOrders={parsedOrders} endpoint="summary" />
         <p>
           Поиск по номеру
           <input

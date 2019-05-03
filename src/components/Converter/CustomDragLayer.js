@@ -25,8 +25,7 @@ const collect = monitor => ({
 
 // FIXME: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
 // Custom dragging layer
-@DragLayer(collect)
-export default class CustomDragLayer extends Component {
+class CustomDragLayer extends Component {
   constructor(props) {
     super(props)
     this.lastUpdate = +new Date()
@@ -35,7 +34,8 @@ export default class CustomDragLayer extends Component {
 
   // Don't rerender component less then 50 times in a second
   shouldComponentUpdate() {
-    if (+new Date() - this.lastUpdate > 32) {
+    // FIXME: Not tested
+    if (+new Date() - this.lastUpdate <= 32) {
       this.lastUpdate = +new Date()
       clearTimeout(this.updateTimer)
       return true
@@ -76,3 +76,6 @@ export default class CustomDragLayer extends Component {
     return <div style={this.getItemStyle(this.props)}>{this.getItem()}</div>
   }
 }
+
+export const UndecoratedCustomDragLayer = CustomDragLayer
+export default DragLayer(collect)(CustomDragLayer)

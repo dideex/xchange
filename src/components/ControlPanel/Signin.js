@@ -5,7 +5,7 @@ import {FormattedMessage, injectIntl} from 'react-intl'
 
 import {H2, Input, Button, isAllPropsFalse} from '../common'
 
-export const Wrap = styled.div`
+export const Wrap = styled('div')`
   & {
     padding: 0 60px;
     @media (max-width: 1024px) {

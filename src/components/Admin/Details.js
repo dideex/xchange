@@ -77,18 +77,18 @@ const PaymentController = styled('div')`
 @observer
 class DetailsComponent extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
-    inputValue: PropTypes.string.isRequired,
-    toWallet: PropTypes.string.isRequired,
-    fromWallet: PropTypes.string.isRequired,
-    outputValue: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-    paymentStatus: PropTypes.number.isRequired,
+    id: PropTypes.string,
+    inputValue: PropTypes.string,
+    toWallet: PropTypes.string,
+    fromWallet: PropTypes.string,
+    outputValue: PropTypes.string,
+    email: PropTypes.string,
+    username: PropTypes.string,
+    paymentStatus: PropTypes.number,
     loading: PropTypes.bool.isRequired,
-    wallets: PropTypes.object.isRequired,
-    login: PropTypes.string.isRequired,
-    updatePaymentStatus: PropTypes.func.isRequired,
+    wallets: PropTypes.object,
+    login: PropTypes.string,
+    updatePaymentStatus: PropTypes.func,
   }
 
   state = {

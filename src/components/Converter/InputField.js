@@ -26,7 +26,7 @@ const BadgeIcon = styled('span')`
     z-index: 1;
     @media (max-width: 1024px) {
       top: 16px;
-    } 
+    }
   }
 `
 
@@ -91,7 +91,11 @@ class InputField extends Component {
                 id={currency.length && currency[currencyId].icon}
               />
             </BadgeIcon>
-            <Input onBlur={correctValuesLimits} value={currencyFormat(inputValue)} handleChange={changeInput} />
+            <Input
+              onBlur={correctValuesLimits}
+              value={currencyFormat(inputValue)}
+              handleChange={changeInput}
+            />
             <Select
               isOpen={this.state.open}
               toggleField={e => this.setState({open: e})}

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Locale locales Chainise locale should exist 1`] = `"<span>测试</span>"`;
+
+exports[`Locale locales English locale should exist 1`] = `"<span>test</span>"`;
+
+exports[`Locale locales France locale should exist 1`] = `"<span>tester</span>"`;
+
+exports[`Locale locales Russian locale should exist 1`] = `"<span>тест</span>"`;

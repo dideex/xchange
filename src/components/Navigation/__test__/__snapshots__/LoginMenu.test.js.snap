@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation: lang menu Markup Admin 1`] = `"<a href=\\"/summary\\">Admin</a>"`;
+
+exports[`Navigation: lang menu Markup Authed 1`] = `"<a href=\\"/lichnii-kabinet\\">Fake username</a>"`;
+
+exports[`Navigation: lang menu Markup Unauth 1`] = `"<a href=\\"/lichnii-kabinet\\"><span>Signin</span></a>"`;

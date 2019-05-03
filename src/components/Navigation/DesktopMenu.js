@@ -86,7 +86,7 @@ const DesktopMenu = ({
 }) => (
   <MenuWrap onMouseLeave={closeBothMenu}>
     <CommonLinks handleClick={handleClick} />
-    <span onClick={toggleLangMenu}>
+    <span onClick={toggleLangMenu} data-testid="lang-toggler">
       <FormattedMessage id="home.nav.lang" defaultMessage="Language" />
       <Icons
         id="chevron"
@@ -94,7 +94,7 @@ const DesktopMenu = ({
       />
       <CSSTransition in={showLangMenu} timeout={300} classNames="content-" unmountOnExit>
         <Popover>
-          <LangMenu handleClick={handleClick} />
+          <LangMenu />
         </Popover>
       </CSSTransition>
     </span>

@@ -11,7 +11,7 @@ import {Wrap} from './Signin'
 @withRouter
 @inject('userStore')
 @observer
-class Signup extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props)
     this.inputs = []
@@ -102,7 +102,7 @@ class Signup extends Component {
           handleChange={changeUsername}
           placeholder={formatMessage({
             id: 'home.cpPlaceholder.username',
-            defaultMessage: 'Логин',
+            defaultMessage: 'Фио',
           })}
           errorMsg={formatMessage({
             id: 'home.cpError.username',
@@ -183,4 +183,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup
+export default SignUp

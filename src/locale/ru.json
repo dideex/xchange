@@ -45,6 +45,7 @@
   "home.userDataPlaceholder.toWallet": "Ваш номер для {wallet}",
   "home.userDataError.username": "Введите ваше ФИО",
   "home.userDataError.email": "Введите ваш Email",
+  "home.userDataError.phone": "Введите ваш телефон",
   "home.userDataError.userInputWallet": "Введите номер кошелька с которого вы будете переводить",
   "home.userDataError.userOutputWallet": "Введите номер вашего кошелька для получения",
   "home.userData.send": "Отправить",

@@ -126,8 +126,8 @@ class CurrencyDNDArea extends Component {
 
   // Save coordiantes to the state
   _handleMouseDown = e => {
-    const {x, y} = e.currentTarget.getBoundingClientRect()
-    this.setState({dragX: e.clientX - x, dragY: e.clientY - y})
+    const {x, y} = e.target.getBoundingClientRect()
+    this.setState({dragX: e.clientX - x + 15, dragY: e.clientY - y + 15})
   }
 
   render() {
@@ -150,7 +150,7 @@ class CurrencyDNDArea extends Component {
           <CurrencyBadgeOverflowWrapper>
             <CurrencyBadgeItems data-testid="dnd-area">
               {currency.filter(this._handleFilter).map(({name, id, icon}, i) => (
-                <CurrencyBadgeItem onMouseDown={this._handleMouseDown} key={i}>
+                <CurrencyBadgeItem onMouseDown={this._handleMouseDown} key={i} data-testid="currency-badge-item">
                   <CurrencyBadge
                     id={id}
                     icon={icon}

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container with bg Basic markup 1`] = `"<section class=\\"css-rz5030\\"><svg class=\\"\\" style=\\"z-index: -1; position: absolute; width: 100%; left: 0px; right: 0px;\\" viewBox=\\"0 0 1443 468\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path style=\\"fill: #40c0cb;\\" d=\\"M1442.5 467.502C1442.5 355.002 1307 109 0.000183105 0.501465V467.502H1442.5Z\\"></path></svg><div>Test children</div><svg class=\\"\\" style=\\"z-index: -1; position: absolute; width: 100%; left: 0px; right: 0px;\\" viewBox=\\"0 0 1445 101\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path style=\\"fill: #40c0cb;\\" d=\\"M1444.5 0.499512C926 89.9998 653.5 82.9999 0 100.5V0.499512H1444.5Z\\"></path></svg></section>"`;

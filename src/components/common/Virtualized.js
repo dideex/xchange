@@ -52,7 +52,7 @@ export class Virtualized extends Component {
   state = {CopyId: null, selectedId: ''}
 
   render() {
-    const {parsedOrders, endpoint} = this.props
+    const {parsedOrders} = this.props
     const {formatMessage} = this.props.intl
     return (
       <TableWrap>
@@ -70,7 +70,7 @@ export class Virtualized extends Component {
               }
               onRowClick={({index, rowData: {id}}) => {
                 this.setState({selectedId: index})
-                this.props.history.push(`/${endpoint}/${id}`)
+                // this.props.history.push(`/${endpoint}/${id}`)
               }}
             >
               <Column

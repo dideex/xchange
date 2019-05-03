@@ -45,7 +45,7 @@ export class Api {
     }).then(response => response.json())
   }
 
-  // Notyfication an error
+  // Error notyfication
   errorEmitter = fn => ({err, errCode, ...data}) => {
     if (err) {
       this.isNetworkError = true
