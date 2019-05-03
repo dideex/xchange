@@ -10,7 +10,6 @@
     "coin-address-validator": "^1.0.4-1",
     "dotenv": "^6.0.0",
     "emotion": "^9.2.12",
-    "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "js-cookie": "^2.2.0",
     "less": "^3.8.1",
@@ -39,8 +38,16 @@
     "react-transition-group": "^2.5.0",
     "react-virtualized": "^9.21.0",
     "recharts": "^1.3.4",
-    "socket.io-client": "^2.1.1",
-    "webpack-bundle-analyzer": "^3.0.2"
+    "socket.io-client": "^2.1.1"
+  },
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "cypress": "^3.2.0",
+    "enzyme": "^3.8.0",
+    "mongoose": "^5.4.4",
+    "webpack-bundle-analyzer": "^3.0.2",
+    "lodash": "^4.17.11",
+    "react-dnd-test-backend": "^7.4.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/sass/ -o src/css",
@@ -50,15 +57,13 @@
     "start-js": "npm-run-all -p watch-css start-js",
     "build-js": "npm-run-all build-css build-js",
     "test": "react-app-rewired test --env=jsdom --watch",
+    "fixtures": "node ./cypress/helpers/init-dump",
+    "cypress:open": "cypress open",
     "test:coverage": "react-app-rewired test --env=jsdom --coverage  --collectCoverageFrom=src/**/*.js --collectCoverageFrom=!src/helpers/**/*.js --collectCoverageFrom=!src/index.js --collectCoverageFrom=!src/serviceWorker.js",
     "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "devDependencies": {
-    "lodash": "^4.17.11",
-    "react-dnd-test-backend": "^7.4.0"
   },
   "majestic": {
     "jestScriptPath": "./node_modules/react-app-rewired/scripts/test.js",

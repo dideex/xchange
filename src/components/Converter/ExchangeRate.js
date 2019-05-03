@@ -47,7 +47,7 @@ const ExchangeRate = ({inputCurrency = 1, outputCurrency = 1, loading, rate}) =>
       <CurrencyTitle>
         <FormattedMessage id="home.rateExchange" defaultMessage="Курс обмена" />
       </CurrencyTitle>
-      <ExchangeRateContent>
+      <ExchangeRateContent data-testid="exchange-container">
         {loading ? (
           <Loading size="inline" />
         ) : (

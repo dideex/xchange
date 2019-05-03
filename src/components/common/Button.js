@@ -37,10 +37,11 @@ const Content = styled('div')`
 `
 
 // Button component;
-export const Button = ({caption, toggle, disabled = false, loading = false}) => (
+export const Button = ({caption, toggle, disabled = false, loading = false, testid}) => (
   <StyledButton
     cursor={disabled ? 'not-allowed' : 'pointer'}
     onClick={disabled ? () => {} : toggle}
+    data-testid={testid}
   >
     <Content>
       {loading && <Loading size="inline" />}
@@ -52,6 +53,7 @@ export const Button = ({caption, toggle, disabled = false, loading = false}) => 
 Button.propTypes = {
   toggle: PropTypes.func.isRequired,
   caption: PropTypes.string.isRequired,
+  testid: PropTypes.string,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
 }
