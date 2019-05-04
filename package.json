@@ -44,10 +44,11 @@
     "bcryptjs": "^2.4.3",
     "cypress": "^3.2.0",
     "enzyme": "^3.8.0",
-    "mongoose": "^5.4.4",
-    "webpack-bundle-analyzer": "^3.0.2",
     "lodash": "^4.17.11",
-    "react-dnd-test-backend": "^7.4.0"
+    "majestic": "^1.4.1",
+    "mongoose": "^5.4.4",
+    "react-dnd-test-backend": "^7.4.0",
+    "webpack-bundle-analyzer": "^3.0.2"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/sass/ -o src/css",
@@ -59,14 +60,17 @@
     "test": "react-app-rewired test --env=jsdom --watch",
     "fixtures": "node ./cypress/helpers/init-dump",
     "cypress:open": "cypress open",
-    "test:coverage": "react-app-rewired test --env=jsdom --coverage  --collectCoverageFrom=src/**/*.js --collectCoverageFrom=!src/helpers/**/*.js --collectCoverageFrom=!src/index.js --collectCoverageFrom=!src/serviceWorker.js",
+    "test:coverage": "react-app-rewired test --env=jsdom --coverage --collectCoverageFrom=src/**/*.js --collectCoverageFrom=!src/helpers/**/*.js --collectCoverageFrom=!src/index.js --collectCoverageFrom=!src/serviceWorker.js",
     "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "majestic": {
-    "jestScriptPath": "./node_modules/react-app-rewired/scripts/test.js",
+    "jestScriptPath": "./node_modules/react-scripts/scripts/test.js",
+    "args": [
+      "--collectCoverage=false"
+    ],
     "env": {
       "NODE_PATH": "./src/"
     }
